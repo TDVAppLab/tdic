@@ -49,6 +49,13 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Edit.Command{ t_attachment = t_attachment}));
         }
 
+        
+        [HttpPost("delete/{id}")]
+        public async Task<IActionResult> Delete(long id)
+        {
+            return HandleResult(await Mediator.Send(new Delete.Command{id=id}));
+        }
+
         [HttpPost("createeyecatch")]
         public async Task<IActionResult> CreateEyecatch([FromBody] AttachmentfileEyecatchDtO image){
             return HandleResult(await Mediator.Send(new CreateEyecatch.Command{ id_article=image.id_article, imgfilebin=image.imgfilebin }));

@@ -62,7 +62,7 @@ export default observer( function AttachmentfileEdit(){
     
 
     const validationSchemaDel = Yup.object({
-        id_part: Yup.number()
+        id_file: Yup.number()
         .min(1, 'The minimum amount is one').required(),
     });
 
@@ -96,6 +96,7 @@ export default observer( function AttachmentfileEdit(){
         console.log("called modelfile delete");
         if(attachmentfile.id_file ===0 ){
         } else {
+            console.log("called attach delete");
             deleteAttachmentfile(attachmentfile);
             //deleteTask(task.id);
         }
