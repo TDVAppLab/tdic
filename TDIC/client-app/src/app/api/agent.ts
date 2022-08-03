@@ -5,6 +5,7 @@ import { history } from "../..";
 import { Annotation } from "../models/Annotation";
 import { AnnotationDisplay } from "../models/AnnotationDisplay";
 import { Article } from "../models/article";
+import { Assembly } from "../models/Assembly";
 import { Attachmentfile, AttachmentfileEyecatchDtO } from "../models/attachmentfile";
 import { Instancepart } from "../models/Instancepart";
 import { Instruction } from "../models/instruction";
@@ -92,6 +93,14 @@ const Attachmentfiles = {
     delete:(id:number) => axios.post<void>(`/attachmentfiles/delete/${id}`),
 }
 
+const Assemblies = {
+    list: () => requests.get<Assembly[]>('/assembly/index'),    
+    details:(id:number) => requests.get<Assembly>(`/assembly/details/${id}`),
+    create:(object: Assembly) => axios.post<void>(`/assembly/create`, object),
+    update: (object: Assembly) => axios.post<void>(`/assembly/update/`, object),
+    delete:(id:number) => axios.post<void>(`/assembly/delete/${id}`),
+}
+
 const Articles = {
     list: () => requests.get<Article[]>('/articles/index'),
     details:(id:number) => requests.get<Article>(`/articles/details/${id}`),
@@ -168,6 +177,7 @@ const agent = {
     Account,
     Modelfiles,
     Attachmentfiles,
+    Assemblies,
     Articles,
     Instructions,
     Views,

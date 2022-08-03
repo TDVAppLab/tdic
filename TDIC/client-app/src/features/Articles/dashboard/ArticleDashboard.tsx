@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import GoogleAd from '../../../app/common/utils/GoogleAd';
 import LoadingComponent from '../../../app/layout/LoadingComponents';
 import { useStore } from '../../../app/stores/store';
@@ -10,6 +11,7 @@ export default observer(function ArticleDashboard() {
     
     const {articleStore} = useStore();
     const {loadArticles, articleRegistry} = articleStore;
+    const {userStore: {user}} = useStore();
   
     useEffect(() => {
         if(articleRegistry.size <= 1) loadArticles();
@@ -22,6 +24,16 @@ export default observer(function ArticleDashboard() {
 
     return(
         <Container>
+            {
+                user &&
+                    <>            
+                        <Link to={`/createarticle`}>
+                            <h3>Create New Article</h3>
+                        </Link>
+                        <hr />                        
+                    </>
+            }
+            
             <ArticleList />
             {
             <GoogleAd pid={process.env.REACT_APP_GOOGLE_ADSENSE_PUBLISHER_ID!} uid={process.env.REACT_APP_GOOGLE_ADSENSE_UNIT_ID!} />
