@@ -36,7 +36,7 @@ export default observer( function AssemblyList() {
                             <td>{x.id_assy}</td>
                             <td>{x.id_assy}</td>
                             <td>{x.assy_name}</td>
-                            <td>bt1</td>
+                            <td><Link to={`/assembliesedit/${x.id_assy}`}>Edit</Link></td>
                         </tr>
 
                         ))

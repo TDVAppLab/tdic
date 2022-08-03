@@ -21,7 +21,7 @@ export default observer(function AssemblyDashboard() {
 
     return(
         <Container>
-            <Link to={`/attachmentfileupload`}>
+            <Link to={`/assembliescreate`}>
                 <h3 >Create New Assembly</h3>
             </Link>
             

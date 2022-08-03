@@ -28,6 +28,7 @@ import ModelfileEdit from '../../features/Modelfiles/edit/ModelfileEdit';
 import AttachmentfileUpload from '../../features/attachmentfiles/upload/AttachmentfileUpload';
 import AttachmentfileEdit from '../../features/attachmentfiles/edit/AttachmentfileEdit';
 import AssemblyDashboard from '../../features/assembly/dashboard/AssemblyDashboard';
+import AssemblyCreate from '../../features/assembly/create/AssemblyCreate';
 
 function App() {
   
@@ -76,7 +77,7 @@ function App() {
 
 
                 <Route path = '/assemblies' component={AssemblyDashboard} />
-                <Route path = '/assembliescreate' component={AssemblyDashboard} />
+                <Route key = {location.key} path = {['/assembliescreate', '/assembliesedit/:id']} component={AssemblyCreate} />
 
                 <Route path = '/attachmentfiles' component={AttachmentFileDashboard} />
                 <Route path = '/attachmentfile/:id' component={AttachmentFileDetails} />

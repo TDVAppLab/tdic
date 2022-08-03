@@ -33,7 +33,7 @@ export default class AssemblyStore {
 
 
 
-    loadAttachmentfile = async (id:number) => {
+    loadAssembly = async (id:number) => {
         this.loading = true;
         let object: Assembly;
         try {
@@ -52,7 +52,7 @@ export default class AssemblyStore {
     }
 
 
-    updateAttachmentfile = async (object: Assembly) => {
+    updateAssembly = async (object: Assembly) => {
         this.loading = true;
         
         try {
