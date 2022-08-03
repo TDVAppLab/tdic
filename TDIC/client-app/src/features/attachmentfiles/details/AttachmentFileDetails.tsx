@@ -98,7 +98,7 @@ export default observer( function AttachmentFileDetails() {
                 </dl>
                 <div>
                     <Link to="/attachmentfiles">Return Index</Link> |
-                    <Link to={`/ContentsEdit/AttachmentFileEdit/${id}`}>Edit</Link>
+                    <Link to={`/attachmentfileedit/${id}`}>Edit</Link>
                 </div>
             </div>
 

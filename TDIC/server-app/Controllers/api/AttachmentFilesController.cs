@@ -43,6 +43,12 @@ namespace API.Controllers
             return File(det.Value.file_data, det.Value.type_data, det.Value.name);
         }
 
+
+        [HttpPost("update")]
+        public async Task<IActionResult> Update([FromBody] t_attachment t_attachment){
+            return HandleResult(await Mediator.Send(new Edit.Command{ t_attachment = t_attachment}));
+        }
+
         [HttpPost("createeyecatch")]
         public async Task<IActionResult> CreateEyecatch([FromBody] AttachmentfileEyecatchDtO image){
             return HandleResult(await Mediator.Send(new CreateEyecatch.Command{ id_article=image.id_article, imgfilebin=image.imgfilebin }));
