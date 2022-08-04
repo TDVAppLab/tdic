@@ -51,6 +51,25 @@ export default class AssemblyStore {
         
     }
 
+    
+    
+    createAssembly = async (object: Assembly) => {
+        this.loading = true;
+        try {
+            await agent.Assemblies.create(object);
+            runInAction(() => {
+                this.AssemblyRegistry.set(object.id_assy, object);
+                this.selectedAssembly = object;
+                this.loading = false;
+            })            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
 
     updateAssembly = async (object: Assembly) => {
         this.loading = true;

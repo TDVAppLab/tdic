@@ -29,25 +29,25 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Details.Query{ID = id}));
         }
-/*
+
         [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] t_light light)
+        public async Task<IActionResult> Update([FromBody] t_assembly t_assembly)
         {
             //task.id = id;
 
-            return HandleResult(await Mediator.Send(new Edit.Command{ Light = light}));
+            return HandleResult(await Mediator.Send(new Edit.Command{ t_assembly = t_assembly}));
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] t_light light){
-            return HandleResult(await Mediator.Send(new Create.Command{ light = light}));
+        public async Task<IActionResult> Create([FromBody] t_assembly t_assembly){
+            return HandleResult(await Mediator.Send(new Create.Command{ t_assembly = t_assembly}));
         }
         
-        [HttpPost("delete/id_article={id_article}&id_light={id_light}")]
-        public async Task<IActionResult> Delete(long id_article, long id_light)
+        [HttpPost("delete/{id}")]
+        public async Task<IActionResult> Delete(long id)
         {
-            return HandleResult(await Mediator.Send(new Delete.Command{id_article=id_article, id_light=id_light}));
+            return HandleResult(await Mediator.Send(new Delete.Command{id=id}));
         }
-*/
+
     }
 }

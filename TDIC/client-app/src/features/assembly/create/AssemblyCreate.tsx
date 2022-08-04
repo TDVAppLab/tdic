@@ -15,7 +15,7 @@ export default observer( function AssemblyCreate(){
     
     
     const {assemblyStore} = useStore();
-    const {loadAssembly, selectedAssembly, updateAssembly, deleteAssembly, loading} = assemblyStore;
+    const {loadAssembly, selectedAssembly, createAssembly, updateAssembly, deleteAssembly, loading} = assemblyStore;
 
     const {id} = useParams<{id: string}>();
 
@@ -54,7 +54,7 @@ export default observer( function AssemblyCreate(){
                 ...assembly
             };
             //console.log(newTask);
-//            createTask(newTask);
+            createAssembly(newAssembly);
 //            createTask(newActivity).then(() => history.push(`/task/${newTask.Id}`))
         } else {
             updateAssembly(assembly);
