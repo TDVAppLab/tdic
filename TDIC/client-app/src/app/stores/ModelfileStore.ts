@@ -1,6 +1,7 @@
 import {  makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Modelfile } from "../models/ModelFile";
+import { OptionBase } from "../models/Optionbase";
 
 export default class ModelfileStore {
     ModelfileRegistry = new Map<number, Modelfile>();
@@ -143,6 +144,16 @@ export default class ModelfileStore {
         }
     }
     
+
+    getOptionArray=()=>{
+        const ans = Array<OptionBase>();
+
+        
+        Array.from(this.ModelfileRegistry.values()).map(modelfile=>(
+            ans.push({label: modelfile.part_number, value: modelfile.id_part.toString()})
+        ))
+        return ans;
+    }
 
     private setModelfile = (modelfile : Modelfile) => {
         this.ModelfileRegistry.set(modelfile.id_part,modelfile);

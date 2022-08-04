@@ -13,12 +13,13 @@ using System.Linq;
 
 namespace Application.Instancepart
 {
+    /*
     public class InstancepartValidator : AbstractValidator<IList<t_instance_part>>
     {
         public InstancepartValidator()
         {
         }
-    }
+    }*/
     public class Edit
     {
         public class Command : IRequest<Result<Unit>>

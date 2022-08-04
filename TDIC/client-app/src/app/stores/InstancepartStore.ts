@@ -58,6 +58,25 @@ export default class InstancepartStore {
     }
 
 
+    
+    
+    createInstancepart = async (object: Instancepart) => {
+        this.loading = true;
+        try {
+            await agent.Instanceparts.create(object);
+            runInAction(() => {
+                this.instancepartRegistry.set(object.id_inst, object);
+                this.selectedInstancepart = object;
+                this.loading = false;
+            })            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
     updateInstancepart = async (objects: Instancepart[]) => {
         this.loading = true;
         

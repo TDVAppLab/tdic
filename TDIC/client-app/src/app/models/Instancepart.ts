@@ -7,4 +7,5 @@ export interface Instancepart {
     pos_x: number;
     pos_y: number;
     pos_z: number;
+    scale: number;
 }

@@ -148,7 +148,8 @@ const Lights = {
 
 const Instanceparts = {
     list: (id:number) => requests.get<Instancepart[]>(`/instancepart/index/${id}`),
-    details:(id_assy:number,id_inst:number) => requests.get<Instancepart>(`/instancepart/details/id_assy=${id_assy}&id_inst=${id_inst}`),
+    details:(id_assy:number,id_inst:number) => requests.get<Instancepart>(`/instancepart/details/id_assy=${id_assy}&id_inst=${id_inst}`),    
+    create:(object: Instancepart) => axios.post<void>(`/instancepart/create`,object),
     update: (instancepart: Instancepart[]) => axios.post<void>(`/instancepart/update/`, instancepart),
 }
 
