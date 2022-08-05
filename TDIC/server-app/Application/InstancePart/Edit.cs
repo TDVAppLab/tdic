@@ -56,6 +56,7 @@ namespace Application.Instancepart
                     target.pos_x = m.pos_x;
                     target.pos_y = m.pos_y;
                     target.pos_z = m.pos_z;
+                    target.scale = m.scale;
                     target.latest_update_datetime = DateTime.Now;
                 }
 

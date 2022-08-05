@@ -20,10 +20,11 @@ export default observer( function AssemblyCreate(){
     const {loadAssembly, selectedAssembly, createAssembly, updateAssembly, deleteAssembly, loading : loadingAssembly} = assemblyStore;
     
     const {instancepartStore} = useStore();
-    const {createInstancepart, loading : loadingInstance} = instancepartStore;
+    const {loadInstanceparts, instancepartRegistry, createInstancepart, deleteInstancepart, loading : loadingInstance} = instancepartStore;
 
     const {modelfileStore} = useStore();
-    const {loadModelfiles, loading : loadingModelfile, getOptionArray} = modelfileStore;
+    const {loadModelfiles, ModelfileRegistry, loading : loadingModelfile, getOptionArray} = modelfileStore;
+
 
     const {id} = useParams<{id: string}>();
 
@@ -43,7 +44,7 @@ export default observer( function AssemblyCreate(){
         pos_x: 0,
         pos_y: 0,
         pos_z: 0,
-        scale: 0,
+        scale: 1,
 
     });
 
@@ -73,6 +74,7 @@ export default observer( function AssemblyCreate(){
     useEffect(()=>{
         if(id){ 
             loadAssembly(Number(id)).then(attachmentfile => {
+                loadInstanceparts(attachmentfile?.id_assy!);
                 setAssembly(attachmentfile!);
                 setInstancepart({        
                     id_assy: attachmentfile?.id_assy!,
@@ -81,7 +83,7 @@ export default observer( function AssemblyCreate(){
                     pos_x: 0,
                     pos_y: 0,
                     pos_z: 0,
-                    scale: 0,
+                    scale: 1,
         
                 });
             });
@@ -120,7 +122,24 @@ export default observer( function AssemblyCreate(){
         }
     }
 
-    if(loadingAssembly || loadingModelfile) return <LoadingComponent content="Loading task..." />
+    
+    function handleFormSubmitInstanceDelete(id_inst:number) {
+        if(id_inst ===0 ){
+        } else {
+            deleteInstancepart({        
+                id_assy: assembly?.id_assy!,
+                id_inst: id_inst,
+                id_part: 0,                
+                pos_x: 0,
+                pos_y: 0,
+                pos_z: 0,
+                scale: 0,
+    
+            });
+        }
+    }
+
+    if(loadingAssembly || loadingInstance || loadingModelfile) return <LoadingComponent content="Loading task..." />
 
     return(
         <div>         
@@ -219,6 +238,60 @@ export default observer( function AssemblyCreate(){
 
                 </Formik> }
             </div>
+
+
+
+            <hr />
+
+            <div>
+          
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                ID Assy
+                            </th>
+                            <th>
+                                ID INST
+                            </th>
+                            <th>
+                                ID Part
+                            </th>
+                            <th>
+                                Delete
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            Array.from(instancepartRegistry.values()).map(x=>(
+                                <tr key={x.id_inst}>
+                                    <td>{x.id_assy}</td>
+                                    <td>{x.id_inst}</td>
+                                    <td>{x.id_part}</td>
+                                    <td>{ModelfileRegistry.get(x.id_part)?.part_number}</td>
+                                    <td>
+                                        <button key={x.id_inst}
+                                                type = 'submit'
+                                                className={"btn btn-danger"}
+                                                onClick={()=>{handleFormSubmitInstanceDelete(x.id_inst)}} 
+                                            >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+
+
+
+
+
 
             
             <hr />
