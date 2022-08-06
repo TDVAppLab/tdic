@@ -126,8 +126,7 @@ export default function WebsiteSettingForm(){
             <hr />
 
             <div>
-                <Link to="/assemblies">Return Index</Link> |
-                <Link to={`/attachmentfile/${id}`}>Details</Link>
+                <Link to="/websitesettings">Return Index</Link>
             </div>
 
 
