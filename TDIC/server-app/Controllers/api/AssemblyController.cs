@@ -33,7 +33,6 @@ namespace API.Controllers
         [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] t_assembly t_assembly)
         {
-            //task.id = id;
 
             return HandleResult(await Mediator.Send(new Edit.Command{ t_assembly = t_assembly}));
         }

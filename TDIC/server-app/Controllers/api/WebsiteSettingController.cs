@@ -15,7 +15,6 @@ namespace API.Controllers
 {
     public class WebsiteSettingController : BaseApiController
     { 
-        [AllowAnonymous]
         [HttpGet("index")]
         public async Task<ActionResult> GetIndex()
         {

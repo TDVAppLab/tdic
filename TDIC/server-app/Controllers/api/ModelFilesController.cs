@@ -46,10 +46,7 @@ namespace API.Controllers
             return File(det.Value.file_data, det.Value.type_data, det.Value.file_name);
         }
 
-
-
-
-
+        
         [HttpPost("uploadfile")]
         public async Task<ActionResult> UploadFile([FromForm] IFormFile file)
         {
