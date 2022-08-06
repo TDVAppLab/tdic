@@ -170,8 +170,11 @@ const MArticleStatus = {
 
 
 const WebsiteSettings = {
+    list: () => requests.get<WebsiteSetting[]>('/websitesetting/index'),
     details:(title:string) => requests.get<WebsiteSetting>(`/websitesetting/details/title=${title}`),
-    //details:(title:string) => requests.get<mArticleStatus>(`/status/details/${title}`),
+    create:(object: WebsiteSetting) => axios.post<WebsiteSetting>(`/websitesetting/create`,object),
+    update:(object: WebsiteSetting) => axios.post<WebsiteSetting>(`/websitesetting/update`,object),
+    delete: (title:string) => axios.post<void>(`/websitesetting/delete/title=${title}`),
 }
 
 

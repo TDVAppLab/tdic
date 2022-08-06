@@ -21,6 +21,7 @@ export default observer ( function NavBar() {
                                     <Nav.Link as={NavLink} to="/assemblies">Assemblies</Nav.Link>
                                     <Nav.Link as={NavLink} to="/attachmentfiles">Attachmentfiles</Nav.Link>
                                     <Nav.Link as={NavLink} to="/modelfiles">Modelfiles</Nav.Link>
+                                    <Nav.Link as={NavLink} to="/websitesettings">WebsiteSettings</Nav.Link>
                                     <Nav.Link as={NavLink} to="/errors">Errors</Nav.Link>
                                     <Nav.Link as={NavLink} to="/logout">{user.username} </Nav.Link>
                                     <Nav.Link onClick={logout} >Logout</Nav.Link>

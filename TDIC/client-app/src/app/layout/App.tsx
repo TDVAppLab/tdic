@@ -29,6 +29,8 @@ import AttachmentfileUpload from '../../features/attachmentfiles/upload/Attachme
 import AttachmentfileEdit from '../../features/attachmentfiles/edit/AttachmentfileEdit';
 import AssemblyDashboard from '../../features/assembly/dashboard/AssemblyDashboard';
 import AssemblyCreate from '../../features/assembly/create/AssemblyCreate';
+import WebsiteSettingDashboard from '../../features/WebsiteSetting/dashboard/WebsiteSettingDashboard';
+import WebsiteSettingForm from '../../features/WebsiteSetting/form/WebsiteSettingForm';
 
 function App() {
   
@@ -89,6 +91,12 @@ function App() {
                 <Route path = '/modelfilecreate' component={ModelfileCreate} />
                 <Route path = '/modelfileedit/:id' component={ModelfileEdit} />
                 <Route path = '/modelfileupload/:id' component={ModelfileUpload} />
+
+
+
+                <Route path = '/websitesettings' component={WebsiteSettingDashboard} />
+                <Route key = {location.key} path = {['/websitesettingcreate', '/websitesettingedit/:id']} component={WebsiteSettingForm} />
+                
 
                 <Route path='/errors' component={TestErrors} />
                 <Route path='/server-error' component={ServerError} />
