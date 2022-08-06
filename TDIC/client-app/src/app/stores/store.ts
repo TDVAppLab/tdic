@@ -2,6 +2,7 @@ import { createContext, useContext } from "react";
 import AnnotationDisplayStore from "./AnnotationDisplayStore";
 import AnnotationStore from "./AnnotationStore";
 import ArticleStore from "./articleStore";
+import AssemblyStore from "./AssemblyStore";
 import AttachmentfileStore from "./attachmentfileStore";
 import CommonStore from "./eommonStore";
 import InstancepartStore from "./InstancepartStore";
@@ -29,6 +30,7 @@ interface Store{
     modalStore: ModalStore;
     mArticleStatusStore:MArticleStatusStore;
     sceneInfoStore:SceneInfoStore;
+    assemblyStore:AssemblyStore;
 }
 
 export const store: Store={
@@ -46,6 +48,7 @@ export const store: Store={
     instancepartStore: new InstancepartStore(),
     mArticleStatusStore: new MArticleStatusStore(),
     sceneInfoStore: new SceneInfoStore(),
+    assemblyStore: new AssemblyStore(),
     
 }
 

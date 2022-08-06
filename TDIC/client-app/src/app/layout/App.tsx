@@ -23,6 +23,14 @@ import Privacy from '../../features/Privacy/Privacy';
 import { initializeGA, useTracking } from '../common/utils/GoogleAnalyticsUtil';
 import { GoogleAdHead } from '../common/utils/GoogleAdHead';
 import AttachmentFileDetails from '../../features/attachmentfiles/details/AttachmentFileDetails';
+import ModelfileCreate from '../../features/Modelfiles/create/ModelfileCreate';
+import ModelfileEdit from '../../features/Modelfiles/edit/ModelfileEdit';
+import AttachmentfileUpload from '../../features/attachmentfiles/upload/AttachmentfileUpload';
+import AttachmentfileEdit from '../../features/attachmentfiles/edit/AttachmentfileEdit';
+import AssemblyDashboard from '../../features/assembly/dashboard/AssemblyDashboard';
+import AssemblyCreate from '../../features/assembly/create/AssemblyCreate';
+import WebsiteSettingDashboard from '../../features/WebsiteSetting/dashboard/WebsiteSettingDashboard';
+import WebsiteSettingForm from '../../features/WebsiteSetting/form/WebsiteSettingForm';
 
 function App() {
   
@@ -67,16 +75,29 @@ function App() {
                 <Route path = '/articles' component={ArticleDashboard} />
                 <Route path = '/article/:id' component={ArticleDetails} />
                 <Route path = '/articleedit/:id' component={ArticleEdit} />
-                {
-         //       <Route key = {location.key} path = {['/createStatus', '/editstatus/:id']} component={ArticleEdit} />
-        }
                 <Route key = {location.key} path = {['/createarticle', '/articleedit/:id']} component={ArticleEdit} />
+
+
+                <Route path = '/assemblies' component={AssemblyDashboard} />
+                <Route key = {location.key} path = {['/assembliescreate', '/assembliesedit/:id']} component={AssemblyCreate} />
 
                 <Route path = '/attachmentfiles' component={AttachmentFileDashboard} />
                 <Route path = '/attachmentfile/:id' component={AttachmentFileDetails} />
+                <Route path = '/attachmentfileedit/:id' component={AttachmentfileEdit} />
+                <Route path = '/attachmentfileupload' component={AttachmentfileUpload} />
+
                 <Route path = '/modelfiles' component={ModelfileDashboard} />
                 <Route path = '/modelfile/:id' component={ModelfileDetails} />
+                <Route path = '/modelfilecreate' component={ModelfileCreate} />
+                <Route path = '/modelfileedit/:id' component={ModelfileEdit} />
                 <Route path = '/modelfileupload/:id' component={ModelfileUpload} />
+
+
+
+                <Route path = '/websitesettings' component={WebsiteSettingDashboard} />
+                <Route key = {location.key} path = {['/websitesettingcreate', '/websitesettingedit/:id']} component={WebsiteSettingForm} />
+                
+
                 <Route path='/errors' component={TestErrors} />
                 <Route path='/server-error' component={ServerError} />
                 <Route path='/login' component={LoginForm} />

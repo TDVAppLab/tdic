@@ -76,6 +76,45 @@ export default class AttachmentfileStore {
     }
 
 
+    updateAttachmentfile = async (object: Attachmentfile) => {
+        this.loading = true;
+        
+        try {
+            await agent.Attachmentfiles.update(object);
+            runInAction(() => {
+                this.AttachmentfileRegistry.set(object.id_file, object);
+                this.selectedAttachmentfile = object;
+                this.loading = false;
+            })
+            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+    
+
+    
+    deleteAttachmentfile = async (object: Attachmentfile) => {
+        this.loading = true;
+        
+        try {
+            await agent.Attachmentfiles.delete(object.id_file);
+            runInAction(() => {
+                this.AttachmentfileRegistry.delete(object.id_file);
+                this.loading = false;
+            })
+            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }    
+
     private setAttachmentfile = (attachmentfile : Attachmentfile) => {
         this.AttachmentfileRegistry.set(attachmentfile.id_file,attachmentfile);
     }

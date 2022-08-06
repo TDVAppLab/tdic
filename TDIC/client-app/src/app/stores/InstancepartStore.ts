@@ -58,6 +58,25 @@ export default class InstancepartStore {
     }
 
 
+    
+    
+    createInstancepart = async (object: Instancepart) => {
+        this.loading = true;
+        try {
+            await agent.Instanceparts.create(object);
+            runInAction(() => {
+                this.instancepartRegistry.set(object.id_inst, object);
+                this.selectedInstancepart = object;
+                this.loading = false;
+            })            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
     updateInstancepart = async (objects: Instancepart[]) => {
         this.loading = true;
         
@@ -77,6 +96,28 @@ export default class InstancepartStore {
             })
         }
     }
+
+
+    
+    deleteInstancepart = async (object: Instancepart) => {
+        this.loading = true;
+        
+        try {
+            console.log(object);
+            await agent.Instanceparts.delete(object.id_assy, object.id_inst);
+            runInAction(() => {
+                this.instancepartRegistry.delete(object.id_inst);
+                this.loading = false;
+            })
+            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }    
+
 
     private setInstancepart = (instancepart : Instancepart) => {
         this.instancepartRegistry.set(instancepart.id_inst,instancepart);

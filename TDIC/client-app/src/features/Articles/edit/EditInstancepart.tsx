@@ -17,6 +17,8 @@ export default observer( function EditInstancepart(){
 
     const [instanceparts, setInstancepart] = useState<Instancepart[]>([]);
 
+    const {modelfileStore} = useStore();
+    const {ModelfileRegistry} = modelfileStore;
 
     useEffect(()=>{
         instancepartRegistry && setInstancepart(Array.from(instancepartRegistry.values()));
@@ -57,7 +59,10 @@ export default observer( function EditInstancepart(){
                                         No.
                                     </th>
                                     <th>
-                                        ID
+                                        ID Inst
+                                    </th>
+                                    <th>
+                                        Part Number
                                     </th>
                                     <th>
                                         X
@@ -68,6 +73,9 @@ export default observer( function EditInstancepart(){
                                     <th>
                                         Z
                                     </th>
+                                    <th>
+                                        Scale
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,9 +84,11 @@ export default observer( function EditInstancepart(){
                                     <tr key={x.id_inst}>
                                         <td><div>{index+1}</div></td>
                                         <td><div>{x.id_inst}</div></td>
+                                        <td>{ModelfileRegistry.get(x.id_part)?.part_number}</td>
                                         <td><TextInputGeneral name={`[${index}]pos_x`} placeholder='POS X' /></td>
                                         <td><TextInputGeneral name={`[${index}]pos_y`} placeholder='POS Y' /></td>
                                         <td><TextInputGeneral name={`[${index}]pos_z`} placeholder='POS Z' /></td>
+                                        <td><TextInputGeneral name={`[${index}]scale`} placeholder='Scale' /></td>
                                     </tr>
                                 ))
                             }

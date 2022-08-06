@@ -1,6 +1,7 @@
 import {  makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Modelfile } from "../models/ModelFile";
+import { OptionBase } from "../models/Optionbase";
 
 export default class ModelfileStore {
     ModelfileRegistry = new Map<number, Modelfile>();
@@ -54,7 +55,70 @@ export default class ModelfileStore {
             this.setLoaingInitial(false);
         }
     }
+    
 
+    loadModelfile = async (id:number) => {
+        this.loading = true;
+        let object:Modelfile;
+        console.log("called loadmodelfiles");
+        try {
+            console.log("called loadmodelfiles");
+            object = await agent.Modelfiles.details(id);
+            this.setModelfile(object);
+            runInAction(()=>{
+                this.selectedModelfile = object;
+            })
+            this.setLoaing(false);
+            return object;
+        } catch (error) {
+            console.log(error);
+            this.setLoaing(false);
+        }
+        
+    }
+
+    
+    updateModelfile = async (object: Modelfile) => {
+        this.loading = true;
+        
+        try {
+            await agent.Modelfiles.update(object);
+            runInAction(() => {
+                this.ModelfileRegistry.set(object.id_part, object);
+                this.selectedModelfile = object;
+//                this.editMode=false;
+                this.loading = false;
+            })
+            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
+    
+    
+
+    
+    deleteModelfile = async (object: Modelfile) => {
+        this.loading = true;
+        
+        try {
+            await agent.Modelfiles.delete(object.id_part);
+            runInAction(() => {
+                this.ModelfileRegistry.delete(object.id_part);
+                this.loading = false;
+            })
+            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }    
     
     setSelectedModelfile = async (id_part:number) => {
         let modelfile = this.getModelfile(id_part);
@@ -78,6 +142,17 @@ export default class ModelfileStore {
                 this.setLoaingInitial(false);
             }
         }
+    }
+    
+
+    getOptionArray=()=>{
+        const ans = Array<OptionBase>();
+
+        
+        Array.from(this.ModelfileRegistry.values()).map(modelfile=>(
+            ans.push({label: modelfile.part_number, value: modelfile.id_part.toString()})
+        ))
+        return ans;
     }
 
     private setModelfile = (modelfile : Modelfile) => {

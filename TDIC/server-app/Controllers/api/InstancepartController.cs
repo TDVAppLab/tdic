@@ -38,5 +38,16 @@ namespace API.Controllers
 
             return HandleResult(await Mediator.Send(new Edit.Command{ List = List}));
         }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromBody] t_instance_part t_instance_part){
+            return HandleResult(await Mediator.Send(new Create.Command{ t_instance_part = t_instance_part}));
+        }
+        
+        [HttpPost("delete/id_assy={id_assy}&id_inst={id_inst}")]
+        public async Task<IActionResult> Delete(long id_assy, long id_inst)
+        {
+            return HandleResult(await Mediator.Send(new Delete.Command{id_assy=id_assy, id_inst=id_inst}));
+        }
     }
 }

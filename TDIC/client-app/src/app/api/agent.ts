@@ -5,6 +5,7 @@ import { history } from "../..";
 import { Annotation } from "../models/Annotation";
 import { AnnotationDisplay } from "../models/AnnotationDisplay";
 import { Article } from "../models/article";
+import { Assembly } from "../models/Assembly";
 import { Attachmentfile, AttachmentfileEyecatchDtO } from "../models/attachmentfile";
 import { Instancepart } from "../models/Instancepart";
 import { Instruction } from "../models/instruction";
@@ -78,12 +79,26 @@ const requests = {
 const Modelfiles = {
     list: () => requests.get<Modelfile[]>('/modelfiles/index'),
     details:(id:number) => requests.get<Modelfile>(`/modelfiles/details/${id}`),
+    update: (modelfile: Modelfile) => axios.post<void>(`/modelfiles/update`, modelfile),
+    fileupload: (formData:FormData) => axios.post('/modelfiles/uploadfile',formData),
+    delete:(id:number) => axios.post<void>(`/modelfiles/delete/${id}`),
 }
 
 const Attachmentfiles = {
     list: () => requests.get<Attachmentfile[]>('/attachmentfiles/index'),
     details:(id:number) => requests.get<Attachmentfile>(`/attachmentfiles/details/${id}`),
     createeyecatch:(image : AttachmentfileEyecatchDtO) => axios.post<void>(`/attachmentfiles/createeyecatch`,image),
+    fileupload: (formData:FormData) => axios.post('/attachmentfiles/uploadfile',formData),
+    update: (object: Attachmentfile) => axios.post<void>(`/attachmentfiles/update/`, object),
+    delete:(id:number) => axios.post<void>(`/attachmentfiles/delete/${id}`),
+}
+
+const Assemblies = {
+    list: () => requests.get<Assembly[]>('/assembly/index'),    
+    details:(id:number) => requests.get<Assembly>(`/assembly/details/${id}`),
+    create:(object: Assembly) => axios.post<void>(`/assembly/create`, object),
+    update: (object: Assembly) => axios.post<void>(`/assembly/update/`, object),
+    delete:(id:number) => axios.post<void>(`/assembly/delete/${id}`),
 }
 
 const Articles = {
@@ -133,8 +148,10 @@ const Lights = {
 
 const Instanceparts = {
     list: (id:number) => requests.get<Instancepart[]>(`/instancepart/index/${id}`),
-    details:(id_assy:number,id_inst:number) => requests.get<Instancepart>(`/instancepart/details/id_assy=${id_assy}&id_inst=${id_inst}`),
+    details:(id_assy:number,id_inst:number) => requests.get<Instancepart>(`/instancepart/details/id_assy=${id_assy}&id_inst=${id_inst}`),    
+    create:(object: Instancepart) => axios.post<void>(`/instancepart/create`,object),
     update: (instancepart: Instancepart[]) => axios.post<void>(`/instancepart/update/`, instancepart),
+    delete: (id_assy:number,id_inst:number) => axios.post<void>(`/instancepart/delete/id_assy=${id_assy}&id_inst=${id_inst}`),
 }
 
 const Account = {
@@ -153,8 +170,11 @@ const MArticleStatus = {
 
 
 const WebsiteSettings = {
+    list: () => requests.get<WebsiteSetting[]>('/websitesetting/index'),
     details:(title:string) => requests.get<WebsiteSetting>(`/websitesetting/details/title=${title}`),
-    //details:(title:string) => requests.get<mArticleStatus>(`/status/details/${title}`),
+    create:(object: WebsiteSetting) => axios.post<WebsiteSetting>(`/websitesetting/create`,object),
+    update:(object: WebsiteSetting) => axios.post<WebsiteSetting>(`/websitesetting/update`,object),
+    delete: (title:string) => axios.post<void>(`/websitesetting/delete/title=${title}`),
 }
 
 
@@ -162,6 +182,7 @@ const agent = {
     Account,
     Modelfiles,
     Attachmentfiles,
+    Assemblies,
     Articles,
     Instructions,
     Views,
