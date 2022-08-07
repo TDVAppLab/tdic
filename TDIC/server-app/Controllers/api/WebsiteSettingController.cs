@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Application.WebsiteSetting;
 using TDIC.Controllers;
 using TDIC.Models.EDM;
+using TDIC.DTOs;
 
 
 
@@ -30,7 +31,7 @@ namespace API.Controllers
         }
 
         [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] t_website_setting t_website_setting)
+        public async Task<IActionResult> Update([FromBody] t_website_settingUpdateUDto t_website_setting)
         {
 
             return HandleResult(await Mediator.Send(new Edit.Command{ t_website_setting = t_website_setting}));
