@@ -12,6 +12,9 @@ namespace TDIC.Application.Core
             CreateMap<t_article, t_article>();
             CreateMap<t_articleUpdateUDto, t_article>();
 
+            //t_website_setting
+            CreateMap<t_annotation, t_annotation>();
+            CreateMap<t_annotationUpdateUDto, t_annotation>();
 
 
 
