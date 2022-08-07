@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TDIC.Models.EDM;
 using TDIC.Application.Core;
+using TDIC.DTOs;
 
 namespace Application.Article
 {
@@ -16,13 +17,13 @@ namespace Application.Article
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public t_article Article {get; set;}
+            public t_articleUpdateUDto Article {get; set;}
         }
         public class CommandVelidator : AbstractValidator<Command>
         {
             public CommandVelidator()
             {
-                RuleFor(x => x.Article).SetValidator(new ArticleValidator());
+                RuleFor(x => x.Article).SetValidator(new ArticleUpdateUDtoValidator());
             }
         }
         
@@ -42,21 +43,7 @@ namespace Application.Article
 
                 if(article == null) return null;
 
-                //_mapper.Map(request.Instruction, instruction);
-
-                //automapperの修正方法が分からないので、暫定的に直書きする
-                article.id_assy=request.Article.id_assy;
-                article.status=request.Article.status;
-
-
-                article.title=request.Article.title;
-                
-                article.short_description=request.Article.short_description;                
-                article.long_description=request.Article.long_description;
-                article.meta_description=request.Article.meta_description;
-                
-                article.gammaOutput=request.Article.gammaOutput;
-                article.isStarrySky=request.Article.isStarrySky;
+                _mapper.Map(request.Article, article);
 
                 article.latest_update_datetime=DateTime.Now;
 

@@ -8,8 +8,17 @@ namespace TDIC.Application.Core
     {
         public MappingProfiles()
         {
+            //t_website_setting
+            CreateMap<t_article, t_article>();
+            CreateMap<t_articleUpdateUDto, t_article>();
+
+
+
+
             CreateMap<t_attachment, t_attachment>();
             CreateMap<t_instruction, t_instruction>();
+
+
 
             //t_website_setting
             CreateMap<t_website_setting, t_website_setting>();
