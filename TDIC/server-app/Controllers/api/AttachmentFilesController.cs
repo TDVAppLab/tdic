@@ -45,7 +45,7 @@ namespace API.Controllers
 
 
         [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] t_attachment t_attachment){
+        public async Task<IActionResult> Update([FromBody] t_attachmentUpdateUDto t_attachment){
             return HandleResult(await Mediator.Send(new Edit.Command{ t_attachment = t_attachment}));
         }
 
