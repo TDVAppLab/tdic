@@ -7,6 +7,7 @@ using TDIC.Controllers;
 using TDIC.Models.EDM;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using TDIC.DTOs;
 
 
 
@@ -80,7 +81,7 @@ namespace API.Controllers
 
 
         [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] t_part t_part){
+        public async Task<IActionResult> Update([FromBody] t_partUpdateUDto t_part){
             return HandleResult(await Mediator.Send(new Edit.Command{ t_part = t_part}));
         }
 
