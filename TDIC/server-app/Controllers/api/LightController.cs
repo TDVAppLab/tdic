@@ -28,8 +28,6 @@ namespace API.Controllers
         [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] t_lightUpdateUDto light)
         {
-            //task.id = id;
-
             return HandleResult(await Mediator.Send(new Edit.Command{ Light = light}));
         }
 
@@ -43,13 +41,5 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Delete.Command{id_article=id_article, id_light=id_light}));
         }
-/*
-        [AllowAnonymous]
-        [HttpGet("details/id_article={id_article}&id_view={id_view}")]
-        public async Task<ActionResult> GetInstruction(long id_article,long id_view)
-        {
-            return HandleResult(await Mediator.Send(new Details.Query{id_article = id_article,id_view=id_view}));
-        }
-*/
     }
 }
