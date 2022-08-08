@@ -34,6 +34,7 @@ namespace TDIC.Application.Core
             
             //t_instruction
             CreateMap<t_instruction, t_instruction>();
+            CreateMap<t_instructionUpdateUDto, t_instruction>();
 
 
 
