@@ -132,7 +132,7 @@ export default observer( function EditArticleSub(){
                         </Row>
 
                         <Row>
-                            <Col xs={4}><TextInputGeneral label='Color' name='color' placeholder='Color' /></Col>
+                            <Col xs={4}><TextInputGeneral label='Color' name='bg_c' placeholder='Color' /></Col>
                             <Col xs={4}><TextInputGeneral label='Intensity' name='intensity' placeholder='Intensity' /></Col>
                         </Row>
 

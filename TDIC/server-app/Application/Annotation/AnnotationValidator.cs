@@ -1,5 +1,6 @@
 using TDIC.Models.EDM;
 using FluentValidation;
+using TDIC.DTOs;
 
 namespace Application.Annotation
 {
@@ -10,4 +11,15 @@ namespace Application.Annotation
             RuleFor(x => x.title).NotEmpty();
         }
     }
+    public class AnnotationUpdateUDtoValidator : AbstractValidator<t_annotationUpdateUDto>
+    {
+        public AnnotationUpdateUDtoValidator()
+        {
+            RuleFor(x => x.title).NotEmpty();
+        }
+    }
 }
+
+
+
+

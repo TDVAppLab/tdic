@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Application.View;
 using TDIC.Controllers;
 using TDIC.Models.EDM;
+using TDIC.DTOs;
 
 
 
@@ -32,7 +33,7 @@ namespace API.Controllers
 
 
         [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] t_view view)
+        public async Task<IActionResult> Update([FromBody] t_viewUpdateUDto view)
         {
             //task.id = id;
 

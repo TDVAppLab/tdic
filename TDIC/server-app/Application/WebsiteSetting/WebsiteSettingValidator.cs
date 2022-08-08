@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TDIC.Models.EDM;
 using FluentValidation;
+using TDIC.DTOs;
 
 namespace Application.WebsiteSetting
 {
@@ -10,4 +11,12 @@ namespace Application.WebsiteSetting
         {
         }
     }
+    public class WebsiteSettingUpdateDtoValidator : AbstractValidator<t_website_settingUpdateUDto>
+    {
+        public WebsiteSettingUpdateDtoValidator()
+        {
+        }
+    }
 }
+
+

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TDIC.Models.EDM;
 using TDIC.Application.Core;
+using TDIC.DTOs;
 
 namespace Application.ModelFile
 {
@@ -16,13 +17,13 @@ namespace Application.ModelFile
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public t_part t_part {get; set;}
+            public t_partUpdateUDto t_part {get; set;}
         }
         public class CommandVelidator : AbstractValidator<Command>
         {
             public CommandVelidator()
             {
-                RuleFor(x => x.t_part).SetValidator(new PartValidator());
+                RuleFor(x => x.t_part).SetValidator(new PartUpdateUDtoValidator());
             }
         }
         
@@ -42,18 +43,8 @@ namespace Application.ModelFile
 
                 if(t_part == null) return null;
 
-                //_mapper.Map(request.Instruction, instruction);
-
-                //automapperの修正方法が分からないので、暫定的に直書きする
-                t_part.part_number=request.t_part.part_number;
-                t_part.version=request.t_part.version;
+                _mapper.Map(request.t_part, t_part);
                 
-                t_part.format_data=request.t_part.format_data;
-                t_part.itemlink=request.t_part.itemlink;
-
-                t_part.license=request.t_part.license;
-                t_part.author=request.t_part.author;
-                t_part.memo=request.t_part.memo;
                 t_part.latest_update_datetime=DateTime.Now;
 
                 var result = await _context.SaveChangesAsync() > 0;

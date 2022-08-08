@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TDIC.Models.EDM;
 using TDIC.Application.Core;
+using TDIC.DTOs;
 
 namespace Application.WebsiteSetting
 {
@@ -16,13 +17,13 @@ namespace Application.WebsiteSetting
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public t_website_setting t_website_setting {get; set;}
+            public t_website_settingUpdateUDto t_website_setting {get; set;}
         }
         public class CommandVelidator : AbstractValidator<Command>
         {
             public CommandVelidator()
             {
-                RuleFor(x => x.t_website_setting).SetValidator(new WebsiteSettingValidator());
+                RuleFor(x => x.t_website_setting).SetValidator(new WebsiteSettingUpdateDtoValidator());
             }
         }
         
@@ -42,14 +43,11 @@ namespace Application.WebsiteSetting
 
                 if(t_website_setting == null) return null;
 
-                //_mapper.Map(request.Instruction, instruction);
-
-                //automapperの修正方法が分からないので、暫定的に直書きする
-                t_website_setting.data=request.t_website_setting.data;
-                t_website_setting.memo=request.t_website_setting.memo;
+                _mapper.Map(request.t_website_setting, t_website_setting);
                 
 
                 t_website_setting.latest_update_datetime=DateTime.Now;
+                
 
                 var result = await _context.SaveChangesAsync() > 0;
 

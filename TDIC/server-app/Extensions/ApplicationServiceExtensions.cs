@@ -37,7 +37,7 @@ namespace TDIC.Extensions
             //     });
             // });
              services.AddMediatR(typeof(List.Handler).Assembly);
-             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+             services.AddAutoMapper(typeof(MappingProfiles));
 
              return services;
         }

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TDIC.Models.EDM;
 using TDIC.Application.Core;
+using TDIC.DTOs;
 
 namespace Application.Annotation
 {
@@ -16,13 +17,13 @@ namespace Application.Annotation
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public t_annotation Annotation {get; set;}
+            public t_annotationUpdateUDto Annotation {get; set;}
         }
         public class CommandVelidator : AbstractValidator<Command>
         {
             public CommandVelidator()
             {
-                RuleFor(x => x.Annotation).SetValidator(new AnnotationValidator());
+                RuleFor(x => x.Annotation).SetValidator(new AnnotationUpdateUDtoValidator());
             }
         }
         
@@ -42,19 +43,7 @@ namespace Application.Annotation
 
                 if(annotation == null) return null;
 
-                //_mapper.Map(request.Instruction, instruction);
-
-                //automapperの修正方法が分からないので、暫定的に直書きする
-                annotation.title=request.Annotation.title;
-
-                annotation.description1=request.Annotation.description1;
-                annotation.description2=request.Annotation.description2;
-                
-                annotation.status=request.Annotation.status;
-
-                annotation.pos_x=request.Annotation.pos_x;
-                annotation.pos_y=request.Annotation.pos_y;
-                annotation.pos_z=request.Annotation.pos_z;
+                _mapper.Map(request.Annotation, annotation);
 
                 annotation.latest_update_datetime=DateTime.Now;
 

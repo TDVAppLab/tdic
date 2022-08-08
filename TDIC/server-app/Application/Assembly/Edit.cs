@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TDIC.Models.EDM;
 using TDIC.Application.Core;
+using TDIC.DTOs;
 
 namespace Application.Assembly
 {
@@ -16,13 +17,13 @@ namespace Application.Assembly
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public t_assembly t_assembly {get; set;}
+            public t_assemblyUpdateUDto t_assembly {get; set;}
         }
         public class CommandVelidator : AbstractValidator<Command>
         {
             public CommandVelidator()
             {
-                RuleFor(x => x.t_assembly).SetValidator(new AssemblyValidator());
+                RuleFor(x => x.t_assembly).SetValidator(new AssemblyUpdateUDtoValidator());
             }
         }
         
@@ -42,11 +43,7 @@ namespace Application.Assembly
 
                 if(t_assembly == null) return null;
 
-                //_mapper.Map(request.Instruction, instruction);
-
-                //automapperの修正方法が分からないので、暫定的に直書きする
-                t_assembly.assy_name=request.t_assembly.assy_name;
-                
+                _mapper.Map(request.t_assembly, t_assembly);                
 
                 t_assembly.latest_update_datetime=DateTime.Now;
 
