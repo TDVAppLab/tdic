@@ -44,6 +44,10 @@ namespace TDIC.Application.Core
             //t_part
             CreateMap<t_part, t_part>();
             CreateMap<t_partUpdateUDto, t_part>();
+            
+            //t_view
+            CreateMap<t_view, t_view>();
+            CreateMap<t_viewUpdateUDto, t_view>();
 
             //t_website_setting
             CreateMap<t_website_setting, t_website_setting>();
