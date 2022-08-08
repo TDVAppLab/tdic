@@ -6,6 +6,7 @@ using Application.Instancepart;
 using TDIC.Controllers;
 using TDIC.Models.EDM;
 using System.Collections.Generic;
+using TDIC.DTOs;
 
 
 
@@ -32,7 +33,7 @@ namespace API.Controllers
         }
 
         [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] IList<t_instance_part> List)
+        public async Task<IActionResult> Update([FromBody] IList<t_instance_partUpdateUDto> List)
         {
             //task.id = id;
 

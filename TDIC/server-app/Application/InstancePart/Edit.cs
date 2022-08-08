@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using TDIC.Models.EDM;
 using TDIC.Application.Core;
 using System.Linq;
+using TDIC.DTOs;
 
 namespace Application.Instancepart
 {
@@ -24,7 +25,7 @@ namespace Application.Instancepart
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public IList<t_instance_part> List {get; set;}
+            public IList<t_instance_partUpdateUDto> List {get; set;}
         }
         public class CommandVelidator : AbstractValidator<Command>
         {
@@ -53,10 +54,8 @@ namespace Application.Instancepart
                 foreach (var m in request.List)
                 {
                     var target = await _context.t_instance_parts.FindAsync(m.id_assy, m.id_inst);
-                    target.pos_x = m.pos_x;
-                    target.pos_y = m.pos_y;
-                    target.pos_z = m.pos_z;
-                    target.scale = m.scale;
+                    
+                    _mapper.Map(m, target);
                     target.latest_update_datetime = DateTime.Now;
                 }
 

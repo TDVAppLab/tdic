@@ -27,6 +27,11 @@ namespace TDIC.Application.Core
             CreateMap<t_attachmentUpdateUDto, t_attachment>();
 
             
+            //t_instance_part
+            CreateMap<t_instance_part, t_instance_part>();
+            CreateMap<t_instance_partUpdateUDto, t_instance_part>();
+
+            
             //t_instruction
             CreateMap<t_instruction, t_instruction>();
 
