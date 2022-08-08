@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Application.Light;
 using TDIC.Controllers;
 using TDIC.Models.EDM;
+using TDIC.DTOs;
 
 
 
@@ -25,7 +26,7 @@ namespace API.Controllers
 
 
         [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] t_light light)
+        public async Task<IActionResult> Update([FromBody] t_lightUpdateUDto light)
         {
             //task.id = id;
 

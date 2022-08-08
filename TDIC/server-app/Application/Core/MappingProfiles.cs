@@ -37,6 +37,9 @@ namespace TDIC.Application.Core
             CreateMap<t_instructionUpdateUDto, t_instruction>();
 
 
+            //t_light
+            CreateMap<t_light, t_light>();
+            CreateMap<t_lightUpdateUDto, t_light>();
 
             //t_website_setting
             CreateMap<t_website_setting, t_website_setting>();
