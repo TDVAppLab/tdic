@@ -9,7 +9,6 @@ export default class AnnotationDisplayStore {
     selectedAnnotationDisplay: AnnotationDisplay | undefined = undefined;
     selectedInstruction=0;
     loading=false;
-    loadingInitial = false;
 
     constructor(){
         makeAutoObservable(this)
@@ -18,17 +17,14 @@ export default class AnnotationDisplayStore {
 
     loadAnnotationDisplays = async (id_article:number) => {
         this.loading = true;
-        this.loadingInitial = true;
         this.annotationDisplayRegistry.clear();
         this.annotationDisplayArray.length=0;
         try {
             this.annotationDisplayArray = await agent.AnnotationDisplays.list(id_article);
-            this.setIsLoading(false);
-            this.setLoaingInitial(false);
+            this.setLoading(false);
         } catch (error) {
             console.log(error);
-            this.setLoaingInitial(false);
-            this.loading = false;
+            this.setLoading(false);
         }
     }
 
@@ -68,8 +64,6 @@ export default class AnnotationDisplayStore {
         try {
             await agent.AnnotationDisplays.update(objects);
             runInAction(() => {
-//                this.lightRegistry.set(object.id_light, object);
-//                this.selectedLight = object;
                 this.loading = false;
             })
             
@@ -89,11 +83,7 @@ export default class AnnotationDisplayStore {
         return this.selectedAnnotationDisplayMap.get(id_annotation);
     }
 
-    setLoaingInitial = (state: boolean) => {
-        this.loadingInitial = state;
-    }
-
-    setIsLoading = (state: boolean) => {
+    setLoading = (state: boolean) => {
         this.loading = state;
     }
 }
