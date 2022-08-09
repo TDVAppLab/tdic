@@ -6,7 +6,6 @@ export default class AnnotationStore {
     annotationRegistry = new Map<number, Annotation>();
     selectedAnnotation: Annotation| undefined = undefined;
     loading=false;
-    loadingInitial = false;
 
     constructor(){
         makeAutoObservable(this)
@@ -15,19 +14,16 @@ export default class AnnotationStore {
 
     loadAnnotations = async (id_article:number) => {
         this.loading = true;
-        this.loadingInitial = true;
         this.annotationRegistry.clear();
         try {
             const annotation = await agent.Annotations.list(id_article);
             annotation.forEach(annotation => {
                 this.setAnnotation(annotation);
             })
-            this.setIsLoading(false);
-            this.setLoaingInitial(false);
+            this.setLoading(false);
         } catch (error) {
             console.log(error);
-            this.loading = false;
-            this.setLoaingInitial(false);
+            this.setLoading(false);
         }
     }
 
@@ -65,12 +61,12 @@ export default class AnnotationStore {
             runInAction(() => {
                 this.annotationRegistry.set(object.id_annotation, object);
                 this.selectedAnnotation = object;
-                this.loading = false;
+                this.setLoading(false);
             })            
         }catch (error) {
             console.log(error);
             runInAction(() => {
-                this.loading = false;
+                this.setLoading(false);
             })
         }
     }
@@ -99,13 +95,13 @@ export default class AnnotationStore {
             runInAction(() => {
                 this.annotationRegistry.set(object.id_annotation, object);
                 this.selectedAnnotation = object;
-                this.loading = false;
+                this.setLoading(false);
             })
             
         }catch (error) {
             console.log(error);
             runInAction(() => {
-                this.loading = false;
+                this.setLoading(false);
             })
         }
     }
@@ -118,13 +114,13 @@ export default class AnnotationStore {
             await agent.Annotations.delete(object.id_article, object.id_annotation);
             runInAction(() => {
                 this.annotationRegistry.delete(object.id_annotation);
-                this.loading = false;
+                this.setLoading(false);
             })
             
         }catch (error) {
             console.log(error);
             runInAction(() => {
-                this.loading = false;
+                this.setLoading(false);
             })
         }
     }    
@@ -137,11 +133,7 @@ export default class AnnotationStore {
         return this.annotationRegistry.get(id_annotation);
     }
 
-    setLoaingInitial = (state: boolean) => {
-        this.loadingInitial = state;
-    }
-
-    setIsLoading = (state: boolean) => {
+    setLoading = (state: boolean) => {
         this.loading = state;
     }
 }
