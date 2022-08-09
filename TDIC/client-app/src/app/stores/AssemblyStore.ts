@@ -2,6 +2,7 @@ import {  makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import {format} from 'date-fns';
 import { Assembly } from "../models/Assembly";
+import { OptionBase } from "../models/Optionbase";
 
 export default class AssemblyStore {
     AssemblyRegistry = new Map<number, Assembly>();
@@ -109,6 +110,18 @@ export default class AssemblyStore {
             })
         }
     }    
+
+    
+
+    getOptionArray=()=>{
+        const ans = Array<OptionBase>();
+
+        
+        Array.from(this.AssemblyRegistry.values()).map(object=>(
+            ans.push({label: object.assy_name, value: object.id_assy.toString()})
+        ))
+        return ans;
+    }
 
     private setObject = (object : Assembly) => {
         this.AssemblyRegistry.set(object.id_assy,object);

@@ -24,7 +24,12 @@ export default observer( function EditArticleSub(){
 
     
     const {mArticleStatusStore} = useStore();
-    const {loadStatuses, loadingInitial : loadingInitialstatus, getOptionArray} = mArticleStatusStore;
+    const {loadStatuses, loadingInitial : loadingInitialstatus, getOptionArray : getMArticleStatusOptionArray } = mArticleStatusStore;
+
+    
+    const {assemblyStore} = useStore();
+    const {loadAssemblies, loading: loadingAssembly, getOptionArray : getAssemblyOptionArray } = assemblyStore;
+    
 
     const [article, setArticle] = useState<Article>({
             
@@ -72,6 +77,7 @@ export default observer( function EditArticleSub(){
     useEffect(()=>{
         loadStatuses().then(()=>{
         });
+        loadAssemblies();
     }, []);
 
     useEffect(()=>{
@@ -81,8 +87,8 @@ export default observer( function EditArticleSub(){
 
 
     useEffect(() => { 
-        setIsDataLoadingFinished(!loadingInitialstatus);        
-    },[loadingInitialstatus])
+        setIsDataLoadingFinished(!(loadingInitialstatus || loadingAssembly));        
+    },[loadingInitialstatus,loadingAssembly])
     
 
     function handleFormSubmit(object:Article) {
@@ -118,8 +124,8 @@ export default observer( function EditArticleSub(){
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
                         <Row>
-                            <Col xs={2}><TextInputGeneral label='Assy ID' name='id_assy' placeholder='Assy ID' /></Col>
-                            <Col xs={3}><SelectInputGeneral label='Status' placeholder='status' name='status' options={getOptionArray()} /></Col>
+                            <Col xs={2}><SelectInputGeneral label='Assy ID' placeholder='id_assy' name='id_assy' options={getAssemblyOptionArray()} /></Col>
+                            <Col xs={3}><SelectInputGeneral label='Status' placeholder='status' name='status' options={getMArticleStatusOptionArray()} /></Col>
                             <Col xs={7}><TextInputGeneral label='Article Title' name='title' placeholder='Article Title' /></Col>
                         </Row>
 
