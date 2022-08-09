@@ -8,31 +8,23 @@ import { mArticleStatus } from "../models/mArticleStatus";
 export default class MArticleStatusStore {
     statusRegistry = new Map<number, mArticleStatus>();
     selectedStatus: mArticleStatus| undefined = undefined;
-    editMode=false;
     loading=false;
-    loadingInitial = false;
-    isLoadingFinished = false;
 
     constructor(){
         makeAutoObservable(this)
     }
 
-
-
-
     loadStatuses = async () => {
-        this.loadingInitial = true;
-        this.isLoadingFinished = false;
+        this.loading = true;
         try {
             const statuses = await agent.MArticleStatus.list();
             statuses.forEach(status => {
                 this.setStatus(status);
             })
-            this.setLoaingInitial(false);
-            this.setIsLoadingFinished(true);
+            this.setLoaing(false);
         } catch (error) {
             console.log(error);
-            this.setLoaingInitial(false);
+            this.setLoaing(false);
         }
     }
 
@@ -40,23 +32,20 @@ export default class MArticleStatusStore {
         let status = this.getStatus(id);
         if(status) {
             this.selectedStatus = status;
-            this.setIsLoadingFinished(true);
             return status;
         } else {
-            this.loadingInitial = true;
-            this.setIsLoadingFinished(false);
+            this.loading = true;
             try {
                 status = await agent.MArticleStatus.details(id);
                 this.setStatus(status);
                 runInAction(()=>{
                     this.selectedStatus = status;
                 })
-                this.setLoaingInitial(false);
-                this.setIsLoadingFinished(true);
+                this.setLoaing(false);
                 return status;
             } catch (error) {
                 console.log(error);
-                this.setLoaingInitial(false);
+                this.setLoaing(false);
             }
         }
     }
@@ -69,7 +58,6 @@ export default class MArticleStatusStore {
             runInAction(() => {
                 this.statusRegistry.set(status.id, status);
                 this.selectedStatus = status;
-                this.editMode=false;
                 this.loading = false;
             })            
         }catch (error) {
@@ -88,7 +76,6 @@ export default class MArticleStatusStore {
             runInAction(() => {
                 this.statusRegistry.set(status.id, status);
                 this.selectedStatus = status;
-                this.editMode=false;
                 this.loading = false;
             })
             
@@ -136,12 +123,8 @@ export default class MArticleStatusStore {
         return ans;
     }
 
-    setLoaingInitial = (state: boolean) => {
-        this.loadingInitial = state;
-    }
-
-    setIsLoadingFinished = (state: boolean) => {
-        this.isLoadingFinished = state;
+    setLoaing = (state: boolean) => {
+        this.loading = state;
     }
 
 }

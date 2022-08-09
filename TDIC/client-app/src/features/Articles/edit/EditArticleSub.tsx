@@ -24,12 +24,12 @@ export default observer( function EditArticleSub(){
 
     
     const {mArticleStatusStore} = useStore();
-    const {loadStatuses, loadingInitial : loadingInitialstatus, getOptionArray : getMArticleStatusOptionArray } = mArticleStatusStore;
+    const {loadStatuses, loading : loadingstatus, getOptionArray : getMArticleStatusOptionArray } = mArticleStatusStore;
 
     
     const {assemblyStore} = useStore();
     const {loadAssemblies, loading: loadingAssembly, getOptionArray : getAssemblyOptionArray } = assemblyStore;
-    
+
 
     const [article, setArticle] = useState<Article>({
             
@@ -87,8 +87,8 @@ export default observer( function EditArticleSub(){
 
 
     useEffect(() => { 
-        setIsDataLoadingFinished(!(loadingInitialstatus || loadingAssembly));        
-    },[loadingInitialstatus,loadingAssembly])
+        setIsDataLoadingFinished(!(loadingstatus || loadingAssembly));        
+    },[loadingstatus,loadingAssembly])
     
 
     function handleFormSubmit(object:Article) {
