@@ -6,10 +6,7 @@ import {format} from 'date-fns';
 export default class AttachmentfileStore {
     AttachmentfileRegistry = new Map<number, Attachmentfile>();
     selectedAttachmentfile: Attachmentfile| undefined = undefined;
-//    editMode=false;
     loading=false;
-//    loadingInitial = false;
-//    AttachmentfileArray:Attachmentfile[]=[];
 
     constructor(){
         makeAutoObservable(this)
@@ -59,14 +56,12 @@ export default class AttachmentfileStore {
         this.loading = true;
         let object:Attachmentfile;
         try {
-            console.log("called id2");
             object = await agent.Attachmentfiles.details(id);
             this.setAttachmentfile(object);
             runInAction(()=>{
                 this.selectedAttachmentfile = object;
             })
             this.setLoaing(false);
-//            this.setLoaingInitial(false);
             return object;
         } catch (error) {
             console.log(error);
@@ -123,11 +118,6 @@ export default class AttachmentfileStore {
         return this.AttachmentfileRegistry.get(id);
     }
 
-    /*
-    setLoaingInitial = (state: boolean) => {
-        this.loadingInitial = state;
-    }
-    */
     
     setLoaing = (state: boolean) => {
         this.loading = state;
