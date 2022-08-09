@@ -7,7 +7,6 @@ export default class InstancepartStore {
     instancepartRegistry = new Map<number, Instancepart>();
     selectedInstancepart: Instancepart| undefined = undefined;
     loading=false;
-    loadingInitial = false;
 
     constructor(){
         makeAutoObservable(this)
@@ -16,19 +15,17 @@ export default class InstancepartStore {
 
     loadInstanceparts = async (id_assy:number) => {
         this.loading = true;
-        this.loadingInitial = true;
         this.instancepartRegistry.clear();
         try {
             const instanceparts = await agent.Instanceparts.list(id_assy);
             instanceparts.forEach(instancepart => {
                 this.setInstancepart(instancepart);
             })
-            this.setIsLoading(false);
-            this.setLoaingInitial(false);
+            this.setLoading(false);
         } catch (error) {
             console.log(error);
             this.loading = false;
-            this.setLoaingInitial(false);
+            this.setLoading(false);
         }
     }
 
@@ -81,9 +78,9 @@ export default class InstancepartStore {
         this.loading = true;
         
         try {
-            //console.log("upd called");
             await agent.Instanceparts.update(objects);
             runInAction(() => {
+
 //                this.lightRegistry.set(object.id_light, object);
 //                this.selectedLight = object;
                 this.loading = false;
@@ -127,12 +124,7 @@ export default class InstancepartStore {
         return this.instancepartRegistry.get(id_inst);
     }
 
-    setLoaingInitial = (state: boolean) => {
-        this.loadingInitial = state;
-    }
-
-
-    setIsLoading = (state: boolean) => {
+    setLoading = (state: boolean) => {
         this.loading = state;
     }
 }
