@@ -7,7 +7,6 @@ export default class ViewStore {
     viewRegistry = new Map<number, View>();
     selectedView: View| undefined = undefined;
     loading=false;
-    loadingInitial = false;
 
     constructor(){
         makeAutoObservable(this)
@@ -16,7 +15,6 @@ export default class ViewStore {
 
     loadViews = async (id_article:number) => {
         this.loading = true;
-        this.loadingInitial = true;
         this.viewRegistry.clear();
         this.selectedView = undefined;
         try {
@@ -24,11 +22,9 @@ export default class ViewStore {
             views.forEach(view => {
                 this.setView(view);
             })
-            this.setLoaingInitial(false);
-            this.setIsLoading(false);
+            this.setLoading(false);
         } catch (error) {
             console.log(error);
-            this.setLoaingInitial(false);
             this.loading = false;
         }
     }
@@ -123,11 +119,7 @@ export default class ViewStore {
         return this.viewRegistry.get(id_view);
     }
 
-    setLoaingInitial = (state: boolean) => {
-        this.loadingInitial = state;
-    }
-
-    setIsLoading = (state: boolean) => {
+    setLoading = (state: boolean) => {
         this.loading = state;
     }
 }
