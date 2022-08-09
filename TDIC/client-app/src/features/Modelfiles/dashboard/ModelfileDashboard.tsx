@@ -15,7 +15,7 @@ export default observer(function ModelfileDashboard() {
     },[ModelfileRegistry.size, loadModelfiles])
   
   
-    if(modelfileStore.loadingInitial) return <LoadingComponent content='Loading modelfiles...' />
+    if(modelfileStore.loading) return <LoadingComponent content='Loading modelfiles...' />
 
 
 
