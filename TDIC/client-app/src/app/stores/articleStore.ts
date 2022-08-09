@@ -7,7 +7,6 @@ export default class ArticleStore {
     articleRegistry = new Map<number, Article>();
     selectedArticle: Article| undefined = undefined;
     loading=false;
-    loadingInitial = false;
 
     constructor(){
         makeAutoObservable(this)
@@ -16,18 +15,15 @@ export default class ArticleStore {
 
     loadArticles = async () => {
         this.loading = true;
-        this.loadingInitial = true;
         try {
             const articles = await agent.Articles.list();
             articles.forEach(article => {
                 this.setArticle(article);
             })
-            this.setIsLoading(false);
-            this.setLoaingInitial(false);
+            this.setLoading(false);
         } catch (error) {
             console.log(error);
-            this.setIsLoading(false);
-            this.setLoaingInitial(false);
+            this.setLoading(false);
         }
     }
 
@@ -36,23 +32,21 @@ export default class ArticleStore {
         let article = this.getArticle(id);
         if(article) {
             this.selectedArticle = article;
-            this.setIsLoading(false);
+            this.setLoading(false);
             return article;
         } else {
-//            this.setIsLoading(false);
-            this.loadingInitial = true;
+            this.loading = true;
             try {
                 article = await agent.Articles.details(id);
                 this.setArticle(article);
                 runInAction(()=>{
                     this.selectedArticle = article;
                 })
-                this.setIsLoading(false);
-                this.setLoaingInitial(false);
+                this.setLoading(false);
                 return article;
             } catch (error) {
                 console.log(error);
-                this.setLoaingInitial(false);
+                this.setLoading(false);
             }
         }
     }
@@ -121,11 +115,7 @@ export default class ArticleStore {
         return this.articleRegistry.get(id);
     }
 
-    setLoaingInitial = (state: boolean) => {
-        this.loadingInitial = state;
-    }
-
-    setIsLoading = (state: boolean) => {
+    setLoading = (state: boolean) => {
         this.loading = state;
     }
 
