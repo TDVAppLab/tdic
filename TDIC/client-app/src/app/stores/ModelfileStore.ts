@@ -6,9 +6,8 @@ import { OptionBase } from "../models/Optionbase";
 export default class ModelfileStore {
     ModelfileRegistry = new Map<number, Modelfile>();
     selectedModelfile: Modelfile| undefined = undefined;
-    editMode=false;
+    //editMode=false;
     loading=false;
-    loadingInitial = false;
 
     constructor(){
         makeAutoObservable(this)
@@ -41,7 +40,6 @@ export default class ModelfileStore {
 
 
     loadModelfiles = async () => {
-        this.loadingInitial = true;
         this.loading = true;
         try {
             const modelfiles = await agent.Modelfiles.list();
@@ -49,10 +47,9 @@ export default class ModelfileStore {
                 this.setModelfile(modelfile);
             })
             this.setLoaing(false);
-            this.setLoaingInitial(false);
         } catch (error) {
             console.log(error);
-            this.setLoaingInitial(false);
+            this.setLoaing(false);
         }
     }
     
@@ -60,9 +57,9 @@ export default class ModelfileStore {
     loadModelfile = async (id:number) => {
         this.loading = true;
         let object:Modelfile;
-        console.log("called loadmodelfiles");
+        //console.log("called loadmodelfiles");
         try {
-            console.log("called loadmodelfiles");
+            //console.log("called loadmodelfiles");
             object = await agent.Modelfiles.details(id);
             this.setModelfile(object);
             runInAction(()=>{
@@ -86,7 +83,6 @@ export default class ModelfileStore {
             runInAction(() => {
                 this.ModelfileRegistry.set(object.id_part, object);
                 this.selectedModelfile = object;
-//                this.editMode=false;
                 this.loading = false;
             })
             
@@ -128,18 +124,18 @@ export default class ModelfileStore {
             })
             return modelfile;
         } else {
-            this.loadingInitial = true;
+            this.loading = true;
             try {
                 modelfile = await agent.Modelfiles.details(id_part);
                 this.setModelfile(modelfile);
                 runInAction(()=>{
                     this.selectedModelfile = modelfile;
                 })
-                this.setLoaingInitial(false);
+                this.setLoaing(false);
                 return modelfile;
             } catch (error) {
                 console.log(error);
-                this.setLoaingInitial(false);
+                this.setLoaing(false);
             }
         }
     }
@@ -161,10 +157,6 @@ export default class ModelfileStore {
 
     private getModelfile=(id:number) => {
         return this.ModelfileRegistry.get(id);
-    }
-
-    setLoaingInitial = (state: boolean) => {
-        this.loadingInitial = state;
     }
 
     setLoaing = (state: boolean) => {

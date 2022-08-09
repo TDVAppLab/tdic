@@ -6,10 +6,7 @@ import { Instruction } from "../models/instruction";
 export default class InstructionStore {
     instructionRegistry = new Map<number, Instruction>();
     selectedInstruction: Instruction| undefined = undefined;
-//    editMode=false;
     loading=false;
-    loadingInitial = false;
-//    isLoadingFinished=false;
 
     constructor(){
         makeAutoObservable(this)
@@ -18,7 +15,6 @@ export default class InstructionStore {
 
     loadInstructions = async (id_article:number) => {
         this.loading = true;
-        this.loadingInitial = true;
         this.instructionRegistry.clear();
         try {
             const instructions = await agent.Instructions.list(id_article);
@@ -39,12 +35,10 @@ export default class InstructionStore {
 
             }
 
-            this.setIsLoading(false);
-            this.setLoaingInitial(false);
+            this.setLoading(false);
         } catch (error) {
             console.log(error);
             this.loading = false;
-            this.setLoaingInitial(false);
         }
     }
 
@@ -79,18 +73,18 @@ export default class InstructionStore {
             this.selectedInstruction = instruction;
             return instruction;
         } else {
-            this.loadingInitial = true;
+            this.loading = true;
             try {
                 instruction = await agent.Instructions.details(id_article,id_instruct);
                 this.setInstruction(instruction);
                 runInAction(()=>{
                     this.selectedInstruction = instruction;
                 })
-                this.setLoaingInitial(false);
+                this.setLoading(false);
                 return instruction;
             } catch (error) {
                 console.log(error);
-                this.setLoaingInitial(false);
+                this.setLoading(false);
             }
         }
     }
@@ -160,11 +154,7 @@ export default class InstructionStore {
         return this.instructionRegistry.get(id_instruct);
     }
 
-    setLoaingInitial = (state: boolean) => {
-        this.loadingInitial = state;
-    }
-
-    setIsLoading = (state: boolean) => {
+    setLoading = (state: boolean) => {
         this.loading = state;
     }
 

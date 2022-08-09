@@ -7,7 +7,6 @@ export default class LightStore {
     lightRegistry = new Map<number, Light>();
     selectedLight: Light| undefined = undefined;
     loading=false;
-    loadingInitial = false;
 
     constructor(){
         makeAutoObservable(this)
@@ -16,19 +15,17 @@ export default class LightStore {
 
     loadLights = async (id_article:number) => {
         this.loading = true;
-        this.loadingInitial = true;
         this.lightRegistry.clear();
         try {
             const lights = await agent.Lights.list(id_article);
             lights.forEach(light => {
                 this.setLight(light);
             })
-            this.setIsLoading(false);
-            this.setLoaingInitial(false);
+            this.setLoading(false);
         } catch (error) {
             console.log(error);
             this.loading = false;
-            this.setLoaingInitial(false);
+            this.setLoading(false);
         }
     }
 
@@ -61,7 +58,7 @@ export default class LightStore {
     
     createLight = async (object: Light) => {
         this.loading = true;
-        console.log("called light create");
+        //console.log("called light create");
         try {
             await agent.Lights.create(object);
             runInAction(() => {
@@ -125,11 +122,7 @@ export default class LightStore {
         return this.lightRegistry.get(id_light);
     }
 
-    setLoaingInitial = (state: boolean) => {
-        this.loadingInitial = state;
-    }
-
-    setIsLoading = (state: boolean) => {
+    setLoading = (state: boolean) => {
         this.loading = state;
     }
 }
