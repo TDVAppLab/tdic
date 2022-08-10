@@ -13,7 +13,7 @@ import ModelfileViewer from "../common/ModelfileViewer";
 export default observer( function ModelfileEdit(){
     const history = useHistory();
     const { modelfileStore} = useStore();
-    const { loadModelfile, updateModelfile, deleteModelfile, loading } = modelfileStore;
+    const { selectedModelfile, loadModelfile, updateModelfile, deleteModelfile, loading } = modelfileStore;
 
     const {id} = useParams<{id: string}>();
 
@@ -56,23 +56,26 @@ export default observer( function ModelfileEdit(){
         //    console.log(statusRegistry);
         //});
     }, []);
-
+/*
     useEffect(()=>{
         if(id) loadModelfile(Number(id)).then(modelfile => setModelfile(modelfile!))
     }, [id, loadModelfile]);
 
+*/
+    useEffect(()=>{
+        if(id) loadModelfile(Number(id));
+    }, [id]);
+
+
+    useEffect(()=>{
+        selectedModelfile && setModelfile(selectedModelfile);
+    }, [selectedModelfile]);
     
+
     function handleFormSubmit(modelfile:Modelfile) {
         if(modelfile.id_part ===0 ){
-            let newModelfile = {
-                ...modelfile
-            };
-            //console.log(newTask);
-//            createTask(newTask);
-//            createTask(newActivity).then(() => history.push(`/task/${newTask.Id}`))
         } else {
             updateModelfile(modelfile);
-            //updateActivity(task).then(() => history.push(`/activities/${task.Id}`))
         }
     }
 
@@ -82,7 +85,6 @@ export default observer( function ModelfileEdit(){
         if(modelfile.id_part ===0 ){
         } else {
             deleteModelfile(modelfile);
-            //deleteTask(task.id);
         }
     }
 
