@@ -119,7 +119,7 @@ export default observer( function EditView(){
 
                         <Row>
                             <Col xs={3}><TextInputGeneral label='View ID' name='id_view' placeholder='View ID' /></Col>
-                            <Col xs={9}><TextInputGeneral label='title' name='title' placeholder='title' /></Col>
+                            <Col xs={9}><TextInputGeneral label='Title' name='title' placeholder='title' /></Col>
                         </Row>
 
                         <hr />
@@ -137,32 +137,32 @@ export default observer( function EditView(){
                             <tbody>
                                 <tr>
                                     <td>Camera Position</td>
-                                    <td><TextInputGeneral label='cam_pos_x' name='cam_pos_x' placeholder='cam_pos_x' /></td>
-                                    <td><TextInputGeneral label='cam_pos_y' name='cam_pos_y' placeholder='cam_pos_y' /></td>
-                                    <td><TextInputGeneral label='cam_pos_z' name='cam_pos_z' placeholder='cam_pos_z' /></td>
+                                    <td><TextInputGeneral label='' name='cam_pos_x' placeholder='cam_pos_x' /></td>
+                                    <td><TextInputGeneral label='' name='cam_pos_y' placeholder='cam_pos_y' /></td>
+                                    <td><TextInputGeneral label='' name='cam_pos_z' placeholder='cam_pos_z' /></td>
                                     <td></td>
                                 </tr>                        
                                 <tr>
                                     <td>Camera Look At</td>
-                                    <td><TextInputGeneral label='cam_lookat_x' name='cam_lookat_x' placeholder='cam_lookat_x' /></td>
-                                    <td><TextInputGeneral label='cam_lookat_y' name='cam_lookat_y' placeholder='cam_lookat_y' /></td>
-                                    <td><TextInputGeneral label='cam_lookat_z' name='cam_lookat_z' placeholder='cam_lookat_z' /></td>
+                                    <td><TextInputGeneral label='' name='cam_lookat_x' placeholder='cam_lookat_x' /></td>
+                                    <td><TextInputGeneral label='' name='cam_lookat_y' placeholder='cam_lookat_y' /></td>
+                                    <td><TextInputGeneral label='' name='cam_lookat_z' placeholder='cam_lookat_z' /></td>
                                     <td></td>
                                 </tr>
                                 
                                 <tr>
                                     <td>Camera Quaternion</td>
-                                    <td><TextInputGeneral label='cam_quat_x' name='cam_quat_x' placeholder='cam_quat_x' /></td>
-                                    <td><TextInputGeneral label='cam_quat_y' name='cam_quat_y' placeholder='cam_quat_y' /></td>
-                                    <td><TextInputGeneral label='cam_quat_z' name='cam_quat_z' placeholder='cam_quat_z' /></td>
-                                    <td><TextInputGeneral label='cam_quat_w' name='cam_quat_w' placeholder='cam_quat_w' /></td>
+                                    <td><TextInputGeneral label='' name='cam_quat_x' placeholder='cam_quat_x' /></td>
+                                    <td><TextInputGeneral label='' name='cam_quat_y' placeholder='cam_quat_y' /></td>
+                                    <td><TextInputGeneral label='' name='cam_quat_z' placeholder='cam_quat_z' /></td>
+                                    <td><TextInputGeneral label='' name='cam_quat_w' placeholder='cam_quat_w' /></td>
                                 </tr>
                                 
                                 <tr>
                                     <td>Orbit Control Target</td>
-                                    <td><TextInputGeneral label='obt_target_x' name='obt_target_x' placeholder='obt_target_x' /></td>
-                                    <td><TextInputGeneral label='obt_target_y' name='obt_target_y' placeholder='obt_target_y' /></td>
-                                    <td><TextInputGeneral label='obt_target_z' name='obt_target_z' placeholder='obt_target_z' /></td>
+                                    <td><TextInputGeneral label='' name='obt_target_x' placeholder='obt_target_x' /></td>
+                                    <td><TextInputGeneral label='' name='obt_target_y' placeholder='obt_target_y' /></td>
+                                    <td><TextInputGeneral label='' name='obt_target_z' placeholder='obt_target_z' /></td>
                                     <td></td>
                                 </tr>
                             </tbody>
