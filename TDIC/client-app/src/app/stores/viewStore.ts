@@ -2,6 +2,7 @@ import {  makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import {format} from 'date-fns';
 import { View } from "../models/view";
+import { OptionBase } from "../models/Optionbase";
 
 export default class ViewStore {
     viewRegistry = new Map<number, View>();
@@ -110,6 +111,18 @@ export default class ViewStore {
             })
         }
     }    
+
+    
+
+    getOptionArray=()=>{
+        const ans = Array<OptionBase>();
+
+        
+        Array.from(this.viewRegistry.values()).map(object=>(
+            ans.push({label: object.title, value: object.id_view.toString()})
+        ))
+        return ans;
+    }
 
     private setView = (object : View) => {
         this.viewRegistry.set(object.id_view,object);

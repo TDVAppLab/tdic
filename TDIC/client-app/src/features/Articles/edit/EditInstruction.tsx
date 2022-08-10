@@ -9,6 +9,7 @@ import { Form, Formik } from 'formik';
 import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
 import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
 import { Col, Row } from 'react-bootstrap';
+import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
 
 
 export default observer( function EditInstruction(){
@@ -18,6 +19,8 @@ export default observer( function EditInstruction(){
     const {instructionStore} = useStore();
     const {selectedInstruction, updateInstruction, deleteInstruction, createInstruction} = instructionStore;
 
+    const {viewStore} = useStore();
+    const {getOptionArray : getViewOptionArray } = viewStore;
 
     const [instruction, setInstruction] = useState<Instruction>({
         id_article: articleStore?.selectedArticle?.id_article!,
@@ -84,9 +87,9 @@ export default observer( function EditInstruction(){
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
                         <Row>
-                            <Col xs={3}><TextInputGeneral label='Instruction ID' name='id_instruct' placeholder='Instruction ID' /></Col>
-                            <Col xs={3}><TextInputGeneral label='Instruction Title' name='title' placeholder='Instruction Title' /></Col>
-                            <Col xs={3}><TextInputGeneral label='View ID' name='id_view' placeholder='View ID' /></Col>
+                            <Col xs={2}><TextInputGeneral label='ID' name='id_instruct' placeholder='Instruction ID' /></Col>
+                            <Col xs={3}><TextInputGeneral label='Title' name='title' placeholder='Instruction Title' /></Col>
+                            <Col xs={4}><SelectInputGeneral label='View ID' placeholder='id_view' name='id_view' options={getViewOptionArray()} /></Col>
                             <Col xs={3}><TextInputGeneral label='Display Order' name='display_order' placeholder='Display Order' /></Col>
                         </Row>
 
