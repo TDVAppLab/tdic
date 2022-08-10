@@ -35,14 +35,14 @@ export default observer( function ModelfileEdit(){
 
 
     const validationSchema = Yup.object({
-        part_number: Yup.string().required('The part_number is required'),
-        /*
-        shortDescription: Yup.string().nullable(),
-        startDatetimeScheduled: Yup.date().nullable(),
-        startDatetimeActual: Yup.date().nullable(),
-        endDatetimeScheduled: Yup.date().nullable(),
-        endDatetimeActual: Yup.date().nullable(),
-        status: Yup.number().required(),*/
+        part_number: Yup.string().required(),
+        version: Yup.number().required(),
+        type_data: Yup.string().nullable(),
+        format_data: Yup.string().nullable(),        
+        file_name: Yup.string().nullable(),
+        license: Yup.string().nullable(),
+        author: Yup.string().nullable(),
+        memo: Yup.string().nullable(),
     });
     
 
