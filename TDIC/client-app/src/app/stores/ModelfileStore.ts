@@ -6,7 +6,6 @@ import { OptionBase } from "../models/Optionbase";
 export default class ModelfileStore {
     ModelfileRegistry = new Map<number, Modelfile>();
     selectedModelfile: Modelfile| undefined = undefined;
-    //editMode=false;
     loading=false;
 
     constructor(){
@@ -32,9 +31,9 @@ export default class ModelfileStore {
     loadModelfile = async (id:number) => {
         this.loading = true;
         let object:Modelfile;
-        //console.log("called loadmodelfiles");
+        
         try {
-            //console.log("called loadmodelfiles");
+            
             object = await agent.Modelfiles.details(id);
             this.setModelfile(object);
             runInAction(()=>{
