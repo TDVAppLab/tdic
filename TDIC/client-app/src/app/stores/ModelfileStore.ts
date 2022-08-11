@@ -6,36 +6,10 @@ import { OptionBase } from "../models/Optionbase";
 export default class ModelfileStore {
     ModelfileRegistry = new Map<number, Modelfile>();
     selectedModelfile: Modelfile| undefined = undefined;
-    //editMode=false;
     loading=false;
 
     constructor(){
         makeAutoObservable(this)
-    }
-
-
-    get ModelfilesArray(){
-        
-        return Array.from(this.ModelfileRegistry.values());
-
-            
-    }
-    get ModelfilesByDate(){
-        
-        return Array.from(this.ModelfileRegistry.values()).sort((a,b) => 
-            a.create_datetime!.getTime() - b.create_datetime!.getTime());
-
-            
-    }
-
-    get groupedModelfiles(){
-        return Object.entries(
-            this.ModelfilesByDate.reduce((modelfiles,modelfile) => {
-                const id = modelfile.id_part;
-                modelfiles[id] = modelfiles[id] ? [...modelfiles[id], modelfile] : [modelfile];
-                return modelfiles;
-            }, {} as {[key: number]: Modelfile[]})
-        )
     }
 
 
@@ -57,9 +31,9 @@ export default class ModelfileStore {
     loadModelfile = async (id:number) => {
         this.loading = true;
         let object:Modelfile;
-        //console.log("called loadmodelfiles");
+        
         try {
-            //console.log("called loadmodelfiles");
+            
             object = await agent.Modelfiles.details(id);
             this.setModelfile(object);
             runInAction(()=>{

@@ -1,16 +1,43 @@
+import { useField } from "formik";
+import React from "react";
+import { Form } from 'react-bootstrap'
+
+interface Props{
+    placeholder: string;
+    name:string;
+    type?: string;
+    label?: string;
+    disabled?: boolean;
+}
+
+export default function FileInputGeneral(props: Props){
+    const[field, meta, helpers] = useField<File>(props.name);
+
+    const { setValue } = helpers;
+    
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        if (event.target.files) {
+            //console.log(event.target.files[0]);
+            setValue(event.target.files[0]);
+        }
+    }
+    
+    return (
+        <Form.Group>
+            { props.label && <Form.Label>{props.label}</Form.Label> }
+            <Form.Control {...props} onChange={handleChange} />
+            {meta.touched && meta.error ? (
+                <Form.Label>{meta.error}</Form.Label>
+            ) : null}
+        </Form.Group>
+    )
+}
+
+/*
 import { Field, FieldProps, useField } from "formik";
 import React, { InputHTMLAttributes } from "react";
 import { Form } from 'react-bootstrap'
 
-/*
-interface Props{
-    //placeholder: string;
-    name:string;
-    //type?: string;
-    label?: string;
-    component?: string;
-}
-*/
 
 type FormikImageFieldProps = InputHTMLAttributes<HTMLElement> & {
     label: string;
@@ -18,12 +45,6 @@ type FormikImageFieldProps = InputHTMLAttributes<HTMLElement> & {
     component?: string;
   };
 
-/*
-export default function FileInputGeneral(props: FormikImageFieldProps){
-//    const[field, meta] = useField(props.name);
-    const [field, { error, touched }, helper] = useField<FieldProps>(props);
-
-*/
 const FileInputGeneral: React.FC<FormikImageFieldProps> = ({
     label,
     size: _,
@@ -54,3 +75,5 @@ const FileInputGeneral: React.FC<FormikImageFieldProps> = ({
 
 
 export default FileInputGeneral;
+
+*/
