@@ -10,6 +10,7 @@ import { Modelfile } from "../../../app/models/ModelFile";
 import { Col, Row, Tab, Tabs } from "react-bootstrap";
 import ModelfileViewer from "../common/ModelfileViewer";
 import TextAreaGeneral from "../../../app/common/form/TextAreaGeneral";
+import EditModelfileEyecatch from "./EditModelfileEyecatch";
 
 export default observer( function ModelfileEdit(){
     const history = useHistory();
@@ -175,6 +176,12 @@ export default observer( function ModelfileEdit(){
                             </div>
 
                         </Tab>
+                        
+                        <Tab eventKey="thumbnail" title="Thumbnail" >
+                            <EditModelfileEyecatch />
+                        </Tab>
+
+
                     </Tabs>
                 </Col>
             </Row>
