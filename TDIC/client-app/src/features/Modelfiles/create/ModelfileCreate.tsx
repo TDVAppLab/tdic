@@ -1,109 +1,78 @@
+import { Form, Formik } from 'formik';
 import React, {useState} from 'react';
 import agent from '../../../app/api/agent';
+import * as Yup from 'yup';
+import { ModelfileUploadDtO } from '../../../app/models/ModelFile';
+import { Col, Row } from 'react-bootstrap';
+import FileInputGeneral from '../../../app/common/form/FileInputGeneral';
 
-function ModelfileCreate() {
+function ModelfileCreate() {    
+    
+    //const [file, setFile] = useState<File>();    
+    
+    const [modelfile, setModelfile] = useState<ModelfileUploadDtO>({
+        id_part: 0,
+        part_number: '',
+        version: 0,
+        file_data: new File([],''),
+        type_data: '',
+        format_data: '',
+        file_name: '',
+        file_length: 0,
+        itemlink: '',
+        license: '',
+        author: '',
+        memo: '',
+        create_datetime: null,
+        latest_update_datetime: null,
+    });
 
-  const [file, setFile] = useState<File>()
 
+    const validationSchema = Yup.object({
+        part_number: Yup.string().nullable(),
+    });
 
-  function handleChange(event: any) {
-    console.log(event);
-    if (event.target.files) {
-        setFile(event.target.files[0]);
+    function handleFormSubmit(event: ModelfileUploadDtO) {
+        const formData = new FormData();
+
+        if(event.file_data){
+            
+            formData.append('file', event.file_data);
+            //console.log(event.file_data);
+            
+            agent.Modelfiles.fileupload(formData).then((response) => {});
+
+        }
 
     }
-  }
-  
-  function handleSubmit(event: any) {
-    event.preventDefault()
-    const formData = new FormData();
 
-    if(file){
-        
-        formData.append('file', file);
-        
-        agent.Modelfiles.fileupload(formData).then((response) => {
+    return (
+        <div className="App">
 
-        });
+            <h3>Model File Upload</h3>
 
-    }
+            <Formik
+                    validationSchema={validationSchema}
+                    enableReinitialize 
+                    initialValues={modelfile} 
+                    onSubmit={values => handleFormSubmit(values)}>
+                    {({ handleSubmit, isValid, isSubmitting, dirty }) => (
+                        <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
+                            
+                            <Row>
+                                <Col xs={4}><FileInputGeneral label='' type="file" name='file_data' placeholder='file_data' /></Col>
+                            </Row>      
+                            
+                            <hr />       
+                            
+                            <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-primary'>Upload</button>
+                        </Form>
+                    )}
 
-  }
+                </Formik>
 
-  return (
-    <div className="App">
-        <form onSubmit={handleSubmit}>
-          <h1>React File Upload</h1>
-          <input type="file" onChange={handleChange}/>
-          <button type="submit">Upload</button>
-        </form>
-    </div>
-  );
+        </div>
+    );
 }
 
 export default ModelfileCreate;
-
-
-/*
-
-import { Formik } from "formik";
-import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
-import LoadingComponent from "../../../app/layout/LoadingComponents";
-import { useStore } from "../../../app/stores/store";
-import * as Yup from 'yup';
-
-
-export default observer( function ModelfileCreate() {
-
-    const {id} = useParams<{id:string}>();
-
-    const {modelfileStore} = useStore();
-    const {selectedModelfile, setSelectedModelfile, loading, setLoaing} = modelfileStore;
-    const [update,setUpdata]=useState<boolean>(false)
-
-    const validationSchema = Yup.object({
-        title: Yup.string().required(),
-    });
-
-    useEffect(()=> {
-
-        if(id) {
-            setSelectedModelfile(Number(id));
-            setLoaing(false);
-            setUpdata(update?false:true)
-        }
-
-    }, [id])
-
-    
-    if(!selectedModelfile) return (<><LoadingComponent /></>);
-
-
-    return (
-        <>
-            <>
-                <div className="row">
-                    <div className="col-md-3"></div>
-                    <div className="col-md-6">
-
-                        
-                        <hr />
-
-                        <div>
-                            <Link to="/ContentsEdit/ContentsModelFile">Return Index</Link> |
-                            {<Link to={`/ContentsEdit/ModelFileEdit/${id}`}>Edit</Link>} |
-                            {<Link to={`/ContentsEdit/ModelFileDelete/${id}`}>Delete</Link>}
-                        </div>
-
-                    </div>
-                </div>
-            </>
-        </>
-    )
-})
-
-
-*/
