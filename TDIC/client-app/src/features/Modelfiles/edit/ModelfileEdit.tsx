@@ -90,7 +90,7 @@ export default observer( function ModelfileEdit(){
         }
     }
 
-    if(loading) return <LoadingComponent content="Loading task..." />
+    if(loading) return <LoadingComponent />
 
     return(
         <div>         
@@ -99,7 +99,7 @@ export default observer( function ModelfileEdit(){
             
             <Row>
                 <Col  sm={6} >
-                    <div className="row" id="model_screen" style={{ width: 640, height : 360 }}>
+                    <div className="row" id="model_screen" style={{ height:"45vh", width:'45vw' }}>
                             {
                                 <ModelfileViewer id_part={Number(id)}/>
                             }
@@ -141,7 +141,12 @@ export default observer( function ModelfileEdit(){
                                 <Row>
                                     <Col xs={12}><TextAreaGeneral label='Memo' name='memo' placeholder='memo' rows={3} /></Col>
                                 </Row>
-                                <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary' >Submit</button>
+                                <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary' >
+                                    { 
+                                    //    isSubmitting && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
+                                    }
+                                    Submit
+                                </button>
                             </Form>
                         )}
 
