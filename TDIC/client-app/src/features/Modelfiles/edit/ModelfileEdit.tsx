@@ -129,10 +129,7 @@ export default observer( function ModelfileEdit(){
                         <Row>
                             <Col xs={6}><TextInputGeneral label='Memo' name='memo' placeholder='memo' /></Col>
                         </Row>
-                        
-                              
-                        <button disabled={!isValid || !dirty || isSubmitting} 
-                            type = 'submit' >Submit</button>
+                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary' >Submit</button>
                     </Form>
                 )}
 
@@ -145,7 +142,7 @@ export default observer( function ModelfileEdit(){
                 onSubmit={values => handleFormSubmitDelete(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                        <button disabled={!isValid || isSubmitting} 
+                        <button disabled={!isValid || isSubmitting} className='btn btn-danger'
                             type = 'submit' >Delete</button>
                     </Form>
                 )}
