@@ -7,7 +7,7 @@ import { Formik , Form } from "formik";
 import * as Yup from 'yup';
 import TextInputGeneral from "../../../app/common/form/TextInputGeneral";
 import { Modelfile } from "../../../app/models/ModelFile";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Tab, Tabs } from "react-bootstrap";
 import ModelfileViewer from "../common/ModelfileViewer";
 import TextAreaGeneral from "../../../app/common/form/TextAreaGeneral";
 
@@ -107,71 +107,75 @@ export default observer( function ModelfileEdit(){
                 </Col>
 
                 <Col sm={6} >
+                    <Tabs defaultActiveKey="modelfile_dataedit" id="modelfile-tab-edit" >
+                        <Tab eventKey="modelfile_dataedit" title="Edit">
 
-                    <Formik
-                        validationSchema={validationSchema}
-                        enableReinitialize 
-                        initialValues={modelfile} 
-                        onSubmit={values => handleFormSubmit(values)}>
-                        {({ handleSubmit, isValid, isSubmitting, dirty }) => (
-                            <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                                
-                                <Row>
-                                    <Col xs={4}><label>ID Part</label><input className="form-control" value={modelfile.id_part} disabled /></Col>
-                                </Row>
-                                
-                                <Row>
-                                    <Col xs={4}><label>Type Data</label><input className="form-control" value={modelfile.type_data} disabled /></Col>
-                                    <Col xs={4}><label>File Name</label><input className="form-control" value={modelfile.file_name} disabled /></Col>
-                                    <Col xs={4}><label>File Length</label><input className="form-control" value={modelfile.file_length} disabled /></Col>
-                                </Row>
+                            <Formik
+                                validationSchema={validationSchema}
+                                enableReinitialize 
+                                initialValues={modelfile} 
+                                onSubmit={values => handleFormSubmit(values)}>
+                                {({ handleSubmit, isValid, isSubmitting, dirty }) => (
+                                    <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
+                                        
+                                        <Row>
+                                            <Col xs={4}><label>ID Part</label><input className="form-control" value={modelfile.id_part} disabled /></Col>
+                                        </Row>
+                                        
+                                        <Row>
+                                            <Col xs={4}><label>Type Data</label><input className="form-control" value={modelfile.type_data} disabled /></Col>
+                                            <Col xs={4}><label>File Name</label><input className="form-control" value={modelfile.file_name} disabled /></Col>
+                                            <Col xs={4}><label>File Length</label><input className="form-control" value={modelfile.file_length} disabled /></Col>
+                                        </Row>
 
-                                <Row>
-                                    <Col xs={4}><TextInputGeneral label='Part Number' name='part_number' placeholder='part_number' /></Col>
-                                    <Col xs={4}><TextInputGeneral label='Version' name='version' placeholder='version' /></Col>
-                                    <Col xs={4}><TextInputGeneral label='Format Fata' name='format_data' placeholder='format_data' /></Col>
-                                </Row>
+                                        <Row>
+                                            <Col xs={4}><TextInputGeneral label='Part Number' name='part_number' placeholder='part_number' /></Col>
+                                            <Col xs={4}><TextInputGeneral label='Version' name='version' placeholder='version' /></Col>
+                                            <Col xs={4}><TextInputGeneral label='Format Fata' name='format_data' placeholder='format_data' /></Col>
+                                        </Row>
 
-                                <Row>
-                                    <Col xs={12}><TextInputGeneral label='Itemlink' name='itemlink' placeholder='itemlink' /></Col>
-                                    <Col xs={6}><TextInputGeneral label='License' name='license' placeholder='license' /></Col>
-                                    <Col xs={6}><TextInputGeneral label='Author' name='author' placeholder='author' /></Col>
-                                </Row>
-                                
-                                <Row>
-                                    <Col xs={12}><TextAreaGeneral label='Memo' name='memo' placeholder='memo' rows={3} /></Col>
-                                </Row>
-                                <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary' >
-                                    { 
-                                    //    isSubmitting && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
-                                    }
-                                    Submit
-                                </button>
-                            </Form>
-                        )}
+                                        <Row>
+                                            <Col xs={12}><TextInputGeneral label='Itemlink' name='itemlink' placeholder='itemlink' /></Col>
+                                            <Col xs={6}><TextInputGeneral label='License' name='license' placeholder='license' /></Col>
+                                            <Col xs={6}><TextInputGeneral label='Author' name='author' placeholder='author' /></Col>
+                                        </Row>
+                                        
+                                        <Row>
+                                            <Col xs={12}><TextAreaGeneral label='Memo' name='memo' placeholder='memo' rows={3} /></Col>
+                                        </Row>
+                                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary' >
+                                            { 
+                                            //    isSubmitting && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
+                                            }
+                                            Submit
+                                        </button>
+                                    </Form>
+                                )}
 
-                    </Formik>
+                            </Formik>
 
-                    <Formik
-                        validationSchema={validationSchemaDel}
-                        enableReinitialize 
-                        initialValues={modelfile} 
-                        onSubmit={values => handleFormSubmitDelete(values)}>
-                        {({ handleSubmit, isValid, isSubmitting, dirty }) => (
-                            <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                                <button disabled={!isValid || isSubmitting} className='btn btn-danger'
-                                    type = 'submit' >Delete</button>
-                            </Form>
-                        )}
-                    </Formik>
-                    
-                    <hr />
+                            <Formik
+                                validationSchema={validationSchemaDel}
+                                enableReinitialize 
+                                initialValues={modelfile} 
+                                onSubmit={values => handleFormSubmitDelete(values)}>
+                                {({ handleSubmit, isValid, isSubmitting, dirty }) => (
+                                    <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
+                                        <button disabled={!isValid || isSubmitting} className='btn btn-danger'
+                                            type = 'submit' >Delete</button>
+                                    </Form>
+                                )}
+                            </Formik>
+                            
+                            <hr />
 
-                    <div>
-                        <Link to="/modelfiles">Return Index</Link> |
-                        <Link to={`/modelfile/${id}`}>Details</Link>
-                    </div>
+                            <div>
+                                <Link to="/modelfiles">Return Index</Link> |
+                                <Link to={`/modelfile/${id}`}>Details</Link>
+                            </div>
 
+                        </Tab>
+                    </Tabs>
                 </Col>
             </Row>
 
