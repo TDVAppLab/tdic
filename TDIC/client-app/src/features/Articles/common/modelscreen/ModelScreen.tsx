@@ -12,6 +12,7 @@ import SceneInfoCatcher from './SceneInfoCatcher';
 import { Effects } from './Effect';
 import { Lights } from './Lights';
 import GetSceneCapture from './GetSceneCapture';
+import AutomaticCameraMove from './AutomaticCameraMove';
 
 
 // ref https://codesandbox.io/s/draggable-mesh-rgn91?file=/src/App.tsx:900-940
@@ -59,6 +60,9 @@ export default observer( function ModelScreen({width, height}: Props) {
     setModeTransport(true);
 }, [selectedInstruction])
 
+useEffect(()=> {
+}, [sceneInfoStore.is_automatic_camera_rotate])
+
   return (
     <div style={{height:height, width:width}} >
       <Canvas
@@ -93,6 +97,7 @@ export default observer( function ModelScreen({width, height}: Props) {
         {
           <ShowAnnotation annotationMap={annotationRegistry} annotationDisplayMap={selectedAnnotationDisplayMap} selectedAnnotationId = {selectedAnnotation?.id_annotation}/>
         }
+        <AutomaticCameraMove isModeTransport={sceneInfoStore.is_automatic_camera_rotate} />
 
         
 			{/* lights */}

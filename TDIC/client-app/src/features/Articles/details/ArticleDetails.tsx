@@ -44,6 +44,10 @@ export default observer( function ArticleDetails() {
     
     const {lightStore} = useStore();
     const {loadLights, loading : isLightLoading} = lightStore;
+    
+    const {sceneInfoStore} = useStore();
+//    const {loadLights, loading : isLightLoading} = lightStore;
+
         
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
     
@@ -114,6 +118,9 @@ export default observer( function ArticleDetails() {
         setSelectedInstruction(id_instruct);
     }
 
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked);
+    }
 
     return (
         <>
@@ -138,6 +145,10 @@ export default observer( function ArticleDetails() {
                                     </button>
                                 ))
                             }
+                        </div>
+                        <div>
+                            <input type="checkbox" defaultChecked={sceneInfoStore.is_automatic_camera_rotate} onChange={handleChange}/>
+                            <label>Camera Auto Moving</label>
                         </div>
                         <GoogleAd pid={process.env.REACT_APP_GOOGLE_ADSENSE_PUBLISHER_ID!} uid={process.env.REACT_APP_GOOGLE_ADSENSE_UNIT_ID!} />
                     </Col>
