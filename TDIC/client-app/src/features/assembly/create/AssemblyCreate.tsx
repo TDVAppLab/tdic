@@ -87,7 +87,7 @@ export default observer( function AssemblyCreate(){
         
                 });
             });
-            loadModelfiles();
+            loadModelfiles(false);
         }
     }, [id, loadAssembly]);
 

@@ -25,10 +25,10 @@ namespace API.Controllers
     public class ModelFilesController : BaseApiController
     {        
         [AllowAnonymous]
-        [HttpGet("Index")]
-        public async Task<ActionResult> GetModelFiles()
+        [HttpGet("Index/is_exclude_used={is_exclude_used}")]
+        public async Task<ActionResult> GetModelFiles(bool is_exclude_used)
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandleResult(await Mediator.Send(new List.Query{is_exclude_used = is_exclude_used}));
         }
 
         [HttpGet("details/{id}")]

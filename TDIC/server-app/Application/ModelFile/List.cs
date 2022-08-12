@@ -14,7 +14,9 @@ namespace Application.ModelFile
 {
     public class List
     {
-        public class Query : IRequest<Result<List<t_partListDto>>>{}
+        public class Query : IRequest<Result<List<t_partListDto>>>{
+            public bool is_exclude_used {get; set;}
+        }
 
         public class Handler : IRequestHandler<Query, Result<List<t_partListDto>>>
         {
@@ -47,6 +49,7 @@ namespace Application.ModelFile
                             latest_update_datetime = x.latest_update_datetime,
                             count_use_instance = x.t_instance_parts.Count
                         })
+                        .Where(x => request.is_exclude_used ? x.count_use_instance < 1 : true )
                         .ToListAsync(cancellationToken));
             }
         }

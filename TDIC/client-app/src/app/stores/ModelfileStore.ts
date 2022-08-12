@@ -13,10 +13,11 @@ export default class ModelfileStore {
     }
 
 
-    loadModelfiles = async () => {
+    loadModelfiles = async (is_exclude_used: boolean) => {
         this.loading = true;
+        this.ModelfileRegistry.clear();
         try {
-            const modelfiles = await agent.Modelfiles.list();
+            const modelfiles = await agent.Modelfiles.list(is_exclude_used);
             modelfiles.forEach(modelfile => {
                 this.setModelfile(modelfile);
             })
