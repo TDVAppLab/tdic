@@ -11,6 +11,11 @@ export default observer(function ModelfileDashboard() {
     const {loadModelfiles, ModelfileRegistry} = modelfileStore;
   
     useEffect(() => {
+        loadModelfiles();
+    },[])
+
+
+    useEffect(() => {
         if(ModelfileRegistry.size <= 1) loadModelfiles();
     },[ModelfileRegistry.size, loadModelfiles])
   

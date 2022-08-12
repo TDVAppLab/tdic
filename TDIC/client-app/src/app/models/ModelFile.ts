@@ -13,6 +13,7 @@ export interface Modelfile {
     memo: string;
     create_datetime: Date | null;
     latest_update_datetime: Date | null;
+    count_use_instance: number;
 }
 
 
