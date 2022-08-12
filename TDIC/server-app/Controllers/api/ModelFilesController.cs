@@ -41,7 +41,7 @@ namespace API.Controllers
         [HttpGet("file/{id}")]
         public async Task<ActionResult> GetFile(long id)
         {
-            var det = await Mediator.Send(new Details.Query{ID = id});
+            var det = await Mediator.Send(new ModelFile.Query{ID = id});
 
 
             return File(det.Value.file_data, det.Value.type_data, det.Value.file_name);
