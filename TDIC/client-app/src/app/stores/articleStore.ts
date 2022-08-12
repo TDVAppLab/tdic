@@ -15,6 +15,7 @@ export default class ArticleStore {
 
     loadArticles = async () => {
         this.loading = true;
+        this.articleRegistry.clear();
         try {
             const articles = await agent.Articles.list();
             articles.forEach(article => {

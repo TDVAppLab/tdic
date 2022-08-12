@@ -16,6 +16,7 @@ export default class MArticleStatusStore {
 
     loadStatuses = async () => {
         this.loading = true;
+        this.statusRegistry.clear();
         try {
             const statuses = await agent.MArticleStatus.list();
             statuses.forEach(status => {

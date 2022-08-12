@@ -40,6 +40,7 @@ export default class AttachmentfileStore {
 
     loadAttachmentfiles = async () => {
         this.loading = true;
+        this.AttachmentfileRegistry.clear();
         try {
             const attachmentfiles = await agent.Attachmentfiles.list();
             attachmentfiles.forEach(attachmentfile => {
