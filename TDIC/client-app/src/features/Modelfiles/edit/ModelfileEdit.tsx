@@ -33,6 +33,7 @@ export default observer( function ModelfileEdit(){
         memo: '',
         create_datetime: null,
         latest_update_datetime: null,
+        count_use_instance:0,
     });
 
 
