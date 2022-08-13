@@ -13,6 +13,7 @@ import { Effects } from './Effect';
 import { Lights } from './Lights';
 import GetSceneCapture from './GetSceneCapture';
 import AutomaticCameraMove from './AutomaticCameraMove';
+import ShowOrbitInfo from './ShowOrbitInfo';
 
 
 // ref https://codesandbox.io/s/draggable-mesh-rgn91?file=/src/App.tsx:900-940
@@ -24,9 +25,10 @@ import AutomaticCameraMove from './AutomaticCameraMove';
 interface Props {
   width : string;
   height : string;
+  isEditmode : boolean
 }
 
-export default observer( function ModelScreen({width, height}: Props) {
+export default observer( function ModelScreen({width, height, isEditmode}: Props) {
 
   const [isDebugMode, setIsDebugMode] = useState(false);
   
@@ -98,6 +100,9 @@ useEffect(()=> {
           <ShowAnnotation annotationMap={annotationRegistry} annotationDisplayMap={selectedAnnotationDisplayMap} selectedAnnotationId = {selectedAnnotation?.id_annotation}/>
         }
         <AutomaticCameraMove isModeTransport={sceneInfoStore.is_automatic_camera_rotate} />
+        {
+          isEditmode && <ShowOrbitInfo />
+        }
 
         
 			{/* lights */}

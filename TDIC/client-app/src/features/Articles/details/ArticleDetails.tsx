@@ -131,7 +131,7 @@ export default observer( function ArticleDetails() {
                 <Row>
                     <Col sm={8}>
                     {
-                        <ModelScreen height="64vh" width='64vw' />
+                        <ModelScreen height="64vh" width='64vw' isEditmode={false} />
                     }
                         <div id="control_panel_zone">
                             {
