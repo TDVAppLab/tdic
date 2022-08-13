@@ -15,6 +15,8 @@ export default class SceneInfoStore {
     screen_shot_trigger : boolean = true;
     screen_shot : string = "";
 
+    is_automatic_camera_rotate : boolean=true;
+
     selectedInstructionId =0;
 
     constructor(){
@@ -64,4 +66,9 @@ export default class SceneInfoStore {
     }
 
 
+    setIsAutomaticCameraRotate = (state:boolean) => {
+        runInAction(() => {
+            this.is_automatic_camera_rotate = state;
+        })
+    }
 }
