@@ -52,6 +52,8 @@ export default observer( function ArticleEdit() {
     const {lightStore} = useStore();
     const {loadLights, loading : isLightLoading} = lightStore;
     
+    const {sceneInfoStore} = useStore();
+    
     function handleResize() {
     //    if(document.getElementById(html_id_instruction)!=null){
         const size = document.documentElement.clientHeight - document.getElementById(html_id_instruction)!.getBoundingClientRect().top;
@@ -119,6 +121,9 @@ export default observer( function ArticleEdit() {
         setSelectedInstruction(id_instruct);
     }
 
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked);
+    }
 
 
 
@@ -144,6 +149,12 @@ export default observer( function ArticleEdit() {
                                 ))
                             }
                         </div>
+
+                        <div>
+                            <input type="checkbox" defaultChecked={sceneInfoStore.is_automatic_camera_rotate} onChange={handleChange}/>
+                            <label>Camera Auto Moving</label>
+                        </div>
+
                     </Col>
                     <Col  sm={6} >
                         <Tabs defaultActiveKey="instruction" id="uncontrolled-tab-example" className="mb-3">
