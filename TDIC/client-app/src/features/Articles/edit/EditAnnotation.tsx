@@ -17,7 +17,8 @@ export default observer( function EditAnnotation(){
     
     const {articleStore} = useStore();
     const {annotationStore} = useStore();
-    const {selectedAnnotation, editAnnotationInternal, updateAnnotation, createAnnotation, deleteAnnotation} = annotationStore;
+    const {selectedAnnotation, editAnnotationInternal, updateAnnotation, createAnnotation, deleteAnnotation, setSelectedAnnotation} = annotationStore;
+    const {sceneInfoStore} = useStore();
 
 
     const [annotation, setAnnotation] = useState<Annotation>({
@@ -91,6 +92,44 @@ export default observer( function EditAnnotation(){
         });
     }
 
+    const handleSetNewAnnotation = () => {
+        editAnnotationInternal({
+            id_article: annotation.id_article,
+            id_annotation: 0,
+    
+            title: annotation.title,
+            description1: annotation.description1,
+            description2: annotation.description2,
+            
+            status: annotation.status,
+    
+            pos_x: sceneInfoStore?.orbit_target?.x!,
+            pos_y: sceneInfoStore?.orbit_target?.y!,
+            pos_z: sceneInfoStore?.orbit_target?.z!,
+        });
+        setSelectedAnnotation(0);
+    }
+
+    
+
+    const handleSetNewAnnotationPosition = () => {
+        editAnnotationInternal({
+            id_article: annotation.id_article,
+            id_annotation: annotation.id_annotation,
+    
+            title: annotation.title,
+            description1: annotation.description1,
+            description2: annotation.description2,
+            
+            status: annotation.status,
+    
+            pos_x: sceneInfoStore?.orbit_target?.x!,
+            pos_y: sceneInfoStore?.orbit_target?.y!,
+            pos_z: sceneInfoStore?.orbit_target?.z!,
+        });
+        setSelectedAnnotation(0);
+    }    
+
     return(
         <div>
             <Formik
@@ -110,53 +149,107 @@ export default observer( function EditAnnotation(){
                         <hr />
 
                         <Row>
-                            <Col ><TextAreaGeneral label='Description1' placeholder='Description1' name='description1' rows={2}   /></Col>
-                            <Col ><TextAreaGeneral label='Description2' placeholder='Description2' name='description2' rows={2}   /></Col>
+                            <Col ><TextAreaGeneral label='Description1' placeholder='Description1' name='description1' rows={1}   /></Col>
+                            <Col ><TextAreaGeneral label='Description2' placeholder='Description2' name='description2' rows={1}   /></Col>
                         </Row>
 
-                        <hr />
+                        { /*
+
+                        <br />
                         
                         <Row>
                             <Col xs={4}><TextInputGeneral label='POS X' name='pos_x' placeholder='POS X' /></Col>
                             <Col>
+                                <label></label><br></br>
                                 <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(-1,0,0))}} >-1 </button>
-                                <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(1,0,0))}} >+1 </button>
-                                <br />
                                 <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(-0.1,0,0))}} >-0.1</button>
-                                <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0.1,0,0))}} >+0.1</button>
-                                <br />
                                 <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(-0.01,0,0))}} >-0.01</button>
                                 <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0.01,0,0))}} >+0.01</button>
+                                <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0.1,0,0))}} >+0.1</button>
+                                <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(1,0,0))}} >+1 </button>
                             </Col>
                         <Row>
                         <br />
                         </Row>
                             <Col xs={4}><TextInputGeneral label='POS Y' name='pos_y' placeholder='POS Y' /></Col>
                             <Col>
+                                <label></label><br></br>
                                 <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,-1,0))}} >-1 </button>
-                                <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,1,0))}} >+1 </button>
-                                <br />
                                 <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,-0.1,0))}} >-0.1</button>
-                                <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0.1,0))}} >+0.1</button>
-                                <br />
                                 <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,-0.01,0))}} >-0.01</button>
                                 <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0.01,0))}} >+0.01</button>
+                                <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0.1,0))}} >+0.1</button>
+                                <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,1,0))}} >+1 </button>
                             </Col>
                         <Row>
                         <br />
                         </Row>
-                            <Col xs={4}><TextInputGeneral label='POS Z' name='pos_z' placeholder='POS Z' /></Col>
+                            <Col xs={4}>POS Z<TextInputGeneral label='' name='pos_z' placeholder='POS Z' /></Col>
                             <Col>
+                                <label></label><br></br>
                                 <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,-1))}} >-1 </button>
-                                <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,1))}} >+1 </button>
-                                <br />
                                 <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,-0.1))}} >-0.1</button>
-                                <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,0.1))}} >+0.1</button>
-                                <br />
                                 <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,-0.01))}} >-0.01</button>
                                 <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,0.01))}} >+0.01</button>
+                                <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,0.1))}} >+0.1</button>
+                                <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,1))}} >+1 </button>
                             </Col>
                         </Row>
+
+                */ }
+
+
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>Axis</th>
+                                    <th>POS</th>
+                                    <th>OP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>X</td>
+                                    <td><TextInputGeneral label='' name='pos_x' placeholder='POS X' /></td>
+                                    <td>
+                                        <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(-1,0,0))}} >-1 </button>
+                                        <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(-0.1,0,0))}} >-0.1</button>
+                                        <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(-0.01,0,0))}} >-0.01</button>
+                                        <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0.01,0,0))}} >+0.01</button>
+                                        <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0.1,0,0))}} >+0.1</button>
+                                        <button type = 'button' className={"btn btn-outline-danger btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(1,0,0))}} >+1 </button>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Y</td>
+                                    <td><TextInputGeneral label='' name='pos_y' placeholder='POS Y' /></td>
+                                    <td>
+                                        <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,-1,0))}} >-1 </button>
+                                        <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,-0.1,0))}} >-0.1</button>
+                                        <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,-0.01,0))}} >-0.01</button>
+                                        <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0.01,0))}} >+0.01</button>
+                                        <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0.1,0))}} >+0.1</button>
+                                        <button type = 'button' className={"btn btn-outline-success btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,1,0))}} >+1 </button>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Z</td>
+                                    <td><TextInputGeneral label='' name='pos_z' placeholder='POS Z' /></td>
+                                    <td>
+                                        <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,-1))}} >-1 </button>
+                                        <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,-0.1))}} >-0.1</button>
+                                        <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,-0.01))}} >-0.01</button>
+                                        <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,0.01))}} >+0.01</button>
+                                        <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,0.1))}} >+0.1</button>
+                                        <button type = 'button' className={"btn btn-outline-primary btn-sm"} onClick={()=>{handleInputChangeAnnotationPosition(new Vector3(0,0,1))}} >+1 </button>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
                         
                         <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>Submit</button>
                     </Form>
@@ -176,6 +269,24 @@ export default observer( function EditAnnotation(){
                     </Form>
                 )}
             </Formik>
+
+
+            
+            <button
+                type = 'submit'
+                className={"btn btn-outline-primary"}
+                onClick={()=>{handleSetNewAnnotation()}} 
+            >
+                Entry New Annotation with Current Orbit
+            </button>
+            
+            <button
+                type = 'submit'
+                className={"btn btn-outline-primary"}
+                onClick={()=>{handleSetNewAnnotationPosition()}} 
+            >
+                Set Annotation Position with Current Orbit
+            </button>
         </div>
     )
 })
