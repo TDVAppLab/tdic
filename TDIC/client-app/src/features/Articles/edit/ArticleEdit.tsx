@@ -134,7 +134,7 @@ export default observer( function ArticleEdit() {
                 <Row>
                     <Col  sm={6} >
                     {
-                        id && <ModelScreen height="45vh" width='45vw' />
+                        id && <ModelScreen height="45vh" width='45vw' isEditmode={true} />
                     }
                         <div>
                             { instructionRegistry.size>0 &&
