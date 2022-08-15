@@ -60,10 +60,22 @@ export default class AnnotationDisplayStore {
 
     updateAnnotationDisplay = async (objects: AnnotationDisplay[]) => {
         this.loading = true;
+
+        const prv_article = objects[0].id_article;
+        const prv_selectedInstruction = this.selectedInstruction;
         
         try {
             await agent.AnnotationDisplays.update(objects);
+            //const result_object = await agent.Lights.details(object.id_article, object.id_light);
             runInAction(() => {
+
+                objects.forEach(object => {
+                    const i = this.annotationDisplayArray.findIndex(x => x.id_article == object.id_article && x.id_instruct == object.id_article && x.id_annotation == object.id_annotation );
+                    if(i != -1){
+                        this.annotationDisplayArray[i] = object;
+                    }
+                })
+                this.setSelectedAnnotationDisplayMap(prv_selectedInstruction);                
                 this.loading = false;
             })
             
