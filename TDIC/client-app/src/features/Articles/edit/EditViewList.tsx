@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
 import { useStore } from '../../../app/stores/store';
 
 
@@ -7,6 +8,10 @@ export default observer( function EditViewList() {
 
     const { viewStore } = useStore();
     const { viewRegistry, setselectedView } = viewStore;
+
+    
+    useEffect(()=>{
+    }, [viewRegistry]);
 
     const handleInputChangeView=(id_view: number) => {
         setselectedView(id_view);
