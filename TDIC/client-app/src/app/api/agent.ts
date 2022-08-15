@@ -119,7 +119,7 @@ const Instructions = {
 
 const Views = {
     list: (id:number) => requests.get<View[]>(`/view/index/${id}`),
-    details:(id:number) => requests.get<View>(`/view/details/${id}`),
+    details:(id_article:number, id_view : number) => requests.get<View>(`/view/details/id_article=${id_article}&id_view=${id_view}`),
     create:(view: View) => axios.post<void>(`/view/create`,view),
     update: (view: View) => axios.post<void>(`/view/update/`, view),
     delete: (id_article:number,id_view:number) => axios.post<void>(`/view/delete/id_article=${id_article}&id_view=${id_view}`),

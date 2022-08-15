@@ -15,7 +15,7 @@ namespace Application.View
     {
         public class Query : IRequest<Result<t_view>>{
             public long id_article {get; set;}
-            public long id_view {get; set;}
+            public int id_view {get; set;}
         }
 
         public class Handler : IRequestHandler<Query, Result<t_view>>
