@@ -141,7 +141,7 @@ const AnnotationDisplays = {
 const Lights = {
     list: (id:number) => requests.get<Light[]>(`/light/index/${id}`),
     details:(id_article:number,id_light:number) => requests.get<Light>(`/light/details/id_article=${id_article}&id_light=${id_light}`),
-    create:(light: Light) => axios.post<void>(`/light/create`,light),
+    create:(light: Light) => axios.post<Light>(`/light/create`,light),
     update: (light: Light) => axios.post<void>(`/light/update/`, light),
     delete: (id_article:number,id_light:number) => axios.post<void>(`/light/delete/id_article=${id_article}&id_light=${id_light}`),
 }

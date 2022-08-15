@@ -57,19 +57,20 @@ export default class LightStore {
     
     
     createLight = async (object: Light) => {
-        this.loading = true;
+        //this.loading = true;
         //console.log("called light create");
         try {
-            await agent.Lights.create(object);
+            //await agent.Lights.create(object);
+            const result_object = await (await agent.Lights.create(object)).data;
             runInAction(() => {
-                this.lightRegistry.set(object.id_light, object);
-                this.selectedLight = object;
-                this.loading = false;
+                this.lightRegistry.set(result_object.id_light, result_object);
+                this.selectedLight = result_object;
+                //this.loading = false;
             })            
         }catch (error) {
             console.log(error);
             runInAction(() => {
-                this.loading = false;
+                //this.loading = false;
             })
         }
     }

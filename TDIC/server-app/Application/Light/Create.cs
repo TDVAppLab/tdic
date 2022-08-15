@@ -16,7 +16,7 @@ namespace Application.Light
 {
     public class Create
     {
-        public class Command : IRequest<Result<Unit>>{
+        public class Command : IRequest<Result<t_light>>{
             public t_light light {get; set;}
         }
 
@@ -29,7 +29,7 @@ namespace Application.Light
             }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<t_light>>
         {
         private readonly db_data_coreContext _context;
             public Handler(db_data_coreContext context)
@@ -37,7 +37,7 @@ namespace Application.Light
                 _context = context;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<t_light>> Handle(Command request, CancellationToken cancellationToken)
             {
 
                 
@@ -56,9 +56,9 @@ namespace Application.Light
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to create task");
+                if(!result) return Result<t_light>.Failure("Failed to create task");
 
-                return Result<Unit>.Success(Unit.Value);
+                return Result<t_light>.Success(request.light);
             }
         }
 
