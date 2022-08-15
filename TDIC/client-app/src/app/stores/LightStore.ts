@@ -79,9 +79,11 @@ export default class LightStore {
         
         try {
             await agent.Lights.update(object);
+            const result_object = await agent.Lights.details(object.id_article, object.id_light);
+            //const result_object = object;
             runInAction(() => {
-                this.lightRegistry.set(object.id_light, object);
-                this.selectedLight = object;
+                this.lightRegistry.set(result_object.id_light, result_object);
+                this.selectedLight = result_object;
                 this.loading = false;
             })
             

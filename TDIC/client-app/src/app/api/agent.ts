@@ -119,7 +119,7 @@ const Instructions = {
 
 const Views = {
     list: (id:number) => requests.get<View[]>(`/view/index/${id}`),
-    details:(id:number) => requests.get<View>(`/view/details/${id}`),
+    details:(id_article:number, id_view : number) => requests.get<View>(`/view/details/id_article=${id_article}&id_view=${id_view}`),
     create:(view: View) => axios.post<void>(`/view/create`,view),
     update: (view: View) => axios.post<void>(`/view/update/`, view),
     delete: (id_article:number,id_view:number) => axios.post<void>(`/view/delete/id_article=${id_article}&id_view=${id_view}`),
@@ -127,7 +127,7 @@ const Views = {
 
 const Annotations = {
     list: (id:number) => requests.get<Annotation[]>(`/annotation/index/${id}`),
-    details:(id:number) => requests.get<Annotation>(`/annotation/details/${id}`),
+    details:(id_article:number,id_annotation:number) => requests.get<Annotation>(`/annotation/details/id_article=${id_article}&id_annotation=${id_annotation}`),
     create:(annotation: Annotation) => axios.post<void>(`/annotation/create`,annotation),
     update: (annotation: Annotation) => axios.post<void>(`/annotation/update/`, annotation),
     delete: (id_article:number,id_annotation:number) => axios.post<void>(`/annotation/delete/id_article=${id_article}&id_annotation=${id_annotation}`),
@@ -140,7 +140,7 @@ const AnnotationDisplays = {
 
 const Lights = {
     list: (id:number) => requests.get<Light[]>(`/light/index/${id}`),
-    details:(id:number) => requests.get<Light>(`/view/details/${id}`),
+    details:(id_article:number,id_light:number) => requests.get<Light>(`/light/details/id_article=${id_article}&id_light=${id_light}`),
     create:(light: Light) => axios.post<void>(`/light/create`,light),
     update: (light: Light) => axios.post<void>(`/light/update/`, light),
     delete: (id_article:number,id_light:number) => axios.post<void>(`/light/delete/id_article=${id_article}&id_light=${id_light}`),

@@ -75,12 +75,16 @@ export default class ViewStore {
 
     updateView = async (object: View) => {
         this.loading = true;
+        //console.log(object);
         
         try {
             await agent.Views.update(object);
+            const result_object = await agent.Views.details(object.id_article, object.id_view);
+            //const result_object = object;
+            //console.log(result_object);
             runInAction(() => {
-                this.viewRegistry.set(object.id_view, object);
-                this.selectedView = object;
+                this.viewRegistry.set(result_object.id_view, result_object);
+                this.selectedView = result_object;
                 this.loading = false;
             })
             

@@ -76,13 +76,14 @@ export default class InstancepartStore {
 
     updateInstancepart = async (objects: Instancepart[]) => {
         this.loading = true;
-        
+
         try {
             await agent.Instanceparts.update(objects);
+            const result_object = await agent.Instanceparts.list(objects[0].id_assy);
             runInAction(() => {
-
-//                this.lightRegistry.set(object.id_light, object);
-//                this.selectedLight = object;
+                result_object.forEach(object => {
+                    this.setInstancepart(object);
+                })
                 this.loading = false;
             })
             

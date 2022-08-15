@@ -24,7 +24,12 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new List.Query{id_article=id}));
         }
 
-
+        [AllowAnonymous]
+        [HttpGet("details/id_article={id_article}&id_light={id_light}")]
+        public async Task<ActionResult> Details(long id_article,long id_light)
+        {
+            return HandleResult(await Mediator.Send(new Details.Query{id_article = id_article,id_light=id_light}));
+        }
         [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] t_lightUpdateUDto light)
         {
