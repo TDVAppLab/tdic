@@ -57,18 +57,19 @@ export default class ViewStore {
     
     
     createView = async (object: View) => {
-        this.loading = true;
+        //this.loading = true;
         try {
-            await agent.Views.create(object);
+            //await agent.Views.create(object);
+            const result_object = await (await agent.Views.create(object)).data;
             runInAction(() => {
-                this.viewRegistry.set(object.id_view, object);
-                this.selectedView = object;
-                this.loading = false;
+                this.viewRegistry.set(result_object.id_view, result_object);
+                this.selectedView = result_object;
+            //    this.loading = false;
             })            
         }catch (error) {
             console.log(error);
             runInAction(() => {
-                this.loading = false;
+            //    this.loading = false;
             })
         }
     }

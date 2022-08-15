@@ -19,7 +19,7 @@ namespace Application.View
 {
     public class Create
     {
-        public class Command : IRequest<Result<Unit>>{
+        public class Command : IRequest<Result<t_view>>{
             public t_view View {get; set;}
         }
 
@@ -32,7 +32,7 @@ namespace Application.View
             }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<t_view>>
         {
         private readonly db_data_coreContext _context;
             public Handler(db_data_coreContext context)
@@ -40,7 +40,7 @@ namespace Application.View
                 _context = context;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<t_view>> Handle(Command request, CancellationToken cancellationToken)
             {
 
                 
@@ -59,9 +59,9 @@ namespace Application.View
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to create view");
+                if(!result) return Result<t_view>.Failure("Failed to create view");
 
-                return Result<Unit>.Success(Unit.Value);
+                return Result<t_view>.Success(request.View);
             }
         }
 
