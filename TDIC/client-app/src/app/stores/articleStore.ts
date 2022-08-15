@@ -53,20 +53,20 @@ export default class ArticleStore {
     }
 
     updateArticle = async (object: Article) => {
-        this.loading = true;
+        //this.loading = true;
         
         try {
             await agent.Articles.update(object);
             runInAction(() => {
                 this.articleRegistry.set(object.id_article, object);
                 this.selectedArticle = object;
-                this.loading = false;
+                //this.loading = false;
             })
             
         }catch (error) {
             console.log(error);
             runInAction(() => {
-                this.loading = false;
+                //this.loading = false;
             })
         }
     }

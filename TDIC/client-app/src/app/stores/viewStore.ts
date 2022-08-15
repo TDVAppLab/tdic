@@ -74,7 +74,7 @@ export default class ViewStore {
     }
 
     updateView = async (object: View) => {
-        this.loading = true;
+        //this.loading = true;
         //console.log(object);
         
         try {
@@ -85,13 +85,13 @@ export default class ViewStore {
             runInAction(() => {
                 this.viewRegistry.set(result_object.id_view, result_object);
                 this.selectedView = result_object;
-                this.loading = false;
+                //this.loading = false;
             })
             
         }catch (error) {
             console.log(error);
             runInAction(() => {
-                this.loading = false;
+                //this.loading = false;
             })
         }
     }

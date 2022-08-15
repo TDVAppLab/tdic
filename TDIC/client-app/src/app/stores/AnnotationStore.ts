@@ -88,7 +88,7 @@ export default class AnnotationStore {
     }
     
     updateAnnotation = async (object: Annotation) => {
-        this.loading = true;
+        //this.loading = true;
         
         try {
             await agent.Annotations.update(object);
@@ -97,13 +97,13 @@ export default class AnnotationStore {
             runInAction(() => {
                 this.annotationRegistry.set(result_object.id_annotation, result_object);
                 this.selectedAnnotation = result_object;
-                this.setLoading(false);
+                //this.setLoading(false);
             })
             
         }catch (error) {
             console.log(error);
             runInAction(() => {
-                this.setLoading(false);
+                //this.setLoading(false);
             })
         }
     }
