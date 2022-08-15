@@ -127,7 +127,7 @@ const Views = {
 
 const Annotations = {
     list: (id:number) => requests.get<Annotation[]>(`/annotation/index/${id}`),
-    details:(id:number) => requests.get<Annotation>(`/annotation/details/${id}`),
+    details:(id_article:number,id_annotation:number) => requests.get<Annotation>(`/annotation/details/${id_article}&id_annotation=${id_annotation}`),
     create:(annotation: Annotation) => axios.post<void>(`/annotation/create`,annotation),
     update: (annotation: Annotation) => axios.post<void>(`/annotation/update/`, annotation),
     delete: (id_article:number,id_annotation:number) => axios.post<void>(`/annotation/delete/id_article=${id_article}&id_annotation=${id_annotation}`),
