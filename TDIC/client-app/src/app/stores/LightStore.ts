@@ -75,7 +75,7 @@ export default class LightStore {
     }
 
     updateLight = async (object: Light) => {
-        this.loading = true;
+        //this.loading = true;
         
         try {
             await agent.Lights.update(object);
@@ -84,7 +84,7 @@ export default class LightStore {
             runInAction(() => {
                 this.lightRegistry.set(result_object.id_light, result_object);
                 this.selectedLight = result_object;
-                this.loading = false;
+            //    this.loading = false;
             })
             
         }catch (error) {

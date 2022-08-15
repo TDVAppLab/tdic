@@ -109,20 +109,20 @@ export default class InstructionStore {
     }
 
     updateInstruction = async (instruction: Instruction) => {
-        this.loading = true;
+        //this.loading = true;
         
         try {
             await agent.Instructions.update(instruction);
             runInAction(() => {
                 this.instructionRegistry.set(instruction.id_instruct, instruction);
                 this.selectedInstruction = instruction;
-                this.loading = false;
+                //this.loading = false;
             })
             
         }catch (error) {
             console.log(error);
             runInAction(() => {
-                this.loading = false;
+            //    this.loading = false;
             })
         }
     }
