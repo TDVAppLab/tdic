@@ -17,6 +17,8 @@ import EditArticleSub from "./EditArticleSub";
 import EditViewList from "./EditViewList";
 import ModelScreen from "../common/modelscreen/ModelScreen";
 import EditEyecatch from "./EditEyecatch";
+import DisplayHtmlSubtitles from "../common/modelscreen/DisplayHtmlSubtitles";
+import SubtitleSelector from "../common/SubtitleSelector";
 
 
 
@@ -136,6 +138,7 @@ export default observer( function ArticleEdit() {
                     {
                         id && <ModelScreen height="45vh" width='45vw' isEditmode={true} />
                     }
+                        <DisplayHtmlSubtitles />
                         <div>
                             { instructionRegistry.size>0 &&
                                 Array.from(instructionRegistry.values()).map(x=>(
@@ -150,6 +153,8 @@ export default observer( function ArticleEdit() {
                             }
                         </div>
 
+                        <SubtitleSelector />
+                        
                         <div>
                             <input type="checkbox" defaultChecked={sceneInfoStore.is_automatic_camera_rotate} onChange={handleChange}/>
                             <label>Camera Auto Moving</label>
