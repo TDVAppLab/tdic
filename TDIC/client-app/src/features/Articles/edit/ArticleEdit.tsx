@@ -136,7 +136,7 @@ export default observer( function ArticleEdit() {
                 <Row>
                     <Col  sm={6} >
                     {
-                        id && <ModelScreen height="45vh" width='45vw' isEditmode={true} />
+                        id && (<div style={{aspectRatio: '16 / 8'}} ><ModelScreen  isEditmode={true} /></div>)
                     }
                         <DisplayHtmlSubtitles />
                         <div>
@@ -207,7 +207,7 @@ export default observer( function ArticleEdit() {
                             <Tab eventKey="info" title="info" >
                                 <Link to={`/article/${Number(article?.id_article)}`}>Details</Link> 
                                 <hr />
-                                <p>{descriptionAreaHeight}</p>
+                                <p>Hight : {descriptionAreaHeight}</p>
                                 <DebugDisplay />
                             </Tab>
                         </Tabs>

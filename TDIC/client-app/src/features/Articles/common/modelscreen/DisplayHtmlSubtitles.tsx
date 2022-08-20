@@ -12,7 +12,7 @@ export default observer( function DisplayHtmlSubtitles() {
   
   return (
         <>
-        <div
+        <div style={{aspectRatio: '16 / 1'}}
               className={ `html-subtitle` }>                            
             <p>{selectedSubtitles[selectedSubtitleIndex]}</p>
         </div>

@@ -23,12 +23,12 @@ import ShowOrbitInfo from './ShowOrbitInfo';
 
 
 interface Props {
-  width : string;
-  height : string;
+  //width : string;
+  //height : string;
   isEditmode : boolean
 }
 
-export default observer( function ModelScreen({width, height, isEditmode}: Props) {
+export default observer( function ModelScreen({isEditmode}: Props) {
 
   const [isDebugMode, setIsDebugMode] = useState(false);
   
@@ -66,7 +66,6 @@ useEffect(()=> {
 }, [sceneInfoStore.is_automatic_camera_rotate])
 
   return (
-    <div style={{height:height, width:width}} >
       <Canvas
         gl={{ 
           antialias: true, 
@@ -117,6 +116,5 @@ useEffect(()=> {
           <GetSceneCapture />
         }
       </Canvas>
-    </div>
   );
 });
