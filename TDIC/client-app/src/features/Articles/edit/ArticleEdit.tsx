@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Form, Row, Tab, Tabs } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
@@ -25,10 +25,9 @@ import SubtitleSelector from "../common/SubtitleSelector";
 
 export default observer( function ArticleEdit() {
 
-    const html_id_instruction = "instruction_description_zone";
     
     const {id} = useParams<{id:string}>();
-    const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(document.documentElement.clientHeight);
+    const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(0);
 
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
 
@@ -56,21 +55,19 @@ export default observer( function ArticleEdit() {
     
     const {sceneInfoStore} = useStore();
     
-    function handleResize() {
-    //    if(document.getElementById(html_id_instruction)!=null){
-        const size = document.documentElement.clientHeight - document.getElementById(html_id_instruction)!.getBoundingClientRect().top;
-        setDescriptionAreaHeight(size);
-    //    }
-    }
+
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-    
-        window.addEventListener('resize', handleResize)
-    
-        return () => {
-          window.removeEventListener('resize', handleResize)
+        if(ref.current){
+            //console.log("clientHeight : hight", document.documentElement.clientHeight );
+            //console.log("current hight", ref.current.getBoundingClientRect().top);
+            //console.log("size", document.documentElement.clientHeight - ref.current.getBoundingClientRect().top);
+            setDescriptionAreaHeight(document.documentElement.clientHeight - ref.current.getBoundingClientRect().top);
         }
-    })
+      });
+
+
 
     useEffect(() => { 
         setIsDataLoading(
@@ -119,7 +116,6 @@ export default observer( function ArticleEdit() {
     
 
     const handleInputChangeInstruction=(id_instruct: number) => {
-        handleResize();
         setSelectedInstruction(id_instruct);
     }
 
@@ -164,8 +160,10 @@ export default observer( function ArticleEdit() {
                     <Col  sm={6} >
                         <Tabs defaultActiveKey="instruction" id="uncontrolled-tab-example" className="mb-3">
                             <Tab eventKey="instruction" title="Instruction">
-                                <EdiaInstruction />
-                                <div id={html_id_instruction} className="overflow-auto" style={{'height':`${descriptionAreaHeight}px`}}>
+                                {
+                                    <EdiaInstruction />
+                                }
+                                <div ref={ref} className="overflow-auto" style={{'height':`${descriptionAreaHeight}px`}}>
                                     {
                                         selectedInstruction && <PanelInstruction instruction={selectedInstruction} />
                                     }
