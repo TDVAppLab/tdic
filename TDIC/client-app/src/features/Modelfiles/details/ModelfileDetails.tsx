@@ -43,7 +43,7 @@ export default observer( function ModelfileDetails() {
                         <h4>Model Management</h4>
 
 
-                        <div className="row" id="model_screen" style={{ width: 640, height : 360 }}>
+                        <div className="row" style={{ width: 640, height : 360 }}>
                             {
                                 <PartViewer id_part={Number(id)}/>
                             }

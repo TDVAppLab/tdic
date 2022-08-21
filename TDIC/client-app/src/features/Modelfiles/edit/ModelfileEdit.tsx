@@ -101,7 +101,7 @@ export default observer( function ModelfileEdit(){
             
             <Row>
                 <Col  sm={6} >
-                    <div className="row" id="model_screen" style={{ height:"45vh", width:'45vw' }}>
+                    <div className="row" style={{ height:"45vh", width:'45vw' }}>
                             {
                                 <ModelfileViewer id_part={Number(id)}/>
                             }
