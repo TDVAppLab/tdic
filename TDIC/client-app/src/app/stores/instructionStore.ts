@@ -8,6 +8,10 @@ export default class InstructionStore {
     selectedInstruction: Instruction| undefined = undefined;
     loading=false;
 
+    
+    selectedSubtitles: string[]=[];
+    selectedSubtitleIndex: number=-1;
+
     constructor(){
         makeAutoObservable(this)
     }
@@ -48,6 +52,11 @@ export default class InstructionStore {
             this.selectedInstruction = instruction;
             runInAction(()=>{
                 this.selectedInstruction = instruction;
+                this.selectedSubtitles.length = 0;
+                if(this.selectedInstruction?.memo){
+                    this.selectedSubtitles = this.selectedInstruction.memo.split(/\n/).filter(x => x.length > 0);
+                    this.selectedSubtitleIndex=0;
+                }
             })
             return instruction;
         } /*else {
@@ -145,6 +154,10 @@ export default class InstructionStore {
             })
         }
     }    
+
+    setSelectedSubtitleIndex = (i : number) => {
+        this.selectedSubtitleIndex = i;
+    }
 
     private setInstruction = (instruction : Instruction) => {
         this.instructionRegistry.set(instruction.id_instruct,instruction);

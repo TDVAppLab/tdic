@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
@@ -16,10 +16,10 @@ import ModelScreen from "../common/modelscreen/ModelScreen";
 
 export default observer( function ArticleDetails() {
 
-    const html_id_instruction = "instruction_description_zone";
     
     const {id} = useParams<{id:string}>();
-    const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(document.documentElement.clientHeight);
+
+    const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(0);
     
     const {userStore: {user}} = useStore();
 
@@ -51,17 +51,13 @@ export default observer( function ArticleDetails() {
         
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
     
-    function handleResize() {
-        const size = document.documentElement.clientHeight - document.getElementById(html_id_instruction)!.getBoundingClientRect().top;
-        setDescriptionAreaHeight(size);
-    }
+    
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-    
-        window.addEventListener('resize', handleResize)
-    
-        return () => {
-          window.removeEventListener('resize', handleResize)
+        
+        if(ref.current){
+            setDescriptionAreaHeight(document.documentElement.clientHeight - ref.current.getBoundingClientRect().top);
         }
     })
 
@@ -114,7 +110,6 @@ export default observer( function ArticleDetails() {
     
 
     const handleInputChangeInstruction=(id_instruct: number) => {
-        handleResize();
         setSelectedInstruction(id_instruct);
     }
 
@@ -131,9 +126,10 @@ export default observer( function ArticleDetails() {
                 <Row>
                     <Col sm={8}>
                     {
-                        <ModelScreen height="64vh" width='64vw' isEditmode={false} />
+                        id && (<div style={{height: '64vh', width: '64vw'}} ><ModelScreen  isEditmode={false} /></div>)
+                        //<ModelScreen height="64vh" width='64vw' isEditmode={false} />
                     }
-                        <div id="control_panel_zone">
+                        <div>
                             {
                                 Array.from(instructionRegistry.values()).map(x=>(
                                     <button key={x.id_instruct}
@@ -155,7 +151,7 @@ export default observer( function ArticleDetails() {
                     <Col   sm={4}>
                         <Tabs defaultActiveKey="instruction" id="uncontrolled-tab-example" className="mb-3">
                             <Tab eventKey="instruction" title="Instruction">
-                                <div id={html_id_instruction} className="overflow-auto" style={{'height':`${descriptionAreaHeight}px`}}>
+                                <div ref={ref} className="overflow-auto" style={{'height':`${descriptionAreaHeight}px`}}>
                                     {
                                         selectedInstruction && <PanelInstruction instruction={selectedInstruction} />
                                     }

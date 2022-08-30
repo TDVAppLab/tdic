@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Form, Row, Tab, Tabs } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
@@ -17,16 +17,20 @@ import EditArticleSub from "./EditArticleSub";
 import EditViewList from "./EditViewList";
 import ModelScreen from "../common/modelscreen/ModelScreen";
 import EditEyecatch from "./EditEyecatch";
+import DisplayHtmlSubtitles from "../common/modelscreen/DisplayHtmlSubtitles";
+import SubtitleSelector from "../common/SubtitleSelector";
+import ListupSubtitles from "./ListupSubtitles";
 
 
 
 
 export default observer( function ArticleEdit() {
 
-    const html_id_instruction = "instruction_description_zone";
     
     const {id} = useParams<{id:string}>();
-    const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(document.documentElement.clientHeight);
+    const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(0);
+
+    const [isEditmode, setIsEditmode] = useState(true);
 
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
 
@@ -54,21 +58,19 @@ export default observer( function ArticleEdit() {
     
     const {sceneInfoStore} = useStore();
     
-    function handleResize() {
-    //    if(document.getElementById(html_id_instruction)!=null){
-        const size = document.documentElement.clientHeight - document.getElementById(html_id_instruction)!.getBoundingClientRect().top;
-        setDescriptionAreaHeight(size);
-    //    }
-    }
+
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-    
-        window.addEventListener('resize', handleResize)
-    
-        return () => {
-          window.removeEventListener('resize', handleResize)
+        if(ref.current){
+            //console.log("clientHeight : hight", document.documentElement.clientHeight );
+            //console.log("current hight", ref.current.getBoundingClientRect().top);
+            //console.log("size", document.documentElement.clientHeight - ref.current.getBoundingClientRect().top);
+            setDescriptionAreaHeight(document.documentElement.clientHeight - ref.current.getBoundingClientRect().top);
         }
-    })
+      });
+
+
 
     useEffect(() => { 
         setIsDataLoading(
@@ -116,33 +118,23 @@ export default observer( function ArticleEdit() {
     if(isDataLoading) return (<><LoadingComponent /><DebugDisplay /></>);
     
 
-    const handleInputChangeInstruction=(id_instruct: number) => {
-        handleResize();
-        setSelectedInstruction(id_instruct);
-    }
-
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked);
-    }
-
-
-
     return (
         <>
             {id && <h2>{article?.title}</h2> }
 
                 <Row>
-                    <Col  sm={6} >
+                    <Col style={{ width: 1280 }} sm={6} >
                     {
-                        id && <ModelScreen height="45vh" width='45vw' isEditmode={true} />
+                        id && (<div style={{aspectRatio: '16 / 7.5'}} ><ModelScreen  isEditmode={isEditmode} /></div>)
                     }
+                        <DisplayHtmlSubtitles fontSize={'2em'}/>
                         <div>
                             { instructionRegistry.size>0 &&
                                 Array.from(instructionRegistry.values()).map(x=>(
                                     <button key={x.id_instruct}
                                         type = 'submit'
                                         className={x.id_instruct==selectedInstruction?.id_instruct ? "btn btn-primary" : "btn btn-outline-primary"}
-                                        onClick={()=>{handleInputChangeInstruction(x.id_instruct)}} 
+                                        onClick={()=>{setSelectedInstruction(x.id_instruct)}} 
                                     >
                                         {x.title}
                                     </button>
@@ -150,17 +142,21 @@ export default observer( function ArticleEdit() {
                             }
                         </div>
 
+                        <SubtitleSelector />
+                        
                         <div>
-                            <input type="checkbox" defaultChecked={sceneInfoStore.is_automatic_camera_rotate} onChange={handleChange}/>
+                            <input type="checkbox" defaultChecked={sceneInfoStore.is_automatic_camera_rotate} onChange={(event: React.ChangeEvent<HTMLInputElement>) => sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked)}/>
                             <label>Camera Auto Moving</label>
                         </div>
 
                     </Col>
-                    <Col  sm={6} >
+                    <Col  sm={5} >
                         <Tabs defaultActiveKey="instruction" id="uncontrolled-tab-example" className="mb-3">
                             <Tab eventKey="instruction" title="Instruction">
-                                <EdiaInstruction />
-                                <div id={html_id_instruction} className="overflow-auto" style={{'height':`${descriptionAreaHeight}px`}}>
+                                {
+                                    <EdiaInstruction />
+                                }
+                                <div ref={ref} className="overflow-auto" style={{'height':`${descriptionAreaHeight}px`}}>
                                     {
                                         selectedInstruction && <PanelInstruction instruction={selectedInstruction} />
                                     }
@@ -202,8 +198,15 @@ export default observer( function ArticleEdit() {
                             <Tab eventKey="info" title="info" >
                                 <Link to={`/article/${Number(article?.id_article)}`}>Details</Link> 
                                 <hr />
-                                <p>{descriptionAreaHeight}</p>
+                                <div>
+                                    <input type="checkbox" defaultChecked={sceneInfoStore.is_automatic_camera_rotate} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsEditmode(event.target.checked)}/>
+                                    <label>Edit Mode</label>
+                                </div>
+                                <p>Hight : {descriptionAreaHeight}</p>
                                 <DebugDisplay />
+                            </Tab>
+                            <Tab eventKey="subtitles" title="Subtitles" >
+                                <ListupSubtitles />
                             </Tab>
                         </Tabs>
                     </Col>
