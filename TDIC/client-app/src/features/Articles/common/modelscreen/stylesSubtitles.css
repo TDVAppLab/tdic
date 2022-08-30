@@ -18,9 +18,10 @@
   margin-left: 0px;
   margin-top: 0px;
   transform: translate(0%, 0%);
-  text-align: center;
+  text-align: left;
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
+  padding: 2px 40px 2px 40px;
   border-radius: 5px;
 }
 

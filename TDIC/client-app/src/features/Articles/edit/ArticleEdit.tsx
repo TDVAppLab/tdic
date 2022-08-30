@@ -19,6 +19,7 @@ import ModelScreen from "../common/modelscreen/ModelScreen";
 import EditEyecatch from "./EditEyecatch";
 import DisplayHtmlSubtitles from "../common/modelscreen/DisplayHtmlSubtitles";
 import SubtitleSelector from "../common/SubtitleSelector";
+import ListupSubtitles from "./ListupSubtitles";
 
 
 
@@ -28,6 +29,8 @@ export default observer( function ArticleEdit() {
     
     const {id} = useParams<{id:string}>();
     const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(0);
+
+    const [isEditmode, setIsEditmode] = useState(true);
 
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
 
@@ -115,33 +118,23 @@ export default observer( function ArticleEdit() {
     if(isDataLoading) return (<><LoadingComponent /><DebugDisplay /></>);
     
 
-    const handleInputChangeInstruction=(id_instruct: number) => {
-        setSelectedInstruction(id_instruct);
-    }
-
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked);
-    }
-
-
-
     return (
         <>
             {id && <h2>{article?.title}</h2> }
 
                 <Row>
-                    <Col  sm={6} >
+                    <Col style={{ width: 1280 }} sm={6} >
                     {
-                        id && (<div style={{aspectRatio: '16 / 8'}} ><ModelScreen  isEditmode={true} /></div>)
+                        id && (<div style={{aspectRatio: '16 / 7.5'}} ><ModelScreen  isEditmode={isEditmode} /></div>)
                     }
-                        <DisplayHtmlSubtitles />
+                        <DisplayHtmlSubtitles fontSize={'2em'}/>
                         <div>
                             { instructionRegistry.size>0 &&
                                 Array.from(instructionRegistry.values()).map(x=>(
                                     <button key={x.id_instruct}
                                         type = 'submit'
                                         className={x.id_instruct==selectedInstruction?.id_instruct ? "btn btn-primary" : "btn btn-outline-primary"}
-                                        onClick={()=>{handleInputChangeInstruction(x.id_instruct)}} 
+                                        onClick={()=>{setSelectedInstruction(x.id_instruct)}} 
                                     >
                                         {x.title}
                                     </button>
@@ -152,12 +145,12 @@ export default observer( function ArticleEdit() {
                         <SubtitleSelector />
                         
                         <div>
-                            <input type="checkbox" defaultChecked={sceneInfoStore.is_automatic_camera_rotate} onChange={handleChange}/>
+                            <input type="checkbox" defaultChecked={sceneInfoStore.is_automatic_camera_rotate} onChange={(event: React.ChangeEvent<HTMLInputElement>) => sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked)}/>
                             <label>Camera Auto Moving</label>
                         </div>
 
                     </Col>
-                    <Col  sm={6} >
+                    <Col  sm={5} >
                         <Tabs defaultActiveKey="instruction" id="uncontrolled-tab-example" className="mb-3">
                             <Tab eventKey="instruction" title="Instruction">
                                 {
@@ -205,8 +198,15 @@ export default observer( function ArticleEdit() {
                             <Tab eventKey="info" title="info" >
                                 <Link to={`/article/${Number(article?.id_article)}`}>Details</Link> 
                                 <hr />
+                                <div>
+                                    <input type="checkbox" defaultChecked={sceneInfoStore.is_automatic_camera_rotate} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsEditmode(event.target.checked)}/>
+                                    <label>Edit Mode</label>
+                                </div>
                                 <p>Hight : {descriptionAreaHeight}</p>
                                 <DebugDisplay />
+                            </Tab>
+                            <Tab eventKey="subtitles" title="Subtitles" >
+                                <ListupSubtitles />
                             </Tab>
                         </Tabs>
                     </Col>

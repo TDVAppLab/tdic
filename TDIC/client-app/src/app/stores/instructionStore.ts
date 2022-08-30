@@ -52,6 +52,7 @@ export default class InstructionStore {
             this.selectedInstruction = instruction;
             runInAction(()=>{
                 this.selectedInstruction = instruction;
+                this.selectedSubtitles.length = 0;
                 if(this.selectedInstruction?.memo){
                     this.selectedSubtitles = this.selectedInstruction.memo.split(/\n/).filter(x => x.length > 0);
                     this.selectedSubtitleIndex=0;
