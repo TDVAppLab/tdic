@@ -30,25 +30,18 @@ export default class ArticleStore {
 
     loadArticle = async (id:number) => {
         this.loading = true;
-        let article = this.getArticle(id);
-        if(article) {
-            this.selectedArticle = article;
+        
+        try {
+            const object = await agent.Articles.details(id);
+            this.setArticle(object);
+            runInAction(()=>{
+                this.selectedArticle = object;
+            })
             this.setLoading(false);
-            return article;
-        } else {
-            this.loading = true;
-            try {
-                article = await agent.Articles.details(id);
-                this.setArticle(article);
-                runInAction(()=>{
-                    this.selectedArticle = article;
-                })
-                this.setLoading(false);
-                return article;
-            } catch (error) {
-                console.log(error);
-                this.setLoading(false);
-            }
+            return object;
+        } catch (error) {
+            console.log(error);
+            this.setLoading(false);
         }
     }
 
