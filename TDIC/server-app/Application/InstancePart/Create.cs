@@ -16,7 +16,7 @@ namespace Application.Instancepart
 {
     public class Create
     {
-        public class Command : IRequest<Result<Unit>>{
+        public class Command : IRequest<Result<t_instance_part>>{
             public t_instance_part t_instance_part {get; set;}
         }
 
@@ -29,7 +29,7 @@ namespace Application.Instancepart
             }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<t_instance_part>>
         {
         private readonly db_data_coreContext _context;
             public Handler(db_data_coreContext context)
@@ -37,7 +37,7 @@ namespace Application.Instancepart
                 _context = context;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<t_instance_part>> Handle(Command request, CancellationToken cancellationToken)
             {
 
                 
@@ -56,9 +56,12 @@ namespace Application.Instancepart
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to create t_instance_part");
+                if(!result) return Result<t_instance_part>.Failure("Failed to create t_instance_part");
 
-                return Result<Unit>.Success(Unit.Value);
+                //var ans = request.t_instance_part.id_inst;
+
+
+                return Result<t_instance_part>.Success(request.t_instance_part);
             }
         }
 
