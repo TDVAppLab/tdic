@@ -16,7 +16,7 @@ namespace Application.Annotation
 {
     public class Create
     {
-        public class Command : IRequest<Result<Unit>>{
+        public class Command : IRequest<Result<t_annotation>>{
             public t_annotation Annotation {get; set;}
         }
 
@@ -29,7 +29,7 @@ namespace Application.Annotation
             }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<t_annotation>>
         {
         private readonly db_data_coreContext _context;
             public Handler(db_data_coreContext context)
@@ -37,7 +37,7 @@ namespace Application.Annotation
                 _context = context;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<t_annotation>> Handle(Command request, CancellationToken cancellationToken)
             {
 
                 
@@ -84,9 +84,11 @@ namespace Application.Annotation
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to create task");
+                if(!result) return Result<t_annotation>.Failure("Failed to create task");
 
-                return Result<Unit>.Success(Unit.Value);
+                var x = request.Annotation;
+
+                return Result<t_annotation>.Success(request.Annotation);
             }
         }
 
