@@ -103,10 +103,11 @@ export default class InstructionStore {
     createInstruction = async (object: Instruction) => {
         this.loading = true;
         try {
-            await agent.Instructions.create(object);
+            const result_object = await (await agent.Instructions.create(object)).data;
+            console.log(result_object);
             runInAction(() => {
-                this.instructionRegistry.set(object.id_instruct, object);
-                this.selectedInstruction = object;
+                this.instructionRegistry.set(result_object.id_instruct, result_object);
+                this.selectedInstruction = result_object;
                 this.loading = false;
             })            
         }catch (error) {

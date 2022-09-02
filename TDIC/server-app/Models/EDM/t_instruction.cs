@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -24,8 +25,11 @@ namespace TDIC.Models.EDM
         public string latest_update_user { get; set; }
         public DateTime? latest_update_datetime { get; set; }
 
+        [JsonIgnore]
         public virtual t_view id_ { get; set; }
+        [JsonIgnore]
         public virtual t_article id_articleNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<t_annotation_display> t_annotation_displays { get; set; }
     }
 }

@@ -57,10 +57,11 @@ export default class AnnotationStore {
     createAnnotation = async (object: Annotation) => {
         this.loading = true;
         try {
-            await agent.Annotations.create(object);
+            //await agent.Annotations.create(object);
+            const result_object = await (await agent.Annotations.create(object)).data;
             runInAction(() => {
-                this.annotationRegistry.set(object.id_annotation, object);
-                this.selectedAnnotation = object;
+                this.annotationRegistry.set(result_object.id_annotation, result_object);
+                this.selectedAnnotation = result_object;
                 this.setLoading(false);
             })            
         }catch (error) {

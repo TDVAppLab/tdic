@@ -112,7 +112,7 @@ const Articles = {
 const Instructions = {
     list: (id:number) => requests.get<Instruction[]>(`/instruction/index/${id}`),
     details:(id_article:number,id_instruct:number) => requests.get<Instruction>(`/instruction/id_article=${id_article}&id_instruct=${id_instruct}`),
-    create:(instruction: Instruction) => axios.post<void>(`/instruction/create`,instruction),
+    create:(instruction: Instruction) => axios.post<Instruction>(`/instruction/create`,instruction),
     update: (instruction: Instruction) => axios.post<void>(`/instruction/update/`, instruction),
     delete: (id_article:number,id_instruct:number) => axios.post<void>(`/instruction/delete/id_article=${id_article}&id_instruct=${id_instruct}`),
 }
@@ -128,7 +128,7 @@ const Views = {
 const Annotations = {
     list: (id:number) => requests.get<Annotation[]>(`/annotation/index/${id}`),
     details:(id_article:number,id_annotation:number) => requests.get<Annotation>(`/annotation/details/id_article=${id_article}&id_annotation=${id_annotation}`),
-    create:(annotation: Annotation) => axios.post<void>(`/annotation/create`,annotation),
+    create:(annotation: Annotation) => axios.post<Annotation>(`/annotation/create`,annotation),
     update: (annotation: Annotation) => axios.post<void>(`/annotation/update/`, annotation),
     delete: (id_article:number,id_annotation:number) => axios.post<void>(`/annotation/delete/id_article=${id_article}&id_annotation=${id_annotation}`),
 }
@@ -149,7 +149,7 @@ const Lights = {
 const Instanceparts = {
     list: (id:number) => requests.get<Instancepart[]>(`/instancepart/index/${id}`),
     details:(id_assy:number,id_inst:number) => requests.get<Instancepart>(`/instancepart/details/id_assy=${id_assy}&id_inst=${id_inst}`),    
-    create:(object: Instancepart) => axios.post<void>(`/instancepart/create`,object),
+    create:(object: Instancepart) => axios.post<Instancepart>(`/instancepart/create`,object),
     update: (instancepart: Instancepart[]) => axios.post<void>(`/instancepart/update/`, instancepart),
     delete: (id_assy:number,id_inst:number) => axios.post<void>(`/instancepart/delete/id_assy=${id_assy}&id_inst=${id_inst}`),
 }
