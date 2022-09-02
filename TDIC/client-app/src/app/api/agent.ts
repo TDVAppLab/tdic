@@ -112,7 +112,7 @@ const Articles = {
 const Instructions = {
     list: (id:number) => requests.get<Instruction[]>(`/instruction/index/${id}`),
     details:(id_article:number,id_instruct:number) => requests.get<Instruction>(`/instruction/id_article=${id_article}&id_instruct=${id_instruct}`),
-    create:(instruction: Instruction) => axios.post<void>(`/instruction/create`,instruction),
+    create:(instruction: Instruction) => axios.post<Instruction>(`/instruction/create`,instruction),
     update: (instruction: Instruction) => axios.post<void>(`/instruction/update/`, instruction),
     delete: (id_article:number,id_instruct:number) => axios.post<void>(`/instruction/delete/id_article=${id_article}&id_instruct=${id_instruct}`),
 }

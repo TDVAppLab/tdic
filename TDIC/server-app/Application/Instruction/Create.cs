@@ -13,7 +13,7 @@ namespace Application.Instruction
 {
     public class Create
     {
-        public class Command : IRequest<Result<Unit>>{
+        public class Command : IRequest<Result<t_instruction>>{
             public t_instruction Instruction {get; set;}
         }
 
@@ -26,7 +26,7 @@ namespace Application.Instruction
             }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<t_instruction>>
         {
         private readonly db_data_coreContext _context;
             public Handler(db_data_coreContext context)
@@ -34,7 +34,7 @@ namespace Application.Instruction
                 _context = context;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<t_instruction>> Handle(Command request, CancellationToken cancellationToken)
             {
 
                 
@@ -81,9 +81,15 @@ namespace Application.Instruction
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to create task");
+                if(!result) return Result<t_instruction>.Failure("Failed to create task");
 
-                return Result<Unit>.Success(Unit.Value);
+//                var ans = request.Instruction;
+
+
+
+
+                return Result<t_instruction>.Success(await _context.t_instructions.FindAsync(request.Instruction.id_article, request.Instruction.id_instruct));
+//                return Result<t_instruction>.Success(request.Instruction);
             }
         }
 
