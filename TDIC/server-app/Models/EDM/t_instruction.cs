@@ -20,8 +20,8 @@ namespace TDIC.Models.EDM
         public string short_description { get; set; }
         public string memo { get; set; }
         public long display_order { get; set; }
-        public bool? is_automatic_camera_rotate { get; set; }
-        public string? display_instance_sets { get; set; }
+        public bool is_automatic_camera_rotate { get; set; }
+        public string display_instance_sets { get; set; }
         public string create_user { get; set; }
         public DateTime? create_datetime { get; set; }
         public string latest_update_user { get; set; }
