@@ -151,50 +151,63 @@ export default observer( function ArticleEdit() {
 
                     </Col>
                     <Col  sm={5} >
-                        <Tabs defaultActiveKey="instruction" id="uncontrolled-tab-example" className="mb-3">
+                        <Tabs defaultActiveKey="instruction" id="article-editor-main-tab" className="mb-3">
+
                             <Tab eventKey="instruction" title="Instruction">
-                                {
-                                    <EdiaInstruction />
-                                }
-                                <div ref={ref} className="overflow-auto" style={{'height':`${descriptionAreaHeight}px`}}>
-                                    {
-                                        selectedInstruction && <PanelInstruction instruction={selectedInstruction} />
-                                    }
-                                </div>
+                                <Tabs defaultActiveKey="edit_instruction" id="instruction-editor-sub-tab" className="mb-3">
+                                    <Tab eventKey="edit_instruction" title="Edit Instruction">
+                                        <EdiaInstruction />
+                                    </Tab>
+                                    <Tab eventKey="show_instruction" title="Show Instruction">
+                                        <div ref={ref} className="overflow-auto" style={{'height':`${descriptionAreaHeight}px`}}>
+                                            {
+                                                selectedInstruction && <PanelInstruction instruction={selectedInstruction} />
+                                            }
+                                        </div>
+                                    </Tab>
+                                    <Tab eventKey="show_subtitles" title="Show Subtitles">
+                                        <ListupSubtitles />
+                                    </Tab>
+                                </Tabs>
                             </Tab>
+
                             <Tab eventKey="view" title="View">
                                 {id && <EditView /> }
                                 <hr />
                                 {id && <EditViewList /> }
                             </Tab>
+
                             <Tab eventKey="annotation" title="Annotation" >
                                 {id && <EditAnnotation /> }
                                 {
                                     selectedAnnotationDisplayMap.size > 0 && <EdiaAnnotationDisplay />
                                 }
                             </Tab>
-                            <Tab eventKey="displayItemsInfo" title="Display Items Info" >
-                                <p>abxxxxxx</p>
-                            </Tab>
+
                             <Tab eventKey="light" title="Light" >
                                 {id && <EditLight /> }
                                 <hr />
                                 {id && <EditLightList /> }
                             </Tab>
+
                             <Tab eventKey="instance" title="Instance" >
                                 {
                                     instancepartRegistry.size > 0 && <EditInstancepart />
                                 }
                             </Tab>
+
                             <Tab eventKey="articleBase" title="Article Base" >
                                 <EditArticleSub /> 
                             </Tab>
+
                             <Tab eventKey="thumbnail" title="Thumbnail" >
                                 <EditEyecatch />
                             </Tab>
+
                             <Tab eventKey="materials" title="Materials" >
                                 <p>abxxxxxx</p>
                             </Tab>
+
                             <Tab eventKey="info" title="info" >
                                 <Link to={`/article/${Number(article?.id_article)}`}>Details</Link> 
                                 <hr />
@@ -205,9 +218,7 @@ export default observer( function ArticleEdit() {
                                 <p>Hight : {descriptionAreaHeight}</p>
                                 <DebugDisplay />
                             </Tab>
-                            <Tab eventKey="subtitles" title="Subtitles" >
-                                <ListupSubtitles />
-                            </Tab>
+
                         </Tabs>
                     </Col>
                 </Row>
