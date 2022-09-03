@@ -10,6 +10,7 @@ import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
 import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
 import { Col, Row } from 'react-bootstrap';
 import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
+import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 
 
 export default observer( function EditInstruction(){
@@ -29,7 +30,9 @@ export default observer( function EditInstruction(){
         title: '',
         short_description: '',
         display_order: 0,
-        memo: '',
+        memo: '',        
+        is_automatic_camera_rotate: true,
+        display_instance_sets: '',
     });
 
 
@@ -53,6 +56,7 @@ export default observer( function EditInstruction(){
 
     
     function handleFormSubmit(instruction:Instruction) {
+        console.log(instruction);
         
         if(instruction.id_instruct ==0 ){
             let newInstruction = {
@@ -101,6 +105,14 @@ export default observer( function EditInstruction(){
                         
                         <Row>
                             <Col ><TextAreaGeneral label='MEMO' placeholder='memo' name='memo' rows={15}   /></Col>
+                        </Row>
+
+                        <Row>
+                            <Col ><TextAreaGeneral label='Display Instance Sets' placeholder='' name='display_instance_sets' rows={5}   /></Col>
+                        </Row>
+
+                        <Row>
+                            <Col xs={4}><CheckBoxGeneral label='Auto Camera Rotate' name='is_automatic_camera_rotate'  /></Col>
                         </Row>
                         
                         
