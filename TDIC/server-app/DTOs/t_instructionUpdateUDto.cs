@@ -13,5 +13,7 @@ namespace TDIC.DTOs
         public string short_description { get; set; }
         public string memo { get; set; }
         public long display_order { get; set; }
+        public bool is_automatic_camera_rotate { get; set; }
+        public string display_instance_sets { get; set; }
     }
 }
