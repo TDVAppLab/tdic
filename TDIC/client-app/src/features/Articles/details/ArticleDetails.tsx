@@ -143,7 +143,7 @@ export default observer( function ArticleDetails() {
                             }
                         </div>
                         <div>
-                            <input type="checkbox" defaultChecked={sceneInfoStore.is_automatic_camera_rotate} onChange={handleChange}/>
+                            <input type="checkbox" checked={sceneInfoStore.is_automatic_camera_rotate} onChange={handleChange}/>
                             <label>Camera Auto Moving</label>
                         </div>
                         <GoogleAd pid={process.env.REACT_APP_GOOGLE_ADSENSE_PUBLISHER_ID!} uid={process.env.REACT_APP_GOOGLE_ADSENSE_UNIT_ID!} />

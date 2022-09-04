@@ -145,7 +145,7 @@ export default observer( function ArticleEdit() {
                         <SubtitleSelector />
                         
                         <div>
-                            <input type="checkbox" defaultChecked={sceneInfoStore.is_automatic_camera_rotate} onChange={(event: React.ChangeEvent<HTMLInputElement>) => sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked)}/>
+                            <input type="checkbox" checked={sceneInfoStore.is_automatic_camera_rotate} onChange={(event: React.ChangeEvent<HTMLInputElement>) => sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked)}/>
                             <label>Camera Auto Moving</label>
                         </div>
 
