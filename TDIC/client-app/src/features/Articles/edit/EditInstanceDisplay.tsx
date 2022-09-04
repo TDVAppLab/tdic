@@ -81,7 +81,7 @@ export default observer( function EditInstanceDisplay(){
                             <tbody>
                             {                                
                                 instanceDisplays && instanceDisplays.map((instanceDisplay,index)=>(
-                                    <tr key={`[${index}]abceditor`}>
+                                    <tr key={`[${index}]EditInstanceDisplaytable`}>
                                         <td><div>{index+1}</div></td>
                                         <td><div>{instanceDisplay.id_assy}</div></td>
                                         <td><div>{instanceDisplay.id_inst}</div></td>
