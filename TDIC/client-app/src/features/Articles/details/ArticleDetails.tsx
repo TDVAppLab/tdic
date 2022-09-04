@@ -113,10 +113,6 @@ export default observer( function ArticleDetails() {
         setSelectedInstruction(id_instruct);
     }
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked);
-    }
-
     return (
         <>
             <h2>{
@@ -135,7 +131,7 @@ export default observer( function ArticleDetails() {
                                     <button key={x.id_instruct}
                                         type = 'submit'
                                         className={x.id_instruct==selectedInstruction?.id_instruct ? "btn btn-primary" : "btn btn-outline-primary"}
-                                        onClick={()=>{handleInputChangeInstruction(x.id_instruct)}} 
+                                        onClick={()=>{setSelectedInstruction(x.id_instruct)}} 
                                     >
                                         {x.title}
                                     </button>
@@ -143,7 +139,7 @@ export default observer( function ArticleDetails() {
                             }
                         </div>
                         <div>
-                            <input type="checkbox" checked={sceneInfoStore.is_automatic_camera_rotate} onChange={handleChange}/>
+                            <input type="checkbox" checked={sceneInfoStore.is_automatic_camera_rotate} onChange={(event: React.ChangeEvent<HTMLInputElement>) => sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked)}/>
                             <label>Camera Auto Moving</label>
                         </div>
                         <GoogleAd pid={process.env.REACT_APP_GOOGLE_ADSENSE_PUBLISHER_ID!} uid={process.env.REACT_APP_GOOGLE_ADSENSE_UNIT_ID!} />
