@@ -107,11 +107,6 @@ export default observer( function ArticleDetails() {
 
 
     if(isDataLoading) return (<LoadingComponent />);
-    
-
-    const handleInputChangeInstruction=(id_instruct: number) => {
-        setSelectedInstruction(id_instruct);
-    }
 
     return (
         <>
