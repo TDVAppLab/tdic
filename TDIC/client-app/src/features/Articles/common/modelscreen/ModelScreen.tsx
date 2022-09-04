@@ -60,7 +60,8 @@ export default observer( function ModelScreen({isEditmode}: Props) {
 
   useEffect(()=> {
     setModeTransport(true);
-}, [selectedInstruction])
+    sceneInfoStore.setIsAutomaticCameraRotate(selectedInstruction ? selectedInstruction.is_automatic_camera_rotate : false);
+  }, [selectedInstruction])
 
 useEffect(()=> {
 }, [sceneInfoStore.is_automatic_camera_rotate])

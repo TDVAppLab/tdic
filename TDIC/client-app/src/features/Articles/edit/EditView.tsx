@@ -108,7 +108,6 @@ export default observer( function EditView(){
 
     return(
         <div>         
-            <h3>Task Details</h3> 
             <Formik
                 validationSchema={validationSchema}
                 enableReinitialize 
