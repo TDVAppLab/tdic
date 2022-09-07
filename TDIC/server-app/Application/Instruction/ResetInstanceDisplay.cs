@@ -66,6 +66,7 @@ namespace Application.Instruction
                 foreach (var instruction in instructions)
                 {
                     instruction.display_instance_sets = json_str;
+                    instruction.latest_update_datetime = DateTime.Now;
                 }
 
                 //end create json
