@@ -10,7 +10,7 @@ import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 export default observer( function EditInstanceDisplay(){
     
     const {instructionStore} = useStore();
-    const {selectedInstruction, updateInstanceDisplay} = instructionStore;
+    const {selectedInstruction, updateInstanceDisplay, resetInstanceDisplay} = instructionStore;
 
     
     const [instanceDisplays, setInstanceDisplays] = useState<InstanceDisplay[]>();
@@ -47,6 +47,11 @@ export default observer( function EditInstanceDisplay(){
         }
     }
 
+    function handleFormSubmitCreate() {
+        if(selectedInstruction){
+            resetInstanceDisplay(selectedInstruction.id_article);
+        }
+    }
     
 
     if(instructionStore.instructionRegistry.size<1) return null;
@@ -97,6 +102,14 @@ export default observer( function EditInstanceDisplay(){
                 )}
 
             </Formik>
+
+            <button 
+                type = 'submit'
+                className={"btn btn-primary"}
+                onClick={()=>{handleFormSubmitCreate()}} 
+            >
+                {"Reset"}
+            </button>
         </div>
     )
 })

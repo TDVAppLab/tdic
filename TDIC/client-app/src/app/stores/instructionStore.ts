@@ -156,6 +156,25 @@ export default class InstructionStore {
         }
     }
 
+    resetInstanceDisplay = async (id_article:number) => {
+        //this.loading = true;
+        console.log(id_article);
+        try {
+            await agent.Instructions.resetInstanceDisplay(id_article);
+            runInAction(() => {
+                //this.instructionRegistry.set(instruction.id_instruct, instruction);
+                //this.selectedInstruction = instruction;
+                //this.loading = false;
+            })
+            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+            //    this.loading = false;
+            })
+        }
+    }
+
     
     deleteInstruction = async (instruction: Instruction) => {
         this.loading = true;
