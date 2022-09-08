@@ -30,11 +30,15 @@ export default observer( function UpdateInstanceVisivility()  {
 
 
     Array.from(instancepartStore.instancepartRegistry.values()).map(inst=> { 
-        const temp_inst = scene.children.find(child => child.name == `[${inst.id_inst}]InstanceModel`); 
+        
+        const temp_inst = scene.children.find(child => child.name == `[${inst.id_inst}]InstanceModel`);
+
         if(temp_inst) {
             const instdisplay = instanceDisplays?.find(x => x.id_inst == inst.id_inst);
             if(instdisplay){
                 temp_inst.visible=instdisplay.isDisplay;
+            } else {
+                temp_inst.visible=true;
             }
         } 
     });
