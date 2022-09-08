@@ -14,6 +14,7 @@ import { Lights } from './Lights';
 import GetSceneCapture from './GetSceneCapture';
 import AutomaticCameraMove from './AutomaticCameraMove';
 import ShowOrbitInfo from './ShowOrbitInfo';
+import UpdateInstanceVisivility from './UpdateInstanceVisivility';
 
 
 // ref https://codesandbox.io/s/draggable-mesh-rgn91?file=/src/App.tsx:900-940
@@ -88,7 +89,7 @@ useEffect(()=> {
           Array.from(lightRegistry.values()).map(x=>(<SetLight key={x.id_light} light={x} />))
         }
         {
-          Array.from(instancepartRegistry.values()).map(x=>(<LoadModel key={x.id_inst} id_part={x.id_part} pos={new Vector3(x.pos_x, x.pos_y, x.pos_z)} scale={x.scale}/>))
+          Array.from(instancepartRegistry.values()).map(x=>(<LoadModel key={x.id_inst} id_inst={x.id_inst} id_part={x.id_part} pos={new Vector3(x.pos_x, x.pos_y, x.pos_z)} scale={x.scale}/>))
         }
         {
           selectedView && <UpdateCameraWork view={selectedView} isModeTransport={sceneInfoStore.mode_transport}/>
@@ -103,6 +104,7 @@ useEffect(()=> {
         {
           isEditmode && <ShowOrbitInfo />
         }
+        <UpdateInstanceVisivility />
 
         
 			{/* lights */}
