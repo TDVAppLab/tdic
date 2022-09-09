@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { InstanceDisplay } from '../../../app/models/InstanceDisplay';
@@ -10,26 +10,12 @@ import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 export default observer( function EditInstanceDisplay(){
     
     const {instructionStore} = useStore();
-    const {selectedInstruction, updateInstanceDisplay, resetInstanceDisplay} = instructionStore;
-
-    
-    const [instanceDisplays, setInstanceDisplays] = useState<InstanceDisplay[]>();
+    const {selectedInstruction, instanceDisplayRegistry, updateInstanceDisplay, resetInstanceDisplay} = instructionStore;
 
     useEffect(()=>{
     }, []);
 
     useEffect(()=>{
-        if(selectedInstruction){
-
-            const ans = JSON.parse(selectedInstruction.display_instance_sets || "null") as InstanceDisplay[];
-            if(ans) {
-                //console.log(instanceDisplays);
-                setInstanceDisplays(ans);
-            } else {
-                setInstanceDisplays([]);
-            }
-        }
-
     }, [selectedInstruction]);
 
     const validationSchema = Yup.object({
@@ -61,7 +47,7 @@ export default observer( function EditInstanceDisplay(){
             <Formik
                 validationSchema={validationSchema}
                 enableReinitialize 
-                initialValues={instanceDisplays!} 
+                initialValues={Array.from(instanceDisplayRegistry.values())!} 
                 onSubmit={(values) => handleFormSubmit(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
@@ -84,8 +70,8 @@ export default observer( function EditInstanceDisplay(){
                                 </tr>
                             </thead>
                             <tbody>
-                            {                                
-                                instanceDisplays && instanceDisplays.map((instanceDisplay,index)=>(
+                            {
+                                instanceDisplayRegistry && Array.from(instanceDisplayRegistry.values()).map((instanceDisplay,index)=> (
                                     <tr key={`[${index}]EditInstanceDisplaytable`}>
                                         <td><div>{index+1}</div></td>
                                         <td><div>{instanceDisplay.id_assy}</div></td>

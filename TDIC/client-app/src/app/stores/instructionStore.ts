@@ -2,6 +2,7 @@ import {  makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import {format} from 'date-fns';
 import { Instruction } from "../models/instruction";
+import { InstanceDisplay } from "../models/InstanceDisplay";
 
 export default class InstructionStore {
     instructionRegistry = new Map<number, Instruction>();
@@ -11,6 +12,9 @@ export default class InstructionStore {
     
     selectedSubtitles: string[]=[];
     selectedSubtitleIndex: number=-1;
+    
+    instanceDisplayRegistry = new Map<number, InstanceDisplay>();
+
 
     constructor(){
         makeAutoObservable(this)
@@ -56,6 +60,17 @@ export default class InstructionStore {
                 if(this.selectedInstruction?.memo){
                     this.selectedSubtitles = this.selectedInstruction.memo.split(/\n/).filter(x => x.length > 0);
                     this.selectedSubtitleIndex=0;
+                }
+
+                this.instanceDisplayRegistry.clear();
+                if(this.selectedInstruction){
+
+                    const ans = JSON.parse(this.selectedInstruction.display_instance_sets || "null") as InstanceDisplay[];
+                    if(ans) {
+                        ans.forEach(x=>{                            
+                            this.instanceDisplayRegistry.set(x.id_inst,x);
+                        })
+                    }
                 }
             })
             return instruction;
