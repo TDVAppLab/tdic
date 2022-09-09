@@ -39,6 +39,24 @@ namespace API.Controllers
 
             return HandleResult(await Mediator.Send(new Edit.Command{ Instruction = instruction}));
         }
+        
+
+        [HttpPost("updateinstancedisplay")]
+        public async Task<IActionResult> UpdateInstancedisplay([FromBody] t_instructionUpdateUDto instruction)
+        {
+            //task.id = id;
+
+            return HandleResult(await Mediator.Send(new UpdateInstanceDisplay.Command{ Instruction = instruction}));
+        }
+
+        [HttpPost("resetinstancedisplay/{id}")]
+        public async Task<IActionResult> ResetInstanceDisplay(long id)
+        {
+            //task.id = id;
+
+            return HandleResult(await Mediator.Send(new ResetInstanceDisplay.Command{ id_article = id}));
+        }
+
 
 
         [HttpPost("delete/id_article={id_article}&id_instruct={id_instruct}")]

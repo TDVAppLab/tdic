@@ -8,9 +8,17 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Application.Instruction
 {
+
+    public partial class InstanceDisplay {
+        public long id_assy { get; set; }
+        public long id_inst { get; set; }
+        public bool isDisplay { get; set; }
+    }
+
     public class Create
     {
         public class Command : IRequest<Result<t_instruction>>{
@@ -37,12 +45,32 @@ namespace Application.Instruction
             public async Task<Result<t_instruction>> Handle(Command request, CancellationToken cancellationToken)
             {
 
+                //--------------------------------------------------------------------------------------
+                //start create json
+
+                var data = new List<InstanceDisplay>();
+                
+                long assyid = (await _context.t_articles.FindAsync(request.Instruction.id_article)).id_assy ?? 0;
+
+                var instlist = await _context.t_instance_parts.Where(t => t.id_assy == assyid).ToListAsync();
+                    
+                foreach (var inst in instlist)
+                {
+                    data.Add(new InstanceDisplay{id_assy=inst.id_assy, id_inst=inst.id_inst, isDisplay=true});
+                }
+                // オプションを付けずにJson文字列に変換
+                var json_str = JsonSerializer.Serialize(data);
+
+                //end create json
+                //--------------------------------------------------------------------------------------
+
                 
                 long id_instruct = 1 + (await _context.t_instructions.Where(t => t.id_article == request.Instruction.id_article)
                                         .MaxAsync(t => (long?)t.id_instruct) ?? 0);
 
                 request.Instruction.id_instruct = id_instruct;
 
+                request.Instruction.display_instance_sets = json_str;
                 
                 request.Instruction.create_user = "";
                 request.Instruction.create_datetime = DateTime.Now;

@@ -20,6 +20,7 @@ import EditEyecatch from "./EditEyecatch";
 import DisplayHtmlSubtitles from "../common/modelscreen/DisplayHtmlSubtitles";
 import SubtitleSelector from "../common/SubtitleSelector";
 import ListupSubtitles from "./ListupSubtitles";
+import EditInstanceDisplay from "./EditInstanceDisplay";
 
 
 
@@ -157,6 +158,9 @@ export default observer( function ArticleEdit() {
                                 <Tabs defaultActiveKey="edit_instruction" id="instruction-editor-sub-tab" className="mb-3">
                                     <Tab eventKey="edit_instruction" title="Edit Instruction">
                                         <EdiaInstruction />
+                                    </Tab>
+                                    <Tab eventKey="edit_instance_display" title="Edit Instance Display">
+                                        <EditInstanceDisplay />
                                     </Tab>
                                     <Tab eventKey="show_instruction" title="Show Instruction">
                                         <div ref={ref} className="overflow-auto" style={{'height':`${descriptionAreaHeight}px`}}>
