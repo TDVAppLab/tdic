@@ -29,9 +29,11 @@ export default observer( function ArticleEdit() {
 
     
     const {id} = useParams<{id:string}>();
+
     const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(0);
 
-    const [isEditmode, setIsEditmode] = useState(true);
+    const [isEditmode, setIsEditmode] = useState(false);
+    const [isMotiondisplayMode, setIsMotiondisplayMode] = useState(false);
 
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
 
@@ -124,7 +126,9 @@ export default observer( function ArticleEdit() {
             {id && <h2>{article?.title}</h2> }
 
                 <Row>
-                    <Col style={{ width: 1280 }} sm={6} >
+                    <Col style={{ 
+                        width: isMotiondisplayMode ? 1280 : undefined
+                        }} sm={6} >
                     {
                         id && (<div style={{aspectRatio: '16 / 7.5'}} ><ModelScreen  isEditmode={isEditmode} /></div>)
                     }
@@ -151,7 +155,7 @@ export default observer( function ArticleEdit() {
                         </div>
 
                     </Col>
-                    <Col  sm={5} >
+                    <Col  sm={6} >
                         <Tabs defaultActiveKey="instruction" id="article-editor-main-tab" className="mb-3">
 
                             <Tab eventKey="instruction" title="Instruction">
@@ -216,8 +220,12 @@ export default observer( function ArticleEdit() {
                                 <Link to={`/article/${Number(article?.id_article)}`}>Details</Link> 
                                 <hr />
                                 <div>
-                                    <input type="checkbox" defaultChecked={sceneInfoStore.is_automatic_camera_rotate} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsEditmode(event.target.checked)}/>
+                                    <input type="checkbox" defaultChecked={isEditmode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsEditmode(event.target.checked)}/>
                                     <label>Edit Mode</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" defaultChecked={isMotiondisplayMode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsMotiondisplayMode(event.target.checked)}/>
+                                    <label>Display Mode</label>
                                 </div>
                                 <p>Hight : {descriptionAreaHeight}</p>
                                 <DebugDisplay />
