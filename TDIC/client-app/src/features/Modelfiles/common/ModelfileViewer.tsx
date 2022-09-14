@@ -1,26 +1,34 @@
-import { Canvas, useLoader } from '@react-three/fiber';
+import { useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import React from 'react';
-import { OrbitControls } from '@react-three/drei';
+import React, { useEffect } from 'react';
+import { AnimationClip } from 'three';
 
 
 interface Props {
   id_part: number;
+  setTeststring: React.Dispatch<React.SetStateAction<AnimationClip[]>>;
+  setModelUuid: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const UseModel  = ({id_part}: Props) => {
+const UseModel  = ({id_part, setTeststring, setModelUuid}: Props) => {
   return (
       <React.Suspense fallback={null}>
-          <LoadModel id_part={id_part} />
+          <LoadModel id_part={id_part} setTeststring={setTeststring}  setModelUuid = {setModelUuid}/>
       </React.Suspense>
   )
 }
 
 
-const LoadModel  = ({id_part}: Props) => {
+const LoadModel  = ({id_part, setTeststring, setModelUuid}: Props) => {
 
   const str_url_partapi = process.env.REACT_APP_API_URL + `/modelfiles/file/${id_part}`
   const gltf = useLoader(GLTFLoader, str_url_partapi);
+
+
+  useEffect(() => {
+    setTeststring(gltf.animations);
+    setModelUuid(gltf.scene.uuid);
+    }, [id_part]);
 
   return (
       <primitive object={gltf.scene} dispose={null} />
@@ -28,21 +36,9 @@ const LoadModel  = ({id_part}: Props) => {
 }
 
 
-export default function ModelfileViewer({id_part}: Props){
+export default function ModelfileViewer({id_part, setTeststring, setModelUuid}: Props){
 
   return (
-      <Canvas
-        style={{background: 'white'}}
-        camera={{position:[3,3,3]}} >
-          <ambientLight intensity={1.5} />
-          <directionalLight intensity={0.6} position={[0, 2, 2]} />
-          { 
-            <UseModel id_part={id_part} /> 
-          }
-          
-        <OrbitControls target={[0, 0, 0]}  makeDefault />
-        <axesHelper args={[2]}/>
-        <gridHelper args={[2]}/>
-      </Canvas>
+    <UseModel id_part={id_part} setTeststring={setTeststring} setModelUuid = {setModelUuid}/> 
   );
 };
