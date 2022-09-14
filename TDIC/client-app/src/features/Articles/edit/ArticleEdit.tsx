@@ -34,6 +34,7 @@ export default observer( function ArticleEdit() {
 
     const [isEditmode, setIsEditmode] = useState(false);
     const [isMotiondisplayMode, setIsMotiondisplayMode] = useState(false);
+    const [isActiondisplayMode, setIsActiondisplayMode] = useState(false);
 
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
 
@@ -130,7 +131,7 @@ export default observer( function ArticleEdit() {
                         width: isMotiondisplayMode ? 1280 : undefined
                         }} sm={6} >
                     {
-                        id && (<div style={{aspectRatio: '16 / 7.5'}} ><ModelScreen  isEditmode={isEditmode} /></div>)
+                        id && (<div style={{aspectRatio: '16 / 7.5'}} ><ModelScreen  isEditmode={isEditmode} isActiondisplayMode={isActiondisplayMode}/></div>)
                     }
                         <DisplayHtmlSubtitles fontSize={'2em'}/>
                         <div>
@@ -226,6 +227,10 @@ export default observer( function ArticleEdit() {
                                 <div>
                                     <input type="checkbox" defaultChecked={isMotiondisplayMode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsMotiondisplayMode(event.target.checked)}/>
                                     <label>Display Mode</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" defaultChecked={isActiondisplayMode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsActiondisplayMode(event.target.checked)}/>
+                                    <label>Show Action</label>
                                 </div>
                                 <p>Hight : {descriptionAreaHeight}</p>
                                 <DebugDisplay />

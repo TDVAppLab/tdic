@@ -11,6 +11,10 @@ import { Col, Row, Tab, Tabs } from "react-bootstrap";
 import ModelfileViewer from "../common/ModelfileViewer";
 import TextAreaGeneral from "../../../app/common/form/TextAreaGeneral";
 import EditModelfileEyecatch from "./EditModelfileEyecatch";
+import { AnimationClip } from "three";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import ShowAction from "../common/ShowAction";
 
 export default observer( function ModelfileEdit(){
     const history = useHistory();
@@ -18,6 +22,10 @@ export default observer( function ModelfileEdit(){
     const { selectedModelfile, loadModelfile, updateModelfile, deleteModelfile, loading } = modelfileStore;
 
     const {id} = useParams<{id: string}>();
+
+    const [isMExecAnimation, setIsMExecAnimation] = useState(false);
+    const [animations, setAnimations] = useState<AnimationClip[]>([]);
+    const [modelUuid, setModelUuid] = useState("");
 
     const [modelfile, setModelfile] = useState<Modelfile>({
         id_part: 0,
@@ -101,10 +109,16 @@ export default observer( function ModelfileEdit(){
             
             <Row>
                 <Col  sm={6} >
-                    <div className="row" style={{ height:"45vh", width:'45vw' }}>
-                            {
-                                <ModelfileViewer id_part={Number(id)}/>
-                            }
+                    <div className="row" style={{ height:"45vh", width:'45vw' }}>                            
+                        <Canvas style={{background: 'white'}} camera={{position:[3,3,3]}} >
+                            <ambientLight intensity={1.5} />
+                            <directionalLight intensity={0.6} position={[0, 2, 2]} />
+                            <ModelfileViewer id_part={Number(id)} setTeststring={setAnimations} setModelUuid = {setModelUuid}/>
+                            <OrbitControls target={[0, 0, 0]}  makeDefault />
+                            <axesHelper args={[2]}/>
+                            <gridHelper args={[2]}/>
+                            <ShowAction modelUuid={modelUuid} animations = {animations} is_exec_animation={isMExecAnimation}/>
+                        </Canvas>                            
                     </div>
                 </Col>
 
@@ -181,12 +195,29 @@ export default observer( function ModelfileEdit(){
                         <Tab eventKey="thumbnail" title="Thumbnail" >
                             <EditModelfileEyecatch />
                         </Tab>
+                        
+                        <Tab eventKey="animation" title="Animation" >
+                            <div>
+                                <input type="checkbox" defaultChecked={isMExecAnimation} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsMExecAnimation(event.target.checked)}/>
+                                <label>Display Mode</label>
+                            </div>
+                            <div>{modelUuid}</div>
+                            <div>{
+                            animations.map((x,index)=>(
+                                <div key={index}
+                                >
+                                    {x.name}
+                                    {x.duration}
+                                </div>
+                            ))
+                            
+                            }</div>
+                        </Tab>
 
 
                     </Tabs>
                 </Col>
             </Row>
-
 
 
 

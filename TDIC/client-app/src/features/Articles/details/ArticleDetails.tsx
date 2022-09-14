@@ -117,7 +117,7 @@ export default observer( function ArticleDetails() {
                 <Row>
                     <Col sm={8}>
                     {
-                        id && (<div style={{height: '64vh', width: '64vw'}} ><ModelScreen  isEditmode={false} /></div>)
+                        id && (<div style={{height: '64vh', width: '64vw'}} ><ModelScreen  isEditmode={false}  isActiondisplayMode={false}/></div>)
                         //<ModelScreen height="64vh" width='64vw' isEditmode={false} />
                     }
                         <div>
