@@ -2,11 +2,14 @@ import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import {format} from 'date-fns';
 import { Instancepart } from "../models/Instancepart";
+import { AnimationClip } from "three";
 
 export default class InstancepartStore {
     instancepartRegistry = new Map<number, Instancepart>();
     selectedInstancepart: Instancepart| undefined = undefined;
     loading=false;
+
+    annimationsRegistry = new Map<number, AnimationClip[]>();
 
     constructor(){
         makeAutoObservable(this)
@@ -115,6 +118,11 @@ export default class InstancepartStore {
             })
         }
     }    
+
+
+    setAnimationClips = (animations : AnimationClip[], id_inst: number) => {
+        this.annimationsRegistry.set(id_inst,animations);
+    }
 
 
     private setInstancepart = (instancepart : Instancepart) => {
