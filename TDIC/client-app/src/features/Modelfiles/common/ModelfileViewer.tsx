@@ -26,6 +26,7 @@ const LoadModel  = ({id_part, setTeststring, setModelUuid}: Props) => {
 
 
   useEffect(() => {
+//    console.log(gltf.animations);
     setTeststring(gltf.animations);
     setModelUuid(gltf.scene.uuid);
     }, [id_part]);
