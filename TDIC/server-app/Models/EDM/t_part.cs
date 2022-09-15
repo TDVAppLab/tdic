@@ -26,6 +26,7 @@ namespace TDIC.Models.EDM
         public string license { get; set; }
         public string author { get; set; }
         public string memo { get; set; }
+        public string AnimationClip { get; set; }
         public string create_user { get; set; }
         public DateTime? create_datetime { get; set; }
         public string latest_update_user { get; set; }
