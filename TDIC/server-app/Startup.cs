@@ -52,11 +52,11 @@ namespace TDIC
                     //config.RegisterValidatorsFromAssemblyContaining<Create>();
 
                 });
-                
+                /*
             services.AddControllersWithViews().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
-            });
+            });*/
 
             services.AddCors(o => o.AddPolicy(MyAllowSpecificOrigins, builder =>
             {
