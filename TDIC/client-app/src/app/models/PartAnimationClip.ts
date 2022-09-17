@@ -1,4 +1,4 @@
 export interface PartAnimationClip {
-    No: number;
+    no: number;
     name: string;
 }

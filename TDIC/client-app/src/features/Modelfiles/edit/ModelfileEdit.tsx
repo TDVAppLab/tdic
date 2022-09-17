@@ -114,7 +114,7 @@ export default observer( function ModelfileEdit(){
         
         const PartAnimationClips : PartAnimationClip[] = [];
         animations.forEach((animation,index)=>{
-            PartAnimationClips.push({No:index, name: animation.name})
+            PartAnimationClips.push({no:index, name: animation.name})
         })
 
         if(id){
@@ -242,7 +242,7 @@ export default observer( function ModelfileEdit(){
 
                                             <tr>
                                                 <td>{index}</td>
-                                                <td>{x.No}</td>
+                                                <td>{x.no}</td>
                                                 <td>{x.name}</td>
                                             </tr>
                                         ))
