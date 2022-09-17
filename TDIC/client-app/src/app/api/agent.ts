@@ -119,6 +119,9 @@ const Instructions = {
     update: (instruction: Instruction) => axios.post<void>(`/instruction/update/`, instruction),
     updateInstanceDisplay: (instruction: Instruction) => axios.post<void>(`/instruction/updateinstancedisplay/`, instruction),
     resetInstanceDisplay: (id_article: number) => axios.post<void>(`/instruction/resetinstancedisplay/${id_article}`),    
+    resetInstanceActionClips: (id_article: number) => axios.post<void>(`/instruction/resetinstanceactionclips/${id_article}`),    
+
+    
     delete: (id_article:number,id_instruct:number) => axios.post<void>(`/instruction/delete/id_article=${id_article}&id_instruct=${id_instruct}`),
 }
 

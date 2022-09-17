@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { InstanceDisplay } from '../../../app/models/InstanceDisplay';
 import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
+import agent from '../../../app/api/agent';
 
 
 export default observer( function EditInstanceDisplay(){
@@ -95,6 +96,20 @@ export default observer( function EditInstanceDisplay(){
                 onClick={()=>{handleFormSubmitCreate()}} 
             >
                 {"Reset"}
+            </button>
+
+            
+            <button 
+                type = 'submit'
+                className={"btn btn-primary"}
+                onClick={()=>{                    
+                        if(selectedInstruction){
+                            agent.Instructions.resetInstanceActionClips(selectedInstruction.id_article);
+                        }
+                    }
+                }
+            >
+                {"ResetInstanceActionClips"}
             </button>
         </div>
     )

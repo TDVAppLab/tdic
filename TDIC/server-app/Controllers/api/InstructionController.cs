@@ -57,6 +57,12 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new ResetInstanceDisplay.Command{ id_article = id}));
         }
 
+        [HttpPost("resetinstanceactionclips/{id}")]
+        public async Task<IActionResult> resetInstanceActionClips(long id)
+        {
+            return HandleResult(await Mediator.Send(new resetInstanceActionClips.Command{ id_article = id}));
+        }
+
 
 
         [HttpPost("delete/id_article={id_article}&id_instruct={id_instruct}")]
