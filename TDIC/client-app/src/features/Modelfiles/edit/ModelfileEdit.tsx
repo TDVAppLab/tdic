@@ -15,6 +15,8 @@ import { AnimationClip } from "three";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import ShowAction from "../common/ShowAction";
+import agent from "../../../app/api/agent";
+import { PartAnimationClip } from "../../../app/models/PartAnimationClip";
 
 export default observer( function ModelfileEdit(){
     const history = useHistory();
@@ -25,6 +27,7 @@ export default observer( function ModelfileEdit(){
 
     const [isMExecAnimation, setIsMExecAnimation] = useState(false);
     const [animations, setAnimations] = useState<AnimationClip[]>([]);
+    const [partAnimationClips, setPartAnimationClips] = useState<PartAnimationClip[]>([]);
     const [modelUuid, setModelUuid] = useState("");
 
     const [modelfile, setModelfile] = useState<Modelfile>({
@@ -74,7 +77,13 @@ export default observer( function ModelfileEdit(){
 
 */
     useEffect(()=>{
-        if(id) loadModelfile(Number(id));
+        if(id){            
+            loadModelfile(Number(id));
+            agent.Modelfiles.getPartAnimationClips(Number(id)).then((response) => {
+                    setPartAnimationClips(response);
+            });
+
+        }
     }, [id]);
 
 
@@ -97,6 +106,21 @@ export default observer( function ModelfileEdit(){
         if(modelfile.id_part ===0 ){
         } else {
             deleteModelfile(modelfile);
+        }
+    }
+
+
+    function handleFormSubmitResetAnimationClipArray() {
+        
+        const PartAnimationClips : PartAnimationClip[] = [];
+        animations.forEach((animation,index)=>{
+            PartAnimationClips.push({No:index, name: animation.name})
+        })
+
+        if(id){
+            console.log(PartAnimationClips);
+            agent.Modelfiles.updatePartAnimationClip(Number(id),PartAnimationClips).then((response) => {});
+
         }
     }
 
@@ -199,19 +223,65 @@ export default observer( function ModelfileEdit(){
                         <Tab eventKey="animation" title="Animation" >
                             <div>
                                 <input type="checkbox" defaultChecked={isMExecAnimation} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsMExecAnimation(event.target.checked)}/>
-                                <label>Display Mode</label>
+                                <label>Display Action</label>
                             </div>
-                            <div>{modelUuid}</div>
-                            <div>{
-                            animations.map((x,index)=>(
-                                <div key={index}
-                                >
-                                    {x.name}
-                                    {x.duration}
-                                </div>
-                            ))
-                            
-                            }</div>
+
+
+                            <div>
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Index</th>
+                                            <th>No</th>
+                                            <th>Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        partAnimationClips.map((x,index)=>(
+
+                                            <tr>
+                                                <td>{index}</td>
+                                                <td>{x.No}</td>
+                                                <td>{x.name}</td>
+                                            </tr>
+                                        ))
+                                    }
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div>
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Index</th>
+                                            <th>Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        animations.map((x,index)=>(
+
+                                            <tr>
+                                                <td>{index}</td>
+                                                <td>{x.name}</td>
+                                            </tr>
+                                            ))
+                                    }
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button 
+                                type = 'submit'
+                                className={"btn btn-primary"}
+                                onClick={()=>{handleFormSubmitResetAnimationClipArray()}} 
+                            >
+                                {"Reset Model Action Array"}
+                            </button>
+
                         </Tab>
 
 

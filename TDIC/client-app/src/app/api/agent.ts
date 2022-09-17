@@ -12,6 +12,7 @@ import { Instruction } from "../models/instruction";
 import { Light } from "../models/Light";
 import { mArticleStatus } from "../models/mArticleStatus";
 import { Modelfile } from "../models/ModelFile";
+import { PartAnimationClip } from "../models/PartAnimationClip";
 import { User, UserFormValues } from "../models/user";
 import { View } from "../models/view";
 import { WebsiteSetting } from "../models/WebsiteSetting";
@@ -82,6 +83,8 @@ const Modelfiles = {
     update: (modelfile: Modelfile) => axios.post<void>(`/modelfiles/update`, modelfile),
     fileupload: (formData:FormData) => axios.post('/modelfiles/uploadfile',formData),
     delete:(id:number) => axios.post<void>(`/modelfiles/delete/${id}`),
+    updatePartAnimationClip: (id:number, partAnimationClips: PartAnimationClip[]) => axios.post<void>(`/modelfiles/updatepartanimationclip/${id}`, partAnimationClips),
+    getPartAnimationClips:(id:number) => requests.get<PartAnimationClip[]>(`/modelfiles/getpartanimationclip/${id}`),
 }
 
 const Attachmentfiles = {

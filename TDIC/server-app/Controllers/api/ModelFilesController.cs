@@ -8,6 +8,7 @@ using TDIC.Models.EDM;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using TDIC.DTOs;
+using System.Collections.Generic;
 
 
 
@@ -90,6 +91,20 @@ namespace API.Controllers
         public async Task<IActionResult> Delete(long id)
         {
             return HandleResult(await Mediator.Send(new Delete.Command{id=id}));
+        }
+
+
+        [HttpGet("getpartanimationclip/{id}")]
+        public async Task<ActionResult> GetPartAnimationClip(long id)
+        {
+            return HandleResult(await Mediator.Send(new GetPartAnimationClip.Query{ID = id}));
+        }
+        
+
+        [HttpPost("updatepartanimationClip/{id}")]
+        public async Task<IActionResult> UpdatePartAnimationClip(long id, [FromBody] IList<PartAnimationClipDtO> partAnimationClips)
+        {
+            return HandleResult(await Mediator.Send(new UpdatePartAnimationClip.Command{id_part=id, PartAnimationClips=partAnimationClips}));
         }
         
         public static byte[] GetByteArrayFromStream(Stream sm)
