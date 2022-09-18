@@ -6,6 +6,7 @@ using Application.Instruction;
 using TDIC.Controllers;
 using TDIC.Models.EDM;
 using TDIC.DTOs;
+using System.Collections.Generic;
 
 
 
@@ -57,7 +58,25 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new ResetInstanceDisplay.Command{ id_article = id}));
         }
 
+        [HttpPost("resetinstanceactionclips/{id}")]
+        public async Task<IActionResult> resetInstanceActionClips(long id)
+        {
+            return HandleResult(await Mediator.Send(new resetInstanceActionClips.Command{ id_article = id}));
+        }
 
+        [AllowAnonymous]
+        [HttpGet("getinstanceactionclips/{id}")]
+        public async Task<ActionResult> GetInstanceActionClips(long id)
+        {
+            return HandleResult(await Mediator.Send(new GetInstanceActionClips.Query{ID = id}));
+        }
+        
+
+        [HttpPost("updateinstanceactionclips/id_article={id_article}&id_instruct={id_instruct}")]
+        public async Task<IActionResult> UpdateInstanceActionClips(long id_article,long id_instruct, [FromBody] List<InstanceActionExecSettingDtO> instanceActionExecSettings)
+        {
+            return HandleResult(await Mediator.Send(new UpdateInstanceActionClips.Command{ id_article = id_article, id_instruct=id_instruct, instanceActionExecSettings=instanceActionExecSettings}));
+        }
 
         [HttpPost("delete/id_article={id_article}&id_instruct={id_instruct}")]
         public async Task<IActionResult> Delete(long id_article,long id_instruct)

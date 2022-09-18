@@ -3,6 +3,7 @@ import agent from "../api/agent";
 import {format} from 'date-fns';
 import { Instruction } from "../models/instruction";
 import { InstanceDisplay } from "../models/InstanceDisplay";
+import { InstanceActionExecSetting } from "../models/InstanceActionExecSetting";
 
 export default class InstructionStore {
     instructionRegistry = new Map<number, Instruction>();
@@ -15,6 +16,9 @@ export default class InstructionStore {
     
     instanceDisplayRegistry = new Map<number, InstanceDisplay>();
 
+    
+    instanceActionExecSettingAllArray :InstanceActionExecSetting[]=[];
+    instanceActionExecSettingRegistry :InstanceActionExecSetting[]=[];
 
     constructor(){
         makeAutoObservable(this)
@@ -29,6 +33,8 @@ export default class InstructionStore {
             instructions.forEach(instruction => {
                 this.setInstruction(instruction);
             })
+
+            await this.loadInstanceActionExecSettingAllArray(id_article);
 
             
 
@@ -49,6 +55,24 @@ export default class InstructionStore {
             this.loading = false;
         }
     }
+
+
+    loadInstanceActionExecSettingAllArray = async (id_article:number) => {
+        this.loading = true;
+        this.instanceActionExecSettingAllArray.length =0;
+        try {
+            this.instanceActionExecSettingAllArray = await agent.Instructions.getInstanceActionClips(id_article);
+
+            //console.log("called loadInstanceActionExecSettingAllArray2");
+            //console.log( this.instanceActionExecSettingAllArray);
+
+            this.setLoading(false);
+        } catch (error) {
+            console.log(error);
+            this.loading = false;
+        }
+    }
+    
 
     setSelectedInstruction = async (id_instruct:number) => {
         let instruction = this.getInstruction(id_instruct);
@@ -72,6 +96,14 @@ export default class InstructionStore {
                         })
                     }
                 }
+
+                this.instanceActionExecSettingRegistry.length=0;
+                if(this.selectedInstruction){
+                    
+                    this.instanceActionExecSettingRegistry = this.instanceActionExecSettingAllArray.filter((item:InstanceActionExecSetting) => item.id_instruct === id_instruct);
+                    //console.log(this.instanceActionExecSettingRegistry);
+                }
+
             })
             return instruction;
         } /*else {
@@ -190,6 +222,25 @@ export default class InstructionStore {
         }
     }
 
+
+    updateInstanceActionClips = async (id_article:number,id_instruct:number,instanceActionExecSettings: InstanceActionExecSetting[]) => {
+        //this.loading = true;
+        //console.log("called");
+        try {
+            await agent.Instructions.updateInstanceActionClips(id_article,id_instruct,instanceActionExecSettings);
+            runInAction(() => {
+                //this.instructionRegistry.set(instruction.id_instruct, instruction);
+                //this.selectedInstruction = instruction;
+                //this.loading = false;
+            })
+            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+            //    this.loading = false;
+            })
+        }
+    }
     
     deleteInstruction = async (instruction: Instruction) => {
         this.loading = true;
