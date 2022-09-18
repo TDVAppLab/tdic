@@ -49,7 +49,7 @@ namespace Application.Instruction
                 //--------------------------------------------------------------------------------------
                 //start create json
 
-                var data = new List<InstanceActionExecSettingDtO>();
+                var modelActionSettinglist = new List<InstanceActionExecSettingDtO>();
                 
                 long assyid = (await _context.t_articles.FindAsync(request.id_article)).id_assy ?? 0;
 
@@ -76,14 +76,15 @@ namespace Application.Instruction
 
                     }
 
-                    foreach (var xxx in AnimationClipList)
+                    foreach (var AnimationClip in AnimationClipList)
                     {
-                        data.Add(new InstanceActionExecSettingDtO{
+                        modelActionSettinglist.Add(new InstanceActionExecSettingDtO{
+                            id_instruct=0, 
                             id_assy=inst.id_assy, 
                             id_inst=inst.id_inst, 
                             id_part=inst.id_part,
-                            no=xxx.no,
-                            name=xxx.name,
+                            no=AnimationClip.no,
+                            name=AnimationClip.name,
                             is_exec=false,
                             num_loop=1,
                             is_clamp_when_finished=true
@@ -92,11 +93,14 @@ namespace Application.Instruction
                     }
                 }
                 
-                // Serialize Json to string without options
-                string json_str = JsonSerializer.Serialize(data);
                    
                 foreach (var instruction in instructions)
                 {
+                    foreach (var modelActionSetting in modelActionSettinglist){
+                        modelActionSetting.id_instruct = instruction.id_instruct;
+                    }
+                    // Serialize Json to string without options
+                    string json_str = JsonSerializer.Serialize(modelActionSettinglist);
                     instruction.model_action_settings = json_str;
                     instruction.latest_update_datetime = DateTime.Now;
                 }
