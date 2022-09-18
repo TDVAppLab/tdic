@@ -122,6 +122,7 @@ const Instructions = {
     resetInstanceDisplay: (id_article: number) => axios.post<void>(`/instruction/resetinstancedisplay/${id_article}`),    
     resetInstanceActionClips: (id_article: number) => axios.post<void>(`/instruction/resetinstanceactionclips/${id_article}`),
     getInstanceActionClips:(id_article:number) => requests.get<InstanceActionExecSetting[]>(`/instruction/getinstanceactionclips/${id_article}`),    
+    updateInstanceActionClips: (id_article:number,id_instruct:number,instanceActionExecSettings: InstanceActionExecSetting[]) => axios.post<void>(`/instruction/updateinstanceactionclips/id_article=${id_article}&id_instruct=${id_instruct}`, instanceActionExecSettings),
     delete: (id_article:number,id_instruct:number) => axios.post<void>(`/instruction/delete/id_article=${id_article}&id_instruct=${id_instruct}`),
 }
 

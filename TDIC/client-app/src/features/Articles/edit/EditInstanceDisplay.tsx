@@ -6,6 +6,7 @@ import { Form, Formik } from 'formik';
 import { InstanceDisplay } from '../../../app/models/InstanceDisplay';
 import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 import agent from '../../../app/api/agent';
+import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
 
 
 export default observer( function EditInstanceDisplay(){
@@ -22,6 +23,10 @@ export default observer( function EditInstanceDisplay(){
     const validationSchema = Yup.object({
         title: Yup.string().required(),
     });
+
+    const validationSchemaUpdateInstanceActionClips = Yup.object({
+        id_assy: Yup.number().required(),
+    });
     
 
     
@@ -34,13 +39,23 @@ export default observer( function EditInstanceDisplay(){
         }
     }
 
+    /*
     function handleFormSubmitCreate() {
         if(selectedInstruction){
             resetInstanceDisplay(selectedInstruction.id_article);
         }
     }
     
+    
 
+    
+    function handleFormSubmitUpdateInstanceActionClips(instanceActionExecSettings:InstanceActionExecSetting[]) {
+        console.log(instanceActionExecSettings);
+        if(instanceActionExecSettings.length>0 && selectedInstruction){
+            instructionStore.updateInstanceActionClips(selectedInstruction.id_article,selectedInstruction.id_instruct,instanceActionExecSettings);
+        }
+    }
+*/
     if(instructionStore.instructionRegistry.size<1) return null;
 
     return(
@@ -92,14 +107,85 @@ export default observer( function EditInstanceDisplay(){
 
             <button 
                 type = 'submit'
-                className={"btn btn-primary"}
-                onClick={()=>{handleFormSubmitCreate()}} 
+                className={"btn btn-danger"}
+                onClick={()=>{selectedInstruction && resetInstanceDisplay(selectedInstruction.id_article)}} 
             >
-                {"Reset"}
+                {"Reset Instance Display Object"}
             </button>
 
 
-            <div>
+            <Formik
+                validationSchema={validationSchemaUpdateInstanceActionClips}
+                enableReinitialize 
+                initialValues={instanceActionExecSettingRegistry!} 
+                onSubmit={(values) => 
+                    selectedInstruction && instructionStore.updateInstanceActionClips(selectedInstruction.id_article,selectedInstruction.id_instruct,values)}>
+                {({ handleSubmit, isValid, isSubmitting, dirty }) => (
+                    <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
+
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        No.
+                                    </th>
+                                    <th>
+                                        id_instruct
+                                    </th>
+                                    <th>
+                                        ID Assy
+                                    </th>
+                                    <th>
+                                        ID Inst
+                                    </th>
+                                    <th>
+                                        ID Part
+                                    </th>
+                                    <th>
+                                        Internal No
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Exec
+                                    </th>
+                                    <th>
+                                        Loop
+                                    </th>
+                                    <th>
+                                        Clamp Finished
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                instanceActionExecSettingRegistry && instanceActionExecSettingRegistry.map((instanceActionExecSetting,index)=> (
+                                    <tr key={index}>
+                                        <td><div>{index+1}</div></td>
+                                        <td><div>{instanceActionExecSetting.id_instruct}</div></td>
+                                        <td><div>{instanceActionExecSetting.id_assy}</div></td>
+                                        <td><div>{instanceActionExecSetting.id_inst}</div></td>
+                                        <td><div>{instanceActionExecSetting.id_part}</div></td>
+                                        <td><div>{instanceActionExecSetting.no}</div></td>
+                                        <td><div>{instanceActionExecSetting.name}</div></td>
+                                        <td><CheckBoxGeneral label='' name={`[${index}]is_exec`}  /></td>
+                                        <td><TextInputGeneral name={`[${index}]num_loop`} placeholder='num_loop' /></td>
+                                        <td><CheckBoxGeneral label='' name={`[${index}]is_clamp_when_finished`}  /></td>
+                                    </tr>
+                                ))
+                            }
+                            </tbody>
+                        </table>
+
+                        
+                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>Submit</button>
+                    </Form>
+                )}
+
+            </Formik>
+            {
+                /*
 
                 <table className="table">
                     <thead>
@@ -148,13 +234,16 @@ export default observer( function EditInstanceDisplay(){
                     </tbody>
                 </table>
 
+                */
+
+            }
 
 
-            </div>
+
             
             <button 
                 type = 'submit'
-                className={"btn btn-primary"}
+                className={"btn btn-danger"}
                 onClick={()=>{                    
                         if(selectedInstruction){
                             agent.Instructions.resetInstanceActionClips(selectedInstruction.id_article);

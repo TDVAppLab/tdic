@@ -222,6 +222,25 @@ export default class InstructionStore {
         }
     }
 
+
+    updateInstanceActionClips = async (id_article:number,id_instruct:number,instanceActionExecSettings: InstanceActionExecSetting[]) => {
+        //this.loading = true;
+        //console.log("called");
+        try {
+            await agent.Instructions.updateInstanceActionClips(id_article,id_instruct,instanceActionExecSettings);
+            runInAction(() => {
+                //this.instructionRegistry.set(instruction.id_instruct, instruction);
+                //this.selectedInstruction = instruction;
+                //this.loading = false;
+            })
+            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+            //    this.loading = false;
+            })
+        }
+    }
     
     deleteInstruction = async (instruction: Instruction) => {
         this.loading = true;
