@@ -65,6 +65,13 @@ namespace API.Controllers
 
 
 
+
+        [HttpGet("getinstanceactionclips/{id}")]
+        public async Task<ActionResult> GetInstanceActionClips(long id)
+        {
+            return HandleResult(await Mediator.Send(new GetInstanceActionClips.Query{ID = id}));
+        }
+
         [HttpPost("delete/id_article={id_article}&id_instruct={id_instruct}")]
         public async Task<IActionResult> Delete(long id_article,long id_instruct)
         {

@@ -7,6 +7,7 @@ import { AnnotationDisplay } from "../models/AnnotationDisplay";
 import { Article } from "../models/article";
 import { Assembly } from "../models/Assembly";
 import { Attachmentfile, AttachmentfileEyecatchDtO } from "../models/attachmentfile";
+import { InstanceActionExecSetting } from "../models/InstanceActionExecSetting";
 import { Instancepart } from "../models/Instancepart";
 import { Instruction } from "../models/instruction";
 import { Light } from "../models/Light";
@@ -119,9 +120,8 @@ const Instructions = {
     update: (instruction: Instruction) => axios.post<void>(`/instruction/update/`, instruction),
     updateInstanceDisplay: (instruction: Instruction) => axios.post<void>(`/instruction/updateinstancedisplay/`, instruction),
     resetInstanceDisplay: (id_article: number) => axios.post<void>(`/instruction/resetinstancedisplay/${id_article}`),    
-    resetInstanceActionClips: (id_article: number) => axios.post<void>(`/instruction/resetinstanceactionclips/${id_article}`),    
-
-    
+    resetInstanceActionClips: (id_article: number) => axios.post<void>(`/instruction/resetinstanceactionclips/${id_article}`),
+    getInstanceActionClips:(id_article:number) => requests.get<InstanceActionExecSetting[]>(`/instruction/getinstanceactionclips/${id_article}`),    
     delete: (id_article:number,id_instruct:number) => axios.post<void>(`/instruction/delete/id_article=${id_article}&id_instruct=${id_instruct}`),
 }
 
