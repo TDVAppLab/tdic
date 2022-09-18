@@ -64,6 +64,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new resetInstanceActionClips.Command{ id_article = id}));
         }
 
+        [AllowAnonymous]
         [HttpGet("getinstanceactionclips/{id}")]
         public async Task<ActionResult> GetInstanceActionClips(long id)
         {
