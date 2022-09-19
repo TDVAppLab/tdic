@@ -9,7 +9,7 @@ export default class InstancepartStore {
     selectedInstancepart: Instancepart| undefined = undefined;
     loading=false;
 
-    annimationsRegistry = new Map<number, AnimationClip[]>();
+    annimationsRegistry = new Map<number, AnimationClip[]>();//number = id_inst(=instance)
 
     constructor(){
         makeAutoObservable(this)
