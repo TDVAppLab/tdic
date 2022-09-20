@@ -29,10 +29,10 @@ interface Props {
   //width : string;
   //height : string;
   isEditmode : boolean
-  isActiondisplayMode : boolean;
+  isAutoAnimationExec : boolean;
 }
 
-export default observer( function ModelScreen({isEditmode, isActiondisplayMode}: Props) {
+export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}: Props) {
 
   const [isDebugMode, setIsDebugMode] = useState(false);
   
@@ -117,8 +117,8 @@ useEffect(()=> {
       {
       //  <Effects />
       }
-      <ShowAction isActiondisplayMode={false} />
-      <ShowActionUseInstructionSettings isActiondisplayMode={isActiondisplayMode} />
+      <ShowAction isActiondisplayMode={isAutoAnimationExec} />
+      <ShowActionUseInstructionSettings isActiondisplayMode={false} />
         {<SceneInfoCatcher />}
         {
           <GetSceneCapture />

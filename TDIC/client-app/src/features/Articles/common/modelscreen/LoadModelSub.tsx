@@ -28,7 +28,7 @@ export default observer( function LoadModelSub({id_inst, id_part, pos, scale}: P
     gltf.scene.name = `[${id_inst}]InstanceModel`;
     setAnimationClips(gltf.animations,id_inst);
     //console.log(id_part);
-    console.log(annimationsRegistry);
+    //console.log(annimationsRegistry);
   
     return (
         <primitive object={gltf.scene} dispose={null} />

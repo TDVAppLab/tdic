@@ -45,7 +45,7 @@ export default class InstructionStore {
                         .map((x: Instruction) => x.display_order);
 
                 const id_startinst = (Array.from(this.instructionRegistry.values())).filter((x: Instruction) => x.display_order == Math.min.apply(null, ar1_map))[0].id_instruct;
-                this.setSelectedInstruction(id_startinst);
+                await this.setSelectedInstruction(id_startinst);
 
             }
 
@@ -75,21 +75,20 @@ export default class InstructionStore {
     
 
     setSelectedInstruction = async (id_instruct:number) => {
-        let instruction = this.getInstruction(id_instruct);
+        const instruction = this.getInstruction(id_instruct);
         if(instruction) {
-            this.selectedInstruction = instruction;
+//            this.selectedInstruction = instruction;
             runInAction(()=>{
-                this.selectedInstruction = instruction;
                 this.selectedSubtitles.length = 0;
-                if(this.selectedInstruction?.memo){
-                    this.selectedSubtitles = this.selectedInstruction.memo.split(/\n/).filter(x => x.length > 0);
+                if(instruction?.memo){
+                    this.selectedSubtitles = instruction.memo.split(/\n/).filter(x => x.length > 0);
                     this.selectedSubtitleIndex=0;
                 }
 
                 this.instanceDisplayRegistry.clear();
-                if(this.selectedInstruction){
+                if(instruction){
 
-                    const ans = JSON.parse(this.selectedInstruction.display_instance_sets || "null") as InstanceDisplay[];
+                    const ans = JSON.parse(instruction.display_instance_sets || "null") as InstanceDisplay[];
                     if(ans) {
                         ans.forEach(x=>{                            
                             this.instanceDisplayRegistry.set(x.id_inst,x);
@@ -98,29 +97,16 @@ export default class InstructionStore {
                 }
 
                 this.instanceActionExecSettingRegistry.length=0;
-                if(this.selectedInstruction){
+                if(instruction){
                     
                     this.instanceActionExecSettingRegistry = this.instanceActionExecSettingAllArray.filter((item:InstanceActionExecSetting) => item.id_instruct === id_instruct);
                     //console.log(this.instanceActionExecSettingRegistry);
                 }
 
+                this.selectedInstruction = instruction;
             })
             return instruction;
-        } /*else {
-            this.loadingInitial = true;
-            try {
-                instruction = await agent.Instructions.details(id_article,id_instruct);
-                this.setInstruction(instruction);
-                runInAction(()=>{
-                    this.selectedInstruction = instruction;
-                })
-                this.setLoaingInitial(false);
-                return instruction;
-            } catch (error) {
-                console.log(error);
-                this.setLoaingInitial(false);
-            }
-        }*/
+        }
     }
 
     loadInstruction = async (id_article:number,id_instruct:number) => {
