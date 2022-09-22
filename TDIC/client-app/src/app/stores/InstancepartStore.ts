@@ -144,7 +144,9 @@ export default class InstancepartStore {
     }
 
     setModelLoading = (id_inst : number, state : boolean) => {
-        this.modelLoadingRegistry.set(id_inst,state);
+        runInAction(() => {
+            this.modelLoadingRegistry.set(id_inst,state);
+        })
     }
 
     getModelLoading = (id_inst : number) => {
