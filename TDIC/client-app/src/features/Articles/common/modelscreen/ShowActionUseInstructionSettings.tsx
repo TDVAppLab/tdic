@@ -24,7 +24,7 @@ export default observer( function ShowActionUseInstructionSettings({isActiondisp
     
     useEffect(()=>{
 
-        Array.from(instancepartRegistry.values()).map(x=>{
+        instancepartRegistry.size>0 && Array.from(instancepartRegistry.values()).map(x=>{
             const temp_instance = scene.children.find(child => child.name == `[${x.id_inst}]InstanceModel`);
             if(temp_instance){
                 mixers.set(x.id_inst,new AnimationMixer(temp_instance))
@@ -41,6 +41,7 @@ export default observer( function ShowActionUseInstructionSettings({isActiondisp
 
 
     useFrame(state => {
+        
 
         if(mixers.size>0 && annimationsRegistry.size>0 && instanceActionExecSettingRegistry.length>0){
             instanceActionExecSettingRegistry.forEach(instanceActionExecSetting=>{
