@@ -34,28 +34,10 @@ export default observer( function EditInstanceDisplay(){
         if(selectedInstruction){
             const object = selectedInstruction;
             object.display_instance_sets = JSON.stringify ( instanceparts );
-//            console.log(JSON.stringify ( instanceparts ));
             updateInstanceDisplay(object);
         }
     }
 
-    /*
-    function handleFormSubmitCreate() {
-        if(selectedInstruction){
-            resetInstanceDisplay(selectedInstruction.id_article);
-        }
-    }
-    
-    
-
-    
-    function handleFormSubmitUpdateInstanceActionClips(instanceActionExecSettings:InstanceActionExecSetting[]) {
-        console.log(instanceActionExecSettings);
-        if(instanceActionExecSettings.length>0 && selectedInstruction){
-            instructionStore.updateInstanceActionClips(selectedInstruction.id_article,selectedInstruction.id_instruct,instanceActionExecSettings);
-        }
-    }
-*/
     if(instructionStore.instructionRegistry.size<1) return null;
 
     return(
@@ -160,7 +142,7 @@ export default observer( function EditInstanceDisplay(){
                             </thead>
                             <tbody>
                             {
-                                instanceActionExecSettingRegistry && instanceActionExecSettingRegistry.map((instanceActionExecSetting,index)=> (
+                                instanceActionExecSettingRegistry.map((instanceActionExecSetting,index)=> (
                                     <tr key={index}>
                                         <td><div>{index+1}</div></td>
                                         <td><div>{instanceActionExecSetting.id_instruct}</div></td>
@@ -169,9 +151,9 @@ export default observer( function EditInstanceDisplay(){
                                         <td><div>{instanceActionExecSetting.id_part}</div></td>
                                         <td><div>{instanceActionExecSetting.no}</div></td>
                                         <td><div>{instanceActionExecSetting.name}</div></td>
-                                        <td><CheckBoxGeneral label='' name={`[${index}]is_exec`}  /></td>
-                                        <td><TextInputGeneral name={`[${index}]num_loop`} placeholder='num_loop' /></td>
-                                        <td><CheckBoxGeneral label='' name={`[${index}]is_clamp_when_finished`}  /></td>
+                                        <td><CheckBoxGeneral label='' name={`instanceActionExecSettingRegistry[${index}]is_exec`}  /></td>
+                                        <td><TextInputGeneral name={`instanceActionExecSettingRegistry[${index}]num_loop`} placeholder='num_loop' /></td>
+                                        <td><CheckBoxGeneral label='' name={`instanceActionExecSettingRegistry[${index}]is_clamp_when_finished`}  /></td>
                                     </tr>
                                 ))
                             }

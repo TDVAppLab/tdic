@@ -15,7 +15,7 @@ export default observer( function ShowActionUseInstructionSettings({isActiondisp
     const { scene } = useThree();
 
     const {instancepartStore} = useStore();
-    const {annimationsRegistry, instancepartRegistry} = instancepartStore;
+    const {annimationsRegistry, instancepartRegistry, getIsAllModelLoading} = instancepartStore;
 
     
     const {instructionStore} = useStore();
@@ -24,7 +24,7 @@ export default observer( function ShowActionUseInstructionSettings({isActiondisp
     
     useEffect(()=>{
 
-        Array.from(instancepartRegistry.values()).map(x=>{
+        instancepartRegistry.size>0 && Array.from(instancepartRegistry.values()).map(x=>{
             const temp_instance = scene.children.find(child => child.name == `[${x.id_inst}]InstanceModel`);
             if(temp_instance){
                 mixers.set(x.id_inst,new AnimationMixer(temp_instance))
@@ -32,6 +32,7 @@ export default observer( function ShowActionUseInstructionSettings({isActiondisp
         });
 
     }, [instanceActionExecSettingRegistry, annimationsRegistry]);
+    
 
 
     const mixers = new Map<number, AnimationMixer>(); //number = id_inst
@@ -39,10 +40,10 @@ export default observer( function ShowActionUseInstructionSettings({isActiondisp
     const clock = new Clock();
 
 
-
     useFrame(state => {
+        
 
-        if(mixers.size>0 && annimationsRegistry.size>0 && instanceActionExecSettingRegistry.length>0){
+        if(!getIsAllModelLoading() && mixers.size>0 && annimationsRegistry.size>0 && instanceActionExecSettingRegistry.length>0){
             instanceActionExecSettingRegistry.forEach(instanceActionExecSetting=>{
                 if(instanceActionExecSetting.id_inst){
                     const annimations = annimationsRegistry?.get(instanceActionExecSetting?.id_inst!);
