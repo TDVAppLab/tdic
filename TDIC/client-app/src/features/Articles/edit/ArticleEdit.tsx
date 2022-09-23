@@ -33,8 +33,8 @@ export default observer( function ArticleEdit() {
     const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(0);
 
     const [isEditmode, setIsEditmode] = useState(false); //編集モードかどうか
-    const [isMotiondisplayMode, setIsMotiondisplayMode] = useState(true); //動画撮影モードかどうか
-    const [isAutoAnimationExec, setIsAutoAnimationExec] = useState(false); //アニメーション自動実行モードかどうか
+    const [isMotiondisplayMode, setIsMotiondisplayMode] = useState(false); //動画撮影モードかどうか
+    const [isAutoAnimationExec, setIsAutoAnimationExec] = useState(true); //アニメーション自動実行モードかどうか
 
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
 
