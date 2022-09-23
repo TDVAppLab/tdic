@@ -4,12 +4,12 @@ import { Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
 import { useStore } from "../../../app/stores/store";
-import PanelInstruction from "./PanelInstruction";
 
 
 import DebugDisplay from "../common/DebugDisplay";
 import GoogleAd from "../../../app/common/utils/GoogleAd";
 import ModelScreen from "../common/modelscreen/ModelScreen";
+import PanelInstruction from "./PanelInstruction";
 
 
 
@@ -19,7 +19,6 @@ export default observer( function ArticleDetails() {
     
     const {id} = useParams<{id:string}>();
 
-    const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(0);
     
     const {userStore: {user}} = useStore();
 
@@ -52,14 +51,6 @@ export default observer( function ArticleDetails() {
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
     
     
-    const ref = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        
-        if(ref.current){
-            setDescriptionAreaHeight(document.documentElement.clientHeight - ref.current.getBoundingClientRect().top);
-        }
-    })
 
     useEffect(() => {
 
@@ -142,11 +133,7 @@ export default observer( function ArticleDetails() {
                     <Col   sm={4}>
                         <Tabs defaultActiveKey="instruction" id="uncontrolled-tab-example" className="mb-3">
                             <Tab eventKey="instruction" title="Instruction">
-                                <div ref={ref} className="overflow-auto" style={{'height':`${descriptionAreaHeight}px`}}>
-                                    {
-                                        selectedInstruction && <PanelInstruction instruction={selectedInstruction} />
-                                    }
-                                </div>
+                                <PanelInstruction />
                             </Tab>
                             <Tab eventKey="profile" title="Material">
                             </Tab>
@@ -154,8 +141,6 @@ export default observer( function ArticleDetails() {
                                 user &&
                                 <Tab eventKey="edit" title="Edit">
                                     <Link to={`/articleedit/${Number(article?.id_article)}`}>Edit</Link> 
-                                    <hr />
-                                    <p>{descriptionAreaHeight}</p>
                                     <hr />
                                     <DebugDisplay />
                                 </Tab>
