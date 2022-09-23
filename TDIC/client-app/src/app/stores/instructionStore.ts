@@ -96,11 +96,11 @@ export default class InstructionStore {
                     }
                 }
 
-                this.instanceActionExecSettingRegistry.length=0;
-                if(instruction){
-                    
+                if(instruction){                    
                     this.instanceActionExecSettingRegistry = this.instanceActionExecSettingAllArray.filter((item:InstanceActionExecSetting) => item.id_instruct === id_instruct);
                     //console.log(this.instanceActionExecSettingRegistry);
+                } else {
+                    this.instanceActionExecSettingRegistry.length=0;
                 }
 
                 this.selectedInstruction = instruction;

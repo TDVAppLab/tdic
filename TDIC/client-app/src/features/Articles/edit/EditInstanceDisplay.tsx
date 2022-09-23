@@ -151,9 +151,9 @@ export default observer( function EditInstanceDisplay(){
                                         <td><div>{instanceActionExecSetting.id_part}</div></td>
                                         <td><div>{instanceActionExecSetting.no}</div></td>
                                         <td><div>{instanceActionExecSetting.name}</div></td>
-                                        <td><CheckBoxGeneral label='' name={`instanceActionExecSettingRegistry[${index}]is_exec`}  /></td>
-                                        <td><TextInputGeneral name={`instanceActionExecSettingRegistry[${index}]num_loop`} placeholder='num_loop' /></td>
-                                        <td><CheckBoxGeneral label='' name={`instanceActionExecSettingRegistry[${index}]is_clamp_when_finished`}  /></td>
+                                        <td><CheckBoxGeneral label='' name={`[${index}]is_exec`}  /></td>
+                                        <td><TextInputGeneral name={`[${index}]num_loop`} placeholder='num_loop' /></td>
+                                        <td><CheckBoxGeneral label='' name={`[${index}]is_clamp_when_finished`}  /></td>
                                     </tr>
                                 ))
                             }
