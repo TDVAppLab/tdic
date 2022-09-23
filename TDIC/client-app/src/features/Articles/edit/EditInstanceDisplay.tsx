@@ -14,11 +14,6 @@ export default observer( function EditInstanceDisplay(){
     const {instructionStore} = useStore();
     const {selectedInstruction, instanceDisplayRegistry, instanceActionExecSettingRegistry, updateInstanceDisplay, resetInstanceDisplay} = instructionStore;
 
-    useEffect(()=>{
-    }, []);
-
-    useEffect(()=>{
-    }, [selectedInstruction]);
 
     const validationSchema = Yup.object({
         title: Yup.string().required(),
@@ -166,62 +161,6 @@ export default observer( function EditInstanceDisplay(){
                 )}
 
             </Formik>
-            {
-                /*
-
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                No.
-                            </th>
-                            <th>
-                                id_instruct
-                            </th>
-                            <th>
-                                ID Assy
-                            </th>
-                            <th>
-                                ID Inst
-                            </th>
-                            <th>
-                            id_part
-                            </th>
-                            <th>
-                            is_exec
-                            </th>
-                            <th>
-                            num_loop
-                            </th>
-                            <th>
-                            is_clamp_when_finished
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        instanceActionExecSettingRegistry && instanceActionExecSettingRegistry.map((instanceActionExecSetting,index)=> (
-                            <tr key={index}>
-                                <td><div>{index+1}</div></td>
-                                <td><div>{instanceActionExecSetting.id_instruct}</div></td>
-                                <td><div>{instanceActionExecSetting.id_assy}</div></td>
-                                <td><div>{instanceActionExecSetting.id_inst}</div></td>
-                                <td><div>{instanceActionExecSetting.id_part}</div></td>
-                                <td><div>{instanceActionExecSetting.is_exec ? "true" : "false"}</div></td>
-                                <td><div>{instanceActionExecSetting.num_loop}</div></td>
-                                <td><div>{instanceActionExecSetting.is_clamp_when_finished ? "true" : "false"}</div></td>
-                            </tr>
-                        ))
-                    }
-                    </tbody>
-                </table>
-
-                */
-
-            }
-
-
-
             
             <button 
                 type = 'submit'
