@@ -34,28 +34,10 @@ export default observer( function EditInstanceDisplay(){
         if(selectedInstruction){
             const object = selectedInstruction;
             object.display_instance_sets = JSON.stringify ( instanceparts );
-//            console.log(JSON.stringify ( instanceparts ));
             updateInstanceDisplay(object);
         }
     }
 
-    /*
-    function handleFormSubmitCreate() {
-        if(selectedInstruction){
-            resetInstanceDisplay(selectedInstruction.id_article);
-        }
-    }
-    
-    
-
-    
-    function handleFormSubmitUpdateInstanceActionClips(instanceActionExecSettings:InstanceActionExecSetting[]) {
-        console.log(instanceActionExecSettings);
-        if(instanceActionExecSettings.length>0 && selectedInstruction){
-            instructionStore.updateInstanceActionClips(selectedInstruction.id_article,selectedInstruction.id_instruct,instanceActionExecSettings);
-        }
-    }
-*/
     if(instructionStore.instructionRegistry.size<1) return null;
 
     return(
