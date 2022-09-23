@@ -21,6 +21,7 @@ import SubtitleSelector from "../common/SubtitleSelector";
 import ListupSubtitles from "./ListupSubtitles";
 import EditInstanceDisplay from "./EditInstanceDisplay";
 import PanelInstruction from "../details/PanelInstruction";
+import InstructionSelector from "../details/InstructionSelector";
 
 
 
@@ -40,7 +41,7 @@ export default observer( function ArticleEdit() {
     const {selectedArticle : article, loadArticle, loading : isArticleLoading} = articleStore;
     
     const {instructionStore} = useStore();
-    const {loadInstructions, selectedInstruction, setSelectedInstruction, instructionRegistry, loading : isInstructionLoading} = instructionStore;
+    const {loadInstructions, selectedInstruction, loading : isInstructionLoading} = instructionStore;
 
 
     const {instancepartStore} = useStore();
@@ -121,19 +122,8 @@ export default observer( function ArticleEdit() {
                         id && (<div style={{aspectRatio: '16 / 7.5'}} ><ModelScreen  isEditmode={isEditmode} isAutoAnimationExec={isAutoAnimationExec}/></div>)
                     }
                         <DisplayHtmlSubtitles fontSize={'2em'}/>
-                        <div>
-                            { instructionRegistry.size>0 &&
-                                Array.from(instructionRegistry.values()).map(x=>(
-                                    <button key={x.id_instruct}
-                                        type = 'submit'
-                                        className={x.id_instruct==selectedInstruction?.id_instruct ? "btn btn-primary" : "btn btn-outline-primary"}
-                                        onClick={()=>{setSelectedInstruction(x.id_instruct)}} 
-                                    >
-                                        {x.title}
-                                    </button>
-                                ))
-                            }
-                        </div>
+                        
+                        <InstructionSelector />
 
                         <SubtitleSelector />
                         
