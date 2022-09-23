@@ -32,6 +32,7 @@ export default observer( function ShowActionUseInstructionSettings({isActiondisp
         });
 
     }, [instanceActionExecSettingRegistry, annimationsRegistry]);
+    
 
 
     const mixers = new Map<number, AnimationMixer>(); //number = id_inst
