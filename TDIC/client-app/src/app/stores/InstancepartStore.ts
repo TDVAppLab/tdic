@@ -9,7 +9,9 @@ export default class InstancepartStore {
     selectedInstancepart: Instancepart| undefined = undefined;
     loading=false;
 
-    annimationsRegistry = new Map<number, AnimationClip[]>();
+    annimationsRegistry = new Map<number, AnimationClip[]>();//number = id_inst(=instance)
+
+    modelLoadingRegistry = new  Map<number, boolean>();
 
     constructor(){
         makeAutoObservable(this)
@@ -19,11 +21,15 @@ export default class InstancepartStore {
     loadInstanceparts = async (id_assy:number) => {
         this.loading = true;
         this.instancepartRegistry.clear();
+        this.modelLoadingRegistry.clear();
         try {
             const instanceparts = await agent.Instanceparts.list(id_assy);
-            instanceparts.forEach(instancepart => {
-                this.setInstancepart(instancepart);
-            })
+            runInAction(() => {
+                instanceparts.forEach(instancepart => {
+                    this.setInstancepart(instancepart);
+                    this.modelLoadingRegistry.set(instancepart.id_inst,true);
+                })
+            })            
             this.setLoading(false);
         } catch (error) {
             console.log(error);
@@ -136,4 +142,23 @@ export default class InstancepartStore {
     setLoading = (state: boolean) => {
         this.loading = state;
     }
+
+    setModelLoading = (id_inst : number, state : boolean) => {
+        runInAction(() => {
+            this.modelLoadingRegistry.set(id_inst,state);
+        })
+    }
+
+    getModelLoading = (id_inst : number) => {
+        return this.modelLoadingRegistry.get(id_inst);
+    }
+
+    getIsAllModelLoading = () => {
+        let ans = false;
+        this.modelLoadingRegistry.forEach(modelLoading=>{
+            ans = ans || modelLoading;
+        })
+        return ans;
+    }
+
 }

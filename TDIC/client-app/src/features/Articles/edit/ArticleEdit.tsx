@@ -32,9 +32,9 @@ export default observer( function ArticleEdit() {
 
     const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(0);
 
-    const [isEditmode, setIsEditmode] = useState(false);
-    const [isMotiondisplayMode, setIsMotiondisplayMode] = useState(false);
-    const [isActiondisplayMode, setIsActiondisplayMode] = useState(false);
+    const [isEditmode, setIsEditmode] = useState(false); //編集モードかどうか
+    const [isMotiondisplayMode, setIsMotiondisplayMode] = useState(false); //動画撮影モードかどうか
+    const [isAutoAnimationExec, setIsAutoAnimationExec] = useState(true); //アニメーション自動実行モードかどうか
 
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
 
@@ -131,7 +131,7 @@ export default observer( function ArticleEdit() {
                         width: isMotiondisplayMode ? 1280 : undefined
                         }} sm={6} >
                     {
-                        id && (<div style={{aspectRatio: '16 / 7.5'}} ><ModelScreen  isEditmode={isEditmode} isActiondisplayMode={isActiondisplayMode}/></div>)
+                        id && (<div style={{aspectRatio: '16 / 7.5'}} ><ModelScreen  isEditmode={isEditmode} isAutoAnimationExec={isAutoAnimationExec}/></div>)
                     }
                         <DisplayHtmlSubtitles fontSize={'2em'}/>
                         <div>
@@ -156,7 +156,7 @@ export default observer( function ArticleEdit() {
                         </div>
 
                     </Col>
-                    <Col  sm={6} >
+                    <Col  sm={isMotiondisplayMode ? 5 : 6} >
                         <Tabs defaultActiveKey="instruction" id="article-editor-main-tab" className="mb-3">
 
                             <Tab eventKey="instruction" title="Instruction">
@@ -229,8 +229,8 @@ export default observer( function ArticleEdit() {
                                     <label>Display Mode</label>
                                 </div>
                                 <div>
-                                    <input type="checkbox" defaultChecked={isActiondisplayMode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsActiondisplayMode(event.target.checked)}/>
-                                    <label>Show Action</label>
+                                    <input type="checkbox" defaultChecked={isAutoAnimationExec} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsAutoAnimationExec(event.target.checked)}/>
+                                    <label>Automatic Animation Exec</label>
                                 </div>
                                 <p>Hight : {descriptionAreaHeight}</p>
                                 <DebugDisplay />

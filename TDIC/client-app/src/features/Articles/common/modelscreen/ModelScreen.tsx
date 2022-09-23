@@ -15,7 +15,8 @@ import GetSceneCapture from './GetSceneCapture';
 import AutomaticCameraMove from './AutomaticCameraMove';
 import ShowOrbitInfo from './ShowOrbitInfo';
 import UpdateInstanceVisivility from './UpdateInstanceVisivility';
-import ShowAction from './ShowAction';
+import ShowActionUseInstructionSettings from './ShowActionUseInstructionSettings';
+import ShowActionofSettedModel from './ShowActionofSettedModel';
 
 
 // ref https://codesandbox.io/s/draggable-mesh-rgn91?file=/src/App.tsx:900-940
@@ -28,10 +29,10 @@ interface Props {
   //width : string;
   //height : string;
   isEditmode : boolean
-  isActiondisplayMode : boolean;
+  isAutoAnimationExec : boolean;
 }
 
-export default observer( function ModelScreen({isEditmode, isActiondisplayMode}: Props) {
+export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}: Props) {
 
   const [isDebugMode, setIsDebugMode] = useState(false);
   
@@ -116,7 +117,13 @@ useEffect(()=> {
       {
       //  <Effects />
       }
-      <ShowAction isActiondisplayMode={isActiondisplayMode} />
+      {
+        isAutoAnimationExec && <ShowActionofSettedModel isActiondisplayMode={isAutoAnimationExec} />
+      }
+      {
+        !isAutoAnimationExec && <ShowActionUseInstructionSettings isActiondisplayMode={false} />
+      }
+      
         {<SceneInfoCatcher />}
         {
           <GetSceneCapture />

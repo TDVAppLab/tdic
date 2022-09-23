@@ -19,7 +19,7 @@ export default observer( function LoadModelSub({id_inst, id_part, pos, scale}: P
 
     const {instancepartStore} = useStore();
     //const { instancepartStore } = useStore();
-    const {annimationsRegistry, setAnimationClips} = instancepartStore;
+    const {annimationsRegistry, setAnimationClips, setModelLoading} = instancepartStore;
   
     const str_url_partapi = process.env.REACT_APP_API_URL + `/modelfiles/file/${id_part}`;
     const gltf = useLoader(GLTFLoader, str_url_partapi);
@@ -27,8 +27,11 @@ export default observer( function LoadModelSub({id_inst, id_part, pos, scale}: P
     gltf.scene.scale.set(scale,scale,scale)
     gltf.scene.name = `[${id_inst}]InstanceModel`;
     setAnimationClips(gltf.animations,id_inst);
+    
+    setModelLoading(id_inst, false);
+
     //console.log(id_part);
-    console.log(annimationsRegistry);
+    //console.log(annimationsRegistry);
   
     return (
         <primitive object={gltf.scene} dispose={null} />
