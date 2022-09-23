@@ -1,9 +1,9 @@
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import React from 'react';
+import React, { useEffect } from 'react';
 import { OrbitControls } from '@react-three/drei';
 import { AnimationMixer } from 'three/src/animation/AnimationMixer';
-import { Clock } from 'three';
+import { Clock, LoopOnce, LoopRepeat } from 'three';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../app/stores/store';
 
@@ -17,14 +17,50 @@ export default observer( function ShowActionofSettedModel({isActiondisplayMode}:
     const { scene } = useThree();
 
     const {instancepartStore} = useStore();
-    const {annimationsRegistry, setAnimationClips} = instancepartStore;
+    const {annimationsRegistry, instancepartRegistry} = instancepartStore;
 
-    const id_inst = 1;
+    const {instructionStore} = useStore();
+    const {selectedInstruction, instanceDisplayRegistry} = instructionStore;
+
 
     
-    const temp_inst = scene.children.find(child => child.name == `[${id_inst}]InstanceModel`);
-  
-    const mixer = new AnimationMixer(temp_inst!);
+    useEffect(()=>{
+
+        instancepartRegistry.size>0 && Array.from(instancepartRegistry.values()).map(x=>{
+            const temp_instance = scene.children.find(child => child.name == `[${x.id_inst}]InstanceModel`);
+            if(temp_instance){
+                mixers.set(x.id_inst,new AnimationMixer(temp_instance))
+                //console.log("mixers"); 
+            }
+        });
+        
+        //console.log(mixers); 
+
+
+        
+
+        if(annimationsRegistry && isActiondisplayMode){
+        
+            Array.from(instancepartStore.instancepartRegistry.values()).map(instance=>{
+
+                const mixer = mixers.get(instance.id_inst);
+
+                mixer && 
+                annimationsRegistry?.get(instance.id_inst)?.forEach(clip => 
+                    {
+                        mixer?.clipAction(clip).reset();
+                        //mixer?.clipAction(clip)?.clampWhenFinished!=false;
+                        //mixer?.clipAction(clip).play(); //console.log(clip); 
+                        //mixer?.update(clock.getDelta());
+                    })})
+        }
+        
+
+
+
+    }, [instancepartRegistry, annimationsRegistry, selectedInstruction]);
+
+    const mixers = new Map<number, AnimationMixer>();
 
     let clock = new Clock();
 
@@ -32,13 +68,16 @@ export default observer( function ShowActionofSettedModel({isActiondisplayMode}:
     useFrame(state => {
         if(annimationsRegistry && isActiondisplayMode){
         
-            Array.from(instancepartStore.instancepartRegistry.values()).map(instance=>(
+            Array.from(instancepartStore.instancepartRegistry.values()).map(instance=>{
 
-                annimationsRegistry?.get(id_inst)?.forEach(clip => 
-                    {
-                        mixer.clipAction(clip).play(); console.log("called"); 
-                        mixer.update(clock.getDelta());
-                    })))
+                const mixer = mixers.get(instance.id_inst);
+
+                //mixer && 
+                annimationsRegistry?.get(instance.id_inst)?.forEach(clip => 
+                {
+                    mixer?.clipAction(clip).play(); 
+                    mixer?.update(clock.getDelta());
+                })})
         }
         })
 

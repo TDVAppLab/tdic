@@ -15,8 +15,8 @@ import GetSceneCapture from './GetSceneCapture';
 import AutomaticCameraMove from './AutomaticCameraMove';
 import ShowOrbitInfo from './ShowOrbitInfo';
 import UpdateInstanceVisivility from './UpdateInstanceVisivility';
-import ShowActionofSettedModel from './ShowActionofSettedModel';
 import ShowActionUseInstructionSettings from './ShowActionUseInstructionSettings';
+import ShowActionofSettedModel from './ShowActionofSettedModel';
 
 
 // ref https://codesandbox.io/s/draggable-mesh-rgn91?file=/src/App.tsx:900-940
@@ -117,8 +117,13 @@ useEffect(()=> {
       {
       //  <Effects />
       }
-      <ShowActionofSettedModel isActiondisplayMode={isAutoAnimationExec} />
-      <ShowActionUseInstructionSettings isActiondisplayMode={false} />
+      {
+        isAutoAnimationExec && <ShowActionofSettedModel isActiondisplayMode={isAutoAnimationExec} />
+      }
+      {
+        !isAutoAnimationExec && <ShowActionUseInstructionSettings isActiondisplayMode={false} />
+      }
+      
         {<SceneInfoCatcher />}
         {
           <GetSceneCapture />
