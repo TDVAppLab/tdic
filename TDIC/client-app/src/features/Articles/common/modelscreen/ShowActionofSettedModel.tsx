@@ -13,7 +13,7 @@ interface Props {
   }
 
 
-export default observer( function ShowAction({isActiondisplayMode}: Props)  {
+export default observer( function ShowActionofSettedModel({isActiondisplayMode}: Props)  {
     const { scene } = useThree();
 
     const {instancepartStore} = useStore();

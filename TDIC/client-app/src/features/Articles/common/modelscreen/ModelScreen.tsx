@@ -15,7 +15,7 @@ import GetSceneCapture from './GetSceneCapture';
 import AutomaticCameraMove from './AutomaticCameraMove';
 import ShowOrbitInfo from './ShowOrbitInfo';
 import UpdateInstanceVisivility from './UpdateInstanceVisivility';
-import ShowAction from './ShowAction';
+import ShowActionofSettedModel from './ShowActionofSettedModel';
 import ShowActionUseInstructionSettings from './ShowActionUseInstructionSettings';
 
 
@@ -117,7 +117,7 @@ useEffect(()=> {
       {
       //  <Effects />
       }
-      <ShowAction isActiondisplayMode={isAutoAnimationExec} />
+      <ShowActionofSettedModel isActiondisplayMode={isAutoAnimationExec} />
       <ShowActionUseInstructionSettings isActiondisplayMode={false} />
         {<SceneInfoCatcher />}
         {
