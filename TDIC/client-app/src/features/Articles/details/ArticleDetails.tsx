@@ -4,12 +4,13 @@ import { Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
 import { useStore } from "../../../app/stores/store";
-import PanelInstruction from "./PanelInstruction";
 
 
 import DebugDisplay from "../common/DebugDisplay";
 import GoogleAd from "../../../app/common/utils/GoogleAd";
 import ModelScreen from "../common/modelscreen/ModelScreen";
+import PanelInstruction from "./PanelInstruction";
+import InstructionSelector from "./InstructionSelector";
 
 
 
@@ -19,7 +20,6 @@ export default observer( function ArticleDetails() {
     
     const {id} = useParams<{id:string}>();
 
-    const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(0);
     
     const {userStore: {user}} = useStore();
 
@@ -27,7 +27,7 @@ export default observer( function ArticleDetails() {
     const {selectedArticle : article, loadArticle, loading : isArticleLoading} = articleStore;
     
     const {instructionStore} = useStore();
-    const {loadInstructions, selectedInstruction, setSelectedInstruction, instructionRegistry, loading : isInstructionLoading} = instructionStore;
+    const {loadInstructions, selectedInstruction, loading : isInstructionLoading} = instructionStore;
 
 
     const {instancepartStore} = useStore();
@@ -46,20 +46,10 @@ export default observer( function ArticleDetails() {
     const {loadLights, loading : isLightLoading} = lightStore;
     
     const {sceneInfoStore} = useStore();
-//    const {loadLights, loading : isLightLoading} = lightStore;
-
         
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
     
     
-    const ref = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        
-        if(ref.current){
-            setDescriptionAreaHeight(document.documentElement.clientHeight - ref.current.getBoundingClientRect().top);
-        }
-    })
 
     useEffect(() => {
 
@@ -110,9 +100,7 @@ export default observer( function ArticleDetails() {
 
     return (
         <>
-            <h2>{
-            article?.title
-            }</h2>
+            <h2>{article?.title}</h2>
 
                 <Row>
                     <Col sm={8}>
@@ -120,19 +108,7 @@ export default observer( function ArticleDetails() {
                         id && (<div style={{height: '64vh', width: '64vw'}} ><ModelScreen  isEditmode={false}  isAutoAnimationExec={false}/></div>)
                         //<ModelScreen height="64vh" width='64vw' isEditmode={false} />
                     }
-                        <div>
-                            {
-                                Array.from(instructionRegistry.values()).map(x=>(
-                                    <button key={x.id_instruct}
-                                        type = 'submit'
-                                        className={x.id_instruct==selectedInstruction?.id_instruct ? "btn btn-primary" : "btn btn-outline-primary"}
-                                        onClick={()=>{setSelectedInstruction(x.id_instruct)}} 
-                                    >
-                                        {x.title}
-                                    </button>
-                                ))
-                            }
-                        </div>
+                        <InstructionSelector />
                         <div>
                             <input type="checkbox" checked={sceneInfoStore.is_automatic_camera_rotate} onChange={(event: React.ChangeEvent<HTMLInputElement>) => sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked)}/>
                             <label>Camera Auto Moving</label>
@@ -142,11 +118,7 @@ export default observer( function ArticleDetails() {
                     <Col   sm={4}>
                         <Tabs defaultActiveKey="instruction" id="uncontrolled-tab-example" className="mb-3">
                             <Tab eventKey="instruction" title="Instruction">
-                                <div ref={ref} className="overflow-auto" style={{'height':`${descriptionAreaHeight}px`}}>
-                                    {
-                                        selectedInstruction && <PanelInstruction instruction={selectedInstruction} />
-                                    }
-                                </div>
+                                <PanelInstruction />
                             </Tab>
                             <Tab eventKey="profile" title="Material">
                             </Tab>
@@ -154,8 +126,6 @@ export default observer( function ArticleDetails() {
                                 user &&
                                 <Tab eventKey="edit" title="Edit">
                                     <Link to={`/articleedit/${Number(article?.id_article)}`}>Edit</Link> 
-                                    <hr />
-                                    <p>{descriptionAreaHeight}</p>
                                     <hr />
                                     <DebugDisplay />
                                 </Tab>

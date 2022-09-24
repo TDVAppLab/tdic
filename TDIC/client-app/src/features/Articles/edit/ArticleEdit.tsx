@@ -5,7 +5,6 @@ import { Link, useParams } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
 import { useStore } from "../../../app/stores/store";
 import DebugDisplay from "../common/DebugDisplay";
-import PanelInstruction from "../details/PanelInstruction";
 import EdiaAnnotationDisplay from "./EditAnnotationDisplay";
 import EditAnnotation from "./EditAnnotation";
 import EdiaInstruction from "./EditInstruction";
@@ -21,6 +20,8 @@ import DisplayHtmlSubtitles from "../common/modelscreen/DisplayHtmlSubtitles";
 import SubtitleSelector from "../common/SubtitleSelector";
 import ListupSubtitles from "./ListupSubtitles";
 import EditInstanceDisplay from "./EditInstanceDisplay";
+import PanelInstruction from "../details/PanelInstruction";
+import InstructionSelector from "../details/InstructionSelector";
 
 
 
@@ -29,8 +30,6 @@ export default observer( function ArticleEdit() {
 
     
     const {id} = useParams<{id:string}>();
-
-    const [descriptionAreaHeight, setDescriptionAreaHeight] = useState(0);
 
     const [isEditmode, setIsEditmode] = useState(false); //編集モードかどうか
     const [isMotiondisplayMode, setIsMotiondisplayMode] = useState(false); //動画撮影モードかどうか
@@ -42,7 +41,7 @@ export default observer( function ArticleEdit() {
     const {selectedArticle : article, loadArticle, loading : isArticleLoading} = articleStore;
     
     const {instructionStore} = useStore();
-    const {loadInstructions, selectedInstruction, setSelectedInstruction, instructionRegistry, loading : isInstructionLoading} = instructionStore;
+    const {loadInstructions, selectedInstruction, loading : isInstructionLoading} = instructionStore;
 
 
     const {instancepartStore} = useStore();
@@ -62,17 +61,6 @@ export default observer( function ArticleEdit() {
     
     const {sceneInfoStore} = useStore();
     
-
-    const ref = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if(ref.current){
-            //console.log("clientHeight : hight", document.documentElement.clientHeight );
-            //console.log("current hight", ref.current.getBoundingClientRect().top);
-            //console.log("size", document.documentElement.clientHeight - ref.current.getBoundingClientRect().top);
-            setDescriptionAreaHeight(document.documentElement.clientHeight - ref.current.getBoundingClientRect().top);
-        }
-      });
 
 
 
@@ -134,19 +122,8 @@ export default observer( function ArticleEdit() {
                         id && (<div style={{aspectRatio: '16 / 7.5'}} ><ModelScreen  isEditmode={isEditmode} isAutoAnimationExec={isAutoAnimationExec}/></div>)
                     }
                         <DisplayHtmlSubtitles fontSize={'2em'}/>
-                        <div>
-                            { instructionRegistry.size>0 &&
-                                Array.from(instructionRegistry.values()).map(x=>(
-                                    <button key={x.id_instruct}
-                                        type = 'submit'
-                                        className={x.id_instruct==selectedInstruction?.id_instruct ? "btn btn-primary" : "btn btn-outline-primary"}
-                                        onClick={()=>{setSelectedInstruction(x.id_instruct)}} 
-                                    >
-                                        {x.title}
-                                    </button>
-                                ))
-                            }
-                        </div>
+                        
+                        <InstructionSelector />
 
                         <SubtitleSelector />
                         
@@ -168,11 +145,7 @@ export default observer( function ArticleEdit() {
                                         <EditInstanceDisplay />
                                     </Tab>
                                     <Tab eventKey="show_instruction" title="Show Instruction">
-                                        <div ref={ref} className="overflow-auto" style={{'height':`${descriptionAreaHeight}px`}}>
-                                            {
-                                                selectedInstruction && <PanelInstruction instruction={selectedInstruction} />
-                                            }
-                                        </div>
+                                        <PanelInstruction />
                                     </Tab>
                                     <Tab eventKey="show_subtitles" title="Show Subtitles">
                                         <ListupSubtitles />
@@ -232,7 +205,6 @@ export default observer( function ArticleEdit() {
                                     <input type="checkbox" defaultChecked={isAutoAnimationExec} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsAutoAnimationExec(event.target.checked)}/>
                                     <label>Automatic Animation Exec</label>
                                 </div>
-                                <p>Hight : {descriptionAreaHeight}</p>
                                 <DebugDisplay />
                             </Tab>
 

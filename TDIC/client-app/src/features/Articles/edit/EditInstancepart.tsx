@@ -21,7 +21,7 @@ export default observer( function EditInstancepart(){
     const {ModelfileRegistry} = modelfileStore;
 
     useEffect(()=>{
-        instancepartRegistry && setInstancepart(Array.from(instancepartRegistry.values()));
+        //instancepartRegistry && setInstancepart(Array.from(instancepartRegistry.values()));
     }, []);
 
     useEffect(()=>{

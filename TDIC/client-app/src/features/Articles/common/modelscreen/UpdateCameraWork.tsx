@@ -13,10 +13,11 @@ import { useStore } from '../../../../app/stores/store';
 interface Props{
   view: View;
   isModeTransport : boolean;
+  step : number;
 }
 
 
-export default observer( function UpdateCameraWork({view, isModeTransport}: Props)  {
+export default observer( function UpdateCameraWork({view, isModeTransport, step}: Props)  {
   const camera = useThree((state) => state.camera);
   const { scene } = useThree();
   const orbitControls = ((scene as any).orbitControls as any);
@@ -26,7 +27,6 @@ export default observer( function UpdateCameraWork({view, isModeTransport}: Prop
   
 
   let count=0;
-  let step=100;
 
   const pitch_camerapos = new Vector3((view.cam_pos_x - camera.position.x) / step, (view.cam_pos_y - camera.position.y) / step, (view.cam_pos_z - camera.position.z) / step);
   const pitch_target = new Vector3();
