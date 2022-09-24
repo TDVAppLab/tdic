@@ -1,6 +1,6 @@
 import { useFrame, useThree } from '@react-three/fiber';
 import { AnimationMixer } from 'three/src/animation/AnimationMixer';
-import { AnimationClip, Clock } from 'three';
+import { AnimationClip, Clock, LoopPingPong } from 'three';
 
 
 interface Props {
@@ -18,13 +18,16 @@ export default function ShowAction({animations, modelUuid, is_exec_animation}: P
 
     let clock = new Clock();
 
+    animations.forEach(clip => {
+        const action = mixer.clipAction(clip);
+        action.reset();
+        action.setLoop(LoopPingPong,Infinity);
+        action.play();
+    })
   
     useFrame(state => {
         if(is_exec_animation){
-            animations.forEach(clip => {
-                mixer.clipAction(clip).play();
-                mixer.update(clock.getDelta());
-            })
+            mixer.update(clock.getDelta());
         }
     })
 
