@@ -24,62 +24,59 @@ export default observer( function ShowActionofSettedModel({isActiondisplayMode}:
 
 
     
+    const mixers = new Map<number, AnimationMixer>();
+
+    let clock = new Clock();
+    
     useEffect(()=>{
 
-        instancepartRegistry.size>0 && Array.from(instancepartRegistry.values()).map(x=>{
-            const temp_instance = scene.children.find(child => child.name == `[${x.id_inst}]InstanceModel`);
+        mixers.clear();
+
+        
+        instancepartRegistry.forEach(instancepart=>{
+            const temp_instance = scene.children.find(child => child.name == `[${instancepart.id_inst}]InstanceModel`);
             if(temp_instance){
-                mixers.set(x.id_inst,new AnimationMixer(temp_instance))
+                mixers.set(instancepart.id_inst,new AnimationMixer(temp_instance))
                 //console.log("mixers"); 
             }
         });
-        
+
+
         //console.log(mixers); 
 
 
         
 
-        if(annimationsRegistry && isActiondisplayMode){
-        
-            Array.from(instancepartStore.instancepartRegistry.values()).map(instance=>{
+        if(annimationsRegistry){
 
-                const mixer = mixers.get(instance.id_inst);
+            mixers.forEach((mixer,i)=>{
 
-                mixer && 
-                annimationsRegistry?.get(instance.id_inst)?.forEach(clip => 
-                    {
-                        mixer?.clipAction(clip).reset();
-                        //mixer?.clipAction(clip)?.clampWhenFinished!=false;
-                        //mixer?.clipAction(clip).play(); //console.log(clip); 
-                        //mixer?.update(clock.getDelta());
-                    })})
-        }
-        
+                annimationsRegistry?.get(i)?.forEach(clip => 
+                {
+                    const action = mixer.clipAction(clip);
+                    action.reset();
+                    action.play();
+                })
+            })
 
-
+        }        
 
     }, [instancepartRegistry, annimationsRegistry, selectedInstruction]);
 
-    const mixers = new Map<number, AnimationMixer>();
 
-    let clock = new Clock();
 
   
     useFrame(state => {
-        if(annimationsRegistry && isActiondisplayMode){
-        
-            Array.from(instancepartStore.instancepartRegistry.values()).map(instance=>{
+        //if(isActiondisplayMode){
 
-                const mixer = mixers.get(instance.id_inst);
+            mixers.forEach(mixer => {if(mixer){
+                mixer.update(clock.getDelta());
+                //console.log("loop-d"); 
 
-                //mixer && 
-                annimationsRegistry?.get(instance.id_inst)?.forEach(clip => 
-                {
-                    mixer?.clipAction(clip).play(); 
-                    mixer?.update(clock.getDelta());
-                })})
-        }
+            }
+        //}
         })
+    })
 
   return (
       null
