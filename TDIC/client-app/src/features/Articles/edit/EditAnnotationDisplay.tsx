@@ -23,7 +23,7 @@ export default observer( function EdiaAnnotationDisplay() {
     const { annotationRegistry, setSelectedAnnotation } = annotationStore;  
 
     const { annotationDisplayStore} = useStore();
-    const { selectedAnnotationDisplayMap, selectedInstruction, updateAnnotationDisplay } = annotationDisplayStore;
+    const { selectedAnnotationDisplayMap, selectedInstructionId, updateAnnotationDisplay } = annotationDisplayStore;
 
     const [annotationDisplays, setAnnotationDisplays] = useState<AnnotationDisplay[]>([]);
  
@@ -41,7 +41,7 @@ export default observer( function EdiaAnnotationDisplay() {
     
     useEffect(()=> {
         selectedAnnotationDisplayMap.size > 0 && setAnnotationDisplays(Array.from(selectedAnnotationDisplayMap.values()));
-    }, [selectedInstruction])
+    }, [selectedInstructionId])
 
   
   

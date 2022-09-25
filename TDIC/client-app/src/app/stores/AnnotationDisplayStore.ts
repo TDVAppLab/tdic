@@ -3,11 +3,11 @@ import agent from "../api/agent";
 import { AnnotationDisplay } from "../models/AnnotationDisplay";
 
 export default class AnnotationDisplayStore {
-    annotationDisplayRegistry = new Map<number, AnnotationDisplay>();
+    //annotationDisplayRegistry = new Map<number, AnnotationDisplay>();
     annotationDisplayArray:AnnotationDisplay[] = [];
     selectedAnnotationDisplayMap = new Map<number, AnnotationDisplay>();
-    selectedAnnotationDisplay: AnnotationDisplay | undefined = undefined;
-    selectedInstruction=0;
+    //selectedAnnotationDisplay: AnnotationDisplay | undefined = undefined;
+    selectedInstructionId=0;
     loading=false;
 
     
@@ -20,7 +20,7 @@ export default class AnnotationDisplayStore {
 
     loadAnnotationDisplays = async (id_article:number) => {
         this.loading = true;
-        this.annotationDisplayRegistry.clear();
+        //this.annotationDisplayRegistry.clear();
         this.annotationDisplayArray.length=0;
         try {
             this.annotationDisplayArray = await agent.AnnotationDisplays.list(id_article);
@@ -47,7 +47,7 @@ export default class AnnotationDisplayStore {
                 })
             })
             
-            this.selectedInstruction=id_instruct;
+            this.selectedInstructionId=id_instruct;
             return objects;
         } /*else {
             this.loadingInitial = true;
@@ -71,7 +71,7 @@ export default class AnnotationDisplayStore {
         this.loading = true;
 
         const prv_article = objects[0].id_article;
-        const prv_selectedInstruction = this.selectedInstruction;
+        const prv_selectedInstruction = this.selectedInstructionId;
         
         try {
             await agent.AnnotationDisplays.update(objects);
