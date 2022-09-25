@@ -65,15 +65,19 @@ export default observer( function ArticleEdit() {
 
 
     useEffect(() => { 
-        setIsDataLoading(
-            article?.id_article != Number(id)
-         || instructionId_article != Number(id)
-         || viewId_article != Number(id) 
-         || instancepartId_assy != article?.id_assy
-         || lightId_article != Number(id) 
-         || annotationId_article != Number(id) 
-         || annotationDisplayId_article != Number(id) 
-         );
+        if(id) {
+            setIsDataLoading(
+                article?.id_article != Number(id)
+            || instructionId_article != Number(id)
+            || viewId_article != Number(id) 
+            || instancepartId_assy != article?.id_assy
+            || lightId_article != Number(id) 
+            || annotationId_article != Number(id) 
+            || annotationDisplayId_article != Number(id) 
+            );
+        } else {
+            setIsDataLoading(false);
+        }
 
     },[article?.id_article, instructionId_article, viewId_article, instancepartId_assy, lightId_article, annotationId_article, annotationDisplayId_article])
 
