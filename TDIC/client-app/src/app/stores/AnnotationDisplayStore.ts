@@ -79,7 +79,7 @@ export default class AnnotationDisplayStore {
             runInAction(() => {
 
                 objects.forEach(object => {
-                    const i = this.annotationDisplayArray.findIndex(x => x.id_article == object.id_article && x.id_instruct == object.id_article && x.id_annotation == object.id_annotation );
+                    const i = this.annotationDisplayArray.findIndex(x => x.id_article == object.id_article && x.id_instruct == object.id_instruct && x.id_annotation == object.id_annotation );
                     if(i != -1){
                         this.annotationDisplayArray[i] = object;
                     }
