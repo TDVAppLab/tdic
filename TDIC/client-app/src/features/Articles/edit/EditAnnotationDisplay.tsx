@@ -35,7 +35,7 @@ export default observer( function EdiaAnnotationDisplay() {
 
     useEffect(()=>{
         selectedAnnotationDisplayMap.size > 0 && setAnnotationDisplays(Array.from(selectedAnnotationDisplayMap.values()));
-    }, [selectedAnnotationDisplayMap]);
+    }, [selectedAnnotationDisplayMap, selectedAnnotationDisplayMap.size]);
 
 
     
