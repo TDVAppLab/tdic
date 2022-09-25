@@ -20,6 +20,9 @@ export default class InstructionStore {
     instanceActionExecSettingAllArray :InstanceActionExecSetting[]=[];
     instanceActionExecSettingRegistry :InstanceActionExecSetting[]=[];
 
+    
+    id_article: number = 0;
+
     constructor(){
         makeAutoObservable(this)
     }
@@ -46,8 +49,11 @@ export default class InstructionStore {
 
                 const id_startinst = (Array.from(this.instructionRegistry.values())).filter((x: Instruction) => x.display_order == Math.min.apply(null, ar1_map))[0].id_instruct;
                 await this.setSelectedInstruction(id_startinst);
-
             }
+
+            runInAction(()=>{
+                this.id_article=id_article;
+            })
 
             this.setLoading(false);
         } catch (error) {

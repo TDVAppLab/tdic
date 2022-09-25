@@ -10,6 +10,9 @@ export default class AnnotationDisplayStore {
     selectedInstruction=0;
     loading=false;
 
+    
+    id_article: number = 0;
+
     constructor(){
         makeAutoObservable(this)
     }
@@ -21,6 +24,12 @@ export default class AnnotationDisplayStore {
         this.annotationDisplayArray.length=0;
         try {
             this.annotationDisplayArray = await agent.AnnotationDisplays.list(id_article);
+            
+
+            runInAction(()=>{
+                this.id_article=id_article;
+            })
+            
             this.setLoading(false);
         } catch (error) {
             console.log(error);

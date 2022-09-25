@@ -8,6 +8,9 @@ export default class LightStore {
     selectedLight: Light| undefined = undefined;
     loading=false;
 
+    
+    id_article: number = 0;
+
     constructor(){
         makeAutoObservable(this)
     }
@@ -21,6 +24,11 @@ export default class LightStore {
             lights.forEach(light => {
                 this.setLight(light);
             })
+
+            runInAction(()=>{
+                this.id_article=id_article;
+            })
+            
             this.setLoading(false);
         } catch (error) {
             console.log(error);
