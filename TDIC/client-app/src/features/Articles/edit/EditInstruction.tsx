@@ -21,7 +21,7 @@ export default observer( function EditInstruction(){
     const {selectedInstruction, updateInstruction, deleteInstruction, createInstruction} = instructionStore;
 
     const {viewStore} = useStore();
-    const {getOptionArray : getViewOptionArray } = viewStore;
+    const {viewRegistry, getOptionArray : getViewOptionArray } = viewStore;
 
     const [instruction, setInstruction] = useState<Instruction>({
         id_article: articleStore?.selectedArticle?.id_article!,
@@ -54,6 +54,8 @@ export default observer( function EditInstruction(){
         selectedInstruction && setInstruction(selectedInstruction);
     }, [selectedInstruction]);
 
+    useEffect(()=>{
+    }, [viewRegistry.size]);
     
     function handleFormSubmit(instruction:Instruction) {
         console.log(instruction);
