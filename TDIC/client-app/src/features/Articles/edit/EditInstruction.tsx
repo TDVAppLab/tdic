@@ -23,6 +23,10 @@ export default observer( function EditInstruction(){
     const {viewStore} = useStore();
     const {viewRegistry, getOptionArray : getViewOptionArray } = viewStore;
 
+    
+    const {annotationDisplayStore} = useStore();
+    const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, selectedInstructionId, id_article : annotationDisplayId_article} = annotationDisplayStore;
+
     const [instruction, setInstruction] = useState<Instruction>({
         id_article: articleStore?.selectedArticle?.id_article!,
         id_instruct: 0,
@@ -58,13 +62,13 @@ export default observer( function EditInstruction(){
     }, [viewRegistry.size]);
     
     function handleFormSubmit(instruction:Instruction) {
-        console.log(instruction);
+        //console.log(instruction);
         
         if(instruction.id_instruct ==0 ){
             let newInstruction = {
                 ...instruction
             };
-            createInstruction(newInstruction);
+            createInstruction(newInstruction).then(()=>loadAnnotationDisplays(annotationDisplayId_article)).then(()=>setSelectedAnnotationDisplayMap(selectedInstructionId));
         } else {
             updateInstruction(instruction);
         }
@@ -118,7 +122,9 @@ export default observer( function EditInstruction(){
                         </Row>
                         
                         
-                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>Submit</button>
+                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>
+                            {isSubmitting ? "Processing" : "Submit"}
+                        </button>
                     </Form>
                 )}
 
