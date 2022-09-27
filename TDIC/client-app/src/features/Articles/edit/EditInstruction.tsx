@@ -18,7 +18,7 @@ export default observer( function EditInstruction(){
     
     const {articleStore} = useStore();
     const {instructionStore} = useStore();
-    const {selectedInstruction, updateInstruction, deleteInstruction, createInstruction} = instructionStore;
+    const {selectedInstruction, updateInstruction, deleteInstruction, createInstruction, loadInstanceActionExecSettingAllArray, id_article: instructionId_article} = instructionStore;
 
     const {viewStore} = useStore();
     const {viewRegistry, getOptionArray : getViewOptionArray } = viewStore;
@@ -68,7 +68,8 @@ export default observer( function EditInstruction(){
             let newInstruction = {
                 ...instruction
             };
-            createInstruction(newInstruction).then(()=>loadAnnotationDisplays(annotationDisplayId_article)).then(()=>setSelectedAnnotationDisplayMap(selectedInstructionId));
+            createInstruction(newInstruction).then(()=>loadAnnotationDisplays(annotationDisplayId_article)).then(()=>setSelectedAnnotationDisplayMap(selectedInstructionId))
+                                             .then(()=>loadInstanceActionExecSettingAllArray(instructionId_article))
         } else {
             updateInstruction(instruction);
         }

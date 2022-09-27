@@ -143,12 +143,13 @@ export default class InstructionStore {
         this.loading = true;
         try {
             const result_object = await (await agent.Instructions.create(object)).data;
-            console.log(result_object);
+            //console.log(result_object);
             runInAction(() => {
                 this.instructionRegistry.set(result_object.id_instruct, result_object);
-                this.selectedInstruction = result_object;
+                //this.selectedInstruction = result_object;
                 this.loading = false;
-            })            
+            })    
+            return result_object;        
         }catch (error) {
             console.log(error);
             runInAction(() => {
