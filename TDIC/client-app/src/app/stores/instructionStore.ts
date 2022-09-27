@@ -230,9 +230,19 @@ export default class InstructionStore {
         try {
             await agent.Instructions.updateInstanceActionClips(id_article,id_instruct,instanceActionExecSettings);
             runInAction(() => {
-                //this.instructionRegistry.set(instruction.id_instruct, instruction);
-                //this.selectedInstruction = instruction;
-                //this.loading = false;
+
+                instanceActionExecSettings.forEach(instanceActionExecSetting=>{
+                    const index = this.instanceActionExecSettingAllArray.findIndex(item => 
+                        item.id_instruct === id_instruct && 
+                        item.id_inst === instanceActionExecSetting.id_inst && 
+                        item.no === instanceActionExecSetting.no);
+                        //console.log(index);
+
+                        if(this.instanceActionExecSettingAllArray[index]) {
+                            this.instanceActionExecSettingAllArray[index] = instanceActionExecSetting;
+                        }
+                })
+                this.instanceActionExecSettingRegistry = this.instanceActionExecSettingAllArray.filter(item => item.id_instruct === id_instruct);
             })
             
         }catch (error) {
