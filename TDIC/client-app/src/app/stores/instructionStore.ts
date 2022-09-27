@@ -179,12 +179,20 @@ export default class InstructionStore {
 
     updateInstanceDisplay = async (instruction: Instruction) => {
         //this.loading = true;
-        console.log("called");
+        //console.log(instruction);
         try {
             await agent.Instructions.updateInstanceDisplay(instruction);
             runInAction(() => {
                 this.instructionRegistry.set(instruction.id_instruct, instruction);
                 this.selectedInstruction = instruction;
+
+                const ans = JSON.parse(instruction.display_instance_sets || "null") as InstanceDisplay[];
+                if(ans) {
+                    ans.forEach(x=>{                            
+                        this.instanceDisplayRegistry.set(x.id_inst,x);
+                    })
+                }
+
                 //this.loading = false;
             })
             
