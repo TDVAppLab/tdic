@@ -33,13 +33,6 @@ export default observer( function EditInstancepart(){
     });
     
 
-    
-    function handleFormSubmit(instanceparts:Instancepart[]) {
-        updateInstancepart(instanceparts);
-    }
-
-    
-
     if(instanceparts.length<1) return null;
 
     return(
@@ -48,7 +41,10 @@ export default observer( function EditInstancepart(){
                 validationSchema={validationSchema}
                 enableReinitialize 
                 initialValues={instanceparts} 
-                onSubmit={(values) => handleFormSubmit(values)}>
+                onSubmit={(values) => 
+                    updateInstancepart(values)
+                        .then(state => instancepartRegistry && setInstancepart(Array.from(instancepartRegistry.values())))
+                }>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
@@ -95,7 +91,9 @@ export default observer( function EditInstancepart(){
                             </tbody>
                         </table>
                         
-                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>Submit</button>
+                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>
+                            {isSubmitting ? "Processing" : "Submit"}
+                        </button>
                     </Form>
                 )}
 

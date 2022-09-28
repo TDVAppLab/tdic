@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using System.Collections.Generic;
 using System.Text.Json;
+using TDIC.DTOs;
 
 namespace Application.Instruction
 {
@@ -44,33 +45,11 @@ namespace Application.Instruction
 
             public async Task<Result<t_instruction>> Handle(Command request, CancellationToken cancellationToken)
             {
-
-                //--------------------------------------------------------------------------------------
-                //start create json
-
-                var data = new List<InstanceDisplay>();
-                
-                long assyid = (await _context.t_articles.FindAsync(request.Instruction.id_article)).id_assy ?? 0;
-
-                var instlist = await _context.t_instance_parts.Where(t => t.id_assy == assyid).ToListAsync();
-                    
-                foreach (var inst in instlist)
-                {
-                    data.Add(new InstanceDisplay{id_assy=inst.id_assy, id_inst=inst.id_inst, isDisplay=true});
-                }
-                // オプションを付けずにJson文字列に変換
-                var json_str = JsonSerializer.Serialize(data);
-
-                //end create json
-                //--------------------------------------------------------------------------------------
-
                 
                 long id_instruct = 1 + (await _context.t_instructions.Where(t => t.id_article == request.Instruction.id_article)
                                         .MaxAsync(t => (long?)t.id_instruct) ?? 0);
 
                 request.Instruction.id_instruct = id_instruct;
-
-                request.Instruction.display_instance_sets = json_str;
                 
                 request.Instruction.create_user = "";
                 request.Instruction.create_datetime = DateTime.Now;
@@ -78,9 +57,67 @@ namespace Application.Instruction
                 request.Instruction.latest_update_datetime = DateTime.Now;
 
 
-                //instructionに一致するannotation displayを作る
+
+                //--------------------------------------------------------------------------------------
+                //start create json
+
+                var InstanceDisplays = new List<InstanceDisplay>();
+                
+                long assyid = (await _context.t_articles.FindAsync(request.Instruction.id_article)).id_assy ?? 0;
+                
+                var instpartlist = await _context.t_instance_parts.Include(t =>t.id_partNavigation).Where(t => t.id_assy == assyid).ToListAsync(cancellationToken);
+                    
+                foreach (var inst in instpartlist)
+                {
+                    InstanceDisplays.Add(new InstanceDisplay{id_assy=inst.id_assy, id_inst=inst.id_inst, isDisplay=true});
+                }
+                
+                request.Instruction.display_instance_sets = JsonSerializer.Serialize(InstanceDisplays);
+                
+                //createInstanceActionClips json
+                //====================================================================================
+                
+
+                var modelActionSettinglist = new List<InstanceActionExecSettingDtO>();
+
+                    
+                foreach (var inst in instpartlist)
+                {
+                    List<PartAnimationClipDtO> AnimationClipList = new List<PartAnimationClipDtO>();
+                    try{
+                        AnimationClipList = JsonSerializer.Deserialize<List<PartAnimationClipDtO>>(inst.id_partNavigation.AnimationClip);
+
+                    } catch{
+                        AnimationClipList = new List<PartAnimationClipDtO>();
+
+                    }
+
+                    foreach (var AnimationClip in AnimationClipList)
+                    {
+                        modelActionSettinglist.Add(new InstanceActionExecSettingDtO{
+                            id_instruct=id_instruct, 
+                            id_assy=inst.id_assy, 
+                            id_inst=inst.id_inst, 
+                            id_part=inst.id_part,
+                            no=AnimationClip.no,
+                            name=AnimationClip.name,
+                            is_exec=false,
+                            num_loop=1,
+                            is_clamp_when_finished=true
+                        });
+
+                    }
+                }
+
+                request.Instruction.model_action_settings = JsonSerializer.Serialize(modelActionSettinglist);
+                //====================================================================================
+
 
                 await _context.t_instructions.AddAsync(request.Instruction);
+                
+                //instructionに一致するannotation displayを作る
+                //====================================================================================
+
 
                 
 
@@ -106,18 +143,14 @@ namespace Application.Instruction
                     }                    
                     await _context.t_annotation_displays.AddRangeAsync(annotation_displays);
                 }
+                //====================================================================================
+
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<t_instruction>.Failure("Failed to create task");
-
-//                var ans = request.Instruction;
-
-
-
+                if(!result) return Result<t_instruction>.Failure("Failed to create instruction");
 
                 return Result<t_instruction>.Success(await _context.t_instructions.FindAsync(request.Instruction.id_article, request.Instruction.id_instruct));
-//                return Result<t_instruction>.Success(request.Instruction);
             }
         }
 

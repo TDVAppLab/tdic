@@ -12,6 +12,8 @@ export default class InstancepartStore {
     annimationsRegistry = new Map<number, AnimationClip[]>();//number = id_inst(=instance)
 
     modelLoadingRegistry = new  Map<number, boolean>();
+    
+    id_assy: number = 0;
 
     constructor(){
         makeAutoObservable(this)
@@ -28,6 +30,7 @@ export default class InstancepartStore {
                 instanceparts.forEach(instancepart => {
                     this.setInstancepart(instancepart);
                     this.modelLoadingRegistry.set(instancepart.id_inst,true);
+                    this.id_assy=id_assy;
                 })
             })            
             this.setLoading(false);

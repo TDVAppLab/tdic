@@ -76,7 +76,9 @@ export default observer( function EditInstanceDisplay(){
                             </tbody>
                         </table>
                         
-                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>Submit</button>
+                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>
+                            {isSubmitting ? "Processing" : "Submit"}
+                        </button>
                     </Form>
                 )}
 
@@ -156,7 +158,9 @@ export default observer( function EditInstanceDisplay(){
                         </table>
 
                         
-                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>Submit</button>
+                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>
+                            {isSubmitting ? "Processing" : "Submit"}
+                        </button>
                     </Form>
                 )}
 

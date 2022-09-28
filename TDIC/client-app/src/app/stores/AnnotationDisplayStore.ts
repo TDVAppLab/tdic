@@ -3,12 +3,15 @@ import agent from "../api/agent";
 import { AnnotationDisplay } from "../models/AnnotationDisplay";
 
 export default class AnnotationDisplayStore {
-    annotationDisplayRegistry = new Map<number, AnnotationDisplay>();
+    //annotationDisplayRegistry = new Map<number, AnnotationDisplay>();
     annotationDisplayArray:AnnotationDisplay[] = [];
     selectedAnnotationDisplayMap = new Map<number, AnnotationDisplay>();
-    selectedAnnotationDisplay: AnnotationDisplay | undefined = undefined;
-    selectedInstruction=0;
+    //selectedAnnotationDisplay: AnnotationDisplay | undefined = undefined;
+    selectedInstructionId=0;
     loading=false;
+
+    
+    id_article: number = 0;
 
     constructor(){
         makeAutoObservable(this)
@@ -17,10 +20,16 @@ export default class AnnotationDisplayStore {
 
     loadAnnotationDisplays = async (id_article:number) => {
         this.loading = true;
-        this.annotationDisplayRegistry.clear();
+        //this.annotationDisplayRegistry.clear();
         this.annotationDisplayArray.length=0;
         try {
             this.annotationDisplayArray = await agent.AnnotationDisplays.list(id_article);
+            
+
+            runInAction(()=>{
+                this.id_article=id_article;
+            })
+            
             this.setLoading(false);
         } catch (error) {
             console.log(error);
@@ -38,7 +47,7 @@ export default class AnnotationDisplayStore {
                 })
             })
             
-            this.selectedInstruction=id_instruct;
+            this.selectedInstructionId=id_instruct;
             return objects;
         } /*else {
             this.loadingInitial = true;
@@ -62,7 +71,7 @@ export default class AnnotationDisplayStore {
         this.loading = true;
 
         const prv_article = objects[0].id_article;
-        const prv_selectedInstruction = this.selectedInstruction;
+        const prv_selectedInstruction = this.selectedInstructionId;
         
         try {
             await agent.AnnotationDisplays.update(objects);
@@ -70,12 +79,30 @@ export default class AnnotationDisplayStore {
             runInAction(() => {
 
                 objects.forEach(object => {
-                    const i = this.annotationDisplayArray.findIndex(x => x.id_article == object.id_article && x.id_instruct == object.id_article && x.id_annotation == object.id_annotation );
+                    const i = this.annotationDisplayArray.findIndex(x => x.id_article == object.id_article && x.id_instruct == object.id_instruct && x.id_annotation == object.id_annotation );
                     if(i != -1){
                         this.annotationDisplayArray[i] = object;
                     }
                 })
                 this.setSelectedAnnotationDisplayMap(prv_selectedInstruction);                
+                this.loading = false;
+            })
+            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+    
+    deleteAnnotationDisplayArray = async (id_annotation: number) => {
+        this.loading = true;
+
+        try {
+            runInAction(() => {
+                this.annotationDisplayArray = this.annotationDisplayArray.filter(x => x.id_annotation != id_annotation);
+                this.selectedInstructionId != 0 &&this.setSelectedAnnotationDisplayMap(this.selectedInstructionId);                
                 this.loading = false;
             })
             

@@ -7,6 +7,9 @@ export default class AnnotationStore {
     selectedAnnotation: Annotation| undefined = undefined;
     loading=false;
 
+    
+    id_article: number = 0;
+
     constructor(){
         makeAutoObservable(this)
     }
@@ -20,6 +23,11 @@ export default class AnnotationStore {
             annotation.forEach(annotation => {
                 this.setAnnotation(annotation);
             })
+
+            runInAction(()=>{
+                this.id_article=id_article;
+            })
+            
             this.setLoading(false);
         } catch (error) {
             console.log(error);
@@ -98,6 +106,7 @@ export default class AnnotationStore {
             runInAction(() => {
                 this.annotationRegistry.set(result_object.id_annotation, result_object);
                 this.selectedAnnotation = result_object;
+                //console.log("calledxxxx");
                 //this.setLoading(false);
             })
             

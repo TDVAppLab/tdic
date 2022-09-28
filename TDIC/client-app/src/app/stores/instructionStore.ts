@@ -20,6 +20,9 @@ export default class InstructionStore {
     instanceActionExecSettingAllArray :InstanceActionExecSetting[]=[];
     instanceActionExecSettingRegistry :InstanceActionExecSetting[]=[];
 
+    
+    id_article: number = 0;
+
     constructor(){
         makeAutoObservable(this)
     }
@@ -46,8 +49,11 @@ export default class InstructionStore {
 
                 const id_startinst = (Array.from(this.instructionRegistry.values())).filter((x: Instruction) => x.display_order == Math.min.apply(null, ar1_map))[0].id_instruct;
                 await this.setSelectedInstruction(id_startinst);
-
             }
+
+            runInAction(()=>{
+                this.id_article=id_article;
+            })
 
             this.setLoading(false);
         } catch (error) {
@@ -137,12 +143,13 @@ export default class InstructionStore {
         this.loading = true;
         try {
             const result_object = await (await agent.Instructions.create(object)).data;
-            console.log(result_object);
+            //console.log(result_object);
             runInAction(() => {
                 this.instructionRegistry.set(result_object.id_instruct, result_object);
-                this.selectedInstruction = result_object;
+                //this.selectedInstruction = result_object;
                 this.loading = false;
-            })            
+            })    
+            return result_object;        
         }catch (error) {
             console.log(error);
             runInAction(() => {
@@ -172,12 +179,20 @@ export default class InstructionStore {
 
     updateInstanceDisplay = async (instruction: Instruction) => {
         //this.loading = true;
-        console.log("called");
+        //console.log(instruction);
         try {
             await agent.Instructions.updateInstanceDisplay(instruction);
             runInAction(() => {
                 this.instructionRegistry.set(instruction.id_instruct, instruction);
                 this.selectedInstruction = instruction;
+
+                const ans = JSON.parse(instruction.display_instance_sets || "null") as InstanceDisplay[];
+                if(ans) {
+                    ans.forEach(x=>{                            
+                        this.instanceDisplayRegistry.set(x.id_inst,x);
+                    })
+                }
+
                 //this.loading = false;
             })
             
@@ -215,9 +230,19 @@ export default class InstructionStore {
         try {
             await agent.Instructions.updateInstanceActionClips(id_article,id_instruct,instanceActionExecSettings);
             runInAction(() => {
-                //this.instructionRegistry.set(instruction.id_instruct, instruction);
-                //this.selectedInstruction = instruction;
-                //this.loading = false;
+
+                instanceActionExecSettings.forEach(instanceActionExecSetting=>{
+                    const index = this.instanceActionExecSettingAllArray.findIndex(item => 
+                        item.id_instruct === id_instruct && 
+                        item.id_inst === instanceActionExecSetting.id_inst && 
+                        item.no === instanceActionExecSetting.no);
+                        //console.log(index);
+
+                        if(this.instanceActionExecSettingAllArray[index]) {
+                            this.instanceActionExecSettingAllArray[index] = instanceActionExecSetting;
+                        }
+                })
+                this.instanceActionExecSettingRegistry = this.instanceActionExecSettingAllArray.filter(item => item.id_instruct === id_instruct);
             })
             
         }catch (error) {

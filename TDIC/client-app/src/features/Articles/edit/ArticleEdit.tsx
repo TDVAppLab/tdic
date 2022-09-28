@@ -41,23 +41,23 @@ export default observer( function ArticleEdit() {
     const {selectedArticle : article, loadArticle, loading : isArticleLoading} = articleStore;
     
     const {instructionStore} = useStore();
-    const {loadInstructions, selectedInstruction, loading : isInstructionLoading} = instructionStore;
+    const {loadInstructions, selectedInstruction, loading : isInstructionLoading, id_article : instructionId_article} = instructionStore;
 
 
     const {instancepartStore} = useStore();
-    const {loadInstanceparts, instancepartRegistry, loading : isInstancepartLoading} = instancepartStore;
+    const {loadInstanceparts, instancepartRegistry, loading : isInstancepartLoading, id_assy : instancepartId_assy} = instancepartStore;
     
     const {viewStore} = useStore();
-    const {loadViews, setselectedView, loading : isViewLoading} = viewStore;
+    const {loadViews, setselectedView, loading : isViewLoading, id_article : viewId_article} = viewStore;
     
     const {annotationStore} = useStore();
-    const {loadAnnotations, loading : isAnnotationLoading} = annotationStore;
+    const {loadAnnotations, loading : isAnnotationLoading, id_article : annotationId_article} = annotationStore;
     
     const {annotationDisplayStore} = useStore();
-    const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, selectedAnnotationDisplayMap, loading : isAnnotationDisplayLoading} = annotationDisplayStore;
+    const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, selectedAnnotationDisplayMap, loading : isAnnotationDisplayLoading, id_article : annotationDisplayId_article} = annotationDisplayStore;
     
     const {lightStore} = useStore();
-    const {loadLights, loading : isLightLoading} = lightStore;
+    const {loadLights, loading : isLightLoading, id_article : lightId_article} = lightStore;
     
     const {sceneInfoStore} = useStore();
     
@@ -65,17 +65,21 @@ export default observer( function ArticleEdit() {
 
 
     useEffect(() => { 
-        setIsDataLoading(
-            isArticleLoading 
-         || isInstructionLoading
-         || isViewLoading 
-         || isInstancepartLoading 
-         || isLightLoading 
-         || isAnnotationLoading 
-         || isAnnotationDisplayLoading
-         );
+        if(id) {
+            setIsDataLoading(
+                article?.id_article != Number(id)
+            || instructionId_article != Number(id)
+            || viewId_article != Number(id) 
+            || instancepartId_assy != article?.id_assy
+            || lightId_article != Number(id) 
+            || annotationId_article != Number(id) 
+            || annotationDisplayId_article != Number(id) 
+            );
+        } else {
+            setIsDataLoading(false);
+        }
 
-    },[isArticleLoading, isInstructionLoading, isViewLoading, isInstancepartLoading, isLightLoading, isAnnotationLoading, isAnnotationDisplayLoading])
+    },[article?.id_article, instructionId_article, viewId_article, instancepartId_assy, lightId_article, annotationId_article, annotationDisplayId_article])
 
 
     useEffect(()=> {
@@ -86,11 +90,11 @@ export default observer( function ArticleEdit() {
 
     useEffect(()=> {
 
-        if(!isInstructionLoading && !isViewLoading)  {
+        if((instructionId_article == Number(id)) && (viewId_article == Number(id)))  {
         selectedInstruction && setselectedView(selectedInstruction.id_view);
         }
         
-    }, [isInstructionLoading,isViewLoading])
+    }, [instructionId_article,viewId_article])
 
     useEffect(()=> {
 

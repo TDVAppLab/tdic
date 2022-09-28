@@ -20,6 +20,8 @@ export default observer( function EditAnnotation(){
     const {selectedAnnotation, editAnnotationInternal, updateAnnotation, createAnnotation, deleteAnnotation, setSelectedAnnotation} = annotationStore;
     const {sceneInfoStore} = useStore();
 
+    const {annotationDisplayStore} = useStore();
+    const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, deleteAnnotationDisplayArray, selectedInstructionId, selectedAnnotationDisplayMap, loading : isAnnotationDisplayLoading, id_article : annotationDisplayId_article} = annotationDisplayStore;
 
     const [annotation, setAnnotation] = useState<Annotation>({
         id_article: articleStore?.selectedArticle?.id_article!,
@@ -57,8 +59,8 @@ export default observer( function EditAnnotation(){
             let newAnnotation = {
                 ...annotation
             };
-            console.log(newAnnotation);
-            createAnnotation(newAnnotation);
+            //console.log(newAnnotation);
+            createAnnotation(newAnnotation).then(()=>loadAnnotationDisplays(annotationDisplayId_article)).then(()=>setSelectedAnnotationDisplayMap(selectedInstructionId));
         } else {
             updateAnnotation(annotation);
         }
@@ -69,7 +71,7 @@ export default observer( function EditAnnotation(){
     
     function handleFormSubmitDelete(object:Annotation) {
         if(object){
-            deleteAnnotation(object);
+            deleteAnnotation(object).then(x => deleteAnnotationDisplayArray(object.id_annotation));
         } else {
         }
     }

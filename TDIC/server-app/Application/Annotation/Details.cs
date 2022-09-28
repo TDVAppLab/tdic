@@ -27,7 +27,7 @@ namespace Application.Annotation
             }           
             public async Task<Result<t_annotation>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var t_annotation =  await _context.t_annotations.FindAsync(request.id_article,request.id_article);
+                var t_annotation =  await _context.t_annotations.FindAsync(request.id_article,request.id_annotation);
 
                 if(t_annotation==null) throw new Exception("t_annotation not found");
 

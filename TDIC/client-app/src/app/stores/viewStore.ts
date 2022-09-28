@@ -8,6 +8,7 @@ export default class ViewStore {
     viewRegistry = new Map<number, View>();
     selectedView: View| undefined = undefined;
     loading=false;
+    id_article: number = 0;
 
     constructor(){
         makeAutoObservable(this)
@@ -22,6 +23,9 @@ export default class ViewStore {
             const views = await agent.Views.list(id_article);
             views.forEach(view => {
                 this.setView(view);
+            })
+            runInAction(()=>{
+                this.id_article=id_article;
             })
             this.setLoading(false);
         } catch (error) {
