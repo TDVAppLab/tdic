@@ -95,6 +95,24 @@ export default class AnnotationDisplayStore {
             })
         }
     }
+    
+    deleteAnnotationDisplayArray = async (id_annotation: number) => {
+        this.loading = true;
+
+        try {
+            runInAction(() => {
+                this.annotationDisplayArray = this.annotationDisplayArray.filter(x => x.id_annotation != id_annotation);
+                this.selectedInstructionId != 0 &&this.setSelectedAnnotationDisplayMap(this.selectedInstructionId);                
+                this.loading = false;
+            })
+            
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
 
     private setAnnotationDisplay = (object : AnnotationDisplay) => {
         this.selectedAnnotationDisplayMap.set(object.id_annotation,object);

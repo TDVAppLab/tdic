@@ -106,6 +106,7 @@ export default class AnnotationStore {
             runInAction(() => {
                 this.annotationRegistry.set(result_object.id_annotation, result_object);
                 this.selectedAnnotation = result_object;
+                console.log("calledxxxx");
                 //this.setLoading(false);
             })
             
