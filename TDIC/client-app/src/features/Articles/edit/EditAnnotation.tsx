@@ -60,11 +60,9 @@ export default observer( function EditAnnotation(){
                 ...annotation
             };
             //console.log(newAnnotation);
-            console.log("create");
             createAnnotation(newAnnotation).then(()=>loadAnnotationDisplays(annotationDisplayId_article)).then(()=>setSelectedAnnotationDisplayMap(selectedInstructionId));
         } else {
             updateAnnotation(annotation);
-            console.log("update");
         }
     }
 
