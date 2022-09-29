@@ -46,6 +46,7 @@ namespace TDIC.Models.EDM
         public virtual m_status_article statusNavigation { get; set; }
         public virtual ICollection<t_annotation> t_annotations { get; set; }
         public virtual ICollection<t_instruction> t_instructions { get; set; }
+        public virtual ICollection<t_instance_object> t_instance_objects { get; set; }
         public virtual ICollection<t_light> t_lights { get; set; }
         public virtual ICollection<t_view> t_views { get; set; }
     }

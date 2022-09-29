@@ -33,5 +33,7 @@ namespace TDIC.Models.EDM
         public DateTime? latest_update_datetime { get; set; }
 
         public virtual ICollection<t_instance_part> t_instance_parts { get; set; }
+
+        public virtual ICollection<t_instance_object> t_instance_objects { get; set; }
     }
 }

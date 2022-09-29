@@ -25,6 +25,7 @@ namespace TDIC.Models.EDM
         public virtual DbSet<t_assembly> t_assemblies { get; set; }
         public virtual DbSet<t_attachment> t_attachments { get; set; }
         public virtual DbSet<t_instance_part> t_instance_parts { get; set; }
+        public virtual DbSet<t_instance_object> t_instance_objects { get; set; }        
         public virtual DbSet<t_instruction> t_instructions { get; set; }
         public virtual DbSet<t_instruction_display> t_instruction_displays { get; set; }
         public virtual DbSet<t_light> t_lights { get; set; }
@@ -219,6 +220,30 @@ namespace TDIC.Models.EDM
                     .HasForeignKey(d => d.id_part)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_instance_part_t_part");
+            });
+
+            modelBuilder.Entity<t_instance_object>(entity =>
+            {
+                entity.HasKey(e => new { e.id_article, e.id_instance })
+                    .HasName("PK_t_instance_object");
+
+                entity.ToTable("t_instance_object");
+
+                entity.Property(e => e.create_user).HasMaxLength(50);
+
+                entity.Property(e => e.latest_update_user).HasMaxLength(50);
+
+                entity.HasOne(d => d.id_articleNavigation)
+                    .WithMany(p => p.t_instance_objects)
+                    .HasForeignKey(d => d.id_article)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_t_instance_object_t_article");
+
+                entity.HasOne(d => d.id_partNavigation)
+                    .WithMany(p => p.t_instance_objects)
+                    .HasForeignKey(d => d.id_part)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_t_instance_object_t_part");
             });
 
             modelBuilder.Entity<t_instruction>(entity =>
