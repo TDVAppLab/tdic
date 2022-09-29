@@ -32,6 +32,11 @@ namespace TDIC.Application.Core
             CreateMap<t_instance_partUpdateUDto, t_instance_part>();
 
             
+            //t_instance_object
+            CreateMap<t_instance_object, t_instance_object>();
+            CreateMap<t_instance_objectUpdateUDto, t_instance_object>();
+
+            
             //t_instruction
             CreateMap<t_instruction, t_instruction>();
             CreateMap<t_instructionUpdateUDto, t_instruction>();
