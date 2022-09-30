@@ -34,12 +34,12 @@ export default observer( function ShowActionUseInstructionSettings({isActiondisp
 
         if(!getIsAllModelLoading() && mixers.size>0 && annimationsRegistry.size>0 && instanceActionExecSettingRegistry.length>0){
             instanceActionExecSettingRegistry.forEach(instanceActionExecSetting=>{
-                if(instanceActionExecSetting.id_inst){
-                    const annimations = annimationsRegistry?.get(instanceActionExecSetting?.id_inst!);
+                if(instanceActionExecSetting.id_instance){
+                    const annimations = annimationsRegistry?.get(instanceActionExecSetting?.id_instance!);
                     
                     if(annimations){
                         const annimation = annimations[instanceActionExecSetting.no];
-                        const mixer = mixers.get(instanceActionExecSetting.id_inst);
+                        const mixer = mixers.get(instanceActionExecSetting.id_instance);
 
                         if(annimation && mixer){
                             //mixer.stopAllAction();
@@ -81,12 +81,12 @@ export default observer( function ShowActionUseInstructionSettings({isActiondisp
 
         if(!getIsAllModelLoading() && mixers.size>0 && annimationsRegistry.size>0 && instanceActionExecSettingRegistry.length>0){
             instanceActionExecSettingRegistry.forEach(instanceActionExecSetting=>{
-                if(instanceActionExecSetting.id_inst){
-                    const annimations = annimationsRegistry?.get(instanceActionExecSetting?.id_inst!);
+                if(instanceActionExecSetting.id_instance){
+                    const annimations = annimationsRegistry?.get(instanceActionExecSetting?.id_instance!);
                     
                     if(annimations){
                         const annimation = annimations[instanceActionExecSetting.no];
-                        const mixer = mixers.get(instanceActionExecSetting.id_inst);
+                        const mixer = mixers.get(instanceActionExecSetting.id_instance);
 
                         if(annimation && mixer){
                             

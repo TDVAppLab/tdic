@@ -54,7 +54,7 @@ namespace Application.Instruction
 
                     foreach(var model_action_setting in temp_model_action_settings)
                     {
-                        var temp = request.instanceActionExecSettings.Where(x => x.id_assy == model_action_setting.id_assy && x.id_inst == model_action_setting.id_inst && x.no == model_action_setting.no).FirstOrDefault();
+                        var temp = request.instanceActionExecSettings.Where(x => x.id_instance == model_action_setting.id_instance && x.no == model_action_setting.no).FirstOrDefault();
                         model_action_setting.is_exec=temp.is_exec;
                         model_action_setting.num_loop=temp.num_loop;
                         model_action_setting.is_clamp_when_finished=temp.is_clamp_when_finished;

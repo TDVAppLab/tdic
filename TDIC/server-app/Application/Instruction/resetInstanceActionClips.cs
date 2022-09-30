@@ -51,17 +51,14 @@ namespace Application.Instruction
 
                 var modelActionSettinglist = new List<InstanceActionExecSettingDtO>();
                 
-                long assyid = (await _context.t_articles.FindAsync(request.id_article)).id_assy ?? 0;
-
-                
-                var instpartlist = await _context.t_instance_parts
+                var instpartlist = await _context.t_instance_objects
                                         .Include(t =>t.id_partNavigation)
                                         .Select(t=> new{
-                                            id_assy=t.id_assy, 
-                                            id_inst=t.id_inst, 
+                                            id_article=t.id_article, 
+                                            id_instance=t.id_instance, 
                                             id_part=t.id_part, 
                                             AnimationClip=t.id_partNavigation.AnimationClip})
-                                        .Where(t => t.id_assy == assyid)
+                                        .Where(t => t.id_article == request.id_article)
                                         .ToListAsync(cancellationToken);
 
                     
@@ -80,8 +77,7 @@ namespace Application.Instruction
                     {
                         modelActionSettinglist.Add(new InstanceActionExecSettingDtO{
                             id_instruct=0, 
-                            id_assy=inst.id_assy, 
-                            id_inst=inst.id_inst, 
+                            id_instance=inst.id_instance, 
                             id_part=inst.id_part,
                             no=AnimationClip.no,
                             name=AnimationClip.name,

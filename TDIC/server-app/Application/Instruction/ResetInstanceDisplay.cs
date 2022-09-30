@@ -49,15 +49,13 @@ namespace Application.Instruction
                 //--------------------------------------------------------------------------------------
                 //start create json
 
-                var data = new List<InstanceDisplay>();
-                
-                long assyid = (await _context.t_articles.FindAsync(request.id_article)).id_assy ?? 0;
+                var data = new List<InstanceObjectDisplay>();
 
-                var instlist = await _context.t_instance_parts.Where(t => t.id_assy == assyid).ToListAsync();
+                var instlist = await _context.t_instance_objects.Where(t => t.id_article == request.id_article).ToListAsync();
                     
                 foreach (var inst in instlist)
                 {
-                    data.Add(new InstanceDisplay{id_assy=inst.id_assy, id_inst=inst.id_inst, isDisplay=true});
+                    data.Add(new InstanceObjectDisplay{id_instance=inst.id_instance, isDisplay=true});
                 }
                 
                 // オプションを付けずにJson文字列に変換

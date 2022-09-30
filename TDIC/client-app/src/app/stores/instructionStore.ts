@@ -97,7 +97,7 @@ export default class InstructionStore {
                     const ans = JSON.parse(instruction.display_instance_sets || "null") as InstanceDisplay[];
                     if(ans) {
                         ans.forEach(x=>{                            
-                            this.instanceDisplayRegistry.set(x.id_inst,x);
+                            this.instanceDisplayRegistry.set(x.id_instance,x);
                         })
                     }
                 }
@@ -189,7 +189,7 @@ export default class InstructionStore {
                 const ans = JSON.parse(instruction.display_instance_sets || "null") as InstanceDisplay[];
                 if(ans) {
                     ans.forEach(x=>{                            
-                        this.instanceDisplayRegistry.set(x.id_inst,x);
+                        this.instanceDisplayRegistry.set(x.id_instance,x);
                     })
                 }
 
@@ -234,7 +234,7 @@ export default class InstructionStore {
                 instanceActionExecSettings.forEach(instanceActionExecSetting=>{
                     const index = this.instanceActionExecSettingAllArray.findIndex(item => 
                         item.id_instruct === id_instruct && 
-                        item.id_inst === instanceActionExecSetting.id_inst && 
+                        item.id_instance === instanceActionExecSetting.id_instance && 
                         item.no === instanceActionExecSetting.no);
                         //console.log(index);
 

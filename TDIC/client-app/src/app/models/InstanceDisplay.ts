@@ -1,5 +1,4 @@
 export interface InstanceDisplay {
-    id_assy: number;
-    id_inst: number;
+    id_instance: number;
     isDisplay: boolean;
 }
