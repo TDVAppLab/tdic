@@ -14,8 +14,8 @@ interface Props {
 export default observer( function ShowActionUseInstructionSettings({isActiondisplayMode}: Props)  {
     const { scene } = useThree();
 
-    const {instancepartStore} = useStore();
-    const {annimationsRegistry, instancepartRegistry, getIsAllModelLoading} = instancepartStore;
+    const {instanceobjectStore} = useStore();
+    const {annimationsRegistry, instanceobjectRegistry, getIsAllModelLoading} = instanceobjectStore;
 
     
     const {instructionStore} = useStore();
@@ -25,10 +25,10 @@ export default observer( function ShowActionUseInstructionSettings({isActiondisp
     
     useEffect(()=>{
 
-        instancepartRegistry.size>0 && Array.from(instancepartRegistry.values()).map(x=>{
-            const temp_instance = scene.children.find(child => child.name == `[${x.id_inst}]InstanceModel`);
+        instanceobjectRegistry.size>0 && Array.from(instanceobjectRegistry.values()).map(x=>{
+            const temp_instance = scene.children.find(child => child.name == `[${x.id_instance}]InstanceModel`);
             if(temp_instance){
-                mixers.set(x.id_inst,new AnimationMixer(temp_instance))
+                mixers.set(x.id_instance,new AnimationMixer(temp_instance))
             }
         });
 

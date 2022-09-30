@@ -30,8 +30,8 @@ export default observer( function ArticleDetails() {
     const {loadInstructions, selectedInstruction, loading : isInstructionLoading} = instructionStore;
 
 
-    const {instancepartStore} = useStore();
-    const {loadInstanceparts, loading : isInstancepartLoading} = instancepartStore;
+    const {instanceobjectStore} = useStore();
+    const {loadInstanceobjects, loading : isInstanceobjectLoading} = instanceobjectStore;
     
     const {viewStore} = useStore();
     const {loadViews, setselectedView, loading : isViewLoading} = viewStore;
@@ -57,13 +57,13 @@ export default observer( function ArticleDetails() {
                isArticleLoading 
             || isInstructionLoading
             || isViewLoading 
-            || isInstancepartLoading 
+            || isInstanceobjectLoading 
             || isLightLoading 
             || isAnnotationLoading 
             || isAnnotationDisplayLoading
             );
         
-    },[isArticleLoading, isInstructionLoading, isViewLoading, isInstancepartLoading, isLightLoading, isAnnotationLoading, isAnnotationDisplayLoading])
+    },[isArticleLoading, isInstructionLoading, isViewLoading, isInstanceobjectLoading, isLightLoading, isAnnotationLoading, isAnnotationDisplayLoading])
 
 
     useEffect(()=> {
@@ -84,7 +84,8 @@ export default observer( function ArticleDetails() {
     useEffect(()=> {
 
         if(id) {
-            loadArticle(Number(id)).then(x=>{x && loadInstanceparts(x?.id_assy)});
+            loadArticle(Number(id));
+            loadInstanceobjects(Number(id));
             loadInstructions(Number(id));
             loadViews(Number(id));
             loadAnnotations(Number(id));

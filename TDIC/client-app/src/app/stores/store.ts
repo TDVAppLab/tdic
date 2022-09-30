@@ -5,6 +5,7 @@ import ArticleStore from "./articleStore";
 import AssemblyStore from "./AssemblyStore";
 import AttachmentfileStore from "./attachmentfileStore";
 import CommonStore from "./eommonStore";
+import InstanceobjectStore from "./InstanceobjectStore";
 import InstancepartStore from "./InstancepartStore";
 import InstructionStore from "./instructionStore";
 import LightStore from "./LightStore";
@@ -25,6 +26,7 @@ interface Store{
     annotationDisplayStore:AnnotationDisplayStore;
     lightStore:LightStore;
     instancepartStore:InstancepartStore;
+    instanceobjectStore:InstanceobjectStore;
     commonStore: CommonStore;
     userStore: UserStore;
     modalStore: ModalStore;
@@ -46,6 +48,7 @@ export const store: Store={
     annotationDisplayStore: new AnnotationDisplayStore(),
     lightStore: new LightStore(),
     instancepartStore: new InstancepartStore(),
+    instanceobjectStore: new InstanceobjectStore(),
     mArticleStatusStore: new MArticleStatusStore(),
     sceneInfoStore: new SceneInfoStore(),
     assemblyStore: new AssemblyStore(),

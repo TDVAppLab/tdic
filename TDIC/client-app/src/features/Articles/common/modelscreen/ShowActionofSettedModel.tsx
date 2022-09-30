@@ -16,8 +16,8 @@ interface Props {
 export default observer( function ShowActionofSettedModel({isActiondisplayMode}: Props)  {
     const { scene } = useThree();
 
-    const {instancepartStore} = useStore();
-    const {annimationsRegistry, instancepartRegistry} = instancepartStore;
+    const {instanceobjectStore} = useStore();
+    const {annimationsRegistry, instanceobjectRegistry} = instanceobjectStore;
 
     const {instructionStore} = useStore();
     const {selectedInstruction, instanceDisplayRegistry} = instructionStore;
@@ -33,10 +33,10 @@ export default observer( function ShowActionofSettedModel({isActiondisplayMode}:
         mixers.clear();
 
         
-        instancepartRegistry.forEach(instancepart=>{
-            const temp_instance = scene.children.find(child => child.name == `[${instancepart.id_inst}]InstanceModel`);
+        instanceobjectRegistry.forEach(instanceobject=>{
+            const temp_instance = scene.children.find(child => child.name == `[${instanceobject.id_instance}]InstanceModel`);
             if(temp_instance){
-                mixers.set(instancepart.id_inst,new AnimationMixer(temp_instance))
+                mixers.set(instanceobject.id_instance,new AnimationMixer(temp_instance))
                 //console.log("mixers"); 
             }
         });
@@ -61,7 +61,7 @@ export default observer( function ShowActionofSettedModel({isActiondisplayMode}:
 
         }        
 
-    }, [instancepartRegistry, annimationsRegistry, selectedInstruction]);
+    }, [instanceobjectRegistry, annimationsRegistry, selectedInstruction]);
 
 
 

@@ -8,6 +8,7 @@ import { Article } from "../models/article";
 import { Assembly } from "../models/Assembly";
 import { Attachmentfile, AttachmentfileEyecatchDtO } from "../models/attachmentfile";
 import { InstanceActionExecSetting } from "../models/InstanceActionExecSetting";
+import { Instanceobject } from "../models/Instanceobject";
 import { Instancepart } from "../models/Instancepart";
 import { Instruction } from "../models/instruction";
 import { Light } from "../models/Light";
@@ -163,6 +164,14 @@ const Instanceparts = {
     delete: (id_assy:number,id_inst:number) => axios.post<void>(`/instancepart/delete/id_assy=${id_assy}&id_inst=${id_inst}`),
 }
 
+const Instanceobjects = {
+    list: (id:number) => requests.get<Instanceobject[]>(`/instanceobject/index/${id}`),
+    details:(id_article:number,id_instance:number) => requests.get<Instanceobject>(`/instanceobject/details/id_article=${id_article}&id_instance=${id_instance}`),    
+    create:(object: Instanceobject) => axios.post<Instanceobject>(`/instanceobject/create`,object),
+    update: (instanceobject: Instanceobject[]) => axios.post<void>(`/instanceobject/update/`, instanceobject),
+    delete: (id_article:number,id_instance:number) => axios.post<void>(`/instanceobject/delete/id_article=${id_article}&id_instance=${id_instance}`),
+}
+
 const Account = {
     current: () => requests.get<User>('/account'),
     login: (user: UserFormValues) => requests.post<User>('/account/login', user),
@@ -199,6 +208,7 @@ const agent = {
     AnnotationDisplays,
     Lights,
     Instanceparts,
+    Instanceobjects,
     MArticleStatus,
     WebsiteSettings,
 }
