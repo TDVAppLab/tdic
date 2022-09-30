@@ -11,8 +11,11 @@ export default observer( function DebugDisplayModelLoadingInfo() {
     
 
 
-    const {instancepartStore} = useStore();
-    const {modelLoadingRegistry, instancepartRegistry, getModelLoading} = instancepartStore;
+    //const {instancepartStore} = useStore();
+    //const {modelLoadingRegistry, instancepartRegistry, getModelLoading} = instancepartStore;
+
+    const {instanceobjectStore} = useStore();
+    const {instanceobjectRegistry, getModelLoading} = instanceobjectStore;
     
 
 
@@ -49,10 +52,10 @@ export default observer( function DebugDisplayModelLoadingInfo() {
                 </thead>
                 <tbody>
                 {          
-                    instancepartRegistry.size>0 && Array.from(instancepartRegistry.values()).map((x,index)=>(         
-                        <tr key={x.id_inst}>
+                    instanceobjectRegistry.size>0 && Array.from(instanceobjectRegistry.values()).map((x,index)=>(         
+                        <tr key={x.id_instance}>
                             <td><div>{index+1}</div></td>
-                            <td><div>{Bool2String(getModelLoading(x.id_inst)!)}</div></td>
+                            <td><div>{Bool2String(getModelLoading(x.id_instance)!)}</div></td>
                         </tr>
                     ))
                 }

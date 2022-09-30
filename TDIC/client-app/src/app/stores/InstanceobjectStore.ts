@@ -132,14 +132,14 @@ export default class InstanceobjectStore {
         this.loading = state;
     }
 
-    setModelLoading = (id_inst : number, state : boolean) => {
+    setModelLoading = (id_instance : number, state : boolean) => {
         runInAction(() => {
-            this.modelLoadingRegistry.set(id_inst,state);
+            this.modelLoadingRegistry.set(id_instance,state);
         })
     }
 
-    getModelLoading = (id_inst : number) => {
-        return this.modelLoadingRegistry.get(id_inst);
+    getModelLoading = (id_instance : number) => {
+        return this.modelLoadingRegistry.get(id_instance);
     }
 
     getIsAllModelLoading = () => {
