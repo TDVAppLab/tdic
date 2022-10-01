@@ -29,7 +29,7 @@ export default class InstanceobjectStore {
             runInAction(() => {
                 objects.forEach(object => {
                     this.setInstanceobject(object);
-                    this.modelLoadingRegistry.set(object.id_article,true);
+                    this.modelLoadingRegistry.set(object.id_instance,true);
                 })
                 this.id_article=id_article;
             })            

@@ -60,12 +60,7 @@ export default observer( function ShowActionUseInstructionSettings({isActiondisp
                     }
                 }
             })
-
-
-
-
         }
-
 
     }, [instanceActionExecSettingRegistry, annimationsRegistry]);
     
