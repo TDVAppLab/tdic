@@ -57,7 +57,10 @@ export default observer( function EditInstanceobject(){
                                         No.
                                     </th>
                                     <th>
-                                        ID Inst
+                                        ID Instance
+                                    </th>
+                                    <th>
+                                        ID Part
                                     </th>
                                     <th>
                                         Part Number
@@ -82,6 +85,7 @@ export default observer( function EditInstanceobject(){
                                     <tr key={x.id_instance}>
                                         <td><div>{index+1}</div></td>
                                         <td><div>{x.id_instance}</div></td>
+                                        <td><div>{x.id_part}</div></td>
                                         <td>{ModelfileRegistry.get(x.id_part)?.part_number}</td>
                                         <td><TextInputGeneral name={`[${index}]pos_x`} placeholder='POS X' /></td>
                                         <td><TextInputGeneral name={`[${index}]pos_y`} placeholder='POS Y' /></td>
