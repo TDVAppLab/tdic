@@ -5,11 +5,9 @@ import { history } from "../..";
 import { Annotation } from "../models/Annotation";
 import { AnnotationDisplay } from "../models/AnnotationDisplay";
 import { Article } from "../models/article";
-import { Assembly } from "../models/Assembly";
 import { Attachmentfile, AttachmentfileEyecatchDtO } from "../models/attachmentfile";
 import { InstanceActionExecSetting } from "../models/InstanceActionExecSetting";
 import { Instanceobject } from "../models/Instanceobject";
-import { Instancepart } from "../models/Instancepart";
 import { Instruction } from "../models/instruction";
 import { Light } from "../models/Light";
 import { mArticleStatus } from "../models/mArticleStatus";
@@ -98,14 +96,6 @@ const Attachmentfiles = {
     delete:(id:number) => axios.post<void>(`/attachmentfiles/delete/${id}`),
 }
 
-const Assemblies = {
-    list: () => requests.get<Assembly[]>('/assembly/index'),    
-    details:(id:number) => requests.get<Assembly>(`/assembly/details/${id}`),
-    create:(object: Assembly) => axios.post<void>(`/assembly/create`, object),
-    update: (object: Assembly) => axios.post<void>(`/assembly/update/`, object),
-    delete:(id:number) => axios.post<void>(`/assembly/delete/${id}`),
-}
-
 const Articles = {
     list: () => requests.get<Article[]>('/articles/index'),
     details:(id:number) => requests.get<Article>(`/articles/details/${id}`),
@@ -156,14 +146,6 @@ const Lights = {
     delete: (id_article:number,id_light:number) => axios.post<void>(`/light/delete/id_article=${id_article}&id_light=${id_light}`),
 }
 
-const Instanceparts = {
-    list: (id:number) => requests.get<Instancepart[]>(`/instancepart/index/${id}`),
-    details:(id_assy:number,id_inst:number) => requests.get<Instancepart>(`/instancepart/details/id_assy=${id_assy}&id_inst=${id_inst}`),    
-    create:(object: Instancepart) => axios.post<Instancepart>(`/instancepart/create`,object),
-    update: (instancepart: Instancepart[]) => axios.post<void>(`/instancepart/update/`, instancepart),
-    delete: (id_assy:number,id_inst:number) => axios.post<void>(`/instancepart/delete/id_assy=${id_assy}&id_inst=${id_inst}`),
-}
-
 const Instanceobjects = {
     list: (id:number) => requests.get<Instanceobject[]>(`/instanceobject/index/${id}`),
     details:(id_article:number,id_instance:number) => requests.get<Instanceobject>(`/instanceobject/details/id_article=${id_article}&id_instance=${id_instance}`),    
@@ -200,14 +182,12 @@ const agent = {
     Account,
     Modelfiles,
     Attachmentfiles,
-    Assemblies,
     Articles,
     Instructions,
     Views,
     Annotations,
     AnnotationDisplays,
     Lights,
-    Instanceparts,
     Instanceobjects,
     MArticleStatus,
     WebsiteSettings,

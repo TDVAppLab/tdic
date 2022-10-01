@@ -27,8 +27,6 @@ import ModelfileCreate from '../../features/Modelfiles/create/ModelfileCreate';
 import ModelfileEdit from '../../features/Modelfiles/edit/ModelfileEdit';
 import AttachmentfileUpload from '../../features/attachmentfiles/upload/AttachmentfileUpload';
 import AttachmentfileEdit from '../../features/attachmentfiles/edit/AttachmentfileEdit';
-import AssemblyDashboard from '../../features/assembly/dashboard/AssemblyDashboard';
-import AssemblyCreate from '../../features/assembly/create/AssemblyCreate';
 import WebsiteSettingDashboard from '../../features/WebsiteSetting/dashboard/WebsiteSettingDashboard';
 import WebsiteSettingForm from '../../features/WebsiteSetting/form/WebsiteSettingForm';
 
@@ -76,10 +74,6 @@ function App() {
                 <Route path = '/article/:id' component={ArticleDetails} />
                 <Route path = '/articleedit/:id' component={ArticleEdit} />
                 <Route key = {location.key} path = {['/createarticle', '/articleedit/:id']} component={ArticleEdit} />
-
-
-                <Route path = '/assemblies' component={AssemblyDashboard} />
-                <Route key = {location.key} path = {['/assembliescreate', '/assembliesedit/:id']} component={AssemblyCreate} />
 
                 <Route path = '/attachmentfiles' component={AttachmentFileDashboard} />
                 <Route path = '/attachmentfile/:id' component={AttachmentFileDetails} />
