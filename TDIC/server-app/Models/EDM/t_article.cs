@@ -41,8 +41,6 @@ namespace TDIC.Models.EDM
         public double bg_s { get; set; }
         public double bg_l { get; set; }
         public bool? isStarrySky { get; set; }
-
-        public virtual t_assembly id_assyNavigation { get; set; }
         public virtual m_status_article statusNavigation { get; set; }
         public virtual ICollection<t_annotation> t_annotations { get; set; }
         public virtual ICollection<t_instruction> t_instructions { get; set; }
