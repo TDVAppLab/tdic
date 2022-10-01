@@ -2,11 +2,9 @@ import { createContext, useContext } from "react";
 import AnnotationDisplayStore from "./AnnotationDisplayStore";
 import AnnotationStore from "./AnnotationStore";
 import ArticleStore from "./articleStore";
-import AssemblyStore from "./AssemblyStore";
 import AttachmentfileStore from "./attachmentfileStore";
 import CommonStore from "./eommonStore";
 import InstanceobjectStore from "./InstanceobjectStore";
-import InstancepartStore from "./InstancepartStore";
 import InstructionStore from "./instructionStore";
 import LightStore from "./LightStore";
 import MArticleStatusStore from "./MArticleStatusStore";
@@ -25,14 +23,12 @@ interface Store{
     annotationStore:AnnotationStore;
     annotationDisplayStore:AnnotationDisplayStore;
     lightStore:LightStore;
-    instancepartStore:InstancepartStore;
     instanceobjectStore:InstanceobjectStore;
     commonStore: CommonStore;
     userStore: UserStore;
     modalStore: ModalStore;
     mArticleStatusStore:MArticleStatusStore;
     sceneInfoStore:SceneInfoStore;
-    assemblyStore:AssemblyStore;
 }
 
 export const store: Store={
@@ -47,11 +43,9 @@ export const store: Store={
     annotationStore: new AnnotationStore(),
     annotationDisplayStore: new AnnotationDisplayStore(),
     lightStore: new LightStore(),
-    instancepartStore: new InstancepartStore(),
     instanceobjectStore: new InstanceobjectStore(),
     mArticleStatusStore: new MArticleStatusStore(),
     sceneInfoStore: new SceneInfoStore(),
-    assemblyStore: new AssemblyStore(),
     
 }
 

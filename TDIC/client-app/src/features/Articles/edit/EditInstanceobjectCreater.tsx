@@ -4,7 +4,6 @@ import { useStore } from "../../../app/stores/store";
 import { Formik , Form } from "formik";
 import * as Yup from 'yup';
 import TextInputGeneral from "../../../app/common/form/TextInputGeneral";
-import { Instancepart } from "../../../app/models/Instancepart";
 import { Instanceobject } from '../../../app/models/Instanceobject';
 import SelectInputGeneral from "../../../app/common/form/SelectInputGeneral";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
@@ -14,7 +13,7 @@ export default observer( function EditInstanceobjectCreater(){
     const {selectedArticle} = articleStore;
 
     const {instanceobjectStore} = useStore();
-    const {createInstanceobject, deleteInstanceobject} = instanceobjectStore;
+    const {createInstanceobject} = instanceobjectStore;
 
     const {modelfileStore} = useStore();
     const {loadModelfiles, loading : loadingModelfile, getOptionArray} = modelfileStore;
