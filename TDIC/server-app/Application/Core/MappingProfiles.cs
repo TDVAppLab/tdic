@@ -16,21 +16,11 @@ namespace TDIC.Application.Core
             CreateMap<t_annotation, t_annotation>();
             CreateMap<t_annotationUpdateUDto, t_annotation>();
 
-            //t_assembly
-            CreateMap<t_assembly, t_assembly>();
-            CreateMap<t_assemblyUpdateUDto, t_assembly>();
-
 
 
             //t_attachment
             CreateMap<t_attachment, t_attachment>();
             CreateMap<t_attachmentUpdateUDto, t_attachment>();
-
-            
-            //t_instance_part
-            CreateMap<t_instance_part, t_instance_part>();
-            CreateMap<t_instance_partUpdateUDto, t_instance_part>();
-
             
             //t_instance_object
             CreateMap<t_instance_object, t_instance_object>();

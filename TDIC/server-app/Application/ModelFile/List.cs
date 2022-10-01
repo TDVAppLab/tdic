@@ -32,7 +32,7 @@ namespace Application.ModelFile
                 return Result<List<t_partListDto>>
                     .Success(
                         await _context.t_parts
-                        .Include(t => t.t_instance_parts)
+                        .Include(t => t.t_instance_objects)
                         .Select(x => new t_partListDto(){                        
                             id_part = x.id_part,
                             part_number = x.part_number,
@@ -47,7 +47,7 @@ namespace Application.ModelFile
                             memo = x.memo,
                             create_datetime = x.create_datetime,
                             latest_update_datetime = x.latest_update_datetime,
-                            count_use_instance = x.t_instance_parts.Count
+                            count_use_instance = x.t_instance_objects.Count
                         })
                         .Where(x => request.is_exclude_used ? x.count_use_instance < 1 : true )
                         .ToListAsync(cancellationToken));
