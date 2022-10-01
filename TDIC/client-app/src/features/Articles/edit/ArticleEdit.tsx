@@ -178,7 +178,7 @@ export default observer( function ArticleEdit() {
 
                             <Tab eventKey="instance" title="Instance" >
                                 {
-                                    instanceobjectRegistry.size > 0 && <EditInstanceobject />
+                                    <EditInstanceobject />
                                 }
                             </Tab>
 
