@@ -9,7 +9,7 @@ namespace TDIC.Models.EDM
     {
         public t_part()
         {
-            t_instance_parts = new HashSet<t_instance_part>();
+            //t_instance_parts = new HashSet<t_instance_part>();
         }
 
         public long id_part { get; set; }
@@ -31,8 +31,6 @@ namespace TDIC.Models.EDM
         public DateTime? create_datetime { get; set; }
         public string latest_update_user { get; set; }
         public DateTime? latest_update_datetime { get; set; }
-
-        public virtual ICollection<t_instance_part> t_instance_parts { get; set; }
 
         public virtual ICollection<t_instance_object> t_instance_objects { get; set; }
     }
