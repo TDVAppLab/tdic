@@ -22,9 +22,8 @@ namespace TDIC.Models.EDM
         public virtual DbSet<t_annotation_display> t_annotation_displays { get; set; }
         public virtual DbSet<t_article> t_articles { get; set; }
         public virtual DbSet<t_article_length_sumarry> t_article_length_sumarries { get; set; }
-        public virtual DbSet<t_assembly> t_assemblies { get; set; }
         public virtual DbSet<t_attachment> t_attachments { get; set; }
-        public virtual DbSet<t_instance_part> t_instance_parts { get; set; }
+        public virtual DbSet<t_instance_object> t_instance_objects { get; set; }        
         public virtual DbSet<t_instruction> t_instructions { get; set; }
         public virtual DbSet<t_instruction_display> t_instruction_displays { get; set; }
         public virtual DbSet<t_light> t_lights { get; set; }
@@ -121,11 +120,6 @@ namespace TDIC.Models.EDM
 
                 entity.Property(e => e.title).HasMaxLength(250);
 
-                entity.HasOne(d => d.id_assyNavigation)
-                    .WithMany(p => p.t_articles)
-                    .HasForeignKey(d => d.id_assy)
-                    .HasConstraintName("FK_t_product_t_assembly");
-
                 entity.HasOne(d => d.statusNavigation)
                     .WithMany(p => p.t_articles)
                     .HasForeignKey(d => d.status)
@@ -138,23 +132,6 @@ namespace TDIC.Models.EDM
                 entity.HasKey(e => new { e.latest_update_datetime, e.status });
 
                 entity.ToTable("t_article_length_sumarry");
-            });
-
-            modelBuilder.Entity<t_assembly>(entity =>
-            {
-                entity.HasKey(e => e.id_assy);
-
-                entity.ToTable("t_assembly");
-
-                entity.HasComment("組み立てに関わる基本情報を格納する");
-
-                entity.Property(e => e.id_assy).ValueGeneratedNever();
-
-                entity.Property(e => e.assy_name).HasMaxLength(250);
-
-                entity.Property(e => e.create_user).HasMaxLength(50);
-
-                entity.Property(e => e.latest_update_user).HasMaxLength(50);
             });
 
             modelBuilder.Entity<t_attachment>(entity =>
@@ -197,28 +174,28 @@ namespace TDIC.Models.EDM
                 entity.Property(e => e.type_data).HasMaxLength(128);
             });
 
-            modelBuilder.Entity<t_instance_part>(entity =>
+            modelBuilder.Entity<t_instance_object>(entity =>
             {
-                entity.HasKey(e => new { e.id_assy, e.id_inst })
-                    .HasName("PK_t_instance_parts");
+                entity.HasKey(e => new { e.id_article, e.id_instance })
+                    .HasName("PK_t_instance_object");
 
-                entity.ToTable("t_instance_part");
+                entity.ToTable("t_instance_object");
 
                 entity.Property(e => e.create_user).HasMaxLength(50);
 
                 entity.Property(e => e.latest_update_user).HasMaxLength(50);
 
-                entity.HasOne(d => d.id_assyNavigation)
-                    .WithMany(p => p.t_instance_parts)
-                    .HasForeignKey(d => d.id_assy)
+                entity.HasOne(d => d.id_articleNavigation)
+                    .WithMany(p => p.t_instance_objects)
+                    .HasForeignKey(d => d.id_article)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_t_instance_part_t_assembly");
+                    .HasConstraintName("FK_t_instance_object_t_article");
 
                 entity.HasOne(d => d.id_partNavigation)
-                    .WithMany(p => p.t_instance_parts)
+                    .WithMany(p => p.t_instance_objects)
                     .HasForeignKey(d => d.id_part)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_t_instance_part_t_part");
+                    .HasConstraintName("FK_t_instance_object_t_part");
             });
 
             modelBuilder.Entity<t_instruction>(entity =>

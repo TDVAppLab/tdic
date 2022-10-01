@@ -18,7 +18,6 @@ export default observer ( function NavBar() {
                         {
                             user ? 
                                 <>
-                                    <Nav.Link as={NavLink} to="/assemblies">Assemblies</Nav.Link>
                                     <Nav.Link as={NavLink} to="/attachmentfiles">Attachmentfiles</Nav.Link>
                                     <Nav.Link as={NavLink} to="/modelfiles">Modelfiles</Nav.Link>
                                     <Nav.Link as={NavLink} to="/websitesettings">WebsiteSettings</Nav.Link>

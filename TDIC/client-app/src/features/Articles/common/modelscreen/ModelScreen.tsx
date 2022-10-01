@@ -51,8 +51,8 @@ export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}:
   const {annotationDisplayStore} = useStore();
   const {selectedAnnotationDisplayMap } = annotationDisplayStore;
 
-  const { instancepartStore } = useStore();
-  const { instancepartRegistry } = instancepartStore;
+  const { instanceobjectStore } = useStore();
+  const { instanceobjectRegistry } = instanceobjectStore;
   
   const { lightStore } = useStore();
   const { lightRegistry } = lightStore;
@@ -92,7 +92,7 @@ useEffect(()=> {
           Array.from(lightRegistry.values()).map(x=>(<SetLight key={x.id_light} light={x} />))
         }
         {
-          Array.from(instancepartRegistry.values()).map(x=>(<LoadModel key={x.id_inst} id_inst={x.id_inst} id_part={x.id_part} pos={new Vector3(x.pos_x, x.pos_y, x.pos_z)} scale={x.scale}/>))
+          Array.from(instanceobjectRegistry.values()).map(x=>(<LoadModel key={x.id_instance} id_inst={x.id_instance} id_part={x.id_part} pos={new Vector3(x.pos_x, x.pos_y, x.pos_z)} scale={x.scale}/>))
         }
         {
           selectedView && <UpdateCameraWork view={selectedView} isModeTransport={sceneInfoStore.mode_transport} step={100}/>

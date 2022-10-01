@@ -11,7 +11,6 @@ import EdiaInstruction from "./EditInstruction";
 import EditView from "./EditView";
 import EditLightList from "./EditLightList";
 import EditLight from "./EditLight";
-import EditInstancepart from "./EditInstancepart";
 import EditArticleSub from "./EditArticleSub";
 import EditViewList from "./EditViewList";
 import ModelScreen from "../common/modelscreen/ModelScreen";
@@ -22,6 +21,7 @@ import ListupSubtitles from "./ListupSubtitles";
 import EditInstanceDisplay from "./EditInstanceDisplay";
 import PanelInstruction from "../details/PanelInstruction";
 import InstructionSelector from "../details/InstructionSelector";
+import EditInstanceobject from "./EditInstanceobject";
 
 
 
@@ -43,9 +43,8 @@ export default observer( function ArticleEdit() {
     const {instructionStore} = useStore();
     const {loadInstructions, selectedInstruction, loading : isInstructionLoading, id_article : instructionId_article} = instructionStore;
 
-
-    const {instancepartStore} = useStore();
-    const {loadInstanceparts, instancepartRegistry, loading : isInstancepartLoading, id_assy : instancepartId_assy} = instancepartStore;
+    const {instanceobjectStore} = useStore();
+    const {instanceobjectRegistry, loadInstanceobjects, loading : isInstanceobjectLoading, id_article : instanceobjectId_article} = instanceobjectStore;
     
     const {viewStore} = useStore();
     const {loadViews, setselectedView, loading : isViewLoading, id_article : viewId_article} = viewStore;
@@ -70,7 +69,7 @@ export default observer( function ArticleEdit() {
                 article?.id_article != Number(id)
             || instructionId_article != Number(id)
             || viewId_article != Number(id) 
-            || instancepartId_assy != article?.id_assy
+            || instanceobjectId_article != Number(id)
             || lightId_article != Number(id) 
             || annotationId_article != Number(id) 
             || annotationDisplayId_article != Number(id) 
@@ -79,7 +78,7 @@ export default observer( function ArticleEdit() {
             setIsDataLoading(false);
         }
 
-    },[article?.id_article, instructionId_article, viewId_article, instancepartId_assy, lightId_article, annotationId_article, annotationDisplayId_article])
+    },[article?.id_article, instructionId_article, viewId_article, instanceobjectId_article, lightId_article, annotationId_article, annotationDisplayId_article])
 
 
     useEffect(()=> {
@@ -99,7 +98,8 @@ export default observer( function ArticleEdit() {
     useEffect(()=> {
 
         if(id) {
-            loadArticle(Number(id)).then(x=>{x && loadInstanceparts(x.id_assy)});
+            loadArticle(Number(id));
+            loadInstanceobjects(Number(id));
             loadInstructions(Number(id));
             loadViews(Number(id));
             loadAnnotations(Number(id));
@@ -178,7 +178,7 @@ export default observer( function ArticleEdit() {
 
                             <Tab eventKey="instance" title="Instance" >
                                 {
-                                    instancepartRegistry.size > 0 && <EditInstancepart />
+                                    <EditInstanceobject />
                                 }
                             </Tab>
 

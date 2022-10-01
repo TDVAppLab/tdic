@@ -1,7 +1,6 @@
 export interface InstanceActionExecSetting {
     id_instruct: number;
-    id_assy: number;
-    id_inst: number;
+    id_instance: number;
     id_part: number;
     no: number;
     name: string;

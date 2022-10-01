@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 export default observer( function UpdateInstanceVisivility()  {
     const { scene } = useThree();
   
-    const { instancepartStore } = useStore();
+    const { instanceobjectStore } = useStore();
 
     const {instructionStore} = useStore();
     const {selectedInstruction, instanceDisplayRegistry} = instructionStore;
@@ -18,13 +18,13 @@ export default observer( function UpdateInstanceVisivility()  {
 
 
 
-    Array.from(instancepartStore.instancepartRegistry.values()).map(inst=> { 
+    Array.from(instanceobjectStore.instanceobjectRegistry.values()).map(inst=> { 
 
-        const temp_inst = scene.children.find(child => child.name == `[${inst.id_inst}]InstanceModel`);
+        const temp_inst = scene.children.find(child => child.name == `[${inst.id_instance}]InstanceModel`);
 
         if(temp_inst) {
             
-            if(instanceDisplayRegistry.get(inst.id_inst)?.isDisplay){
+            if(instanceDisplayRegistry.get(inst.id_instance)?.isDisplay){
                 temp_inst.visible=true;
             } else {
                 temp_inst.visible=false;

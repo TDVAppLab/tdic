@@ -1,7 +1,7 @@
-export interface Instancepart {
+export interface Instanceobject {
 
-    id_assy: number;
-    id_inst: number;
+    id_article: number;
+    id_instance: number;
     id_part: number;
     
     pos_x: number;

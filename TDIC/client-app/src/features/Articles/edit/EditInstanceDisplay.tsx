@@ -52,9 +52,6 @@ export default observer( function EditInstanceDisplay(){
                                         No.
                                     </th>
                                     <th>
-                                        ID Assy
-                                    </th>
-                                    <th>
                                         ID Inst
                                     </th>
                                     <th>
@@ -67,8 +64,7 @@ export default observer( function EditInstanceDisplay(){
                                 instanceDisplayRegistry && Array.from(instanceDisplayRegistry.values()).map((instanceDisplay,index)=> (
                                     <tr key={`[${index}]EditInstanceDisplaytable`}>
                                         <td><div>{index+1}</div></td>
-                                        <td><div>{instanceDisplay.id_assy}</div></td>
-                                        <td><div>{instanceDisplay.id_inst}</div></td>
+                                        <td><div>{instanceDisplay.id_instance}</div></td>
                                         <td><CheckBoxGeneral label='' name={`[${index}]isDisplay`}  /></td>
                                     </tr>
                                 ))
@@ -112,9 +108,6 @@ export default observer( function EditInstanceDisplay(){
                                         id_instruct
                                     </th>
                                     <th>
-                                        ID Assy
-                                    </th>
-                                    <th>
                                         ID Inst
                                     </th>
                                     <th>
@@ -143,8 +136,7 @@ export default observer( function EditInstanceDisplay(){
                                     <tr key={index}>
                                         <td><div>{index+1}</div></td>
                                         <td><div>{instanceActionExecSetting.id_instruct}</div></td>
-                                        <td><div>{instanceActionExecSetting.id_assy}</div></td>
-                                        <td><div>{instanceActionExecSetting.id_inst}</div></td>
+                                        <td><div>{instanceActionExecSetting.id_instance}</div></td>
                                         <td><div>{instanceActionExecSetting.id_part}</div></td>
                                         <td><div>{instanceActionExecSetting.no}</div></td>
                                         <td><div>{instanceActionExecSetting.name}</div></td>

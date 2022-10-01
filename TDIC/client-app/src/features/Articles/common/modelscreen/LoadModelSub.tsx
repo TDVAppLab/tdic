@@ -17,9 +17,8 @@ interface PartProps {
 
 export default observer( function LoadModelSub({id_inst, id_part, pos, scale}: PartProps){
 
-    const {instancepartStore} = useStore();
-    //const { instancepartStore } = useStore();
-    const {annimationsRegistry, setAnimationClips, setModelLoading} = instancepartStore;
+    const {instanceobjectStore} = useStore();
+    const {annimationsRegistry, setAnimationClips, setModelLoading} = instanceobjectStore;
   
     const str_url_partapi = process.env.REACT_APP_API_URL + `/modelfiles/file/${id_part}`;
     const gltf = useLoader(GLTFLoader, str_url_partapi);

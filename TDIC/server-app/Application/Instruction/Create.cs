@@ -13,10 +13,8 @@ using TDIC.DTOs;
 
 namespace Application.Instruction
 {
-
-    public partial class InstanceDisplay {
-        public long id_assy { get; set; }
-        public long id_inst { get; set; }
+    public partial class InstanceObjectDisplay {
+        public long id_instance { get; set; }
         public bool isDisplay { get; set; }
     }
 
@@ -59,20 +57,17 @@ namespace Application.Instruction
 
 
                 //--------------------------------------------------------------------------------------
-                //start create json
+                //start create json                
 
-                var InstanceDisplays = new List<InstanceDisplay>();
+                var InstanceObjectDisplays = new List<InstanceObjectDisplay>();
                 
-                long assyid = (await _context.t_articles.FindAsync(request.Instruction.id_article)).id_assy ?? 0;
-                
-                var instpartlist = await _context.t_instance_parts.Include(t =>t.id_partNavigation).Where(t => t.id_assy == assyid).ToListAsync(cancellationToken);
+                var instobjectlist = await _context.t_instance_objects.Include(t =>t.id_partNavigation).Where(t => t.id_article == request.Instruction.id_article).ToListAsync(cancellationToken);
                     
-                foreach (var inst in instpartlist)
+                foreach (var inst in instobjectlist)
                 {
-                    InstanceDisplays.Add(new InstanceDisplay{id_assy=inst.id_assy, id_inst=inst.id_inst, isDisplay=true});
+                    InstanceObjectDisplays.Add(new InstanceObjectDisplay{id_instance=inst.id_instance, isDisplay=true});
                 }
-                
-                request.Instruction.display_instance_sets = JsonSerializer.Serialize(InstanceDisplays);
+                request.Instruction.display_instance_sets = JsonSerializer.Serialize(InstanceObjectDisplays);
                 
                 //createInstanceActionClips json
                 //====================================================================================
@@ -81,7 +76,7 @@ namespace Application.Instruction
                 var modelActionSettinglist = new List<InstanceActionExecSettingDtO>();
 
                     
-                foreach (var inst in instpartlist)
+                foreach (var inst in instobjectlist)
                 {
                     List<PartAnimationClipDtO> AnimationClipList = new List<PartAnimationClipDtO>();
                     try{
@@ -96,8 +91,7 @@ namespace Application.Instruction
                     {
                         modelActionSettinglist.Add(new InstanceActionExecSettingDtO{
                             id_instruct=id_instruct, 
-                            id_assy=inst.id_assy, 
-                            id_inst=inst.id_inst, 
+                            id_instance=inst.id_instance, 
                             id_part=inst.id_part,
                             no=AnimationClip.no,
                             name=AnimationClip.name,
