@@ -161,7 +161,9 @@ export default observer( function EditArticleSub(){
                         </Row>
                         
                         
-                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>Submit</button>
+                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>
+                            {isSubmitting ? "Processing" : "submit"}
+                        </button>
                     </Form>
                 )}
 
@@ -179,7 +181,9 @@ export default observer( function EditArticleSub(){
                 onSubmit={values => handleFormSubmitDelete(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                        <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>Delete</button>
+                        <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
+                            {isSubmitting ? "Processing" : "Delete"}
+                        </button>
                     </Form>
                 )}
             </Formik>

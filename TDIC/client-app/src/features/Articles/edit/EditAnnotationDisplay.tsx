@@ -119,7 +119,9 @@ export default observer( function EdiaAnnotationDisplay() {
                             </tbody>
                         </table>
                         
-                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>Submit</button>
+                        <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>
+                            {isSubmitting ? "Processing" : "submit"}
+                        </button>
                     </Form>
                 )}
 
