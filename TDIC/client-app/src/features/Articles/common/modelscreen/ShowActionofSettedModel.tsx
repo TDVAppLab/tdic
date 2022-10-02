@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { OrbitControls } from '@react-three/drei';
 import { AnimationMixer } from 'three/src/animation/AnimationMixer';
 import { Clock, LoopOnce, LoopRepeat } from 'three';
@@ -24,19 +24,26 @@ export default observer( function ShowActionofSettedModel({isActiondisplayMode}:
 
 
     
-    const mixers = new Map<number, AnimationMixer>();
+    //const mixers = new Map<number, AnimationMixer>();
 
-    let clock = new Clock();
+    //let clock = new Clock();
+
+
+    
+    const clock = useRef<Clock>(new Clock());
+
+
+    const mixers = useRef<Map<number, AnimationMixer>>(new Map<number, AnimationMixer>());
     
     useEffect(()=>{
 
-        mixers.clear();
+        mixers.current.clear();
 
         
         instanceobjectRegistry.forEach(instanceobject=>{
             const temp_instance = scene.children.find(child => child.name == `[${instanceobject.id_instance}]InstanceModel`);
             if(temp_instance){
-                mixers.set(instanceobject.id_instance,new AnimationMixer(temp_instance))
+                mixers.current.set(instanceobject.id_instance,new AnimationMixer(temp_instance))
                 //console.log("mixers"); 
             }
         });
@@ -49,7 +56,7 @@ export default observer( function ShowActionofSettedModel({isActiondisplayMode}:
 
         if(annimationsRegistry){
 
-            mixers.forEach((mixer,i)=>{
+            mixers.current.forEach((mixer,i)=>{
 
                 annimationsRegistry?.get(i)?.forEach(clip => 
                 {
@@ -69,9 +76,9 @@ export default observer( function ShowActionofSettedModel({isActiondisplayMode}:
     useFrame(state => {
         //if(isActiondisplayMode){
 
-            mixers.forEach(mixer => {if(mixer){
-                mixer.update(clock.getDelta());
-                //console.log("loop-d"); 
+            mixers.current.forEach(mixer => {if(mixer){
+                mixer.update(clock.current.getDelta());
+                console.log("loop-d"); 
 
             }
         //}
