@@ -15,25 +15,33 @@ export default observer( function EditInstanceobject(){
     const history = useHistory();
     
     const {instanceobjectStore} = useStore();
-    const {instanceobjectRegistry, updateInstanceobjects, deleteInstanceobject, loading : loadingModelfile} = instanceobjectStore;
+    const {instanceobjectRegistry, updateInstanceobjects, deleteInstanceobject, loading : loadingInstanceobject} = instanceobjectStore;
 
-    const [instanceobjects, setInstanceobjects] = useState<Instanceobject[]>([]);
+    //const [instanceobjects, setInstanceobjects] = useState<Instanceobject[]>([]);
 
     const {modelfileStore} = useStore();
-    const {ModelfileRegistry} = modelfileStore;
+    const {loadModelfiles, ModelfileRegistry, loading : loadingModelfile} = modelfileStore;
 
 
     useEffect(()=>{
-        instanceobjectRegistry && setInstanceobjects(Array.from(instanceobjectRegistry.values()));
-    }, [instanceobjectRegistry, loadingModelfile]);
+        //instanceobjectRegistry && setInstanceobjects(Array.from(instanceobjectRegistry.values()));        
+        //if(instanceobjectRegistry && !loadingModelfile && !loadingInstanceobject){
+        //    setInstanceobjects(Array.from(instanceobjectRegistry.values()));
+    //}
+
+    }, [instanceobjectRegistry, loadingModelfile, loadingInstanceobject]);
 
     const validationSchema = Yup.object({
         title: Yup.string().required(),
     });
     
 
+    useEffect(()=>{
+        loadModelfiles(false);
+    }, []);
+
     //if(instanceobjects.length<1) return null;
-    if(loadingModelfile) return <LoadingComponent content="Loading ..." />
+    if(loadingModelfile || loadingInstanceobject) return <LoadingComponent content="Loading ..." />
 
     return(
         <div>
@@ -42,10 +50,10 @@ export default observer( function EditInstanceobject(){
             <Formik
                 validationSchema={validationSchema}
                 enableReinitialize 
-                initialValues={instanceobjects} 
+                initialValues={Array.from(instanceobjectRegistry.values())} 
                 onSubmit={(values) => 
                     updateInstanceobjects(values)
-                        .then(state => instanceobjectRegistry && setInstanceobjects(Array.from(instanceobjectRegistry.values())))
+                        //.then(state => instanceobjectRegistry && setInstanceobjects(Array.from(instanceobjectRegistry.values())))
                 }>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
@@ -81,7 +89,7 @@ export default observer( function EditInstanceobject(){
                             </thead>
                             <tbody>
                             {                                
-                                instanceobjects.map((x,index)=>(
+                                Array.from(instanceobjectRegistry.values()).map((x,index)=>(
                                     <tr key={x.id_instance}>
                                         <td><div>{index+1}</div></td>
                                         <td><div>{x.id_instance}</div></td>

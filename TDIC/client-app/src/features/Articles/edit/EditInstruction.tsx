@@ -140,7 +140,9 @@ export default observer( function EditInstruction(){
                 onSubmit={values => handleFormSubmitDelete(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                        <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>Delete</button>
+                        <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
+                            {isSubmitting ? "Processing" : "Delete"}
+                        </button>
                     </Form>
                 )}
             </Formik>

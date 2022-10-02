@@ -2,6 +2,16 @@ import { useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import React, { useEffect } from 'react';
 import { AnimationClip } from 'three';
+import { Html, useProgress } from '@react-three/drei';
+
+
+
+function Loader() {
+  const { progress } = useProgress()
+  return <Html center>{progress} % loaded</Html>
+}
+
+
 
 
 interface Props {
@@ -12,7 +22,7 @@ interface Props {
 
 const UseModel  = ({id_part, setTeststring, setModelUuid}: Props) => {
   return (
-      <React.Suspense fallback={null}>
+      <React.Suspense fallback={<Loader />}>
           <LoadModel id_part={id_part} setTeststring={setTeststring}  setModelUuid = {setModelUuid}/>
       </React.Suspense>
   )
