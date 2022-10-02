@@ -39,7 +39,7 @@ export default observer( function EditInstanceobjectCreater(){
     
 
     useEffect(()=>{
-        if(selectedArticle?.id_article){
+        if(selectedArticle?.id_article && !loadingModelfile){
                 setInstancepart({        
                     id_article: selectedArticle.id_article,
                     id_instance: 0,
@@ -50,13 +50,9 @@ export default observer( function EditInstanceobjectCreater(){
                     scale: 1,
         
                 });            
-            loadModelfiles(false);
+            //loadModelfiles(false);
         }
-    }, [selectedArticle?.id_article]);
-
-    useEffect(()=>{
-        loadModelfiles(false);
-    }, []);
+    }, [selectedArticle?.id_article, loadingModelfile]);
 
     if(loadingModelfile) return <LoadingComponent content="Loading ..." />
 

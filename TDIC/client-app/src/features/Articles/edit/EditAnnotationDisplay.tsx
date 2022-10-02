@@ -43,17 +43,6 @@ export default observer( function EdiaAnnotationDisplay() {
         selectedAnnotationDisplayMap.size > 0 && setAnnotationDisplays(Array.from(selectedAnnotationDisplayMap.values()));
     }, [selectedInstructionId])
 
-  
-  
-    function handleFormSubmit(annotationDisplays:AnnotationDisplay[]) {
-        updateAnnotationDisplay(annotationDisplays);
-    }
-
-
-    const handleInputChangeAnnotation=(id_annotation: number) => {
-        setSelectedAnnotation(id_annotation);
-    }
-
 
     return(
         <div>
@@ -61,7 +50,7 @@ export default observer( function EdiaAnnotationDisplay() {
                 validationSchema={validationSchema}
                 enableReinitialize 
                 initialValues={annotationDisplays} 
-                onSubmit={(values) => handleFormSubmit(values)}>
+                onSubmit={(values) => updateAnnotationDisplay(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
@@ -107,7 +96,7 @@ export default observer( function EdiaAnnotationDisplay() {
                                             <button key={x.id_annotation}
                                                     type = 'button'
                                                     className={"btn btn-outline-primary"}
-                                                    onClick={()=>{handleInputChangeAnnotation(x.id_annotation)}} 
+                                                    onClick={()=>{setSelectedAnnotation(x.id_annotation)}} 
                                                 >
                                                 Edit
                                             </button>
