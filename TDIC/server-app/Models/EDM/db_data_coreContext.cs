@@ -25,10 +25,8 @@ namespace TDIC.Models.EDM
         public virtual DbSet<t_attachment> t_attachments { get; set; }
         public virtual DbSet<t_instance_object> t_instance_objects { get; set; }        
         public virtual DbSet<t_instruction> t_instructions { get; set; }
-        public virtual DbSet<t_instruction_display> t_instruction_displays { get; set; }
         public virtual DbSet<t_light> t_lights { get; set; }
         public virtual DbSet<t_part> t_parts { get; set; }
-        public virtual DbSet<t_part_display> t_part_displays { get; set; }
         public virtual DbSet<t_view> t_views { get; set; }
         public virtual DbSet<t_website_setting> t_website_settings { get; set; }
 
@@ -223,17 +221,6 @@ namespace TDIC.Models.EDM
                     .HasConstraintName("FK_t_instruction_t_view");
             });
 
-            modelBuilder.Entity<t_instruction_display>(entity =>
-            {
-                entity.HasKey(e => new { e.id_article, e.id_instruct, e.id_annotation });
-
-                entity.ToTable("t_instruction_display");
-
-                entity.Property(e => e.create_user).HasMaxLength(50);
-
-                entity.Property(e => e.latest_update_user).HasMaxLength(50);
-            });
-
             modelBuilder.Entity<t_light>(entity =>
             {
                 entity.HasKey(e => new { e.id_article, e.id_light });
@@ -288,17 +275,6 @@ namespace TDIC.Models.EDM
                 entity.Property(e => e.type_data).HasMaxLength(128);
 
                 entity.Property(e => e.type_texture).HasMaxLength(128);
-            });
-
-            modelBuilder.Entity<t_part_display>(entity =>
-            {
-                entity.HasKey(e => new { e.id_instruct, e.id_assy, e.id_inst });
-
-                entity.ToTable("t_part_display");
-
-                entity.Property(e => e.create_user).HasMaxLength(50);
-
-                entity.Property(e => e.latest_update_user).HasMaxLength(50);
             });
 
             modelBuilder.Entity<t_view>(entity =>
