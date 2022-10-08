@@ -1,6 +1,10 @@
-namespace TDIC.DTOs
+using System;
+
+#nullable disable
+
+namespace TDIC.Models.VEDM
 {
-    public partial class InstanceActionExecSettingDtO
+    public partial class InstanceActionExecSetting
     {
         public long id_instruct { get; set; }
         public long id_instance { get; set; }

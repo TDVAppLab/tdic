@@ -12,6 +12,7 @@ using TDIC.Application.Core;
 using TDIC.DTOs;
 using System.Linq;
 using System.Text.Json;
+using TDIC.Models.VEDM;
 
 namespace Application.Instruction
 {

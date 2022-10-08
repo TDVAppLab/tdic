@@ -12,6 +12,7 @@ using TDIC.Application.Core;
 using TDIC.DTOs;
 using System.Linq;
 using System.Text.Json;
+using TDIC.Models.VEDM;
 
 namespace Application.Instruction
 {
@@ -49,7 +50,7 @@ namespace Application.Instruction
                 //--------------------------------------------------------------------------------------
                 //start create json
 
-                var modelActionSettinglist = new List<InstanceActionExecSettingDtO>();
+                var modelActionSettinglist = new List<InstanceActionExecSetting>();
                 
                 var instpartlist = await _context.t_instance_objects
                                         .Include(t =>t.id_partNavigation)
@@ -75,7 +76,7 @@ namespace Application.Instruction
 
                     foreach (var AnimationClip in AnimationClipList)
                     {
-                        modelActionSettinglist.Add(new InstanceActionExecSettingDtO{
+                        modelActionSettinglist.Add(new InstanceActionExecSetting{
                             id_instruct=0, 
                             id_instance=inst.id_instance, 
                             id_part=inst.id_part,
