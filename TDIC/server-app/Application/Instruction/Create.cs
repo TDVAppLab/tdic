@@ -10,13 +10,10 @@ using FluentValidation;
 using System.Collections.Generic;
 using System.Text.Json;
 using TDIC.DTOs;
+using TDIC.Models.VEDM;
 
 namespace Application.Instruction
 {
-    public partial class InstanceObjectDisplay {
-        public long id_instance { get; set; }
-        public bool isDisplay { get; set; }
-    }
 
     public class Create
     {
@@ -73,7 +70,7 @@ namespace Application.Instruction
                 //====================================================================================
                 
 
-                var modelActionSettinglist = new List<InstanceActionExecSettingDtO>();
+                var modelActionSettinglist = new List<InstanceActionExecSetting>();
 
                     
                 foreach (var inst in instobjectlist)
@@ -89,7 +86,7 @@ namespace Application.Instruction
 
                     foreach (var AnimationClip in AnimationClipList)
                     {
-                        modelActionSettinglist.Add(new InstanceActionExecSettingDtO{
+                        modelActionSettinglist.Add(new InstanceActionExecSetting{
                             id_instruct=id_instruct, 
                             id_instance=inst.id_instance, 
                             id_part=inst.id_part,

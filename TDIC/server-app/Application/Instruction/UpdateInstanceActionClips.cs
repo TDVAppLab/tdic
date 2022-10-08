@@ -12,6 +12,7 @@ using TDIC.Application.Core;
 using TDIC.DTOs;
 using System.Text.Json;
 using System.Linq;
+using TDIC.Models.VEDM;
 
 namespace Application.Instruction
 {
@@ -21,7 +22,7 @@ namespace Application.Instruction
         {
             public long id_article {get; set;}
             public long id_instruct {get; set;}
-            public IList<InstanceActionExecSettingDtO> instanceActionExecSettings {get; set;}
+            public IList<InstanceActionExecSetting> instanceActionExecSettings {get; set;}
         }/*
         public class CommandVelidator : AbstractValidator<Command>
         {
@@ -50,7 +51,7 @@ namespace Application.Instruction
 
 
                 try{
-                    var temp_model_action_settings = JsonSerializer.Deserialize<List<InstanceActionExecSettingDtO>>(instruction.model_action_settings);
+                    var temp_model_action_settings = JsonSerializer.Deserialize<List<InstanceActionExecSetting>>(instruction.model_action_settings);
 
                     foreach(var model_action_setting in temp_model_action_settings)
                     {

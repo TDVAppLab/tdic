@@ -7,6 +7,7 @@ using TDIC.Controllers;
 using TDIC.Models.EDM;
 using TDIC.DTOs;
 using System.Collections.Generic;
+using TDIC.Models.VEDM;
 
 
 
@@ -73,7 +74,7 @@ namespace API.Controllers
         
 
         [HttpPost("updateinstanceactionclips/id_article={id_article}&id_instruct={id_instruct}")]
-        public async Task<IActionResult> UpdateInstanceActionClips(long id_article,long id_instruct, [FromBody] List<InstanceActionExecSettingDtO> instanceActionExecSettings)
+        public async Task<IActionResult> UpdateInstanceActionClips(long id_article,long id_instruct, [FromBody] List<InstanceActionExecSetting> instanceActionExecSettings)
         {
             return HandleResult(await Mediator.Send(new UpdateInstanceActionClips.Command{ id_article = id_article, id_instruct=id_instruct, instanceActionExecSettings=instanceActionExecSettings}));
         }

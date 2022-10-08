@@ -9,16 +9,17 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TDIC.DTOs;
 using System.Text.Json;
+using TDIC.Models.VEDM;
 
 namespace Application.Instruction
 {
     public class GetInstanceActionClips
     {
-        public class Query : IRequest<Result<List<InstanceActionExecSettingDtO>>>{
+        public class Query : IRequest<Result<List<InstanceActionExecSetting>>>{
             public long ID {get; set;}
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<InstanceActionExecSettingDtO>>>
+        public class Handler : IRequestHandler<Query, Result<List<InstanceActionExecSetting>>>
         {
             private readonly db_data_coreContext _context;
             public Handler(db_data_coreContext context)
@@ -26,7 +27,7 @@ namespace Application.Instruction
                 _context = context;
             }
 
-            public async Task<Result<List<InstanceActionExecSettingDtO>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<InstanceActionExecSetting>>> Handle(Query request, CancellationToken cancellationToken)
             {
 
                 
@@ -41,7 +42,7 @@ namespace Application.Instruction
 
                 if(instructions == null) return null;
 
-                List<InstanceActionExecSettingDtO> ans = new List<InstanceActionExecSettingDtO>();
+                List<InstanceActionExecSetting> ans = new List<InstanceActionExecSetting>();
                 //try{
                     //ans = JsonSerializer.Deserialize<List<InstanceActionExecSettingDtO>>(model_action_settings_list.AnimationClip);
 
@@ -50,7 +51,7 @@ namespace Application.Instruction
                     {
                         //data.Add(new InstanceDisplay{id_assy=inst.id_assy, id_inst=inst.id_inst, isDisplay=true});
                         try{
-                            var temp_model_action_settings = JsonSerializer.Deserialize<List<InstanceActionExecSettingDtO>>(instruction.model_action_settings);
+                            var temp_model_action_settings = JsonSerializer.Deserialize<List<InstanceActionExecSetting>>(instruction.model_action_settings);
                             ans.AddRange(temp_model_action_settings);
                         } catch {
                         }
@@ -64,10 +65,10 @@ namespace Application.Instruction
                 //}
 
                 if(ans.Count<1){
-                    ans = new List<InstanceActionExecSettingDtO>();
+                    ans = new List<InstanceActionExecSetting>();
                 }
 
-                return Result<List<InstanceActionExecSettingDtO>>.Success(ans);
+                return Result<List<InstanceActionExecSetting>>.Success(ans);
             }
         }
     }
