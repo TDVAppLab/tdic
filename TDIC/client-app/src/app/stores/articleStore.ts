@@ -87,7 +87,7 @@ export default class ArticleStore {
         this.loading = true;
         
         try {
-            await agent.Articles.delete(object.id_article);
+            await agent.Articles.deleteDeep(object.id_article);
             runInAction(() => {
                 this.articleRegistry.delete(object.id_article);
                 this.loading = false;

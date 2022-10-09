@@ -50,6 +50,12 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Delete.Command{id_article=id}));
         }
+        
+        [HttpPost("deletedeep/{id}")]
+        public async Task<IActionResult> DeleteDeep(long id)
+        {
+            return HandleResult(await Mediator.Send(new DeleteDeep.Command{id_article=id}));
+        }
 
         // [HttpGet("filedata/{id}")]
         // public async Task<ActionResult> GetAttachmentFileData(long id)

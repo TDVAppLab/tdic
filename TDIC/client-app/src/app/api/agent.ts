@@ -102,6 +102,7 @@ const Articles = {
     create:(article: Article) => axios.post<void>(`/articles/create`,article),
     update: (article: Article) => axios.post<void>(`/articles/update/`, article),
     delete:(id:number) => axios.post<void>(`/articles/delete/${id}`),
+    deleteDeep:(id:number) => axios.post<void>(`/articles/deletedeep/${id}`),
 }
 
 const Instructions = {

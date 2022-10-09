@@ -103,9 +103,9 @@ export default observer( function EditArticleSub(){
     }
 
     
-    function handleFormSubmitDelete(object:Article) {
+    async function handleFormSubmitDelete(object:Article) {
         if(object){
-            deleteArticle(object);
+            await deleteArticle(object);
         } else {
         }
     }
