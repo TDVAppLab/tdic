@@ -17,7 +17,14 @@ export default observer( function EditView(){
     const {viewStore} = useStore();
     const {selectedView, updateView, createView, deleteView} = viewStore;
 
+    
+    const {instructionStore} = useStore();
+    const { instructionRegistry } = instructionStore;
+
     const {sceneInfoStore : {camera_pos, quaternion, orbit_target}} = useStore();
+
+    
+    const [isRefbyInstruction, setIsRefbyInstruction] = useState(false);
 
     const [view, setView] = useState<View>({
         id_article: articleStore?.selectedArticle?.id_article!,
@@ -55,7 +62,14 @@ export default observer( function EditView(){
     
 
     useEffect(()=>{
-        selectedView && setView(selectedView);
+        if(selectedView){
+            setView(selectedView);
+
+            Array.from(instructionRegistry.values()).find(instruction => instruction.id_view == selectedView.id_view) ? setIsRefbyInstruction(true) : setIsRefbyInstruction(false);
+        }
+
+
+
     }, [selectedView]);
 
     
@@ -186,7 +200,7 @@ export default observer( function EditView(){
                 onSubmit={values => deleteView(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                        <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
+                        <button disabled={!isValid || isSubmitting || isRefbyInstruction} type = 'submit' className='btn btn-danger'>
                             {isSubmitting ? "Processing" : "Delete"}
                         </button>
                     </Form>
@@ -201,6 +215,10 @@ export default observer( function EditView(){
             >
                 upd
             </button>
+
+            <div>
+                {isRefbyInstruction ? "Ref by Instruction" : "Not Ref by Instruction" }
+            </div>
 
         </div>
     )
