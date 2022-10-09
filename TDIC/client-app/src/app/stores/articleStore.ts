@@ -69,12 +69,14 @@ export default class ArticleStore {
         this.loading = true;
         //console.log("called light create");
         try {
-            await agent.Articles.create(object);
+//            await agent.Articles.create(object);
+            const result_object = await (await agent.Articles.create(object)).data;
             runInAction(() => {
-                this.articleRegistry.set(object.id_article, object);
-                this.selectedArticle = object;
+                this.articleRegistry.set(result_object.id_article, result_object);
+//                this.selectedArticle = object;
                 this.loading = false;
             })            
+            return result_object;
         }catch (error) {
             console.log(error);
             runInAction(() => {

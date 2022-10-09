@@ -96,7 +96,10 @@ export default observer( function EditArticleSub(){
             let newObject = {
                 ...object
             };
-            createArticle(newObject);
+            //createArticle(newObject);
+
+            
+            createArticle(newObject).then((ans_article)=>{ ans_article && history.push(`/articleedit/${Number(ans_article.id_article)}`) }) 
         } else {
             updateArticle(object);
         }
