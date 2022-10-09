@@ -16,7 +16,7 @@ namespace Application.Article
 {
     public class Create
     {
-        public class Command : IRequest<Result<Unit>>{
+        public class Command : IRequest<Result<t_article>>{
             public t_article Article {get; set;}
         }
 
@@ -29,7 +29,7 @@ namespace Application.Article
             }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<t_article>>
         {
         private readonly db_data_coreContext _context;
             public Handler(db_data_coreContext context)
@@ -37,7 +37,7 @@ namespace Application.Article
                 _context = context;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<t_article>> Handle(Command request, CancellationToken cancellationToken)
             {
 
                 
@@ -56,9 +56,11 @@ namespace Application.Article
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to create task");
+                if(!result) return Result<t_article>.Failure("Failed to create task");
 
-                return Result<Unit>.Success(Unit.Value);
+                t_article ans_article = new t_article{id_article = request.Article.id_article};
+
+                return Result<t_article>.Success(ans_article);
             }
         }
 

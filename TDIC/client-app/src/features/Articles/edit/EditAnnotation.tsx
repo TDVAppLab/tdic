@@ -59,7 +59,6 @@ export default observer( function EditAnnotation(){
             let newAnnotation = {
                 ...annotation
             };
-            //console.log(newAnnotation);
             createAnnotation(newAnnotation).then(()=>loadAnnotationDisplays(annotationDisplayId_article)).then(()=>setSelectedAnnotationDisplayMap(selectedInstructionId));
         } else {
             updateAnnotation(annotation);
@@ -68,13 +67,6 @@ export default observer( function EditAnnotation(){
 
     
 
-    
-    function handleFormSubmitDelete(object:Annotation) {
-        if(object){
-            deleteAnnotation(object).then(x => deleteAnnotationDisplayArray(object.id_annotation));
-        } else {
-        }
-    }
 
     
     const handleInputChangeAnnotationPosition=(diff_pos: Vector3) => {
@@ -221,7 +213,7 @@ export default observer( function EditAnnotation(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={annotation} 
-                onSubmit={values => handleFormSubmitDelete(values)}>
+                onSubmit={values => deleteAnnotation(values).then(x => deleteAnnotationDisplayArray(values.id_annotation))}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>

@@ -45,6 +45,7 @@ export default observer( function ModelfileEdit(){
         create_datetime: null,
         latest_update_datetime: null,
         count_use_instance:0,
+        article_references: []
     });
 
 
@@ -284,6 +285,39 @@ export default observer( function ModelfileEdit(){
 
                         </Tab>
 
+                        
+                        <Tab eventKey="references" title="References" >
+                            <div>
+                
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                ID.
+                                            </th>
+                                            <th>
+                                                Article Title
+                                            </th>
+                                            <th>
+                                                Article Status
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            
+                                            selectedModelfile && selectedModelfile.article_references.map(x=>(
+                                                <tr key={x.id_article}>
+                                                    <td>{x.id_article}</td>
+                                                    <td><Link to={`/articleedit/${Number(x.id_article)}`}>{x.title}</Link></td>
+                                                    <td>{x.status_name}</td>
+                                                </tr>
+                                            ))
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </Tab>
 
                     </Tabs>
                 </Col>

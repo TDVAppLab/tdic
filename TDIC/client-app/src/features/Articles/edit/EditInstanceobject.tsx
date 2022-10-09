@@ -1,7 +1,7 @@
 
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
@@ -93,7 +93,7 @@ export default observer( function EditInstanceobject(){
                                     <tr key={x.id_instance}>
                                         <td><div>{index+1}</div></td>
                                         <td><div>{x.id_instance}</div></td>
-                                        <td><div>{x.id_part}</div></td>
+                                        <td><div><Link to={`/modelfileedit/${Number(x.id_part)}`}>{x.id_part}</Link></div></td>
                                         <td>{ModelfileRegistry.get(x.id_part)?.part_number}</td>
                                         <td><TextInputGeneral name={`[${index}]pos_x`} placeholder='POS X' /></td>
                                         <td><TextInputGeneral name={`[${index}]pos_y`} placeholder='POS Y' /></td>

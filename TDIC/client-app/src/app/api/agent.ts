@@ -99,9 +99,11 @@ const Attachmentfiles = {
 const Articles = {
     list: () => requests.get<Article[]>('/articles/index'),
     details:(id:number) => requests.get<Article>(`/articles/details/${id}`),
-    create:(article: Article) => axios.post<void>(`/articles/create`,article),
+    create:(article: Article) => axios.post<Article>(`/articles/create`,article),
     update: (article: Article) => axios.post<void>(`/articles/update/`, article),
     delete:(id:number) => axios.post<void>(`/articles/delete/${id}`),
+    deleteDeep:(id:number) => axios.post<void>(`/articles/deletedeep/${id}`),
+    duplicate:(id:number) => axios.post<Article>(`/articles/duplicate/${id}`),
 }
 
 const Instructions = {

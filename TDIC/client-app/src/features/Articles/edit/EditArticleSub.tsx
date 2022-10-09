@@ -20,7 +20,7 @@ export default observer( function EditArticleSub(){
     const [isDataLoadingFinished, setIsDataLoadingFinished]= useState<boolean>(false);
     
     const {articleStore} = useStore();
-    const {selectedArticle, updateArticle, createArticle, deleteArticle} = articleStore;
+    const {selectedArticle, updateArticle, createArticle, deleteArticle, duplicateArticle} = articleStore;
 
     
     const {mArticleStatusStore} = useStore();
@@ -96,17 +96,12 @@ export default observer( function EditArticleSub(){
             let newObject = {
                 ...object
             };
-            createArticle(newObject);
+            //createArticle(newObject);
+
+            
+            createArticle(newObject).then((ans_article)=>{ ans_article && history.push(`/articleedit/${Number(ans_article.id_article)}`) }) 
         } else {
             updateArticle(object);
-        }
-    }
-
-    
-    function handleFormSubmitDelete(object:Article) {
-        if(object){
-            deleteArticle(object);
-        } else {
         }
     }
 
@@ -169,16 +164,13 @@ export default observer( function EditArticleSub(){
 
             </Formik>
 
-
-
-
-            
-
             <Formik
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={article} 
-                onSubmit={values => handleFormSubmitDelete(values)}>
+                onSubmit={values => {                    
+                    deleteArticle(values).then(()=>{ history.push(`/`) }) 
+                }}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
@@ -190,12 +182,24 @@ export default observer( function EditArticleSub(){
 
 
 
+            <Formik
+                validationSchema={validationSchemaDel}
+                enableReinitialize 
+                initialValues={article} 
+                onSubmit={values => {
+                        duplicateArticle(values).then((ans_article)=>{ ans_article && history.push(`/articleedit/${Number(ans_article.id_article)}`) }) 
+                    }
+                }>
+                {({ handleSubmit, isValid, isSubmitting }) => (
+                    <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
+                        <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-warning'>
+                            {isSubmitting ? "Processing" : "Duplicate"}
+                        </button>
+                    </Form>
+                )}
+            </Formik>
 
-
-
-
-
-
+            
 
         </div>
     )
