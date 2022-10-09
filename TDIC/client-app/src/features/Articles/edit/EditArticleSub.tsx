@@ -20,7 +20,7 @@ export default observer( function EditArticleSub(){
     const [isDataLoadingFinished, setIsDataLoadingFinished]= useState<boolean>(false);
     
     const {articleStore} = useStore();
-    const {selectedArticle, updateArticle, createArticle, deleteArticle} = articleStore;
+    const {selectedArticle, updateArticle, createArticle, deleteArticle, duplicateArticle} = articleStore;
 
     
     const {mArticleStatusStore} = useStore();
@@ -169,11 +169,6 @@ export default observer( function EditArticleSub(){
 
             </Formik>
 
-
-
-
-            
-
             <Formik
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
@@ -190,12 +185,24 @@ export default observer( function EditArticleSub(){
 
 
 
+            <Formik
+                validationSchema={validationSchemaDel}
+                enableReinitialize 
+                initialValues={article} 
+                onSubmit={values => {
+                        duplicateArticle(values).then((ans_article)=>{ ans_article && history.push(`/articleedit/${Number(ans_article.id_article)}`) }) 
+                    }
+                }>
+                {({ handleSubmit, isValid, isSubmitting }) => (
+                    <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
+                        <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-warning'>
+                            {isSubmitting ? "Processing" : "Duplicate"}
+                        </button>
+                    </Form>
+                )}
+            </Formik>
 
-
-
-
-
-
+            
 
         </div>
     )

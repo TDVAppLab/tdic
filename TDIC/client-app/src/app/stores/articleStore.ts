@@ -67,7 +67,7 @@ export default class ArticleStore {
     
     createArticle = async (object: Article) => {
         this.loading = true;
-        console.log("called light create");
+        //console.log("called light create");
         try {
             await agent.Articles.create(object);
             runInAction(() => {
@@ -93,6 +93,26 @@ export default class ArticleStore {
                 this.loading = false;
             })
             
+        }catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }    
+
+    duplicateArticle = async (object: Article) => {
+        this.loading = true;
+        //console.log("duplicateArticle");
+        try {
+            //const result_object = await agent.Articles.duplicate(object.id_article);
+            const result_object = await (await agent.Articles.duplicate(object.id_article)).data;
+            //console.log(result_object);
+            runInAction(() => {
+                this.articleRegistry.set(result_object.id_article, result_object);
+                this.loading = false;
+            })
+            return result_object;
         }catch (error) {
             console.log(error);
             runInAction(() => {
