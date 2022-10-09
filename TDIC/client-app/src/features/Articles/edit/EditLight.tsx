@@ -73,15 +73,6 @@ export default observer( function EditLight(){
     }
 
     
-    function handleFormSubmitDelete(light:Light) {
-        console.log("called del");
-        if(light){
-            deleteLight(light);
-        } else {
-        }
-    }
-
-    
 
 
     return(
@@ -139,7 +130,7 @@ export default observer( function EditLight(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={light} 
-                onSubmit={values => handleFormSubmitDelete(values)}>
+                onSubmit={values => deleteLight(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>

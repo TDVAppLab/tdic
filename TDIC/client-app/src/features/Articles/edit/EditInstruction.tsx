@@ -61,26 +61,22 @@ export default observer( function EditInstruction(){
     useEffect(()=>{
     }, [viewRegistry.size]);
     
-    function handleFormSubmit(instruction:Instruction) {
-        //console.log(instruction);
+
+    
+    async function handleFormSubmit(instruction:Instruction) {
         
         if(instruction.id_instruct ==0 ){
             let newInstruction = {
                 ...instruction
             };
-            createInstruction(newInstruction).then(()=>loadAnnotationDisplays(annotationDisplayId_article)).then(()=>setSelectedAnnotationDisplayMap(selectedInstructionId))
-                                             .then(()=>loadInstanceActionExecSettingAllArray(instructionId_article))
-        } else {
-            updateInstruction(instruction);
-        }
-    }
 
-    
-    function handleFormSubmitDelete(instruction:Instruction) {
-        
-        if(instruction){
-            deleteInstruction(instruction);
+            await createInstruction(newInstruction);
+            await loadAnnotationDisplays(annotationDisplayId_article);
+            await setSelectedAnnotationDisplayMap(selectedInstructionId);
+            await loadInstanceActionExecSettingAllArray(instructionId_article);
+
         } else {
+            await updateInstruction(instruction);
         }
     }
 
@@ -137,7 +133,7 @@ export default observer( function EditInstruction(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={instruction} 
-                onSubmit={values => handleFormSubmitDelete(values)}>
+                onSubmit={values => deleteInstruction(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>

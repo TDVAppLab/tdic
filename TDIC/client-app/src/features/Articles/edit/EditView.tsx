@@ -183,7 +183,7 @@ export default observer( function EditView(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={view} 
-                onSubmit={values => handleFormSubmitDelete(values)}>
+                onSubmit={values => deleteView(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>

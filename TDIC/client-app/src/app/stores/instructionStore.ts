@@ -65,15 +65,20 @@ export default class InstructionStore {
 
     loadInstanceActionExecSettingAllArray = async (id_article:number) => {
         this.loading = true;
-        this.instanceActionExecSettingAllArray.length =0;
         try {
-            this.instanceActionExecSettingAllArray = await agent.Instructions.getInstanceActionClips(id_article);
+            const result_object = await agent.Instructions.getInstanceActionClips(id_article);
 
+            runInAction(()=>{
+                this.instanceActionExecSettingAllArray = result_object;
+            })
             //console.log("called loadInstanceActionExecSettingAllArray2");
             //console.log( this.instanceActionExecSettingAllArray);
 
             this.setLoading(false);
         } catch (error) {
+            runInAction(()=>{
+                this.instanceActionExecSettingAllArray.length =0;
+            })
             console.log(error);
             this.loading = false;
         }
