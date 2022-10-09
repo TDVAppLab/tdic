@@ -21,5 +21,14 @@ namespace TDIC.DTOs
         public string latest_update_user { get; set; }
         public DateTime? latest_update_datetime { get; set; }
         public long count_use_instance { get; set; }
+        public virtual IEnumerable<article_reference> article_references { get; set; }
+    }
+
+    
+    public partial class article_reference
+    {
+        public long id_article { get; set; }
+        public string title { get; set; }
+        public string status_name { get; set; }
     }
 }
