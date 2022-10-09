@@ -102,14 +102,6 @@ export default observer( function EditArticleSub(){
         }
     }
 
-    
-    async function handleFormSubmitDelete(object:Article) {
-        if(object){
-            await deleteArticle(object);
-        } else {
-        }
-    }
-
 
     if(!isDataLoadingFinished) return (<><LoadingComponent /></>);
 
@@ -173,7 +165,9 @@ export default observer( function EditArticleSub(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={article} 
-                onSubmit={values => handleFormSubmitDelete(values)}>
+                onSubmit={values => {                    
+                    deleteArticle(values).then(()=>{ history.push(`/`) }) 
+                }}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
