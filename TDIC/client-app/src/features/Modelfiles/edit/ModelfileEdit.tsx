@@ -101,15 +101,6 @@ export default observer( function ModelfileEdit(){
         }
     }
 
-    
-    function handleFormSubmitDelete(modelfile:Modelfile) {
-        console.log("called modelfile delete");
-        if(modelfile.id_part ===0 ){
-        } else {
-            deleteModelfile(modelfile);
-        }
-    }
-
 
     function handleFormSubmitResetAnimationClipArray() {
         
@@ -199,7 +190,9 @@ export default observer( function ModelfileEdit(){
                                 validationSchema={validationSchemaDel}
                                 enableReinitialize 
                                 initialValues={modelfile} 
-                                onSubmit={values => handleFormSubmitDelete(values)}>
+                                onSubmit={values => {
+                                    deleteModelfile(values).then(()=>{ history.push(`/modelfiles`) }) 
+                                }}>
                                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                                         <button disabled={!isValid || isSubmitting} className='btn btn-danger'
