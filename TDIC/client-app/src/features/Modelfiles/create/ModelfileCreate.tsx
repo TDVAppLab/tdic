@@ -5,10 +5,10 @@ import * as Yup from 'yup';
 import { ModelfileUploadDtO } from '../../../app/models/ModelFile';
 import { Col, Row } from 'react-bootstrap';
 import FileInputGeneral from '../../../app/common/form/FileInputGeneral';
+import { useHistory } from 'react-router-dom';
 
-function ModelfileCreate() {    
-    
-    //const [file, setFile] = useState<File>();    
+function ModelfileCreate() {  
+    const history = useHistory();
     
     const [modelfile, setModelfile] = useState<ModelfileUploadDtO>({
         id_part: 0,
@@ -27,20 +27,45 @@ function ModelfileCreate() {
         latest_update_datetime: null,
     });
 
+    const SUPPORTED_FORMATS = [
+        "image/jpg",
+        "image/jpeg",
+        "image/gif",
+        "image/png"
+      ];
 
     const validationSchema = Yup.object({
-        part_number: Yup.string().nullable(),
+        file_data: Yup.mixed().required('A file is required')
+        /*.test(
+          "fileSize",
+          "File too large",
+          value => 100 <= value.size
+        )*/
+        .test(
+          "name",
+          "File not Selected",
+          value => value.name != ""
+        )
+/*        .test(
+          "fileFormat",
+          "Unsupported Format",
+          value => value && SUPPORTED_FORMATS.includes(value.type)
+        )*/
     });
 
-    function handleFormSubmit(event: ModelfileUploadDtO) {
+    async function handleFormSubmit(event: ModelfileUploadDtO) {
+
         const formData = new FormData();
+        console.log(event);
 
         if(event.file_data){
             
             formData.append('file', event.file_data);
-            //console.log(event.file_data);
+
             
-            agent.Modelfiles.fileupload(formData).then((response) => {});
+            const ans = await (await agent.Modelfiles.fileupload(formData)).data;
+            
+            ans && history.push(`/modelfileedit/${Number(ans.id_part)}`);
 
         }
 

@@ -15,10 +15,8 @@ import AttachmentFileDashboard from '../../features/attachmentfiles/dashboard/At
 import ArticleDashboard from '../../features/Articles/dashboard/ArticleDashboard';
 import ArticleDetails from '../../features/Articles/details/ArticleDetails';
 import ModelfileDashboard from '../../features/Modelfiles/dashboard/ModelfileDashboard';
-import ModelfileDetails from '../../features/Modelfiles/details/ModelfileDetails';
 import RegisterForm from '../../features/users/RegisterForm';
 import ArticleEdit from '../../features/Articles/edit/ArticleEdit';
-import ModelfileUpload from '../../features/Modelfiles/upload/ModelfileUpload';
 import Privacy from '../../features/Privacy/Privacy';
 import { initializeGA, useTracking } from '../common/utils/GoogleAnalyticsUtil';
 import { GoogleAdHead } from '../common/utils/GoogleAdHead';
@@ -81,10 +79,8 @@ function App() {
                 <Route path = '/attachmentfileupload' component={AttachmentfileUpload} />
 
                 <Route path = '/modelfiles' component={ModelfileDashboard} />
-                <Route path = '/modelfile/:id' component={ModelfileDetails} />
                 <Route path = '/modelfilecreate' component={ModelfileCreate} />
                 <Route path = '/modelfileedit/:id' component={ModelfileEdit} />
-                <Route path = '/modelfileupload/:id' component={ModelfileUpload} />
 
 
 

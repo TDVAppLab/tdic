@@ -47,16 +47,13 @@ using TDIC.Models.EDM;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
-
-
-
-
+using TDIC.DTOs;
 
 namespace Application.ModelFile
 {
     public class Upload
     {
-        public class Command : IRequest<Result<Unit>>{
+        public class Command : IRequest<Result<t_partListDto>>{
             public t_part Part {get; set;}
         }
 
@@ -69,7 +66,7 @@ namespace Application.ModelFile
             }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<t_partListDto>>
         {
         private readonly db_data_coreContext _context;
             public Handler(db_data_coreContext context)
@@ -77,7 +74,7 @@ namespace Application.ModelFile
                 _context = context;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<t_partListDto>> Handle(Command request, CancellationToken cancellationToken)
             {
 
 
@@ -99,9 +96,11 @@ namespace Application.ModelFile
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to upload task");
+                if(!result) return Result<t_partListDto>.Failure("Failed to upload task");
 
-                return Result<Unit>.Success(Unit.Value);
+                t_partListDto ans_part = new t_partListDto{id_part = request.Part.id_part};
+
+                return Result<t_partListDto>.Success(ans_part);
             }
         }
 
