@@ -62,6 +62,38 @@ export default observer( function EditInstruction(){
     }, [viewRegistry.size]);
     
 
+    function EntryNewInstruction(instructionId : number) {
+        if(instructionId == 0) {
+            setInstruction({
+                id_article: articleStore?.selectedArticle?.id_article!,
+                id_instruct: 0,
+                id_view: 0,
+                title: '',
+                short_description: '',
+                display_order: 0,
+                memo: '',        
+                is_automatic_camera_rotate: true,
+                display_instance_sets: '',
+            });
+        } else {
+            const instruction_temp = instructionStore.instructionRegistry.get(instructionId);
+            if(instruction_temp){
+                
+                setInstruction({
+                    id_article: instruction_temp.id_article,
+                    id_instruct: 0,
+                    id_view: instruction_temp.id_view,
+                    title: instruction_temp.title,
+                    short_description: instruction_temp.short_description,
+                    display_order: instruction_temp.display_order,
+                    memo: instruction_temp.memo,
+                    is_automatic_camera_rotate: instruction_temp.is_automatic_camera_rotate,
+                    display_instance_sets: instruction_temp.display_instance_sets,
+                });
+
+            }
+        }
+    }
     
     async function handleFormSubmit(instruction:Instruction) {
         
@@ -94,7 +126,7 @@ export default observer( function EditInstruction(){
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
                         <Row>
-                            <Col xs={2}><TextInputGeneral label='ID' name='id_instruct' placeholder='Instruction ID' /></Col>
+                            <Col xs={2}><TextInputGeneral label='ID' name='id_instruct' placeholder='Instruction ID' disabled /></Col>
                             <Col xs={3}><TextInputGeneral label='Title' name='title' placeholder='Instruction Title' /></Col>
                             <Col xs={4}><SelectInputGeneral label='View ID' placeholder='id_view' name='id_view' options={getViewOptionArray()} /></Col>
                             <Col xs={3}><TextInputGeneral label='Display Order' name='display_order' placeholder='Display Order' /></Col>
@@ -108,10 +140,6 @@ export default observer( function EditInstruction(){
                         
                         <Row>
                             <Col ><TextAreaGeneral label='MEMO' placeholder='memo' name='memo' rows={15}   /></Col>
-                        </Row>
-
-                        <Row>
-                            <Col ><TextAreaGeneral label='Display Instance Sets' placeholder='' name='display_instance_sets' rows={5}   /></Col>
                         </Row>
 
                         <Row>
@@ -142,6 +170,32 @@ export default observer( function EditInstruction(){
                     </Form>
                 )}
             </Formik>
+
+
+
+            <button
+                type = 'submit'
+                className={"btn btn-outline-primary"}
+                onClick={()=>{EntryNewInstruction(0)}} 
+            >
+                {"Add New Instruction"}
+            </button>
+
+
+            <button
+                type = 'submit'
+                className={"btn btn-outline-primary"}
+                onClick={()=>{selectedInstruction && EntryNewInstruction(selectedInstruction.id_instruct)}}
+                disabled={!selectedInstruction}
+            >
+                {"Copy Selected Insgruction"}
+            </button>
+
+
+
+
+
+
         </div>
     )
 })
