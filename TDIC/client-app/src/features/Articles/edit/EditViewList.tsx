@@ -7,7 +7,7 @@ import { useStore } from '../../../app/stores/store';
 export default observer( function EditViewList() {
 
     const { viewStore } = useStore();
-    const { viewRegistry, setselectedView } = viewStore;
+    const { viewRegistry, setselectedView, selectedView } = viewStore;
 
     
     useEffect(()=>{
@@ -63,7 +63,7 @@ export default observer( function EditViewList() {
                               <td>
                                 <button key={x.id_view}
                                         type = 'submit'
-                                        className={"btn btn-outline-primary"}
+                                        className={ x.id_view == selectedView?.id_view ? "btn btn-secondary" :  "btn btn-outline-secondary"}
                                         onClick={()=>{handleInputChangeView(x.id_view)}} 
                                     >
                                     Edit

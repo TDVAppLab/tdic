@@ -63,9 +63,13 @@ export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}:
 
 
   useEffect(()=> {
-    setModeTransport(true);
     sceneInfoStore.setIsAutomaticCameraRotate(selectedInstruction ? selectedInstruction.is_automatic_camera_rotate : false);
   }, [selectedInstruction])
+
+  
+  useEffect(()=> {
+    setModeTransport(true);
+  }, [selectedView, selectedInstruction])
 
 useEffect(()=> {
 }, [sceneInfoStore.is_automatic_camera_rotate])
