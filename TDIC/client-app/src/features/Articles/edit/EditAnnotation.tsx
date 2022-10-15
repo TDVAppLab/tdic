@@ -137,7 +137,7 @@ export default observer( function EditAnnotation(){
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
                         <Row>
-                            <Col xs={3}><TextInputGeneral label='Annotation ID' name='id_annotation' placeholder='Annotation ID' /></Col>
+                            <Col xs={3}><TextInputGeneral label='Annotation ID' name='id_annotation' placeholder='Annotation ID' disabled /></Col>
                             <Col xs={6}><TextInputGeneral label='Annotation Title' name='title' placeholder='Annotation Title' /></Col>
                             <Col xs={3}><TextInputGeneral label='Status' name='status' placeholder='Status' /></Col>
                         </Row>
