@@ -242,7 +242,7 @@ export default observer( function EditView(){
             <button
                 type = 'submit'
                 className={"btn btn-secondary"}
-                onClick={()=>{selectedView && EntryNewView()}}
+                onClick={()=>{EntryNewView()}}
                 disabled = {view.id_view == 0 ? true : false}
             >
                 {isDataCopyFromSelectedView ? "Copy From Selected View" : "Entry New View"}
