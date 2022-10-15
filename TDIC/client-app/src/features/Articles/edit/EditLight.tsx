@@ -10,16 +10,10 @@ import { Col, Row } from 'react-bootstrap';
 import { Light } from '../../../app/models/Light';
 
 
-export default observer( function EditLight(){
-    const history = useHistory();
-    
-    const {articleStore} = useStore();
-    const {lightStore} = useStore();
-    const {selectedLight, createLight, updateLight, deleteLight} = lightStore;
 
-
-    const [light, setLight] = useState<Light>({
-        id_article: articleStore?.selectedArticle?.id_article!,
+const getDefaultValueOfLight = (id_article : number) => {
+    const ans : Light = {
+        id_article: id_article ? id_article : 0,
         id_light: 0,
         light_type: '',
         title:  '',
@@ -42,7 +36,21 @@ export default observer( function EditLight(){
         lfsize: 0,
         file_data: null,
         light_object: null,
-    });
+    }
+    return ans;
+}
+
+export default observer( function EditLight(){
+    const history = useHistory();
+    
+    const {articleStore} = useStore();
+    const {lightStore} = useStore();
+    const {selectedLight, createLight, updateLight, deleteLight} = lightStore;
+
+
+    const [isDataCopyFromSelectedLight, setIsDataCopyFromSelectedLight] = useState(false);
+
+    const [light, setLight] = useState<Light>(getDefaultValueOfLight(articleStore?.selectedArticle?.id_article!));
 
 
     const validationSchema = Yup.object({
@@ -74,6 +82,22 @@ export default observer( function EditLight(){
 
     
 
+    function EntryNewLight() {
+        if(isDataCopyFromSelectedLight && selectedLight) {
+            
+            
+            const light_temp = {...selectedLight};
+            light_temp.id_light=0;
+
+            setLight(light_temp);
+
+        } else {
+
+            const temp_light_new = getDefaultValueOfLight(articleStore?.selectedArticle?.id_article!);
+            setLight(temp_light_new);
+            
+        }
+    }
 
     return(
         <div>
@@ -86,7 +110,7 @@ export default observer( function EditLight(){
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
                         <Row>
-                            <Col xs={2}><TextInputGeneral label='Light ID' name='id_light' placeholder='Light ID' /></Col>
+                            <Col xs={2}><TextInputGeneral label='Light ID' name='id_light' placeholder='Light ID' disabled /></Col>
                             <Col xs={4}><TextInputGeneral label='Light Type' name='light_type' placeholder='Light Type' /></Col>
                             <Col xs={6}><TextInputGeneral label='Light Title' name='title' placeholder='Light Title' /></Col>
                         </Row>
@@ -130,7 +154,7 @@ export default observer( function EditLight(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={light} 
-                onSubmit={values => deleteLight(values)}>
+                onSubmit={values => deleteLight(values).then(state => setLight(getDefaultValueOfLight(articleStore?.selectedArticle?.id_article!)))}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
@@ -139,6 +163,26 @@ export default observer( function EditLight(){
                     </Form>
                 )}
             </Formik>
+
+
+
+
+            
+            <button
+                type = 'submit'
+                className={"btn btn-secondary"}
+                onClick={()=>{EntryNewLight()}}
+                disabled = {light.id_light == 0 ? true : false}
+            >
+                {isDataCopyFromSelectedLight ? "Copy From Selected Light" : "Entry New Light"}
+            </button>
+
+            
+            <div>
+                <input type="checkbox" checked={isDataCopyFromSelectedLight} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsDataCopyFromSelectedLight(event.target.checked)}/>
+                <label>Data Copy From Selected Light</label>
+            </div>
         </div>
     )
 })
+

@@ -4,12 +4,33 @@ import { useStore } from '../../../app/stores/store';
 import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import { Form, Formik } from 'formik';
+import { Form, Formik, useField, useFormikContext } from 'formik';
 import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
 import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
 import { Col, Row } from 'react-bootstrap';
 import { Annotation } from '../../../app/models/Annotation';
 import { Vector3 } from 'three';
+
+
+
+const getDefaultValueOfAnnotation = (id_article : number) => {
+    const ans : Annotation = {
+        id_article: id_article ? id_article : 0,
+        id_annotation: 0,
+
+        title: '',
+        description1: '',
+        description2: '',
+        
+        status: 0,
+
+        pos_x: 0,
+        pos_y: 0,
+        pos_z: 0,
+    }
+    return ans;
+}
+
 
 
 export default observer( function EditAnnotation(){
@@ -23,20 +44,10 @@ export default observer( function EditAnnotation(){
     const {annotationDisplayStore} = useStore();
     const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, deleteAnnotationDisplayArray, selectedInstructionId, selectedAnnotationDisplayMap, loading : isAnnotationDisplayLoading, id_article : annotationDisplayId_article} = annotationDisplayStore;
 
-    const [annotation, setAnnotation] = useState<Annotation>({
-        id_article: articleStore?.selectedArticle?.id_article!,
-        id_annotation: 0,
+    const [isDataCopyFromSelectedAnnotation, setIsDataCopyFromSelectedAnnotation] = useState(false);
 
-        title: '',
-        description1: '',
-        description2: '',
-        
-        status: 0,
 
-        pos_x: 0,
-        pos_y: 0,
-        pos_z: 0,
-    });
+    const [annotation, setAnnotation] = useState<Annotation>(getDefaultValueOfAnnotation(articleStore?.selectedArticle?.id_article!));
 
 
     const validationSchema = Yup.object({
@@ -70,59 +81,49 @@ export default observer( function EditAnnotation(){
 
     
     const handleInputChangeAnnotationPosition=(diff_pos: Vector3) => {
-        editAnnotationInternal({
-            id_article: annotation.id_article,
-            id_annotation: annotation.id_annotation,
-    
-            title: annotation.title,
-            description1: annotation.description1,
-            description2: annotation.description2,
-            
-            status: annotation.status,
-    
-            pos_x: annotation.pos_x + diff_pos.x,
-            pos_y: annotation.pos_y + diff_pos.y,
-            pos_z: annotation.pos_z + diff_pos.z,
-        });
+        
+        const temp_annotation = {...annotation};
+        temp_annotation.pos_x += diff_pos.x;
+        temp_annotation.pos_y += diff_pos.y;
+        temp_annotation.pos_z += diff_pos.z;
+
+        editAnnotationInternal(temp_annotation);
     }
 
-    const handleSetNewAnnotation = () => {
-        editAnnotationInternal({
-            id_article: annotation.id_article,
-            id_annotation: 0,
-    
-            title: annotation.title,
-            description1: annotation.description1,
-            description2: annotation.description2,
-            
-            status: annotation.status,
-    
-            pos_x: sceneInfoStore?.orbit_target?.x!,
-            pos_y: sceneInfoStore?.orbit_target?.y!,
-            pos_z: sceneInfoStore?.orbit_target?.z!,
-        });
-        setSelectedAnnotation(0);
-    }
 
+
+    const EntryNewAnnotation = () => {
+        
+        if(isDataCopyFromSelectedAnnotation && selectedAnnotation) {
+
+            
+            const temp_annotation = {...selectedAnnotation};
+            temp_annotation.id_annotation=0;
+            
+            editAnnotationInternal(temp_annotation);
+            setSelectedAnnotation(0);
+
+        } else {
+            const temp_annotation_new = getDefaultValueOfAnnotation(articleStore?.selectedArticle?.id_article!);
+            temp_annotation_new.pos_x = sceneInfoStore?.orbit_target?.x!;
+            temp_annotation_new.pos_y = sceneInfoStore?.orbit_target?.y!;
+            temp_annotation_new.pos_z = sceneInfoStore?.orbit_target?.z!;
+            editAnnotationInternal(temp_annotation_new);
+            setSelectedAnnotation(0);
+        }
+    }
     
 
     const handleSetNewAnnotationPosition = () => {
-        editAnnotationInternal({
-            id_article: annotation.id_article,
-            id_annotation: annotation.id_annotation,
-    
-            title: annotation.title,
-            description1: annotation.description1,
-            description2: annotation.description2,
-            
-            status: annotation.status,
-    
-            pos_x: sceneInfoStore?.orbit_target?.x!,
-            pos_y: sceneInfoStore?.orbit_target?.y!,
-            pos_z: sceneInfoStore?.orbit_target?.z!,
-        });
-        setSelectedAnnotation(0);
-    }    
+        
+        const temp_annotation = {...annotation};
+
+        temp_annotation.pos_x = sceneInfoStore?.orbit_target?.x!;
+        temp_annotation.pos_y = sceneInfoStore?.orbit_target?.y!;
+        temp_annotation.pos_z = sceneInfoStore?.orbit_target?.z!;
+        editAnnotationInternal(temp_annotation);
+        setSelectedAnnotation(annotation.id_annotation);
+    }
 
     return(
         <div>
@@ -135,7 +136,7 @@ export default observer( function EditAnnotation(){
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
                         <Row>
-                            <Col xs={3}><TextInputGeneral label='Annotation ID' name='id_annotation' placeholder='Annotation ID' /></Col>
+                            <Col xs={3}><TextInputGeneral label='Annotation ID' name='id_annotation' placeholder='Annotation ID' disabled /></Col>
                             <Col xs={6}><TextInputGeneral label='Annotation Title' name='title' placeholder='Annotation Title' /></Col>
                             <Col xs={3}><TextInputGeneral label='Status' name='status' placeholder='Status' /></Col>
                         </Row>
@@ -213,7 +214,7 @@ export default observer( function EditAnnotation(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={annotation} 
-                onSubmit={values => deleteAnnotation(values).then(x => deleteAnnotationDisplayArray(values.id_annotation))}>
+                onSubmit={values => deleteAnnotation(values).then(x => deleteAnnotationDisplayArray(values.id_annotation).then(state => setAnnotation(getDefaultValueOfAnnotation(articleStore?.selectedArticle?.id_article!))) )}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
@@ -223,17 +224,23 @@ export default observer( function EditAnnotation(){
                 )}
             </Formik>
 
-
-            
             <button
                 type = 'submit'
-                className={"btn btn-outline-primary"}
-                onClick={()=>{handleSetNewAnnotation()}} 
+                className={"btn btn-secondary"}
+                onClick={()=>{EntryNewAnnotation()}}
+                disabled = {   annotation.id_annotation == 0 ? true : false}
             >
-                Entry New Annotation with Current Orbit
+                {isDataCopyFromSelectedAnnotation ? "Copy From Selected Annotation" : "Entry New Annotation"}
             </button>
+
+            <div>
+                <input type="checkbox" checked={isDataCopyFromSelectedAnnotation} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsDataCopyFromSelectedAnnotation(event.target.checked)}/>
+                <label>Data Copy From Selected View</label>
+            </div>
             
-            <br />
+
+            
+
 
             <button
                 type = 'submit'

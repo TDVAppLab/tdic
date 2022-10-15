@@ -20,7 +20,7 @@ export default observer( function EdiaAnnotationDisplay() {
     });
   
     const { annotationStore } = useStore();
-    const { annotationRegistry, setSelectedAnnotation } = annotationStore;  
+    const { annotationRegistry, setSelectedAnnotation, selectedAnnotation } = annotationStore;  
 
     const { annotationDisplayStore} = useStore();
     const { selectedAnnotationDisplayMap, selectedInstructionId, updateAnnotationDisplay } = annotationDisplayStore;
@@ -95,7 +95,7 @@ export default observer( function EdiaAnnotationDisplay() {
                                         <td>
                                             <button key={x.id_annotation}
                                                     type = 'button'
-                                                    className={"btn btn-outline-primary"}
+                                                    className={ x.id_annotation == selectedAnnotation?.id_annotation ? "btn btn-secondary" :  "btn btn-outline-secondary"}
                                                     onClick={()=>{setSelectedAnnotation(x.id_annotation)}} 
                                                 >
                                                 Edit

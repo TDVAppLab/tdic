@@ -6,7 +6,7 @@ import { useStore } from '../../../app/stores/store';
 export default observer( function EditLightList() {
 
     const { lightStore } = useStore();
-    const { lightRegistry, setSelectedLight } = lightStore;
+    const { lightRegistry, selectedLight, setSelectedLight } = lightStore;
 
     const handleInputChangeLight=(id_light: number) => {
         setSelectedLight(id_light);
@@ -42,7 +42,7 @@ export default observer( function EditLightList() {
                               <td>
                                 <button key={x.id_light}
                                         type = 'submit'
-                                        className={"btn btn-outline-primary"}
+                                        className={ x.id_light == selectedLight?.id_light ? "btn btn-secondary" :  "btn btn-outline-secondary"}
                                         onClick={()=>{handleInputChangeLight(x.id_light)}} 
                                     >
                                     Edit

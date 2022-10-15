@@ -13,22 +13,10 @@ import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
 import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 
 
-export default observer( function EditInstruction(){
-    const history = useHistory();
-    
-    const {articleStore} = useStore();
-    const {instructionStore} = useStore();
-    const {selectedInstruction, updateInstruction, deleteInstruction, createInstruction, loadInstanceActionExecSettingAllArray, id_article: instructionId_article} = instructionStore;
 
-    const {viewStore} = useStore();
-    const {viewRegistry, getOptionArray : getViewOptionArray } = viewStore;
-
-    
-    const {annotationDisplayStore} = useStore();
-    const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, selectedInstructionId, id_article : annotationDisplayId_article} = annotationDisplayStore;
-
-    const [instruction, setInstruction] = useState<Instruction>({
-        id_article: articleStore?.selectedArticle?.id_article!,
+const getDefaultValueOfInstruction = (id_article : number) => {
+    const ans : Instruction = {
+        id_article: id_article ? id_article : 0,
         id_instruct: 0,
         id_view: 0,
         title: '',
@@ -37,7 +25,28 @@ export default observer( function EditInstruction(){
         memo: '',        
         is_automatic_camera_rotate: true,
         display_instance_sets: '',
-    });
+    }
+    return ans;
+}
+
+export default observer( function EditInstruction(){
+    const history = useHistory();
+    
+    const {articleStore} = useStore();
+    const {instructionStore} = useStore();
+    const {selectedInstruction, setSelectedInstruction, updateInstruction, deleteInstruction, createInstruction, loadInstanceActionExecSettingAllArray, id_article: instructionId_article} = instructionStore;
+
+    const {viewStore} = useStore();
+    const {viewRegistry, getOptionArray : getViewOptionArray } = viewStore;
+
+    
+    const {annotationDisplayStore} = useStore();
+    const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, selectedInstructionId, id_article : annotationDisplayId_article} = annotationDisplayStore;
+
+    
+    const [isDataCopyFromSelectedInstruction, setIsDataCopyFromSelectedInstruction] = useState(false);
+
+    const [instruction, setInstruction] = useState<Instruction>(getDefaultValueOfInstruction(articleStore?.selectedArticle?.id_article!));
 
 
     const validationSchema = Yup.object({
@@ -63,6 +72,22 @@ export default observer( function EditInstruction(){
     
 
     
+
+    function EntryNewInstruction() {
+        if(isDataCopyFromSelectedInstruction && selectedInstruction) {
+            
+            
+            const instruction_temp = {...selectedInstruction};
+            instruction_temp.id_instruct=0;
+
+            setInstruction(instruction_temp);
+
+        } else {
+
+            setInstruction(getDefaultValueOfInstruction(articleStore?.selectedArticle?.id_article!));
+        }
+    }
+    
     async function handleFormSubmit(instruction:Instruction) {
         
         if(instruction.id_instruct ==0 ){
@@ -70,10 +95,11 @@ export default observer( function EditInstruction(){
                 ...instruction
             };
 
-            await createInstruction(newInstruction);
+            const new_instruction = await createInstruction(newInstruction);
             await loadAnnotationDisplays(annotationDisplayId_article);
             await setSelectedAnnotationDisplayMap(selectedInstructionId);
             await loadInstanceActionExecSettingAllArray(instructionId_article);
+            new_instruction && await setSelectedInstruction(new_instruction.id_instruct);
 
         } else {
             await updateInstruction(instruction);
@@ -94,7 +120,7 @@ export default observer( function EditInstruction(){
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
                         <Row>
-                            <Col xs={2}><TextInputGeneral label='ID' name='id_instruct' placeholder='Instruction ID' /></Col>
+                            <Col xs={2}><TextInputGeneral label='ID' name='id_instruct' placeholder='Instruction ID' disabled /></Col>
                             <Col xs={3}><TextInputGeneral label='Title' name='title' placeholder='Instruction Title' /></Col>
                             <Col xs={4}><SelectInputGeneral label='View ID' placeholder='id_view' name='id_view' options={getViewOptionArray()} /></Col>
                             <Col xs={3}><TextInputGeneral label='Display Order' name='display_order' placeholder='Display Order' /></Col>
@@ -108,10 +134,6 @@ export default observer( function EditInstruction(){
                         
                         <Row>
                             <Col ><TextAreaGeneral label='MEMO' placeholder='memo' name='memo' rows={15}   /></Col>
-                        </Row>
-
-                        <Row>
-                            <Col ><TextAreaGeneral label='Display Instance Sets' placeholder='' name='display_instance_sets' rows={5}   /></Col>
                         </Row>
 
                         <Row>
@@ -133,7 +155,7 @@ export default observer( function EditInstruction(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={instruction} 
-                onSubmit={values => deleteInstruction(values)}>
+                onSubmit={values => deleteInstruction(values).then(state => setInstruction(getDefaultValueOfInstruction(articleStore?.selectedArticle?.id_article!)))}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
@@ -142,6 +164,25 @@ export default observer( function EditInstruction(){
                     </Form>
                 )}
             </Formik>
+
+
+            <button
+                type = 'submit'
+                className={"btn btn-secondary"}
+                onClick={()=>{EntryNewInstruction()}}
+                disabled = {instruction.id_instruct == 0 ? true : false}
+            >
+                {isDataCopyFromSelectedInstruction ? "Copy From Selected Instruction" : "Entry New Instruction"}
+            </button>
+
+
+
+            <div>
+                <input type="checkbox" checked={isDataCopyFromSelectedInstruction} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsDataCopyFromSelectedInstruction(event.target.checked)}/>
+                <label>Data Copy From Selected Light</label>
+            </div>
+
+
         </div>
     )
 })
