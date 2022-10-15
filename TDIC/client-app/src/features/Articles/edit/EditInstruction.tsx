@@ -18,7 +18,7 @@ export default observer( function EditInstruction(){
     
     const {articleStore} = useStore();
     const {instructionStore} = useStore();
-    const {selectedInstruction, updateInstruction, deleteInstruction, createInstruction, loadInstanceActionExecSettingAllArray, id_article: instructionId_article} = instructionStore;
+    const {selectedInstruction, setSelectedInstruction, updateInstruction, deleteInstruction, createInstruction, loadInstanceActionExecSettingAllArray, id_article: instructionId_article} = instructionStore;
 
     const {viewStore} = useStore();
     const {viewRegistry, getOptionArray : getViewOptionArray } = viewStore;
@@ -26,6 +26,9 @@ export default observer( function EditInstruction(){
     
     const {annotationDisplayStore} = useStore();
     const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, selectedInstructionId, id_article : annotationDisplayId_article} = annotationDisplayStore;
+
+    
+    const [isDataCopyFromSelectedInstruction, setIsDataCopyFromSelectedInstruction] = useState(false);
 
     const [instruction, setInstruction] = useState<Instruction>({
         id_article: articleStore?.selectedArticle?.id_article!,
@@ -62,8 +65,19 @@ export default observer( function EditInstruction(){
     }, [viewRegistry.size]);
     
 
-    function EntryNewInstruction(instructionId : number) {
-        if(instructionId == 0) {
+    
+
+    function EntryNewInstruction() {
+        if(isDataCopyFromSelectedInstruction && selectedInstruction) {
+            
+            
+            const instruction_temp = {...selectedInstruction};
+            instruction_temp.id_instruct=0;
+
+            setInstruction(instruction_temp);
+
+        } else {
+
             setInstruction({
                 id_article: articleStore?.selectedArticle?.id_article!,
                 id_instruct: 0,
@@ -75,23 +89,6 @@ export default observer( function EditInstruction(){
                 is_automatic_camera_rotate: true,
                 display_instance_sets: '',
             });
-        } else {
-            const instruction_temp = instructionStore.instructionRegistry.get(instructionId);
-            if(instruction_temp){
-                
-                setInstruction({
-                    id_article: instruction_temp.id_article,
-                    id_instruct: 0,
-                    id_view: instruction_temp.id_view,
-                    title: instruction_temp.title,
-                    short_description: instruction_temp.short_description,
-                    display_order: instruction_temp.display_order,
-                    memo: instruction_temp.memo,
-                    is_automatic_camera_rotate: instruction_temp.is_automatic_camera_rotate,
-                    display_instance_sets: instruction_temp.display_instance_sets,
-                });
-
-            }
         }
     }
     
@@ -102,10 +99,11 @@ export default observer( function EditInstruction(){
                 ...instruction
             };
 
-            await createInstruction(newInstruction);
+            const new_instruction = await createInstruction(newInstruction);
             await loadAnnotationDisplays(annotationDisplayId_article);
             await setSelectedAnnotationDisplayMap(selectedInstructionId);
             await loadInstanceActionExecSettingAllArray(instructionId_article);
+            new_instruction && await setSelectedInstruction(new_instruction.id_instruct);
 
         } else {
             await updateInstruction(instruction);
@@ -172,28 +170,21 @@ export default observer( function EditInstruction(){
             </Formik>
 
 
-
             <button
                 type = 'submit'
-                className={"btn btn-outline-primary"}
-                onClick={()=>{EntryNewInstruction(0)}} 
+                className={"btn btn-secondary"}
+                onClick={()=>{EntryNewInstruction()}}
+                disabled = {instruction.id_instruct == 0 ? true : false}
             >
-                {"Add New Instruction"}
-            </button>
-
-
-            <button
-                type = 'submit'
-                className={"btn btn-outline-primary"}
-                onClick={()=>{selectedInstruction && EntryNewInstruction(selectedInstruction.id_instruct)}}
-                disabled={!selectedInstruction}
-            >
-                {"Copy Selected Insgruction"}
+                {isDataCopyFromSelectedInstruction ? "Copy From Selected Instruction" : "Entry New Instruction"}
             </button>
 
 
 
-
+            <div>
+                <input type="checkbox" checked={isDataCopyFromSelectedInstruction} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsDataCopyFromSelectedInstruction(event.target.checked)}/>
+                <label>Data Copy From Selected Light</label>
+            </div>
 
 
         </div>
