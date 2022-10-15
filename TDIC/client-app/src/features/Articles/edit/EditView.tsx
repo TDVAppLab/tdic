@@ -11,26 +11,11 @@ import { Col, Row } from 'react-bootstrap';
 import EditViewSubUpdateCurrentCameraInfo from './EditViewSubUpdateCurrentCameraInfo';
 
 
-export default observer( function EditView(){
-    const history = useHistory();
-    
-    const { articleStore } = useStore();
-    const { viewStore : {selectedView, updateView, createView, deleteView} } = useStore();
 
-    
-    const {instructionStore : {instructionRegistry}} = useStore();
 
-    const {sceneInfoStore : {camera_pos, quaternion, orbit_target}} = useStore();
-
-    
-    const [isRefbyInstruction, setIsRefbyInstruction] = useState(false);
-
-    
-    const [isReflectCurrentCameraInfo, setIsReflectCurrentCameraInfo] = useState(false);
-    const [isDataCopyFromSelectedView, setIsDataCopyFromSelectedView] = useState(false);
-
-    const [view, setView] = useState<View>({
-        id_article: articleStore?.selectedArticle?.id_article!,
+const getDefaultValueOfView = (id_article : number) => {
+    const ans : View = {
+        id_article: id_article ? id_article : 0,
         id_view: 0,
         title: '',
         cam_pos_x: 0,
@@ -49,7 +34,30 @@ export default observer( function EditView(){
         obt_target_x: 0,
         obt_target_y: 0,
         obt_target_z: 0,
-    });
+    }
+    return ans;
+}
+
+
+export default observer( function EditView(){
+    const history = useHistory();
+    
+    const { articleStore } = useStore();
+    const { viewStore : {selectedView, updateView, createView, deleteView} } = useStore();
+
+    
+    const {instructionStore : {instructionRegistry}} = useStore();
+
+    const {sceneInfoStore : {camera_pos, quaternion, orbit_target}} = useStore();
+
+    
+    const [isRefbyInstruction, setIsRefbyInstruction] = useState(false);
+
+    
+    const [isReflectCurrentCameraInfo, setIsReflectCurrentCameraInfo] = useState(false);
+    const [isDataCopyFromSelectedView, setIsDataCopyFromSelectedView] = useState(false);
+
+    const [view, setView] = useState<View>(getDefaultValueOfView(articleStore?.selectedArticle?.id_article!));
 
 
     const validationSchema = Yup.object({
@@ -118,27 +126,7 @@ export default observer( function EditView(){
 
         } else {
 
-            setView({
-                id_article: articleStore?.selectedArticle?.id_article!,
-                id_view: 0,
-                title: '',
-                cam_pos_x: 0,
-                cam_pos_y: 0,
-                cam_pos_z: 0,
-            
-                cam_lookat_x: 0,
-                cam_lookat_y: 0,
-                cam_lookat_z: 0,
-            
-                cam_quat_x: 0,
-                cam_quat_y: 0,
-                cam_quat_z: 0,
-                cam_quat_w: 0,
-            
-                obt_target_x: 0,
-                obt_target_y: 0,
-                obt_target_z: 0,
-            });
+            setView(getDefaultValueOfView(articleStore?.selectedArticle?.id_article!));
         }
     }
 
@@ -229,7 +217,7 @@ export default observer( function EditView(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={view} 
-                onSubmit={values => deleteView(values)}>
+                onSubmit={values => deleteView(values).then(state => setView(getDefaultValueOfView(articleStore?.selectedArticle?.id_article!)))}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting || isRefbyInstruction} type = 'submit' className='btn btn-danger'>

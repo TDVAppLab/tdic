@@ -12,6 +12,27 @@ import { Annotation } from '../../../app/models/Annotation';
 import { Vector3 } from 'three';
 
 
+
+const getDefaultValueOfAnnotation = (id_article : number) => {
+    const ans : Annotation = {
+        id_article: id_article ? id_article : 0,
+        id_annotation: 0,
+
+        title: '',
+        description1: '',
+        description2: '',
+        
+        status: 0,
+
+        pos_x: 0,
+        pos_y: 0,
+        pos_z: 0,
+    }
+    return ans;
+}
+
+
+
 export default observer( function EditAnnotation(){
     const history = useHistory();
     
@@ -26,20 +47,7 @@ export default observer( function EditAnnotation(){
     const [isDataCopyFromSelectedAnnotation, setIsDataCopyFromSelectedAnnotation] = useState(false);
 
 
-    const [annotation, setAnnotation] = useState<Annotation>({
-        id_article: articleStore?.selectedArticle?.id_article!,
-        id_annotation: 0,
-
-        title: '',
-        description1: '',
-        description2: '',
-        
-        status: 0,
-
-        pos_x: 0,
-        pos_y: 0,
-        pos_z: 0,
-    });
+    const [annotation, setAnnotation] = useState<Annotation>(getDefaultValueOfAnnotation(articleStore?.selectedArticle?.id_article!));
 
 
     const validationSchema = Yup.object({
@@ -96,20 +104,11 @@ export default observer( function EditAnnotation(){
             setSelectedAnnotation(0);
 
         } else {
-            editAnnotationInternal({
-                id_article: annotation.id_article,
-                id_annotation: 0,
-        
-                title: '',
-                description1: '',
-                description2: '',
-                
-                status: 0,
-        
-                pos_x: sceneInfoStore?.orbit_target?.x!,
-                pos_y: sceneInfoStore?.orbit_target?.y!,
-                pos_z: sceneInfoStore?.orbit_target?.z!,
-            });
+            const temp_annotation_new = getDefaultValueOfAnnotation(articleStore?.selectedArticle?.id_article!);
+            temp_annotation_new.pos_x = sceneInfoStore?.orbit_target?.x!;
+            temp_annotation_new.pos_y = sceneInfoStore?.orbit_target?.y!;
+            temp_annotation_new.pos_z = sceneInfoStore?.orbit_target?.z!;
+            editAnnotationInternal(temp_annotation_new);
             setSelectedAnnotation(0);
         }
     }
@@ -215,7 +214,7 @@ export default observer( function EditAnnotation(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={annotation} 
-                onSubmit={values => deleteAnnotation(values).then(x => deleteAnnotationDisplayArray(values.id_annotation))}>
+                onSubmit={values => deleteAnnotation(values).then(x => deleteAnnotationDisplayArray(values.id_annotation).then(state => setAnnotation(getDefaultValueOfAnnotation(articleStore?.selectedArticle?.id_article!))) )}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>

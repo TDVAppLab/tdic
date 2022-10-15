@@ -13,6 +13,22 @@ import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
 import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 
 
+
+const getDefaultValueOfInstruction = (id_article : number) => {
+    const ans : Instruction = {
+        id_article: id_article ? id_article : 0,
+        id_instruct: 0,
+        id_view: 0,
+        title: '',
+        short_description: '',
+        display_order: 0,
+        memo: '',        
+        is_automatic_camera_rotate: true,
+        display_instance_sets: '',
+    }
+    return ans;
+}
+
 export default observer( function EditInstruction(){
     const history = useHistory();
     
@@ -30,17 +46,7 @@ export default observer( function EditInstruction(){
     
     const [isDataCopyFromSelectedInstruction, setIsDataCopyFromSelectedInstruction] = useState(false);
 
-    const [instruction, setInstruction] = useState<Instruction>({
-        id_article: articleStore?.selectedArticle?.id_article!,
-        id_instruct: 0,
-        id_view: 0,
-        title: '',
-        short_description: '',
-        display_order: 0,
-        memo: '',        
-        is_automatic_camera_rotate: true,
-        display_instance_sets: '',
-    });
+    const [instruction, setInstruction] = useState<Instruction>(getDefaultValueOfInstruction(articleStore?.selectedArticle?.id_article!));
 
 
     const validationSchema = Yup.object({
@@ -78,17 +84,7 @@ export default observer( function EditInstruction(){
 
         } else {
 
-            setInstruction({
-                id_article: articleStore?.selectedArticle?.id_article!,
-                id_instruct: 0,
-                id_view: 0,
-                title: '',
-                short_description: '',
-                display_order: 0,
-                memo: '',        
-                is_automatic_camera_rotate: true,
-                display_instance_sets: '',
-            });
+            setInstruction(getDefaultValueOfInstruction(articleStore?.selectedArticle?.id_article!));
         }
     }
     
@@ -159,7 +155,7 @@ export default observer( function EditInstruction(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={instruction} 
-                onSubmit={values => deleteInstruction(values)}>
+                onSubmit={values => deleteInstruction(values).then(state => setInstruction(getDefaultValueOfInstruction(articleStore?.selectedArticle?.id_article!)))}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>

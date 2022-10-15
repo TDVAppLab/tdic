@@ -10,18 +10,10 @@ import { Col, Row } from 'react-bootstrap';
 import { Light } from '../../../app/models/Light';
 
 
-export default observer( function EditLight(){
-    const history = useHistory();
-    
-    const {articleStore} = useStore();
-    const {lightStore} = useStore();
-    const {selectedLight, createLight, updateLight, deleteLight} = lightStore;
 
-
-    const [isDataCopyFromSelectedLight, setIsDataCopyFromSelectedLight] = useState(false);
-
-    const [light, setLight] = useState<Light>({
-        id_article: articleStore?.selectedArticle?.id_article!,
+const getDefaultValueOfLight = (id_article : number) => {
+    const ans : Light = {
+        id_article: id_article ? id_article : 0,
         id_light: 0,
         light_type: '',
         title:  '',
@@ -44,7 +36,21 @@ export default observer( function EditLight(){
         lfsize: 0,
         file_data: null,
         light_object: null,
-    });
+    }
+    return ans;
+}
+
+export default observer( function EditLight(){
+    const history = useHistory();
+    
+    const {articleStore} = useStore();
+    const {lightStore} = useStore();
+    const {selectedLight, createLight, updateLight, deleteLight} = lightStore;
+
+
+    const [isDataCopyFromSelectedLight, setIsDataCopyFromSelectedLight] = useState(false);
+
+    const [light, setLight] = useState<Light>(getDefaultValueOfLight(articleStore?.selectedArticle?.id_article!));
 
 
     const validationSchema = Yup.object({
@@ -87,31 +93,9 @@ export default observer( function EditLight(){
 
         } else {
 
-            setLight({
-                id_article: articleStore?.selectedArticle?.id_article!,
-                id_light: 0,
-                light_type: '',
-                title:  '',
-                short_description:  '',
-                color: 0,
-                intensity: 0,
-                px: 0,
-                py: 0,
-                pz: 0,
-                distance: 0,
-                decay: 0,
-                power: 0,
-                shadow: 0,
-                tx: 0,
-                ty: 0,
-                tz: 0,
-                skycolor: 0,
-                groundcolor: 0,
-                is_lensflare: false,
-                lfsize: 0,
-                file_data: null,
-                light_object: null,
-            });
+            const temp_light_new = getDefaultValueOfLight(articleStore?.selectedArticle?.id_article!);
+            setLight(temp_light_new);
+            
         }
     }
 
@@ -170,7 +154,7 @@ export default observer( function EditLight(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={light} 
-                onSubmit={values => deleteLight(values)}>
+                onSubmit={values => deleteLight(values).then(state => setLight(getDefaultValueOfLight(articleStore?.selectedArticle?.id_article!)))}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
