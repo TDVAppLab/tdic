@@ -18,6 +18,8 @@ export default observer( function EditLight(){
     const {selectedLight, createLight, updateLight, deleteLight} = lightStore;
 
 
+    const [isDataCopyFromSelectedLight, setIsDataCopyFromSelectedLight] = useState(false);
+
     const [light, setLight] = useState<Light>({
         id_article: articleStore?.selectedArticle?.id_article!,
         id_light: 0,
@@ -74,6 +76,44 @@ export default observer( function EditLight(){
 
     
 
+    function EntryNewLight() {
+        if(isDataCopyFromSelectedLight && selectedLight) {
+            
+            
+            const light_temp = {...selectedLight};
+            light_temp.id_light=0;
+
+            setLight(light_temp);
+
+        } else {
+
+            setLight({
+                id_article: articleStore?.selectedArticle?.id_article!,
+                id_light: 0,
+                light_type: '',
+                title:  '',
+                short_description:  '',
+                color: 0,
+                intensity: 0,
+                px: 0,
+                py: 0,
+                pz: 0,
+                distance: 0,
+                decay: 0,
+                power: 0,
+                shadow: 0,
+                tx: 0,
+                ty: 0,
+                tz: 0,
+                skycolor: 0,
+                groundcolor: 0,
+                is_lensflare: false,
+                lfsize: 0,
+                file_data: null,
+                light_object: null,
+            });
+        }
+    }
 
     return(
         <div>
@@ -86,7 +126,7 @@ export default observer( function EditLight(){
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
                         <Row>
-                            <Col xs={2}><TextInputGeneral label='Light ID' name='id_light' placeholder='Light ID' /></Col>
+                            <Col xs={2}><TextInputGeneral label='Light ID' name='id_light' placeholder='Light ID' disabled /></Col>
                             <Col xs={4}><TextInputGeneral label='Light Type' name='light_type' placeholder='Light Type' /></Col>
                             <Col xs={6}><TextInputGeneral label='Light Title' name='title' placeholder='Light Title' /></Col>
                         </Row>
@@ -139,6 +179,26 @@ export default observer( function EditLight(){
                     </Form>
                 )}
             </Formik>
+
+
+
+
+            
+            <button
+                type = 'submit'
+                className={"btn btn-secondary"}
+                onClick={()=>{EntryNewLight()}}
+                disabled = {light.id_light == 0 ? true : false}
+            >
+                {isDataCopyFromSelectedLight ? "Copy From Selected Light" : "Entry New Light"}
+            </button>
+
+            
+            <div>
+                <input type="checkbox" checked={isDataCopyFromSelectedLight} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsDataCopyFromSelectedLight(event.target.checked)}/>
+                <label>Data Copy From Selected Light</label>
+            </div>
         </div>
     )
 })
+
