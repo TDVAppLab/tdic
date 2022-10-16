@@ -17,6 +17,15 @@ export default class LightStore {
 
 
     loadLights = async (id_article:number) => {
+        
+        if(id_article == -1) {
+            runInAction(()=>{
+                this.lightRegistry.clear();
+            })
+            return null;
+        }
+
+
         this.loading = true;
         this.lightRegistry.clear();
         try {

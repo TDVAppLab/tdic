@@ -29,6 +29,17 @@ export default class InstructionStore {
 
 
     loadInstructions = async (id_article:number) => {
+        
+        
+        
+        if(id_article == -1) {
+            this.instructionRegistry.clear();
+            this.selectedInstruction = undefined;
+            this.selectedSubtitles.length = 0;
+            return null;
+        }
+
+
         this.loading = true;
         this.instructionRegistry.clear();
         try {

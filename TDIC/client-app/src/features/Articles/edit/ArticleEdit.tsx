@@ -106,6 +106,13 @@ export default observer( function ArticleEdit() {
             loadLights(Number(id));
             loadAnnotationDisplays(Number(id));
         } else {
+            loadArticle(-1);
+            loadInstanceobjects(-1);
+            loadInstructions(-1);
+            loadViews(-1);
+            loadAnnotations(-1);
+            loadLights(-1);
+            loadAnnotationDisplays(-1);
         }
 
     }, [id])
@@ -138,7 +145,8 @@ export default observer( function ArticleEdit() {
 
                     </Col>
                     <Col  sm={isMotiondisplayMode ? 5 : 6} >
-                        <Tabs defaultActiveKey="instruction" id="article-editor-main-tab" className="mb-3">
+                        <Tabs defaultActiveKey={id ? "instruction" : "articleBase"} id="article-editor-main-tab" className="mb-3">
+                            {id && 
 
                             <Tab eventKey="instruction" title="Instruction">
                                 <Tabs defaultActiveKey="edit_instruction" id="instruction-editor-sub-tab" className="mb-3">
@@ -156,44 +164,56 @@ export default observer( function ArticleEdit() {
                                     </Tab>
                                 </Tabs>
                             </Tab>
+                            }
 
+                            { id &&
                             <Tab eventKey="view" title="View">
-                                {id && <EditView /> }
+                                <EditView /> 
                                 <hr />
-                                {id && <EditViewList /> }
+                                <EditViewList /> 
                             </Tab>
+                            }
 
+                            { id &&
                             <Tab eventKey="annotation" title="Annotation" >
-                                {id && <EditAnnotation /> }
+                                <EditAnnotation />
                                 {
                                     selectedAnnotationDisplayMap.size > 0 && <EdiaAnnotationDisplay />
                                 }
                             </Tab>
+                            }
 
+                            { id &&
                             <Tab eventKey="light" title="Light" >
-                                {id && <EditLight /> }
+                                <EditLight /> 
                                 <hr />
-                                {id && <EditLightList /> }
+                                <EditLightList /> 
                             </Tab>
-
+                            }
+                            
+                            { id &&
                             <Tab eventKey="instance" title="Instance" >
-                                {
-                                    <EditInstanceobject />
-                                }
+                                <EditInstanceobject />
                             </Tab>
+                            }
 
                             <Tab eventKey="articleBase" title="Article Base" >
                                 <EditArticleSub /> 
                             </Tab>
-
+                            
+                            { id &&
                             <Tab eventKey="thumbnail" title="Thumbnail" >
                                 <EditEyecatch />
                             </Tab>
+                            }
+                            { id &&
 
                             <Tab eventKey="materials" title="Materials" >
                                 <p>abxxxxxx</p>
                             </Tab>
+                            }
 
+                            { id &&
                             <Tab eventKey="info" title="info" >
                                 <Link to={`/article/${Number(article?.id_article)}`}>Details</Link> 
                                 <hr />
@@ -211,6 +231,7 @@ export default observer( function ArticleEdit() {
                                 </div>
                                 <DebugDisplay />
                             </Tab>
+                            }
 
                         </Tabs>
                     </Col>

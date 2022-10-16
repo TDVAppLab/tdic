@@ -21,6 +21,18 @@ export default class InstanceobjectStore {
 
 
     loadInstanceobjects = async (id_article:number) => {
+
+        
+        if(id_article == -1) {
+            this.instanceobjectRegistry.clear();
+            this.annimationsRegistry.clear();
+            this.modelLoadingRegistry.clear();
+            return null;
+        }
+
+
+
+
         this.loading = true;
         this.instanceobjectRegistry.clear();
         this.modelLoadingRegistry.clear();

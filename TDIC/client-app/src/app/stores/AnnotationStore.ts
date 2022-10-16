@@ -16,6 +16,13 @@ export default class AnnotationStore {
 
 
     loadAnnotations = async (id_article:number) => {
+        
+        if(id_article == -1) {
+            this.annotationRegistry.clear();
+            return null;
+        }
+
+
         this.loading = true;
         this.annotationRegistry.clear();
         try {

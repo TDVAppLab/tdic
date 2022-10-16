@@ -29,6 +29,17 @@ export default class ArticleStore {
     }
 
     loadArticle = async (id:number) => {
+
+        
+        
+        if(id == -1) {
+            runInAction(()=>{
+                this.selectedArticle = undefined;
+            })
+            return null;
+        }
+
+
         this.loading = true;
         
         try {
