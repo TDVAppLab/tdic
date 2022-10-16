@@ -8,6 +8,7 @@ import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
 import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
 import { Col, Row } from 'react-bootstrap';
 import { Light } from '../../../app/models/Light';
+import { toast } from 'react-toastify';
 
 
 
@@ -68,18 +69,26 @@ export default observer( function EditLight(){
     }, [selectedLight]);
 
     
-    function handleFormSubmit(light:Light) {
-        if(light.id_light ==0 ){
+    async function handleFormLightUpd(values:Light) {
+        if(values.id_light ==0 ){
             let newLight = {
-                ...light
+                ...values
             };
-            console.log(newLight);
-            createLight(newLight);
+            //console.log(newLight);
+            await createLight(newLight);
+            toast.info('light added');
         } else {
-            updateLight(light);
+            await updateLight(values);
+            toast.info('light updated');
         }
     }
 
+    async function handleFormLightDel(values:Light) {
+
+        await deleteLight(values);
+        await setLight(getDefaultValueOfLight(articleStore?.selectedArticle?.id_article!));
+        toast.info('light deleted');
+    }
     
 
     function EntryNewLight() {
@@ -105,7 +114,7 @@ export default observer( function EditLight(){
                 validationSchema={validationSchema}
                 enableReinitialize 
                 initialValues={light} 
-                onSubmit={values => handleFormSubmit(values)}>
+                onSubmit={values => handleFormLightUpd(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
@@ -154,7 +163,7 @@ export default observer( function EditLight(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={light} 
-                onSubmit={values => deleteLight(values).then(state => setLight(getDefaultValueOfLight(articleStore?.selectedArticle?.id_article!)))}>
+                onSubmit={values => handleFormLightDel(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>

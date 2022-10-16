@@ -10,6 +10,7 @@ import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
 import { Col, Row } from 'react-bootstrap';
 import { Annotation } from '../../../app/models/Annotation';
 import { Vector3 } from 'three';
+import { toast } from 'react-toastify';
 
 
 
@@ -65,17 +66,28 @@ export default observer( function EditAnnotation(){
     }, [selectedAnnotation]);
 
     
-    function handleFormSubmit(annotation:Annotation) {
+    async function handleFormAnnotationUpd(annotation:Annotation) {
         if(annotation.id_annotation ==0 ){
             let newAnnotation = {
                 ...annotation
             };
-            createAnnotation(newAnnotation).then(()=>loadAnnotationDisplays(annotationDisplayId_article)).then(()=>setSelectedAnnotationDisplayMap(selectedInstructionId));
+            await createAnnotation(newAnnotation);
+            await loadAnnotationDisplays(annotationDisplayId_article);
+            await setSelectedAnnotationDisplayMap(selectedInstructionId);
+            await toast.info('annotation added');
         } else {
-            updateAnnotation(annotation);
+            await updateAnnotation(annotation);
+            await toast.info('annotation updated');
         }
     }
 
+    async function handleFormAnnotationDel(values:Annotation) {
+        
+        await deleteAnnotation(values);
+        await deleteAnnotationDisplayArray(values.id_annotation);
+        setAnnotation(getDefaultValueOfAnnotation(articleStore?.selectedArticle?.id_article!));
+        toast.info('annotation deleted');
+    }
     
 
 
@@ -131,7 +143,7 @@ export default observer( function EditAnnotation(){
                 validationSchema={validationSchema}
                 enableReinitialize 
                 initialValues={annotation} 
-                onSubmit={values => handleFormSubmit(values)}>
+                onSubmit={values => handleFormAnnotationUpd(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
@@ -214,7 +226,7 @@ export default observer( function EditAnnotation(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={annotation} 
-                onSubmit={values => deleteAnnotation(values).then(x => deleteAnnotationDisplayArray(values.id_annotation).then(state => setAnnotation(getDefaultValueOfAnnotation(articleStore?.selectedArticle?.id_article!))) )}>
+                onSubmit={values => handleFormAnnotationDel(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>

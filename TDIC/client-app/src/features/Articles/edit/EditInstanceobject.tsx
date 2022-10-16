@@ -9,6 +9,7 @@ import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
 import { Instanceobject } from '../../../app/models/Instanceobject';
 import EditInstanceobjectCreater from './EditInstanceobjectCreater';
 import LoadingComponent from '../../../app/layout/LoadingComponents';
+import { toast } from 'react-toastify';
 
 
 export default observer( function EditInstanceobject(){
@@ -40,6 +41,20 @@ export default observer( function EditInstanceobject(){
         loadModelfiles(false);
     }, []);
 
+    
+    async function handleFormInstanceobjectUpd(values:Instanceobject[]) {
+        await updateInstanceobjects(values);        
+            //.then(state => instanceobjectRegistry && setInstanceobjects(Array.from(instanceobjectRegistry.values())))
+        toast.info('instanceobjects updated');
+        
+    }
+
+    async function handleFormInstanceobjectDel(values:Instanceobject) {
+
+        await deleteInstanceobject(values);
+        toast.info('instanceobject deleted');
+    }
+
     //if(instanceobjects.length<1) return null;
     if(loadingModelfile || loadingInstanceobject) return <LoadingComponent content="Loading ..." />
 
@@ -51,10 +66,7 @@ export default observer( function EditInstanceobject(){
                 validationSchema={validationSchema}
                 enableReinitialize 
                 initialValues={Array.from(instanceobjectRegistry.values())} 
-                onSubmit={(values) => 
-                    updateInstanceobjects(values)
-                        //.then(state => instanceobjectRegistry && setInstanceobjects(Array.from(instanceobjectRegistry.values())))
-                }>
+                onSubmit={(values) => handleFormInstanceobjectUpd(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
@@ -104,7 +116,7 @@ export default observer( function EditInstanceobject(){
                                                     type = 'submit'
                                                     className={"btn btn-danger"}
                                                     onClick={()=>{                                                        
-                                                        deleteInstanceobject({        
+                                                        handleFormInstanceobjectDel({        
                                                             id_article: x.id_article,
                                                             id_instance: x.id_instance,
                                                             id_part: 0,                

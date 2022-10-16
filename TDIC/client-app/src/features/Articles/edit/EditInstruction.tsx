@@ -11,6 +11,7 @@ import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
 import { Col, Row } from 'react-bootstrap';
 import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
 import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
+import { toast } from 'react-toastify';
 
 
 
@@ -100,13 +101,17 @@ export default observer( function EditInstruction(){
             await setSelectedAnnotationDisplayMap(selectedInstructionId);
             await loadInstanceActionExecSettingAllArray(instructionId_article);
             new_instruction && await setSelectedInstruction(new_instruction.id_instruct);
+            toast.info('new instruction added');
 
         } else {
             await updateInstruction(instruction);
+            
+            toast.info('instruction updated');
         }
     }
 
     
+
 
 
     return(
@@ -155,7 +160,8 @@ export default observer( function EditInstruction(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={instruction} 
-                onSubmit={values => deleteInstruction(values).then(state => setInstruction(getDefaultValueOfInstruction(articleStore?.selectedArticle?.id_article!)))}>
+                onSubmit={values => deleteInstruction(values).then(state => {setInstruction(getDefaultValueOfInstruction(articleStore?.selectedArticle?.id_article!))
+                            toast.info('instruction deleted')})}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>

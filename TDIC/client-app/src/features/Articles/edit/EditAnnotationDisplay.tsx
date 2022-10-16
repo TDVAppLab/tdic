@@ -8,6 +8,7 @@ import { useStore } from '../../../app/stores/store';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
+import { toast } from 'react-toastify';
 
 
 
@@ -43,6 +44,11 @@ export default observer( function EdiaAnnotationDisplay() {
         selectedAnnotationDisplayMap.size > 0 && setAnnotationDisplays(Array.from(selectedAnnotationDisplayMap.values()));
     }, [selectedInstructionId])
 
+    
+    async function handleFormAnnotationDisplayUpd(values:AnnotationDisplay[]) {
+        await updateAnnotationDisplay(values);
+        toast.info('annotation display updated');
+    }
 
     return(
         <div>
@@ -50,7 +56,7 @@ export default observer( function EdiaAnnotationDisplay() {
                 validationSchema={validationSchema}
                 enableReinitialize 
                 initialValues={annotationDisplays} 
-                onSubmit={(values) => updateAnnotationDisplay(values)}>
+                onSubmit={(values) => handleFormAnnotationDisplayUpd(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 

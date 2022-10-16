@@ -9,6 +9,7 @@ import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
 import { View } from '../../../app/models/view';
 import { Col, Row } from 'react-bootstrap';
 import EditViewSubUpdateCurrentCameraInfo from './EditViewSubUpdateCurrentCameraInfo';
+import { toast } from 'react-toastify';
 
 
 
@@ -89,11 +90,17 @@ export default observer( function EditView(){
             let newView = {
                 ...view
             };
-            console.log(newView);
-            createView(newView);
+            //console.log(newView);
+            createView(newView).then(state => toast.info('view added'));
         } else {
-            updateView(view);
+            updateView(view).then(state => toast.info('view updated'));
         }
+    }
+    
+    async function handleFormViewDel(view:View) {
+        await deleteView(view); 
+        await setView(getDefaultValueOfView(articleStore?.selectedArticle?.id_article!));
+        toast.info('view deleted');
     }
 
 
@@ -217,7 +224,7 @@ export default observer( function EditView(){
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={view} 
-                onSubmit={values => deleteView(values).then(state => setView(getDefaultValueOfView(articleStore?.selectedArticle?.id_article!)))}>
+                onSubmit={values => handleFormViewDel(values) }>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting || isRefbyInstruction} type = 'submit' className='btn btn-danger'>
