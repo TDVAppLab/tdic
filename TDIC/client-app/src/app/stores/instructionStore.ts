@@ -121,25 +121,21 @@ export default class InstructionStore {
     }
 
     loadInstruction = async (id_article:number,id_instruct:number) => {
-        let instruction = this.getInstruction(id_instruct);
-        if(instruction) {
-            this.selectedInstruction = instruction;
+
+        this.loading = true;
+        try {
+            const instruction = await agent.Instructions.details(id_article,id_instruct);
+            this.setInstruction(instruction);
+            runInAction(()=>{
+                this.selectedInstruction = instruction;
+            })
+            this.setLoading(false);
             return instruction;
-        } else {
-            this.loading = true;
-            try {
-                instruction = await agent.Instructions.details(id_article,id_instruct);
-                this.setInstruction(instruction);
-                runInAction(()=>{
-                    this.selectedInstruction = instruction;
-                })
-                this.setLoading(false);
-                return instruction;
-            } catch (error) {
-                console.log(error);
-                this.setLoading(false);
-            }
+        } catch (error) {
+            console.log(error);
+            this.setLoading(false);
         }
+        
     }
     
 
