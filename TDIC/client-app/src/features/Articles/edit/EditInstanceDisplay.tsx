@@ -108,7 +108,6 @@ export default observer( function EditInstanceDisplay(){
                 initialValues={instanceActionExecSettingRegistry!} 
                 onSubmit={(values) =>                     
                     selectedInstruction && handleFormInstanceActionClipsUpd(selectedInstruction.id_article,selectedInstruction.id_instruct,values)
-//                    selectedInstruction && instructionStore.updateInstanceActionClips(selectedInstruction.id_article,selectedInstruction.id_instruct,values)
                     }>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
