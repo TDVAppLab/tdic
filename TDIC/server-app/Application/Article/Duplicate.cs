@@ -37,8 +37,17 @@ namespace Application.Article
 
                 long id_article_new = 1 + (await _context.t_articles
                                         .MaxAsync(t => (long?)t.id_article) ?? 0);
+
+                string title_new = "Copy : " + ( article.title ?? "" );
+
+                short status_new = await _context.m_status_articles.Where(m => m.is_approved == false).MinAsync(t => t.id);
+
+
                 
                 article.id_article = id_article_new;
+                article.title = title_new;
+                article.status = status_new;
+
                 article.create_user = "";
                 article.create_datetime = DateTime.Now;
                 article.latest_update_user = "";
