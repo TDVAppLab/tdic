@@ -62,7 +62,14 @@ export default observer( function EditAnnotation(){
     });
 
     useEffect(()=>{
-        selectedAnnotation && setAnnotation(selectedAnnotation);
+        
+        if(selectedAnnotation){
+            setAnnotation(selectedAnnotation);
+        } else {
+            setAnnotation(getDefaultValueOfAnnotation(articleStore?.selectedArticle?.id_article!));
+        }
+
+
     }, [selectedAnnotation]);
 
     
@@ -229,7 +236,7 @@ export default observer( function EditAnnotation(){
                 onSubmit={values => handleFormAnnotationDel(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                        <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
+                        <button disabled={!isValid || isSubmitting || annotation.id_annotation == 0} type = 'submit' className='btn btn-danger'>
                             {isSubmitting ? "Processing" : "Delete"}
                         </button>
                     </Form>

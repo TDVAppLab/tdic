@@ -65,7 +65,11 @@ export default observer( function EditLight(){
     });
 
     useEffect(()=>{
-        selectedLight && setLight(selectedLight);
+        if(selectedLight){
+            setLight(selectedLight);
+        } else {
+            setLight(getDefaultValueOfLight(articleStore?.selectedArticle?.id_article!));
+        }
     }, [selectedLight]);
 
     
@@ -166,7 +170,7 @@ export default observer( function EditLight(){
                 onSubmit={values => handleFormLightDel(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                        <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
+                        <button disabled={!isValid || isSubmitting || light.id_light == 0} type = 'submit' className='btn btn-danger'>
                             {isSubmitting ? "Processing" : "Delete"}
                         </button>
                     </Form>

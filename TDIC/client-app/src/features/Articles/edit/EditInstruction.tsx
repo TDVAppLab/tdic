@@ -65,8 +65,16 @@ export default observer( function EditInstruction(){
     });
 
     useEffect(()=>{
-        selectedInstruction && setInstruction(selectedInstruction);
+        if(selectedInstruction){
+            setInstruction(selectedInstruction);
+        } else {
+            setInstruction(getDefaultValueOfInstruction(articleStore?.selectedArticle?.id_article!));
+        }
     }, [selectedInstruction]);
+    /*
+    useEffect(()=>{
+        setInstruction(getDefaultValueOfInstruction(articleStore?.selectedArticle?.id_article!));
+    }, [articleStore?.selectedArticle?.id_article]);*/
 
     useEffect(()=>{
     }, [viewRegistry.size]);
@@ -164,7 +172,7 @@ export default observer( function EditInstruction(){
                             toast.info('instruction deleted')})}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                        <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
+                        <button disabled={!isValid || isSubmitting || instruction.id_instruct == 0} type = 'submit' className='btn btn-danger'>
                             {isSubmitting ? "Processing" : "Delete"}
                         </button>
                     </Form>

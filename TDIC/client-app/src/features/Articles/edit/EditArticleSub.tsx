@@ -179,6 +179,7 @@ export default observer( function EditArticleSub(){
 
             </Formik>
 
+            { article.id_article != 0 &&
             <Formik
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
@@ -192,9 +193,10 @@ export default observer( function EditArticleSub(){
                     </Form>
                 )}
             </Formik>
+            }
 
 
-
+            { article.id_article != 0 &&
             <Formik
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
@@ -208,6 +210,7 @@ export default observer( function EditArticleSub(){
                     </Form>
                 )}
             </Formik>
+            }
 
             
 
