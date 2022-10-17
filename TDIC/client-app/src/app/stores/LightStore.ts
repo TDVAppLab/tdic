@@ -36,6 +36,9 @@ export default class LightStore {
 
             runInAction(()=>{
                 this.id_article=id_article;
+                if(this.lightRegistry.size<1){
+                    this.selectedLight = undefined
+                }
             })
             
             this.setLoading(false);

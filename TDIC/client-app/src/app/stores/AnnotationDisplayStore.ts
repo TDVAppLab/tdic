@@ -38,6 +38,9 @@ export default class AnnotationDisplayStore {
 
             runInAction(()=>{
                 this.id_article=id_article;
+                if(this.annotationDisplayArray.length<1){
+                    this.selectedAnnotationDisplayMap.clear();
+                }
             })
             
             this.setLoading(false);

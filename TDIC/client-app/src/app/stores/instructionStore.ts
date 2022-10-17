@@ -60,6 +60,12 @@ export default class InstructionStore {
 
                 const id_startinst = (Array.from(this.instructionRegistry.values())).filter((x: Instruction) => x.display_order == Math.min.apply(null, ar1_map))[0].id_instruct;
                 await this.setSelectedInstruction(id_startinst);
+            } else {                
+                runInAction(()=>{
+                    this.selectedInstruction = undefined;
+                    this.selectedSubtitles.length = 0;
+                    this.selectedSubtitleIndex = -1;
+                })
             }
 
             runInAction(()=>{

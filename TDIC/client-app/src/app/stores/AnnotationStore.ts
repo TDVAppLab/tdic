@@ -32,7 +32,13 @@ export default class AnnotationStore {
             })
 
             runInAction(()=>{
+                if(this.id_article != id_article){
+                    this.selectedAnnotation = undefined
+                }
                 this.id_article=id_article;
+                if(this.annotationRegistry.size<1){
+//                    this.selectedAnnotation = undefined
+                }
             })
             
             this.setLoading(false);
