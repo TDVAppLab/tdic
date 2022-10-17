@@ -30,25 +30,21 @@ export default class MArticleStatusStore {
     }
 
     loadStatus = async (id:number) => {
-        let status = this.getStatus(id);
-        if(status) {
-            this.selectedStatus = status;
+
+        this.loading = true;
+        try {
+            const status = await agent.MArticleStatus.details(id);
+            this.setStatus(status);
+            runInAction(()=>{
+                this.selectedStatus = status;
+            })
+            this.setLoaing(false);
             return status;
-        } else {
-            this.loading = true;
-            try {
-                status = await agent.MArticleStatus.details(id);
-                this.setStatus(status);
-                runInAction(()=>{
-                    this.selectedStatus = status;
-                })
-                this.setLoaing(false);
-                return status;
-            } catch (error) {
-                console.log(error);
-                this.setLoaing(false);
-            }
+        } catch (error) {
+            console.log(error);
+            this.setLoaing(false);
         }
+        
     }
 
     

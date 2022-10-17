@@ -7,6 +7,7 @@ import TextInputGeneral from "../../../app/common/form/TextInputGeneral";
 import { Instanceobject } from '../../../app/models/Instanceobject';
 import SelectInputGeneral from "../../../app/common/form/SelectInputGeneral";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
+import { toast } from "react-toastify";
 
 export default observer( function EditInstanceobjectCreater(){
     const {articleStore} = useStore();
@@ -54,6 +55,13 @@ export default observer( function EditInstanceobjectCreater(){
         }
     }, [selectedArticle?.id_article, loadingModelfile]);
 
+    
+    async function handleFormInstanceobjectCreate(values:Instanceobject) {
+        await createInstanceobject(values);        
+        toast.info('instanceobjects created');
+        
+    }
+
     if(loadingModelfile) return <LoadingComponent content="Loading ..." />
 
     return(
@@ -67,7 +75,7 @@ export default observer( function EditInstanceobjectCreater(){
                     validationSchema={validationSchemaInstanceEdit}
                     enableReinitialize 
                     initialValues={instanceobject} 
-                    onSubmit={(values) => createInstanceobject(values)}>
+                    onSubmit={(values) => handleFormInstanceobjectCreate(values)}>
                     {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                         <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 

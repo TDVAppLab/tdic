@@ -16,6 +16,15 @@ export default class ViewStore {
 
 
     loadViews = async (id_article:number) => {
+
+        
+        
+        if(id_article == -1) {
+            this.viewRegistry.clear();
+            return null;
+        }
+
+
         this.loading = true;
         this.viewRegistry.clear();
         this.selectedView = undefined;

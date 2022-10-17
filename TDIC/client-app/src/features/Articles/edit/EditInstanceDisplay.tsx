@@ -7,6 +7,8 @@ import { InstanceDisplay } from '../../../app/models/InstanceDisplay';
 import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 import agent from '../../../app/api/agent';
 import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
+import { toast } from 'react-toastify';
+import { InstanceActionExecSetting } from '../../../app/models/InstanceActionExecSetting';
 
 
 export default observer( function EditInstanceDisplay(){
@@ -25,13 +27,24 @@ export default observer( function EditInstanceDisplay(){
     
 
     
-    function handleFormSubmit(instanceparts:InstanceDisplay[]) {
+    async function handleFormSubmit(instanceparts:InstanceDisplay[]) {
         if(selectedInstruction){
             const object = selectedInstruction;
             object.display_instance_sets = JSON.stringify ( instanceparts );
-            updateInstanceDisplay(object);
+            await updateInstanceDisplay(object);
+            toast.info('instance display updated');
         }
     }
+
+
+    
+    async function handleFormInstanceActionClipsUpd(id_article : number,id_instruct : number, values : InstanceActionExecSetting[]) {        
+        await instructionStore.updateInstanceActionClips(id_article,id_instruct,values);
+        toast.info('instance actionClips updated');
+    }
+
+
+    
 
     if(instructionStore.instructionRegistry.size<1) return null;
 
@@ -93,8 +106,9 @@ export default observer( function EditInstanceDisplay(){
                 validationSchema={validationSchemaUpdateInstanceActionClips}
                 enableReinitialize 
                 initialValues={instanceActionExecSettingRegistry!} 
-                onSubmit={(values) => 
-                    selectedInstruction && instructionStore.updateInstanceActionClips(selectedInstruction.id_article,selectedInstruction.id_instruct,values)}>
+                onSubmit={(values) =>                     
+                    selectedInstruction && handleFormInstanceActionClipsUpd(selectedInstruction.id_article,selectedInstruction.id_instruct,values)
+                    }>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 

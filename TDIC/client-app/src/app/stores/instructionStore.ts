@@ -29,6 +29,17 @@ export default class InstructionStore {
 
 
     loadInstructions = async (id_article:number) => {
+        
+        
+        
+        if(id_article == -1) {
+            this.instructionRegistry.clear();
+            this.selectedInstruction = undefined;
+            this.selectedSubtitles.length = 0;
+            return null;
+        }
+
+
         this.loading = true;
         this.instructionRegistry.clear();
         try {
@@ -49,6 +60,12 @@ export default class InstructionStore {
 
                 const id_startinst = (Array.from(this.instructionRegistry.values())).filter((x: Instruction) => x.display_order == Math.min.apply(null, ar1_map))[0].id_instruct;
                 await this.setSelectedInstruction(id_startinst);
+            } else {                
+                runInAction(()=>{
+                    this.selectedInstruction = undefined;
+                    this.selectedSubtitles.length = 0;
+                    this.selectedSubtitleIndex = -1;
+                })
             }
 
             runInAction(()=>{
@@ -121,25 +138,21 @@ export default class InstructionStore {
     }
 
     loadInstruction = async (id_article:number,id_instruct:number) => {
-        let instruction = this.getInstruction(id_instruct);
-        if(instruction) {
-            this.selectedInstruction = instruction;
+
+        this.loading = true;
+        try {
+            const instruction = await agent.Instructions.details(id_article,id_instruct);
+            this.setInstruction(instruction);
+            runInAction(()=>{
+                this.selectedInstruction = instruction;
+            })
+            this.setLoading(false);
             return instruction;
-        } else {
-            this.loading = true;
-            try {
-                instruction = await agent.Instructions.details(id_article,id_instruct);
-                this.setInstruction(instruction);
-                runInAction(()=>{
-                    this.selectedInstruction = instruction;
-                })
-                this.setLoading(false);
-                return instruction;
-            } catch (error) {
-                console.log(error);
-                this.setLoading(false);
-            }
+        } catch (error) {
+            console.log(error);
+            this.setLoading(false);
         }
+        
     }
     
 

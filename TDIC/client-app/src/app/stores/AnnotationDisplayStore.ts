@@ -19,8 +19,18 @@ export default class AnnotationDisplayStore {
 
 
     loadAnnotationDisplays = async (id_article:number) => {
+
+        if(id_article == -1) {            
+            runInAction(()=>{
+                this.selectedAnnotationDisplayMap.clear();
+            })
+            return null;
+        }
+
+
         this.loading = true;
         //this.annotationDisplayRegistry.clear();
+
         this.annotationDisplayArray.length=0;
         try {
             this.annotationDisplayArray = await agent.AnnotationDisplays.list(id_article);
@@ -28,6 +38,9 @@ export default class AnnotationDisplayStore {
 
             runInAction(()=>{
                 this.id_article=id_article;
+                if(this.annotationDisplayArray.length<1){
+                    this.selectedAnnotationDisplayMap.clear();
+                }
             })
             
             this.setLoading(false);

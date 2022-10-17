@@ -12,6 +12,7 @@ import { Article } from '../../../app/models/article';
 import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
 import LoadingComponent from '../../../app/layout/LoadingComponents';
+import { toast } from 'react-toastify';
 
 
 export default observer( function EditArticleSub(){
@@ -91,20 +92,34 @@ export default observer( function EditArticleSub(){
     },[loadingstatus])
     
 
-    function handleFormSubmit(object:Article) {
+    async function handleFormArticleUpd(object:Article) {
         if(object.id_article ==0 ){
             let newObject = {
                 ...object
-            };
-            //createArticle(newObject);
+            }
 
-            
-            createArticle(newObject).then((ans_article)=>{ ans_article && history.push(`/articleedit/${Number(ans_article.id_article)}`) }) 
+            const ans_article = await createArticle(newObject);
+            ans_article && history.push(`/articleedit/${Number(ans_article.id_article)}`);
+            toast.success('new article added');
         } else {
-            updateArticle(object);
+            await updateArticle(object);
+            toast.info('article updeted');
         }
     }
 
+    async function handleFormArticleDel(values:Article) {
+        
+        await deleteArticle(values);
+        history.push(`/`);
+        toast.info('article deleted');
+    }
+
+    async function handleFormArticleDuplicate(values:Article) {
+        
+        const ans_article = await duplicateArticle(values);
+        ans_article && history.push(`/articleedit/${Number(ans_article.id_article)}`); 
+        toast.info('article duplicated');
+    }
 
     if(!isDataLoadingFinished) return (<><LoadingComponent /></>);
 
@@ -114,7 +129,7 @@ export default observer( function EditArticleSub(){
                 validationSchema={validationSchema}
                 enableReinitialize 
                 initialValues={article} 
-                onSubmit={values => handleFormSubmit(values)}>
+                onSubmit={values => handleFormArticleUpd(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
@@ -164,13 +179,12 @@ export default observer( function EditArticleSub(){
 
             </Formik>
 
+            { article.id_article != 0 &&
             <Formik
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={article} 
-                onSubmit={values => {                    
-                    deleteArticle(values).then(()=>{ history.push(`/`) }) 
-                }}>
+                onSubmit={values => {handleFormArticleDel(values)}}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
@@ -179,17 +193,15 @@ export default observer( function EditArticleSub(){
                     </Form>
                 )}
             </Formik>
+            }
 
 
-
+            { article.id_article != 0 &&
             <Formik
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
                 initialValues={article} 
-                onSubmit={values => {
-                        duplicateArticle(values).then((ans_article)=>{ ans_article && history.push(`/articleedit/${Number(ans_article.id_article)}`) }) 
-                    }
-                }>
+                onSubmit={values => handleFormArticleDuplicate(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
                         <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-warning'>
@@ -198,6 +210,7 @@ export default observer( function EditArticleSub(){
                     </Form>
                 )}
             </Formik>
+            }
 
             
 
