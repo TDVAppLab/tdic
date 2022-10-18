@@ -34,6 +34,7 @@ export default function SelectInputGeneral(props: Props){
           onBlur = {() => helpers.setTouched(true)} 
           placeholder={props.placeholder}
         >
+          <option hidden>-- Select --</option>
           {props.options.map((option) => (
             <option key={option.value} value={option.value}>{option.label}</option>
           ))}
