@@ -51,7 +51,7 @@ export default observer( function EditInstruction(){
 
 
     const validationSchema = Yup.object({
-        id_view: Yup.number().required(),
+        id_view: Yup.number().required().min(1),
         title: Yup.string().required(),
         short_description: Yup.string().nullable(),
         display_order: Yup.number().nullable(),
