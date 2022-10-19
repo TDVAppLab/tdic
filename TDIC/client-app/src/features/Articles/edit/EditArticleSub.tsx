@@ -134,11 +134,12 @@ export default observer( function EditArticleSub(){
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
                         <Row>
-                            <Col xs={7}><TextInputGeneral label='Assy ID' name='id_assy' placeholder='id_assy' /></Col>
                             <Col xs={3}><SelectInputGeneral label='Status' placeholder='status' name='status' options={getMArticleStatusOptionArray()} /></Col>
-                            <Col xs={7}><TextInputGeneral label='Article Title' name='title' placeholder='Article Title' /></Col>
+                            <Col xs={9}><TextInputGeneral label='Article Title' name='title' placeholder='Article Title' /></Col>
                         </Row>
 
+                        <hr />
+                        
                         <Row>
                             <Col ><TextAreaGeneral label='Short Description' placeholder='Description' name='short_description' rows={3}   /></Col>
                         </Row>
@@ -147,23 +148,10 @@ export default observer( function EditArticleSub(){
                             <Col ><TextAreaGeneral label='Long Description' placeholder='Description' name='long_description' rows={3}   /></Col>
                         </Row>
 
-                        <Row>
-                            <Col xs={4}><TextInputGeneral label='Color' name='bg_c' placeholder='Color' /></Col>
-                            <Col xs={4}><TextInputGeneral label='Intensity' name='intensity' placeholder='Intensity' /></Col>
-                        </Row>
-
-                        <Row>
-                            <Col xs={4}><TextInputGeneral label='POS X' name='px' placeholder='POS X' /></Col>
-                            <Col xs={4}><TextInputGeneral label='POS Y' name='py' placeholder='POS Y' /></Col>
-                            <Col xs={4}><TextInputGeneral label='POS Z' name='pz' placeholder='POS Z' /></Col>
-                        </Row>
-
                         <hr />
 
-                        
                         <Row>
-                            <Col xs={4}><TextInputGeneral label='Distance' name='distance' placeholder='Distance' /></Col>
-                            <Col xs={4}><TextInputGeneral label='Decay' name='decay' placeholder='Decay' /></Col>
+                            <Col xs={4}><TextInputGeneral label='Color' name='bg_c' placeholder='Color' /></Col>
                         </Row>
                         
                         <Row>
