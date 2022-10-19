@@ -23,6 +23,7 @@ export interface Article {
 
     id_attachment_for_eye_catch: number;
 
+    bg_color: string;
     bg_c: number;
     bg_h: number;
     bg_s: number;

@@ -58,6 +58,7 @@ export default observer( function EditArticleSub(){
 
         id_attachment_for_eye_catch: 0,
 
+        bg_color:'#000000',
         bg_c: 0,
         bg_h: 0,
         bg_s: 0,
@@ -151,7 +152,7 @@ export default observer( function EditArticleSub(){
                         <hr />
 
                         <Row>
-                            <Col xs={4}><TextInputGeneral label='Color' name='bg_c' placeholder='Color' /></Col>
+                            <Col xs={4}><TextInputGeneral type="color" label='Color' name='bg_color' placeholder='Color' /></Col>
                         </Row>
                         
                         <Row>

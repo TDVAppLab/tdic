@@ -83,7 +83,7 @@ useEffect(()=> {
         onCreated={({ gl, scene }) => {
           //gl.toneMapping = THREE.ACESFilmicToneMapping
           //gl.outputEncoding = THREE.sRGBEncoding
-          scene.background = new Color(selectedArticle?.bg_c)
+          scene.background = new Color(selectedArticle?.bg_color)
         }}
         linear={!selectedArticle?.gammaOutput}        
         camera={{ 
