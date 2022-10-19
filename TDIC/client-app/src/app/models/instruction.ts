@@ -11,6 +11,7 @@ export interface Instruction {
     display_order: number;
 
     memo: string;
+    subtitle: string;
 
     is_automatic_camera_rotate: boolean;
     display_instance_sets: string;

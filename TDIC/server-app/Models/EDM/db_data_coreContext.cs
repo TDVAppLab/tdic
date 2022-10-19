@@ -118,6 +118,8 @@ namespace TDIC.Models.EDM
 
                 entity.Property(e => e.title).HasMaxLength(250);
 
+                entity.Property(e => e.bg_color).HasMaxLength(7);
+
                 entity.HasOne(d => d.statusNavigation)
                     .WithMany(p => p.t_articles)
                     .HasForeignKey(d => d.status)
