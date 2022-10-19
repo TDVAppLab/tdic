@@ -24,6 +24,7 @@ const getDefaultValueOfInstruction = (id_article : number) => {
         short_description: '',
         display_order: 0,
         memo: '',        
+        subtitle: '',        
         is_automatic_camera_rotate: true,
         display_instance_sets: '',
     }
