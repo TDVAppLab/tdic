@@ -126,12 +126,14 @@ export default observer( function ArticleEdit() {
             {id && <h2>{article?.title}</h2> }
 
                 <Row>
+                    
+                    { id &&
                     <Col style={{ 
                         width: isMotiondisplayMode ? 1280 : undefined
                         }} sm={6} >
-                    {
-                        id && (<div style={{aspectRatio: '16 / 7.5'}} ><ModelScreen  isEditmode={isEditmode} isAutoAnimationExec={isAutoAnimationExec}/></div>)
-                    }
+
+                        <div style={{aspectRatio: '16 / 7.5'}} ><ModelScreen  isEditmode={isEditmode} isAutoAnimationExec={isAutoAnimationExec}/></div>
+
                         <DisplayHtmlSubtitles fontSize={'2em'}/>
                         
                         <InstructionSelector />
@@ -144,6 +146,8 @@ export default observer( function ArticleEdit() {
                         </div>
 
                     </Col>
+                    }
+
                     <Col  sm={isMotiondisplayMode ? 5 : 6} >
                         <Tabs defaultActiveKey={id ? "instruction" : "articleBase"} id="article-editor-main-tab" className="mb-3">
                             {id && 
@@ -197,7 +201,7 @@ export default observer( function ArticleEdit() {
                             </Tab>
                             }
 
-                            <Tab eventKey="articleBase" title="Article Base" >
+                            <Tab eventKey="articleBase" title="Base" >
                                 <EditArticleSub /> 
                             </Tab>
                             
@@ -206,8 +210,8 @@ export default observer( function ArticleEdit() {
                                 <EditEyecatch />
                             </Tab>
                             }
-                            { id &&
 
+                            { id &&
                             <Tab eventKey="materials" title="Materials" >
                                 <p>abxxxxxx</p>
                             </Tab>
@@ -232,7 +236,7 @@ export default observer( function ArticleEdit() {
                                 <DebugDisplay />
                             </Tab>
                             }
-
+                            
                         </Tabs>
                     </Col>
                 </Row>
