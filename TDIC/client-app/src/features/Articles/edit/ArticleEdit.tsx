@@ -149,7 +149,7 @@ export default observer( function ArticleEdit() {
                     }
 
                     <Col  sm={isMotiondisplayMode ? 5 : 6} >
-                        <Tabs defaultActiveKey={id ? "instruction" : "articleBase"} id="article-editor-main-tab" className="mb-3">
+                        <Tabs defaultActiveKey={id ? "instruction" : "base"} id="article-editor-main-tab" className="mb-3">
                             {id && 
 
                             <Tab eventKey="instruction" title="Instruction">
@@ -171,51 +171,55 @@ export default observer( function ArticleEdit() {
                             }
 
                             { id &&
-                            <Tab eventKey="view" title="View">
-                                <EditView /> 
-                                <hr />
-                                <EditViewList /> 
+                            <Tab eventKey="objects" title="Objects">
+                                <Tabs defaultActiveKey="view" id="objects-editor-sub-tab" className="mb-3">
+                                    <Tab eventKey="view" title="View">
+                                        <EditView /> 
+                                        <hr />
+                                        <EditViewList /> 
+                                    </Tab>
+                                    
+                                    <Tab eventKey="annotation" title="Annotation" >
+                                        <EditAnnotation />
+                                        {
+                                            selectedAnnotationDisplayMap.size > 0 && <EdiaAnnotationDisplay />
+                                        }
+                                    </Tab>
+                                    
+                                    <Tab eventKey="light" title="Light" >
+                                        <EditLight /> 
+                                        <hr />
+                                        <EditLightList /> 
+                                    </Tab>
+
+                                    <Tab eventKey="instance" title="Instance" >
+                                        <EditInstanceobject />
+                                    </Tab>
+                                </Tabs>
                             </Tab>
                             }
 
-                            { id &&
-                            <Tab eventKey="annotation" title="Annotation" >
-                                <EditAnnotation />
-                                {
-                                    selectedAnnotationDisplayMap.size > 0 && <EdiaAnnotationDisplay />
-                                }
-                            </Tab>
-                            }
+                            <Tab eventKey="base" title="Base">
+                                <Tabs defaultActiveKey="articleBase" id="base-editor-sub-tab" className="mb-3">
+                                    <Tab eventKey="articleBase" title="Article Base" >
+                                        <EditArticleSub /> 
+                                    </Tab>
+                                    
 
-                            { id &&
-                            <Tab eventKey="light" title="Light" >
-                                <EditLight /> 
-                                <hr />
-                                <EditLightList /> 
-                            </Tab>
-                            }
-                            
-                            { id &&
-                            <Tab eventKey="instance" title="Instance" >
-                                <EditInstanceobject />
-                            </Tab>
-                            }
+                                    { id &&
+                                    <Tab eventKey="thumbnail" title="Thumbnail" >
+                                        <EditEyecatch />
+                                    </Tab>
+                                    }
 
-                            <Tab eventKey="articleBase" title="Base" >
-                                <EditArticleSub /> 
+                                    { id &&
+                                    <Tab eventKey="materials" title="Materials" >
+                                        <p>abxxxxxx</p>
+                                    </Tab>
+                                    }
+                                </Tabs>
                             </Tab>
-                            
-                            { id &&
-                            <Tab eventKey="thumbnail" title="Thumbnail" >
-                                <EditEyecatch />
-                            </Tab>
-                            }
 
-                            { id &&
-                            <Tab eventKey="materials" title="Materials" >
-                                <p>abxxxxxx</p>
-                            </Tab>
-                            }
 
                             { id &&
                             <Tab eventKey="info" title="info" >
