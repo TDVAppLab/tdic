@@ -16,15 +16,26 @@ export default observer ( function NavBar() {
                     <Nav className="me-auto">
                         <Nav.Link as={NavLink} to="/articles">Contents</Nav.Link>
                         {
+                            user && 
+                                <>
+                                    <Nav.Link as={NavLink} to="/modelfiles">Modelfiles</Nav.Link>
+                                    <Nav.Link as={NavLink} to="/attachmentfiles">Attachmentfiles</Nav.Link>
+                                </>
+                        }
+                    </Nav>
+                    <Nav>
+                        <Nav.Link as={NavLink} to="/privacy">PrivacyPolicy</Nav.Link>                        
+                        {
                             user ? 
                                 <>
-                                    <Nav.Link as={NavLink} to="/attachmentfiles">Attachmentfiles</Nav.Link>
-                                    <Nav.Link as={NavLink} to="/modelfiles">Modelfiles</Nav.Link>
-                                    <Nav.Link as={NavLink} to="/websitesettings">WebsiteSettings</Nav.Link>
-                                    <Nav.Link as={NavLink} to="/errors">Errors</Nav.Link>
-                                    <Nav.Link as={NavLink} to="/logout">{user.username} </Nav.Link>
-                                    <Nav.Link onClick={logout} >Logout</Nav.Link>
-                                    <Nav.Link as={NavLink} to="/register">register</Nav.Link>
+
+                                    <NavDropdown title={user.username} id="collasible-nav-dropdown-user">
+                                        <NavDropdown.Item as={NavLink} to="/register">register</NavDropdown.Item>
+                                        <NavDropdown.Item as={NavLink} to="/websitesettings">WebsiteSettings</NavDropdown.Item>
+                                        { process.env.NODE_ENV === 'development' &&  <NavDropdown.Item as={NavLink} to="/errors">Errors</NavDropdown.Item>  }     
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item as="a" onClick={logout}>Logout</NavDropdown.Item>
+                                    </NavDropdown>
                                     
                                 </>                            
                                 :
@@ -32,7 +43,6 @@ export default observer ( function NavBar() {
                                     { process.env.NODE_ENV === 'development' &&  <Nav.Link as={NavLink} to="/login">Login</Nav.Link>  }                   
                                 </>
                         }
-                        <Nav.Link as={NavLink} to="/privacy">Privacy</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
