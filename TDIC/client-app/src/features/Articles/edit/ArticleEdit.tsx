@@ -132,9 +132,11 @@ export default observer( function ArticleEdit() {
                         width: isMotiondisplayMode ? 1280 : undefined
                         }} sm={6} >
 
-                        <div style={{aspectRatio: '16 / 7.5'}} ><ModelScreen  isEditmode={isEditmode} isAutoAnimationExec={isAutoAnimationExec}/></div>
+                        <div style={{aspectRatio: '16 / 9', position: "relative"}} >
+                            <ModelScreen  isEditmode={isEditmode} isAutoAnimationExec={isAutoAnimationExec}/>
+                            <DisplayHtmlSubtitles fontSize={'2em'}/>
+                        </div>
 
-                        <DisplayHtmlSubtitles fontSize={'2em'}/>
                         
                         <InstructionSelector />
 

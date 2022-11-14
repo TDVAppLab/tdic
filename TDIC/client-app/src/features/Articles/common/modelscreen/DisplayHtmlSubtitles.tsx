@@ -24,7 +24,7 @@ export default observer( function DisplayHtmlSubtitles({fontSize}: Props) {
   
   return (
         <>
-        <div style={{aspectRatio: '16 / 1.5', fontSize: fontSize}}
+        <div style={{ fontSize: fontSize, position: "absolute", bottom: "0px",  left:"0px", width:"100%"}}
               className={ `html-subtitle` }>                            
             <p>{selectedSubtitles[selectedSubtitleIndex]}</p>
         </div>
