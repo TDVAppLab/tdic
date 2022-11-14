@@ -8,10 +8,11 @@ import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
 import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Tab, Tabs } from 'react-bootstrap';
 import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
 import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 import { toast } from 'react-toastify';
+import PreviewInstructionDescription from './PreviewInstructionDescription';
 
 
 
@@ -143,7 +144,21 @@ export default observer( function EditInstruction(){
                         <hr />
 
                         <Row>
-                            <Col ><TextAreaGeneral label='Short Description' placeholder='shortDescription' name='short_description' rows={15}   /></Col>
+                            <Col >
+                            
+                                <Tabs defaultActiveKey={"editor"} id="article-editor-main-tab" className="mb-3">                                
+
+                                    <Tab eventKey="editor" title="Editor">
+                                    <TextAreaGeneral label='Short Description' placeholder='shortDescription' name='short_description' rows={15} />
+                                    </Tab>
+
+                                    <Tab eventKey="preview" title="Preview">
+                                        <PreviewInstructionDescription />
+                                    </Tab>
+
+                                </Tabs>
+                            
+                            </Col>
                         </Row>
                         
                         <Row>
