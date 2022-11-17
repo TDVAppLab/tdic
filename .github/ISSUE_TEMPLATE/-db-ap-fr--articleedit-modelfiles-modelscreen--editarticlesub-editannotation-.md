@@ -1,6 +1,6 @@
 ---
 name: "[DB/AP/FR][ArticleEdit/Modelfiles/modelscreen][EditArticleSub/EditAnnotation]"
-about: Describe this issue template's purpose here.
+about: "[DB/AP/FR][ArticleEdit/Modelfiles/modelscreen][EditArticleSub/EditAnnotation]"
 title: ''
 labels: ''
 assignees: ''
