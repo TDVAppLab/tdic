@@ -150,7 +150,7 @@ export default observer( function ArticleEdit() {
                     </Col>
                     }
 
-                    <Col  sm={isMotiondisplayMode ? 5 : 6} >
+                    <Col>
                         <Tabs defaultActiveKey={id ? "instruction" : "base"} id="article-editor-main-tab" className="mb-3">
                             {id && 
 
@@ -227,18 +227,10 @@ export default observer( function ArticleEdit() {
                             <Tab eventKey="info" title="info" >
                                 <Link to={`/article/${Number(article?.id_article)}`}>Details</Link> 
                                 <hr />
-                                <div>
-                                    <input type="checkbox" defaultChecked={isEditmode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsEditmode(event.target.checked)}/>
-                                    <label>Edit Mode</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" defaultChecked={isMotiondisplayMode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsMotiondisplayMode(event.target.checked)}/>
-                                    <label>Display Mode</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" defaultChecked={isAutoAnimationExec} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsAutoAnimationExec(event.target.checked)}/>
-                                    <label>Automatic Animation Exec</label>
-                                </div>
+                                <SetChecker Val={isEditmode} ValSettingFunction={setIsEditmode} LabelString="Edit Mode" />
+                                <SetChecker Val={isMotiondisplayMode} ValSettingFunction={setIsMotiondisplayMode} LabelString="Display Mode" />
+                                <SetChecker Val={isAutoAnimationExec} ValSettingFunction={setIsAutoAnimationExec} LabelString="Automatic Animation Exec" />
+                                <hr />
                                 <DebugDisplay />
                             </Tab>
                             }
@@ -251,3 +243,27 @@ export default observer( function ArticleEdit() {
 
     )
 })
+
+
+
+
+
+
+interface Props {
+    Val: boolean;
+    ValSettingFunction: React.Dispatch<React.SetStateAction<boolean>>;
+    LabelString: string;
+  }
+  
+ const SetChecker = ({Val, ValSettingFunction, LabelString}: Props) => {
+    
+        
+
+    return (
+
+        <div>
+            <input type="checkbox" defaultChecked={Val} onChange={(event: React.ChangeEvent<HTMLInputElement>) => ValSettingFunction(event.target.checked)}/>
+            <label>{LabelString}</label>
+        </div>
+    )
+}
