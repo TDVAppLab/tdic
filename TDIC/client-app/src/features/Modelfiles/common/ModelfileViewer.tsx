@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import React, { useEffect } from 'react';
 import { AnimationClip } from 'three';
 import { Html, useProgress } from '@react-three/drei';
+import { APIURL } from '../../../app/constants';
 
 
 
@@ -31,7 +32,7 @@ const UseModel  = ({id_part, setTeststring, setModelUuid}: Props) => {
 
 const LoadModel  = ({id_part, setTeststring, setModelUuid}: Props) => {
 
-  const str_url_partapi = process.env.REACT_APP_API_URL + `/modelfiles/file/${id_part}`
+  const str_url_partapi = APIURL + `/modelfiles/file/${id_part}`
   const gltf = useLoader(GLTFLoader, str_url_partapi);
 
 

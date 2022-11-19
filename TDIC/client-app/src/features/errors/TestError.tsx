@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import ValidationErrors from './ValidationErrors';
 import { Button, ButtonGroup } from 'react-bootstrap';
+import { APIURL } from '../../app/constants';
 
 export default function TestErrors() {
-    const baseUrl = process.env.REACT_APP_API_URL+'/';
+    const baseUrl = APIURL+'/';
     const [errors, setErrors] = useState(null);
 
     function handleNotFound() {

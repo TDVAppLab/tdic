@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { request } from "http";
 import { toast } from "react-toastify";
 import { history } from "../..";
+import { APIURL } from "../constants";
 import { Annotation } from "../models/Annotation";
 import { AnnotationDisplay } from "../models/AnnotationDisplay";
 import { Article } from "../models/article";
@@ -25,7 +26,7 @@ const sleep = (delay: number) => {
 }
 
 
-axios.defaults.baseURL = "/api"
+axios.defaults.baseURL = APIURL;
 
 
 
