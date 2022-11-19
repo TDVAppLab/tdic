@@ -24,7 +24,14 @@ const sleep = (delay: number) => {
     })
 }
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
+if(process.env.NODE_ENV === 'development') { 
+    axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+} else {
+    axios.defaults.baseURL = "/api"
+}
+
+
 
 axios.interceptors.request.use(config => {
     const token = store.commonStore.token;
