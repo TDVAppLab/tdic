@@ -34,6 +34,7 @@ export default observer( function ArticleEdit() {
     const [isEditmode, setIsEditmode] = useState(false); //編集モードかどうか
     const [isMotiondisplayMode, setIsMotiondisplayMode] = useState(false); //動画撮影モードかどうか
     const [isAutoAnimationExec, setIsAutoAnimationExec] = useState(true); //アニメーション自動実行モードかどうか
+    const [isSubtitleMode, setIsSubtitleMode] = useState(false); //動画撮影モードかどうか
 
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
 
@@ -134,23 +135,19 @@ export default observer( function ArticleEdit() {
 
                         <div style={{aspectRatio: '16 / 9', position: "relative"}} >
                             <ModelScreen  isEditmode={isEditmode} isAutoAnimationExec={isAutoAnimationExec}/>
-                            <DisplayHtmlSubtitles fontSize={'2em'}/>
+                            { isSubtitleMode && <DisplayHtmlSubtitles fontSize={'2em'}/> }
                         </div>
 
                         
                         <InstructionSelector />
 
-                        <SubtitleSelector />
-                        
-                        <div>
-                            <input type="checkbox" checked={sceneInfoStore.is_automatic_camera_rotate} onChange={(event: React.ChangeEvent<HTMLInputElement>) => sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked)}/>
-                            <label>Camera Auto Moving</label>
-                        </div>
+                        { isSubtitleMode && <SubtitleSelector /> }
 
+                        <SetChecker Val={sceneInfoStore.is_automatic_camera_rotate} ValSettingFunction={sceneInfoStore.setIsAutomaticCameraRotate} LabelString="Camera Auto Moving" />
                     </Col>
                     }
 
-                    <Col  sm={isMotiondisplayMode ? 5 : 6} >
+                    <Col>
                         <Tabs defaultActiveKey={id ? "instruction" : "base"} id="article-editor-main-tab" className="mb-3">
                             {id && 
 
@@ -227,18 +224,13 @@ export default observer( function ArticleEdit() {
                             <Tab eventKey="info" title="info" >
                                 <Link to={`/article/${Number(article?.id_article)}`}>Details</Link> 
                                 <hr />
-                                <div>
-                                    <input type="checkbox" defaultChecked={isEditmode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsEditmode(event.target.checked)}/>
-                                    <label>Edit Mode</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" defaultChecked={isMotiondisplayMode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsMotiondisplayMode(event.target.checked)}/>
-                                    <label>Display Mode</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" defaultChecked={isAutoAnimationExec} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsAutoAnimationExec(event.target.checked)}/>
-                                    <label>Automatic Animation Exec</label>
-                                </div>
+
+                                <SetChecker Val={isEditmode} ValSettingFunction={setIsEditmode} LabelString="Edit Mode" />
+                                <SetChecker Val={isMotiondisplayMode} ValSettingFunction={setIsMotiondisplayMode} LabelString="Display Mode" />
+                                <SetChecker Val={isAutoAnimationExec} ValSettingFunction={setIsAutoAnimationExec} LabelString="Automatic Animation Exec" />
+                                <SetChecker Val={isSubtitleMode} ValSettingFunction={setIsSubtitleMode} LabelString="Subtitle Mode" />
+                                
+                                <hr />
                                 <DebugDisplay />
                             </Tab>
                             }
@@ -251,3 +243,27 @@ export default observer( function ArticleEdit() {
 
     )
 })
+
+
+//https://awesome-linus.com/2020/01/10/react-props-function-type/
+type MyFunctionType = (state: boolean) => void;
+
+
+interface Props {
+    Val: boolean;
+    ValSettingFunction: React.Dispatch<React.SetStateAction<boolean>> | MyFunctionType;
+    LabelString: string;
+  }
+  
+ const SetChecker = ({Val, ValSettingFunction, LabelString}: Props) => {
+    
+        
+
+    return (
+
+        <div>
+            <input type="checkbox" defaultChecked={Val} onChange={(event: React.ChangeEvent<HTMLInputElement>) => ValSettingFunction(event.target.checked)}/>
+            <label>{LabelString}</label>
+        </div>
+    )
+}
