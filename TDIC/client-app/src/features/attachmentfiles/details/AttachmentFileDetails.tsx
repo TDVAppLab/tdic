@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import { APIURL } from "../../../app/constants";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
 import { useStore } from "../../../app/stores/store";
 //import PartViewer from "./PartViewer";
@@ -53,7 +54,7 @@ export default observer( function AttachmentFileDetails() {
                     </dt>
                     <dd className="col-sm-12">
                         {
-                         id && <img src={process.env.REACT_APP_API_URL + `/attachmentfiles/file/${id}`} alt="" loading="lazy"></img>
+                         id && <img src={APIURL + `/attachmentfiles/file/${id}`} alt="" loading="lazy"></img>
                         }
                     </dd>
 

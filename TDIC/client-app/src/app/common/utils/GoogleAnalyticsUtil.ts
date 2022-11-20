@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useStore } from '../../stores/store';
 
 // idで検索できるように埋め込むscript用の名前を定義
 const SCRIPT1_NAME = 'gtag';
@@ -43,16 +44,22 @@ declare global {
   }
 }
 
+
+
 /** トラッキング用関数 */
-export const useTracking = (googleAnalyticsId: string): void => {
+export const useTracking = (): void => {
+  
+  const {siteAnalyticsStore} = useStore();
   const { listen } = useHistory();
   useEffect(() => {
     const unlisten = listen((location) => {
       if (!window.gtag) return;
-      if (googleAnalyticsId === '') return;
-      window.gtag('config', googleAnalyticsId, { page_path: location.pathname });
+      if (siteAnalyticsStore.GoogleAnalyticsId === '') return;
+      if(siteAnalyticsStore.GoogleAnalyticsId) {
+        window.gtag('config', siteAnalyticsStore.GoogleAnalyticsId, { page_path: location.pathname });
+      }
     });
 
     return unlisten;
-  }, [googleAnalyticsId, listen]);
+  }, [siteAnalyticsStore.GoogleAnalyticsId, listen]);
 };

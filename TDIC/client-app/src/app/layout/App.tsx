@@ -29,16 +29,21 @@ import WebsiteSettingDashboard from '../../features/WebsiteSetting/dashboard/Web
 import WebsiteSettingForm from '../../features/WebsiteSetting/form/WebsiteSettingForm';
 
 function App() {
-  
-  useEffect(() => {
-    // loading GoogleAnalytics gtag.js
-    initializeGA(process.env.REACT_APP_GOOGLE_ANALYTICS_ID!);
-    GoogleAdHead(process.env.REACT_APP_GOOGLE_ADSENSE_PUBLISHER_ID!)
-  }, []);
 
   
+  const {siteAnalyticsStore} = useStore();
+  
+  useEffect(() => {
+    GoogleAdHead(siteAnalyticsStore.GoogleAdsensePublisherId!)
+  }, [siteAnalyticsStore.GoogleAdsensePublisherId]);
+
+  useEffect(() => {
+    // loading GoogleAnalytics gtag.js
+    initializeGA(siteAnalyticsStore.GoogleAnalyticsId!);
+  }, [siteAnalyticsStore.GoogleAnalyticsId]);
+  
   // GoogleAnalytics Tracking
-  useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID!);
+  useTracking();
 
 
 

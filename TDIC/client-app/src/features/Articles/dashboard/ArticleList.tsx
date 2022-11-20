@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { APIURL } from "../../../app/constants";
 import { useStore } from "../../../app/stores/store";
 
 export default observer( function ArticleList() {
@@ -18,7 +19,7 @@ export default observer( function ArticleList() {
                         <div>
                             <Link to={`/article/${x.id_article}`}>
                                 {
-                                    <img className="img-thumbnail mb-3" src={process.env.REACT_APP_API_URL + `/attachmentfiles/file/${x.id_attachment_for_eye_catch}`} alt="" width="480" height="270" loading="lazy"></img>
+                                    <img className="img-thumbnail mb-3" src={APIURL + `/attachmentfiles/file/${x.id_attachment_for_eye_catch}`} alt="" width="480" height="270" loading="lazy"></img>
                                 }
                                 <h3 className="h5 mb-1">{x.title}</h3>
                             </Link>

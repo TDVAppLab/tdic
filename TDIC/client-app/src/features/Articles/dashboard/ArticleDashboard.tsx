@@ -8,6 +8,9 @@ import { useStore } from '../../../app/stores/store';
 import ArticleList from './ArticleList';
 
 export default observer(function ArticleDashboard() {      
+
+    
+    const {siteAnalyticsStore} = useStore();
     
     const {articleStore} = useStore();
     const {loadArticles, articleRegistry} = articleStore;
@@ -36,7 +39,7 @@ export default observer(function ArticleDashboard() {
             
             <ArticleList />
             {
-            <GoogleAd pid={process.env.REACT_APP_GOOGLE_ADSENSE_PUBLISHER_ID!} uid={process.env.REACT_APP_GOOGLE_ADSENSE_UNIT_ID!} />
+            <GoogleAd pid={siteAnalyticsStore.GoogleAdsensePublisherId!} uid={siteAnalyticsStore.GoogleAdsenseUnitId!} />
             }
         </Container>
 

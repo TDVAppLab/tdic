@@ -10,6 +10,7 @@ import TextInputGeneral from "../../../app/common/form/TextInputGeneral";
 import { Col, Row } from "react-bootstrap";
 import { Attachmentfile } from "../../../app/models/attachmentfile";
 import CheckBoxGeneral from "../../../app/common/form/CheckBoxGeneral";
+import { APIURL } from "../../../app/constants";
 
 export default observer( function AttachmentfileEdit(){
     const history = useHistory();
@@ -110,7 +111,7 @@ export default observer( function AttachmentfileEdit(){
 
             <div>
             {
-                id && <img src={process.env.REACT_APP_API_URL + `/attachmentfiles/file/${id}`} alt="" loading="lazy"></img>
+                id && <img src={APIURL + `/attachmentfiles/file/${id}`} alt="" loading="lazy"></img>
             }
             </div>
 
