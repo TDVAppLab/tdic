@@ -20,6 +20,7 @@ export default observer( function ArticleDetails() {
     
     const {id} = useParams<{id:string}>();
 
+    const {siteAnalyticsStore} = useStore();
     
     const {userStore: {user}} = useStore();
 
@@ -114,7 +115,7 @@ export default observer( function ArticleDetails() {
                             <input type="checkbox" checked={sceneInfoStore.is_automatic_camera_rotate} onChange={(event: React.ChangeEvent<HTMLInputElement>) => sceneInfoStore.setIsAutomaticCameraRotate(event.target.checked)}/>
                             <label>Camera Auto Moving</label>
                         </div>
-                        <GoogleAd pid={process.env.REACT_APP_GOOGLE_ADSENSE_PUBLISHER_ID!} uid={process.env.REACT_APP_GOOGLE_ADSENSE_UNIT_ID!} />
+                        <GoogleAd pid={siteAnalyticsStore.GoogleAdsensePublisherId!} uid={siteAnalyticsStore.GoogleAdsenseUnitId!} />
                     </Col>
                     <Col   sm={4}>
                         <Tabs defaultActiveKey="instruction" id="uncontrolled-tab-example" className="mb-3">

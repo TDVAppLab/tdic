@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../app/stores/store';
+import { APIURL } from '../../../../app/constants';
 
 
 
@@ -20,7 +21,7 @@ export default observer( function LoadModelSub({id_inst, id_part, pos, scale}: P
     const {instanceobjectStore} = useStore();
     const {annimationsRegistry, setAnimationClips, setModelLoading} = instanceobjectStore;
   
-    const str_url_partapi = process.env.REACT_APP_API_URL + `/modelfiles/file/${id_part}`;
+    const str_url_partapi = APIURL + `/modelfiles/file/${id_part}`;
     const gltf = useLoader(GLTFLoader, str_url_partapi);
     gltf.scene.position.set(pos.x,pos.y,pos.z);
     gltf.scene.scale.set(scale,scale,scale)
