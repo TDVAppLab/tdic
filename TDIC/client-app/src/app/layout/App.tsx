@@ -18,7 +18,6 @@ import ModelfileDashboard from '../../features/Modelfiles/dashboard/ModelfileDas
 import RegisterForm from '../../features/users/RegisterForm';
 import ArticleEdit from '../../features/Articles/edit/ArticleEdit';
 import Privacy from '../../features/Privacy/Privacy';
-import { initializeGA, useTracking } from '../common/utils/GoogleAnalyticsUtil';
 import { GoogleAdHead } from '../common/utils/GoogleAdHead';
 import AttachmentFileDetails from '../../features/attachmentfiles/details/AttachmentFileDetails';
 import ModelfileCreate from '../../features/Modelfiles/create/ModelfileCreate';
@@ -27,6 +26,7 @@ import AttachmentfileUpload from '../../features/attachmentfiles/upload/Attachme
 import AttachmentfileEdit from '../../features/attachmentfiles/edit/AttachmentfileEdit';
 import WebsiteSettingDashboard from '../../features/WebsiteSetting/dashboard/WebsiteSettingDashboard';
 import WebsiteSettingForm from '../../features/WebsiteSetting/form/WebsiteSettingForm';
+import useTrackingGA4 from '../common/utils/useTrackingGA4';
 
 function App() {
 
@@ -37,13 +37,7 @@ function App() {
     GoogleAdHead(siteAnalyticsStore.GoogleAdsensePublisherId!)
   }, [siteAnalyticsStore.GoogleAdsensePublisherId]);
 
-  useEffect(() => {
-    // loading GoogleAnalytics gtag.js
-    initializeGA(siteAnalyticsStore.GoogleAnalyticsId!);
-  }, [siteAnalyticsStore.GoogleAnalyticsId]);
-  
-  // GoogleAnalytics Tracking
-  useTracking();
+  useTrackingGA4();
 
 
 

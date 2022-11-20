@@ -23,7 +23,7 @@ export default class SiteAnalyticsStore {
     loadGoogleAnalyticsId = async () => {
         
         try {
-            const object = await agent.WebsiteSettings.details("GOOGLE_ANALYTICS_ID");
+            const object = await agent.WebsiteSettings.details("GOOGLE_ANALYTICS_ID_GA4");
             runInAction(()=>{
                 this.GoogleAnalyticsId=object.data;
             })
