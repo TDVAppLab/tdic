@@ -20,7 +20,6 @@ namespace API.Controllers
     [Authorize]
     public class AttachmentFilesController : BaseApiController
     {        
-        [AllowAnonymous]
         [HttpGet("Index")]
         public async Task<ActionResult> GetAttachmentFiles()
         {
