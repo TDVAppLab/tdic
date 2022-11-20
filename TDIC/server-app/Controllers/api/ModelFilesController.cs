@@ -25,7 +25,6 @@ namespace API.Controllers
     [Authorize]
     public class ModelFilesController : BaseApiController
     {        
-        [AllowAnonymous]
         [HttpGet("Index/is_exclude_used={is_exclude_used}")]
         public async Task<ActionResult> GetModelFiles(bool is_exclude_used)
         {
