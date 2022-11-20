@@ -11,6 +11,7 @@ import MArticleStatusStore from "./MArticleStatusStore";
 import ModalStore from "./modalStore";
 import ModelfileStore from "./ModelfileStore";
 import SceneInfoStore from "./SceneInfoStore";
+import SiteAnalyticsStore from "./SiteAnalyticsStore";
 import UserStore from "./userStore";
 import ViewStore from "./viewStore";
 
@@ -29,6 +30,7 @@ interface Store{
     modalStore: ModalStore;
     mArticleStatusStore:MArticleStatusStore;
     sceneInfoStore:SceneInfoStore;
+    siteAnalyticsStore:SiteAnalyticsStore;
 }
 
 export const store: Store={
@@ -46,6 +48,7 @@ export const store: Store={
     instanceobjectStore: new InstanceobjectStore(),
     mArticleStatusStore: new MArticleStatusStore(),
     sceneInfoStore: new SceneInfoStore(),
+    siteAnalyticsStore: new SiteAnalyticsStore(),
     
 }
 
