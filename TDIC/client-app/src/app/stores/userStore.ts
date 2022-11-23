@@ -40,6 +40,12 @@ export default class UserStore {
             const user = await agent.Account.current();
             runInAction(() => this.user = user);            
         } catch (error) {
+            
+            //If the answer from the server is an error, delete the token and user information
+            store.commonStore.setToken(null);
+            window.localStorage.removeItem('jwt');
+            this.user = null;
+
             console.log(error);
         }
     }
