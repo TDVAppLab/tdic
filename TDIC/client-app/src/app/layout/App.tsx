@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import NavBar from './NavBar';
 import { observer } from 'mobx-react-lite';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import TestErrors from '../../features/errors/TestError';
 import { ToastContainer } from 'react-toastify';
 import NotFound from '../../features/errors/NotFound';
@@ -59,47 +59,39 @@ function App() {
     <>
       <ToastContainer position ='bottom-right' hideProgressBar />
       <ModalContainer />
-      <Route
-        //path={'/(.+)'}        
-        render={() => (
-          <>          
-            <NavBar />
-            <div className="container-fluid">
-              <Switch>
-                <Route exact path = '/' component={ArticleDashboard} />       
-                <Route path = '/articles' component={ArticleDashboard} />
-                <Route path = '/article/:id' component={ArticleDetails} />
-                <Route path = '/articleedit/:id' component={ArticleEdit} />
-                <Route key = {location.key} path = {['/createarticle', '/articleedit/:id']} component={ArticleEdit} />
+      <NavBar />
+      <div className="container-fluid">
+            <Routes>
+                <Route path = '/' element={<ArticleDashboard />} />       
+                <Route path = '/articles' element={<ArticleDashboard />} />
+                <Route path = '/article/:id' element={<ArticleDetails />} />
+                <Route path = '/articleedit/:id' element={<ArticleEdit />} />
+                <Route path = '/createarticle' element={<ArticleEdit />} />
 
-                <Route path = '/attachmentfiles' component={AttachmentFileDashboard} />
-                <Route path = '/attachmentfile/:id' component={AttachmentFileDetails} />
-                <Route path = '/attachmentfileedit/:id' component={AttachmentfileEdit} />
-                <Route path = '/attachmentfileupload' component={AttachmentfileUpload} />
+                <Route path = '/attachmentfiles' element={<AttachmentFileDashboard />} />
+                <Route path = '/attachmentfile/:id' element={<AttachmentFileDetails />} />
+                <Route path = '/attachmentfileedit/:id' element={<AttachmentfileEdit />} />
+                <Route path = '/attachmentfileupload' element={<AttachmentfileUpload />} />
 
-                <Route path = '/modelfiles' component={ModelfileDashboard} />
-                <Route path = '/modelfilecreate' component={ModelfileCreate} />
-                <Route path = '/modelfileedit/:id' component={ModelfileEdit} />
+                <Route path = '/modelfiles' element={<ModelfileDashboard />} />
+                <Route key = {location.key} path = '/modelfilecreate' element={<ModelfileCreate />} />
+                <Route key = {location.key} path = '/modelfileedit/:id' element={<ModelfileEdit />} />
 
 
 
-                <Route path = '/websitesettings' component={WebsiteSettingDashboard} />
-                <Route key = {location.key} path = {['/websitesettingcreate', '/websitesettingedit/:id']} component={WebsiteSettingForm} />
+                <Route path = '/websitesettings' element={<WebsiteSettingDashboard />} />
+                <Route key = {location.key} path = '/websitesettingcreate' element={<WebsiteSettingForm />} />
+                <Route key = {location.key} path = '/websitesettingcreate/:id' element={<WebsiteSettingForm />} />
                 
 
-                <Route path='/errors' component={TestErrors} />
-                <Route path='/server-error' component={ServerError} />
-                <Route path='/login' component={LoginForm} />
-                <Route path='/register' component={RegisterForm} />
-                <Route path='/privacy' component={Privacy} />
-                <Route component={NotFound} />
-
-                
-              </Switch>
-            </div>    
-          </>
-        )}
-      />
+                <Route path='/errors' element={<TestErrors />} />
+                <Route path='/server-error' element={<ServerError />} />
+                <Route path='/login' element={<LoginForm />} />
+                <Route path='/register' element={<RegisterForm />} />
+                <Route path='/privacy' element={<Privacy />} />
+                <Route element={<NotFound />} />
+            </Routes>
+      </div>    
     </>
   );
 }

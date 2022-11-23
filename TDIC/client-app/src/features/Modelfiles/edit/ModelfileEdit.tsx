@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
 import { useStore } from "../../../app/stores/store";
 import { Formik , Form } from "formik";
@@ -19,7 +19,7 @@ import agent from "../../../app/api/agent";
 import { PartAnimationClip } from "../../../app/models/PartAnimationClip";
 
 export default observer( function ModelfileEdit(){
-    const history = useHistory();
+    const navigate = useNavigate();
     const { modelfileStore} = useStore();
     const { selectedModelfile, loadModelfile, updateModelfile, deleteModelfile, loading } = modelfileStore;
 
@@ -191,7 +191,7 @@ export default observer( function ModelfileEdit(){
                                 enableReinitialize 
                                 initialValues={modelfile} 
                                 onSubmit={values => {
-                                    deleteModelfile(values).then(()=>{ history.push(`/modelfiles`) }) 
+                                    deleteModelfile(values).then(()=>{ navigate(`/modelfiles`) }) 
                                 }}>
                                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>

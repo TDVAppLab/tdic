@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { request } from "http";
 import { toast } from "react-toastify";
-import { history } from "../..";
+//import { history } from "../..";
 import { APIURL } from "../constants";
 import { Annotation } from "../models/Annotation";
 import { AnnotationDisplay } from "../models/AnnotationDisplay";
@@ -44,7 +44,7 @@ axios.interceptors.response.use(async response => {
     switch (status) {
         case 400:
             if(config.method === 'get' && data.errors.hasOwnProperty('id')){
-                history.push('/not-found');
+                toast.error('/not-found');
             }            
             if(data.errors){
                 const modalStateErrors = [];
@@ -62,11 +62,11 @@ axios.interceptors.response.use(async response => {
             toast.error('unauthorized');
             break;
         case 404:
-            history.push('/not-found');
+            toast.error('/not-found');
             break;
         case 500:
             store.commonStore.setServerError(data);
-            history.push('server-error');
+            toast.error('server-error');
             break;
     }
     return Promise.reject(error);

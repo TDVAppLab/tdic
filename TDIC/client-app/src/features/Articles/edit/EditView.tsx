@@ -1,7 +1,6 @@
 
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
-import { useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
@@ -41,7 +40,6 @@ const getDefaultValueOfView = (id_article : number) => {
 
 
 export default observer( function EditView(){
-    const history = useHistory();
     
     const { articleStore } = useStore();
     const { viewStore : {selectedView, updateView, createView, deleteView} } = useStore();

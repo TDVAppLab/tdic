@@ -5,10 +5,10 @@ import * as Yup from 'yup';
 import { ModelfileUploadDtO } from '../../../app/models/ModelFile';
 import { Col, Row } from 'react-bootstrap';
 import FileInputGeneral from '../../../app/common/form/FileInputGeneral';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function ModelfileCreate() {  
-    const history = useHistory();
+    const navigate = useNavigate();
     
     const [modelfile, setModelfile] = useState<ModelfileUploadDtO>({
         id_part: 0,
@@ -65,7 +65,7 @@ function ModelfileCreate() {
             
             const ans = await (await agent.Modelfiles.fileupload(formData)).data;
             
-            ans && history.push(`/modelfileedit/${Number(ans.id_part)}`);
+            ans && navigate(`/modelfileedit/${Number(ans.id_part)}`);
 
         }
 

@@ -1,7 +1,7 @@
 
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik, useField, useFormikContext } from 'formik';
@@ -35,7 +35,6 @@ const getDefaultValueOfAnnotation = (id_article : number) => {
 
 
 export default observer( function EditAnnotation(){
-    const history = useHistory();
     
     const {articleStore} = useStore();
     const {annotationStore} = useStore();

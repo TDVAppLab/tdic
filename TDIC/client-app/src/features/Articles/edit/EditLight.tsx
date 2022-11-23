@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
@@ -42,7 +42,6 @@ const getDefaultValueOfLight = (id_article : number) => {
 }
 
 export default observer( function EditLight(){
-    const history = useHistory();
     
     const {articleStore} = useStore();
     const {lightStore} = useStore();
