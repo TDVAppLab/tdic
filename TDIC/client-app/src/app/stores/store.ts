@@ -3,7 +3,7 @@ import AnnotationDisplayStore from "./AnnotationDisplayStore";
 import AnnotationStore from "./AnnotationStore";
 import ArticleStore from "./articleStore";
 import AttachmentfileStore from "./attachmentfileStore";
-import CommonStore from "./eommonStore";
+import CommonStore from "./commonStore";
 import InstanceobjectStore from "./InstanceobjectStore";
 import InstructionStore from "./instructionStore";
 import LightStore from "./LightStore";
