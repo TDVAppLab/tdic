@@ -27,6 +27,7 @@ import AttachmentfileEdit from '../../features/attachmentfiles/edit/Attachmentfi
 import WebsiteSettingDashboard from '../../features/WebsiteSetting/dashboard/WebsiteSettingDashboard';
 import WebsiteSettingForm from '../../features/WebsiteSetting/form/WebsiteSettingForm';
 import useTrackingGA4 from '../common/utils/useTrackingGA4';
+import { RouteAuthChk } from '../common/RouteAuthChk';
 
 function App() {
 
@@ -64,24 +65,28 @@ function App() {
             <Routes>
                 <Route path = '/' element={<ArticleDashboard />} />       
                 <Route path = '/articles' element={<ArticleDashboard />} />
-                <Route path = '/article/:id' element={<ArticleDetails />} />
-                <Route path = '/articleedit/:id' element={<ArticleEdit />} />
-                <Route path = '/createarticle' element={<ArticleEdit />} />
+                <Route path = '/article/:id' element={<ArticleDetails />} />                
+                <Route path = '/articleedit/:id' element={ <RouteAuthChk component={<ArticleEdit />} redirect="/login" /> } />
+                <Route path = '/createarticle' element={ <RouteAuthChk component={<ArticleEdit />} redirect="/login" /> } />
 
-                <Route path = '/attachmentfiles' element={<AttachmentFileDashboard />} />
-                <Route path = '/attachmentfile/:id' element={<AttachmentFileDetails />} />
-                <Route path = '/attachmentfileedit/:id' element={<AttachmentfileEdit />} />
-                <Route path = '/attachmentfileupload' element={<AttachmentfileUpload />} />
-
-                <Route path = '/modelfiles' element={<ModelfileDashboard />} />
-                <Route key = {location.key} path = '/modelfilecreate' element={<ModelfileCreate />} />
-                <Route key = {location.key} path = '/modelfileedit/:id' element={<ModelfileEdit />} />
+                
+                <Route path = '/attachmentfiles' element={ <RouteAuthChk component={<AttachmentFileDashboard />} redirect="/login" /> } />
+                <Route path = '/attachmentfile/:id' element={ <RouteAuthChk component={<AttachmentFileDetails />} redirect="/login" /> } />
+                <Route path = '/attachmentfileedit/:id' element={ <RouteAuthChk component={<AttachmentfileEdit />} redirect="/login" /> } />
+                <Route path = '/attachmentfileupload' element={ <RouteAuthChk component={<AttachmentfileUpload />} redirect="/login" /> } />
 
 
 
-                <Route path = '/websitesettings' element={<WebsiteSettingDashboard />} />
-                <Route key = {location.key} path = '/websitesettingcreate' element={<WebsiteSettingForm />} />
-                <Route key = {location.key} path = '/websitesettingcreate/:id' element={<WebsiteSettingForm />} />
+                <Route path = '/modelfiles' element={ <RouteAuthChk component={<ModelfileDashboard />} redirect="/login" /> } />
+                <Route path = '/modelfilecreate' element={ <RouteAuthChk component={<ModelfileCreate />} redirect="/login" /> } />
+                <Route key = {location.key} path = '/modelfileedit/:id' element={ <RouteAuthChk component={<ModelfileEdit />} redirect="/login" /> } />
+
+
+
+                <Route path = '/websitesettings' element={ <RouteAuthChk component={<WebsiteSettingDashboard />} redirect="/login" /> } />
+                <Route key = {location.key} path = '/websitesettingedit/:id' element={ <RouteAuthChk component={<WebsiteSettingForm />} redirect="/login" /> } />
+                <Route key = {location.key} path = '/websitesettingcreate' element={ <RouteAuthChk component={<WebsiteSettingForm />} redirect="/login" /> } />
+                
                 
 
                 <Route path='/errors' element={<TestErrors />} />
