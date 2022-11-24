@@ -1,6 +1,6 @@
 import { color } from 'csx';
 import { useControls } from 'leva';
-import React, { useEffect, useRef, VFC } from 'react';
+import React, { useEffect, useRef, FC } from 'react';
 import * as THREE from 'three';
 import { useHelper } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
@@ -14,7 +14,7 @@ type LightsProps = {
 }
 
 
-export const Lights: VFC<LightsProps> = ({ position, size }) => {
+export const Lights: FC<LightsProps> = ({ position, size }) => {
 	return (
 		<>
 			{
@@ -35,7 +35,7 @@ type PointLightProps = {
     size:number;
 }
 
-const PointLight: VFC<PointLightProps> = ({ position, size }) => {
+const PointLight: FC<PointLightProps> = ({ position, size }) => {
 	// add controller
 	//const datas = useController()
 
@@ -47,8 +47,8 @@ const PointLight: VFC<PointLightProps> = ({ position, size }) => {
 
     
 	// add helper
-	const lightRef = useRef<THREE.Light>()
-	useHelper(lightRef, THREE.PointLightHelper, [datas.helper ? 1 : 0])
+	const lightRef : any = useRef<THREE.Light>()
+	useHelper(lightRef as React.MutableRefObject<THREE.Light>, THREE.PointLightHelper, datas.helper ? 1 : 0)
 
 	const meshRef = useRef<THREE.Mesh>()
 	const { scene } = useThree()
@@ -65,7 +65,7 @@ const PointLight: VFC<PointLightProps> = ({ position, size }) => {
 
     //SphereGeometry( 15, 32, 16 );
 	return (
-		<mesh ref={meshRef} position={position}>
+		meshRef && <mesh ref={meshRef as React.MutableRefObject<THREE.Mesh<THREE.BufferGeometry, THREE.Material | THREE.Material[]>>} position={position}>
             {
                 //<circleGeometry args={[datas.size, 64]} />
             }
@@ -85,15 +85,16 @@ const PointLight: VFC<PointLightProps> = ({ position, size }) => {
 	)
 }
 
-const PointLightEditor: VFC<PointLightProps> = ({ position }) => {
+const PointLightEditor: FC<PointLightProps> = ({ position }) => {
 	// add controller
 	const datas = useController()
 
 	// add helper
-	const lightRef = useRef<THREE.Light>()
-	useHelper(lightRef, THREE.PointLightHelper, [datas.helper ? 1 : 0])
+	const lightRef : any = useRef<THREE.Light>()
 
-	const meshRef = useRef<THREE.Mesh>()
+	useHelper(lightRef, THREE.PointLightHelper, datas.helper ? 1 : 0)
+
+	const meshRef : any = useRef<THREE.Mesh>()
 	const { scene } = useThree()
 
 	useEffect(() => {

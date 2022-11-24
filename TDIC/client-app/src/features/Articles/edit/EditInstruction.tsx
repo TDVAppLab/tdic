@@ -2,7 +2,7 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
 import { Instruction } from "../../../app/models/instruction";
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
@@ -33,7 +33,6 @@ const getDefaultValueOfInstruction = (id_article : number) => {
 }
 
 export default observer( function EditInstruction(){
-    const history = useHistory();
     
     const {articleStore} = useStore();
     const {instructionStore} = useStore();
