@@ -26,13 +26,13 @@ function ModelfileCreate() {
         create_datetime: null,
         latest_update_datetime: null,
     });
-
+/*
     const SUPPORTED_FORMATS = [
         "image/jpg",
         "image/jpeg",
         "image/gif",
         "image/png"
-      ];
+      ];*/
 
     const validationSchema = Yup.object({
         file_data: Yup.mixed().required('A file is required')

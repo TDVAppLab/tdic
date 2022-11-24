@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Fragment } from "react";
-import { Card, Col, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useStore } from "../../../app/stores/store";
 

@@ -2,7 +2,7 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import TextInputGeneral from '../../../app/common/form/TextInputGeneral';

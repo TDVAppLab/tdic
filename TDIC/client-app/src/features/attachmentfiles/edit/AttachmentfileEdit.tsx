@@ -19,7 +19,7 @@ export default observer( function AttachmentfileEdit(){
     
     
     const {attachmentfileStore} = useStore();
-    const {loadAttachmentfile, selectedAttachmentfile, updateAttachmentfile, deleteAttachmentfile, loading} = attachmentfileStore;
+    const {loadAttachmentfile, updateAttachmentfile, deleteAttachmentfile, loading} = attachmentfileStore;
 
     const {id} = useParams<{id: string}>();
 
@@ -79,26 +79,18 @@ export default observer( function AttachmentfileEdit(){
     
     function handleFormSubmit(attachmentfile:Attachmentfile) {
         if(attachmentfile.id_file ===0 ){
-            let newModelfile = {
-                ...attachmentfile
-            };
-            //console.log(newTask);
-//            createTask(newTask);
-//            createTask(newActivity).then(() => history.push(`/task/${newTask.Id}`))
         } else {
             updateAttachmentfile(attachmentfile);
-            //updateActivity(task).then(() => history.push(`/activities/${task.Id}`))
         }
     }
 
     
     function handleFormSubmitDelete(attachmentfile:Attachmentfile) {
-        console.log("called modelfile delete");
+        
         if(attachmentfile.id_file ===0 ){
         } else {
-            console.log("called attach delete");
+            
             deleteAttachmentfile(attachmentfile);
-            //deleteTask(task.id);
         }
     }
 
