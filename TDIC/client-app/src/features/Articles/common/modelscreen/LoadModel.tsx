@@ -1,6 +1,4 @@
-import { useLoader } from '@react-three/fiber';
 import { Vector3 } from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import React from 'react';
 import LoadModelSub from './LoadModelSub';
 
