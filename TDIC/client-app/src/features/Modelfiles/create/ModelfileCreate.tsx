@@ -44,7 +44,7 @@ function ModelfileCreate() {
         .test(
           "name",
           "File not Selected",
-          value => value.name != ""
+          value => value.name !== ""
         )
 /*        .test(
           "fileFormat",

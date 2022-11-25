@@ -2,7 +2,6 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
 import { Instruction } from "../../../app/models/instruction";
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
@@ -13,6 +12,7 @@ import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
 import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 import { toast } from 'react-toastify';
 import PreviewInstructionDescription from './PreviewInstructionDescription';
+
 
 
 
@@ -100,7 +100,7 @@ export default observer( function EditInstruction(){
     
     async function handleFormSubmit(instruction:Instruction) {
         
-        if(instruction.id_instruct ==0 ){
+        if(instruction.id_instruct === 0 ){
             let newInstruction = {
                 ...instruction
             };
@@ -187,7 +187,7 @@ export default observer( function EditInstruction(){
                             toast.info('instruction deleted')})}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                        <button disabled={!isValid || isSubmitting || instruction.id_instruct == 0} type = 'submit' className='btn btn-danger'>
+                        <button disabled={!isValid || isSubmitting || instruction.id_instruct === 0} type = 'submit' className='btn btn-danger'>
                             {isSubmitting ? "Processing" : "Delete"}
                         </button>
                     </Form>
@@ -199,7 +199,7 @@ export default observer( function EditInstruction(){
                 type = 'submit'
                 className={"btn btn-secondary"}
                 onClick={()=>{EntryNewInstruction()}}
-                disabled = {instruction.id_instruct == 0 ? true : false}
+                disabled = {instruction.id_instruct === 0 ? true : false}
             >
                 {isDataCopyFromSelectedInstruction ? "Copy From Selected Instruction" : "Entry New Instruction"}
             </button>

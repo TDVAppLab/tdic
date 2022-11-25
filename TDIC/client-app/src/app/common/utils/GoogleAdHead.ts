@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+
 
 // idで検索できるように埋め込むscript用の名前を定義
 const SCRIPT1_NAME = 'tagheadsenseheader';

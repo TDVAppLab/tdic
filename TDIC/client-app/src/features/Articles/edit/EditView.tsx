@@ -75,7 +75,7 @@ export default observer( function EditView(){
         if(selectedView){
             setView(selectedView);
 
-            Array.from(instructionRegistry.values()).find(instruction => instruction.id_view == selectedView.id_view) ? setIsRefbyInstruction(true) : setIsRefbyInstruction(false);
+            Array.from(instructionRegistry.values()).find(instruction => instruction.id_view === selectedView.id_view) ? setIsRefbyInstruction(true) : setIsRefbyInstruction(false);
         } else {
             setView(getDefaultValueOfView(articleStore?.selectedArticle?.id_article!));
             setIsRefbyInstruction(false);
@@ -87,7 +87,7 @@ export default observer( function EditView(){
 
     
     function handleFormSubmit(view:View) {
-        if(view.id_view ==0 ){
+        if(view.id_view === 0 ){
             let newView = {
                 ...view
             };
@@ -228,7 +228,7 @@ export default observer( function EditView(){
                 onSubmit={values => handleFormViewDel(values) }>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                        <button disabled={!isValid || isSubmitting || isRefbyInstruction || view.id_view == 0} type = 'submit' className='btn btn-danger'>
+                        <button disabled={!isValid || isSubmitting || isRefbyInstruction || view.id_view === 0} type = 'submit' className='btn btn-danger'>
                             {isSubmitting ? "Processing" : "Delete"}
                         </button>
                     </Form>
@@ -239,7 +239,7 @@ export default observer( function EditView(){
                 type = 'submit'
                 className={"btn btn-secondary"}
                 onClick={()=>{EntryNewView()}}
-                disabled = {view.id_view == 0 ? true : false}
+                disabled = {view.id_view === 0 ? true : false}
             >
                 {isDataCopyFromSelectedView ? "Copy From Selected View" : "Entry New View"}
             </button>

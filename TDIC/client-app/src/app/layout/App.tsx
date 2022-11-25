@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Container } from 'react-bootstrap';
 import NavBar from './NavBar';
 import { observer } from 'mobx-react-lite';
 import { Route, Routes, useLocation } from 'react-router-dom';

@@ -99,7 +99,7 @@ export default observer( function EdiaAnnotationDisplay() {
                                         <td>
                                             <button key={x.id_annotation}
                                                     type = 'button'
-                                                    className={ x.id_annotation == selectedAnnotation?.id_annotation ? "btn btn-secondary" :  "btn btn-outline-secondary"}
+                                                    className={ x.id_annotation === selectedAnnotation?.id_annotation ? "btn btn-secondary" :  "btn btn-outline-secondary"}
                                                     onClick={()=>{setSelectedAnnotation(x.id_annotation)}} 
                                                 >
                                                 Edit

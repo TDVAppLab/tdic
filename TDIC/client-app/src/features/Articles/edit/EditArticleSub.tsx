@@ -1,7 +1,7 @@
 
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
@@ -94,7 +94,7 @@ export default observer( function EditArticleSub(){
     
 
     async function handleFormArticleUpd(object:Article) {
-        if(object.id_article ==0 ){
+        if(object.id_article === 0 ){
             let newObject = {
                 ...object
             }
@@ -168,7 +168,7 @@ export default observer( function EditArticleSub(){
 
             </Formik>
 
-            { article.id_article != 0 &&
+            { article.id_article !== 0 &&
             <Formik
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
@@ -185,7 +185,7 @@ export default observer( function EditArticleSub(){
             }
 
 
-            { article.id_article != 0 &&
+            { article.id_article !== 0 &&
             <Formik
                 validationSchema={validationSchemaDel}
                 enableReinitialize 

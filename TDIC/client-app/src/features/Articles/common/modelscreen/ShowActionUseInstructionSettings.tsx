@@ -34,7 +34,7 @@ export default observer( function ShowActionUseInstructionSettings({isActiondisp
         mixers.current.clear();
 
         instanceobjectRegistry.size>0 && Array.from(instanceobjectRegistry.values()).map(x=>{
-            const temp_instance = scene.children.find(child => child.name == `[${x.id_instance}]InstanceModel`);
+            const temp_instance = scene.children.find(child => child.name === `[${x.id_instance}]InstanceModel`);
             if(temp_instance){
                 //mixers_temp.set(x.id_instance,new AnimationMixer(temp_instance));
                 mixers.current.set(x.id_instance,new AnimationMixer(temp_instance));
