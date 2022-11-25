@@ -1,4 +1,4 @@
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import React, { useEffect, useRef } from 'react';
 import { AnimationMixer } from 'three/src/animation/AnimationMixer';
 import { Clock } from 'three';

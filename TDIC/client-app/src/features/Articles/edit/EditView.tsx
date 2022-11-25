@@ -108,7 +108,7 @@ export default observer( function EditView(){
     function EntryNewView() {
         if(isDataCopyFromSelectedView && selectedView) {
             
-            const view_temp = selectedView;
+            //const view_temp = selectedView;
 
             setView({
                 id_article: articleStore?.selectedArticle?.id_article!,
