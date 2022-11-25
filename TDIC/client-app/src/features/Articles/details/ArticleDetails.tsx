@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useRef, useState } from "react";
-import { Col, Container, Row, Tab, Tabs } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Col, Row, Tab, Tabs } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
 import { useStore } from "../../../app/stores/store";
