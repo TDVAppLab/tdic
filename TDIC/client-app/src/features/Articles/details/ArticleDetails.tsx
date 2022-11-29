@@ -11,6 +11,7 @@ import GoogleAd from "../../../app/common/utils/GoogleAd";
 import ModelScreen from "../common/modelscreen/ModelScreen";
 import PanelInstruction from "./PanelInstruction";
 import InstructionSelector from "./InstructionSelector";
+import agent from "../../../app/api/agent";
 
 
 
@@ -55,7 +56,8 @@ export default observer( function ArticleDetails() {
     useEffect(() => {
 
         setIsDataLoading(
-               isArticleLoading 
+               article?.id_article_uid !== id
+            || isArticleLoading 
             || isInstructionLoading
             || isViewLoading 
             || isInstanceobjectLoading 
@@ -84,15 +86,19 @@ export default observer( function ArticleDetails() {
 
     useEffect(()=> {
 
-        if(id) {
-            loadArticle(Number(id));
-            loadInstanceobjects(Number(id));
-            loadInstructions(Number(id));
-            loadViews(Number(id));
-            loadAnnotations(Number(id));
-            loadLights(Number(id));
-            loadAnnotationDisplays(Number(id));
-        }
+        
+        id && agent.Articles.detailsguid(id).then(x=>{
+
+            if(x.id_article) {
+                loadArticle(x.id_article);
+                loadInstanceobjects(x.id_article);
+                loadInstructions(x.id_article);
+                loadViews(x.id_article);
+                loadAnnotations(x.id_article);
+                loadLights(x.id_article);
+                loadAnnotationDisplays(x.id_article);
+            }
+        })
 
     }, [id])
 

@@ -17,7 +17,7 @@ export default observer( function ArticleList() {
 
                     <div key={x.id_article} className="col-sm-6 col-md-4 col-xl-3 mb-3">
                         <div>
-                            <Link to={`/article/${x.id_article}`}>
+                            <Link to={`/article/${x.id_article_uid}`}>
                                 {
                                     <img className="img-thumbnail mb-3" src={APIURL + `/attachmentfiles/file/${x.id_attachment_for_eye_catch}`} alt="" width="480" height="270" loading="lazy"></img>
                                 }

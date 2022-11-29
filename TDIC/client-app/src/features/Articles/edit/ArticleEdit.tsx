@@ -222,7 +222,7 @@ export default observer( function ArticleEdit() {
 
                             { id &&
                             <Tab eventKey="info" title="info" >
-                                <Link to={`/article/${Number(article?.id_article)}`}>Details</Link> 
+                                <Link to={`/article/${article?.id_article_uid}`}>Details</Link> 
                                 <hr />
 
                                 <SetChecker Val={isEditmode} ValSettingFunction={setIsEditmode} LabelString="Edit Mode" />
