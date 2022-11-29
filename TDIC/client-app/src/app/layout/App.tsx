@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { Container } from 'react-bootstrap';
 import NavBar from './NavBar';
 import { observer } from 'mobx-react-lite';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import TestErrors from '../../features/errors/TestError';
 import { ToastContainer } from 'react-toastify';
 import NotFound from '../../features/errors/NotFound';
@@ -27,6 +26,7 @@ import AttachmentfileEdit from '../../features/attachmentfiles/edit/Attachmentfi
 import WebsiteSettingDashboard from '../../features/WebsiteSetting/dashboard/WebsiteSettingDashboard';
 import WebsiteSettingForm from '../../features/WebsiteSetting/form/WebsiteSettingForm';
 import useTrackingGA4 from '../common/utils/useTrackingGA4';
+import { RouteAuthChk } from '../common/RouteAuthChk';
 
 function App() {
 
@@ -59,47 +59,43 @@ function App() {
     <>
       <ToastContainer position ='bottom-right' hideProgressBar />
       <ModalContainer />
-      <Route
-        //path={'/(.+)'}        
-        render={() => (
-          <>          
-            <NavBar />
-            <div className="container-fluid">
-              <Switch>
-                <Route exact path = '/' component={ArticleDashboard} />       
-                <Route path = '/articles' component={ArticleDashboard} />
-                <Route path = '/article/:id' component={ArticleDetails} />
-                <Route path = '/articleedit/:id' component={ArticleEdit} />
-                <Route key = {location.key} path = {['/createarticle', '/articleedit/:id']} component={ArticleEdit} />
-
-                <Route path = '/attachmentfiles' component={AttachmentFileDashboard} />
-                <Route path = '/attachmentfile/:id' component={AttachmentFileDetails} />
-                <Route path = '/attachmentfileedit/:id' component={AttachmentfileEdit} />
-                <Route path = '/attachmentfileupload' component={AttachmentfileUpload} />
-
-                <Route path = '/modelfiles' component={ModelfileDashboard} />
-                <Route path = '/modelfilecreate' component={ModelfileCreate} />
-                <Route path = '/modelfileedit/:id' component={ModelfileEdit} />
-
-
-
-                <Route path = '/websitesettings' component={WebsiteSettingDashboard} />
-                <Route key = {location.key} path = {['/websitesettingcreate', '/websitesettingedit/:id']} component={WebsiteSettingForm} />
-                
-
-                <Route path='/errors' component={TestErrors} />
-                <Route path='/server-error' component={ServerError} />
-                <Route path='/login' component={LoginForm} />
-                <Route path='/register' component={RegisterForm} />
-                <Route path='/privacy' component={Privacy} />
-                <Route component={NotFound} />
+      <NavBar />
+      <div className="container-fluid">
+            <Routes>
+                <Route path = '/' element={<ArticleDashboard />} />       
+                <Route path = '/articles' element={<ArticleDashboard />} />
+                <Route path = '/article/:id' element={<ArticleDetails />} />                
+                <Route path = '/articleedit/:id' element={ <RouteAuthChk component={<ArticleEdit />} redirect="/login" /> } />
+                <Route path = '/createarticle' element={ <RouteAuthChk component={<ArticleEdit />} redirect="/login" /> } />
 
                 
-              </Switch>
-            </div>    
-          </>
-        )}
-      />
+                <Route path = '/attachmentfiles' element={ <RouteAuthChk component={<AttachmentFileDashboard />} redirect="/login" /> } />
+                <Route path = '/attachmentfile/:id' element={ <RouteAuthChk component={<AttachmentFileDetails />} redirect="/login" /> } />
+                <Route path = '/attachmentfileedit/:id' element={ <RouteAuthChk component={<AttachmentfileEdit />} redirect="/login" /> } />
+                <Route path = '/attachmentfileupload' element={ <RouteAuthChk component={<AttachmentfileUpload />} redirect="/login" /> } />
+
+
+
+                <Route path = '/modelfiles' element={ <RouteAuthChk component={<ModelfileDashboard />} redirect="/login" /> } />
+                <Route path = '/modelfilecreate' element={ <RouteAuthChk component={<ModelfileCreate />} redirect="/login" /> } />
+                <Route key = {location.key} path = '/modelfileedit/:id' element={ <RouteAuthChk component={<ModelfileEdit />} redirect="/login" /> } />
+
+
+
+                <Route path = '/websitesettings' element={ <RouteAuthChk component={<WebsiteSettingDashboard />} redirect="/login" /> } />
+                <Route key = {location.key} path = '/websitesettingedit/:id' element={ <RouteAuthChk component={<WebsiteSettingForm />} redirect="/login" /> } />
+                <Route key = {location.key} path = '/websitesettingcreate' element={ <RouteAuthChk component={<WebsiteSettingForm />} redirect="/login" /> } />
+                
+                
+
+                <Route path='/errors' element={<TestErrors />} />
+                <Route path='/server-error' element={<ServerError />} />
+                <Route path='/login' element={<LoginForm />} />
+                <Route path='/register' element={<RegisterForm />} />
+                <Route path='/privacy' element={<Privacy />} />
+                <Route path='*' element={<NotFound />} />
+            </Routes>
+      </div>    
     </>
   );
 }

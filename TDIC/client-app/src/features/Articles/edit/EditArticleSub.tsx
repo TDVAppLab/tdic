@@ -1,7 +1,7 @@
 
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
-import { Link, useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 
 
 export default observer( function EditArticleSub(){
-    const history = useHistory();
+    const navigate = useNavigate();
     
     const [isDataLoadingFinished, setIsDataLoadingFinished]= useState<boolean>(false);
     
@@ -94,13 +94,13 @@ export default observer( function EditArticleSub(){
     
 
     async function handleFormArticleUpd(object:Article) {
-        if(object.id_article ==0 ){
+        if(object.id_article === 0 ){
             let newObject = {
                 ...object
             }
 
             const ans_article = await createArticle(newObject);
-            ans_article && history.push(`/articleedit/${Number(ans_article.id_article)}`);
+            ans_article && navigate(`/articleedit/${Number(ans_article.id_article)}`);
             toast.success('new article added');
         } else {
             await updateArticle(object);
@@ -111,14 +111,14 @@ export default observer( function EditArticleSub(){
     async function handleFormArticleDel(values:Article) {
         
         await deleteArticle(values);
-        history.push(`/`);
+        navigate(`/`);
         toast.info('article deleted');
     }
 
     async function handleFormArticleDuplicate(values:Article) {
         
         const ans_article = await duplicateArticle(values);
-        ans_article && history.push(`/articleedit/${Number(ans_article.id_article)}`); 
+        ans_article && navigate(`/articleedit/${Number(ans_article.id_article)}`); 
         toast.info('article duplicated');
     }
 
@@ -168,7 +168,7 @@ export default observer( function EditArticleSub(){
 
             </Formik>
 
-            { article.id_article != 0 &&
+            { article.id_article !== 0 &&
             <Formik
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
@@ -185,7 +185,7 @@ export default observer( function EditArticleSub(){
             }
 
 
-            { article.id_article != 0 &&
+            { article.id_article !== 0 &&
             <Formik
                 validationSchema={validationSchemaDel}
                 enableReinitialize 

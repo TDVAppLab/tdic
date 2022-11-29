@@ -20,7 +20,7 @@ export default observer( function UpdateInstanceVisivility()  {
 
     Array.from(instanceobjectStore.instanceobjectRegistry.values()).map(inst=> { 
 
-        const temp_inst = scene.children.find(child => child.name == `[${inst.id_instance}]InstanceModel`);
+        const temp_inst = scene.children.find(child => child.name === `[${inst.id_instance}]InstanceModel`);
 
         if(temp_inst) {
             

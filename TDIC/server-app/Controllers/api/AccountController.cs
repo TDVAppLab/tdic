@@ -79,8 +79,12 @@ namespace TDIC.Controllers
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
-            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
-            return CreateUserObject(user);
+            try {
+                var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+                return CreateUserObject(user);
+            } catch {
+                return Unauthorized();
+            }
         }
         
         private UserDto CreateUserObject(AppUser user)

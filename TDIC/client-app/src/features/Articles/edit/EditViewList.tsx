@@ -63,7 +63,7 @@ export default observer( function EditViewList() {
                               <td>
                                 <button key={x.id_view}
                                         type = 'submit'
-                                        className={ x.id_view == selectedView?.id_view ? "btn btn-secondary" :  "btn btn-outline-secondary"}
+                                        className={ x.id_view === selectedView?.id_view ? "btn btn-secondary" :  "btn btn-outline-secondary"}
                                         onClick={()=>{handleInputChangeView(x.id_view)}} 
                                     >
                                     Edit

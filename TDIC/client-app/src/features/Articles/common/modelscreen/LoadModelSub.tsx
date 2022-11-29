@@ -19,7 +19,7 @@ interface PartProps {
 export default observer( function LoadModelSub({id_inst, id_part, pos, scale}: PartProps){
 
     const {instanceobjectStore} = useStore();
-    const {annimationsRegistry, setAnimationClips, setModelLoading} = instanceobjectStore;
+    const {setAnimationClips, setModelLoading} = instanceobjectStore;
   
     const str_url_partapi = APIURL + `/modelfiles/file/${id_part}`;
     const gltf = useLoader(GLTFLoader, str_url_partapi);
@@ -29,9 +29,6 @@ export default observer( function LoadModelSub({id_inst, id_part, pos, scale}: P
     setAnimationClips(gltf.animations,id_inst);
     
     setModelLoading(id_inst, false);
-
-    //console.log(id_part);
-    //console.log(annimationsRegistry);
   
     return (
         <primitive object={gltf.scene} dispose={null} />

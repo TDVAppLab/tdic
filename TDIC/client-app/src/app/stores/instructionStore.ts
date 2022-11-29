@@ -1,6 +1,5 @@
 import {  makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import {format} from 'date-fns';
 import { Instruction } from "../models/instruction";
 import { InstanceDisplay } from "../models/InstanceDisplay";
 import { InstanceActionExecSetting } from "../models/InstanceActionExecSetting";
@@ -32,7 +31,7 @@ export default class InstructionStore {
         
         
         
-        if(id_article == -1) {
+        if(id_article === -1) {
             this.instructionRegistry.clear();
             this.selectedInstruction = undefined;
             this.selectedSubtitles.length = 0;
@@ -58,7 +57,7 @@ export default class InstructionStore {
                     = (Array.from(this.instructionRegistry.values()).filter((x: Instruction) => typeof x.display_order === 'number'))
                         .map((x: Instruction) => x.display_order);
 
-                const id_startinst = (Array.from(this.instructionRegistry.values())).filter((x: Instruction) => x.display_order == Math.min.apply(null, ar1_map))[0].id_instruct;
+                const id_startinst = (Array.from(this.instructionRegistry.values())).filter((x: Instruction) => x.display_order === Math.min.apply(null, ar1_map))[0].id_instruct;
                 await this.setSelectedInstruction(id_startinst);
             } else {                
                 runInAction(()=>{

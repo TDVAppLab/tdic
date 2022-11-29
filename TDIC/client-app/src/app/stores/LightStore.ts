@@ -1,7 +1,7 @@
 import {  makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import {format} from 'date-fns';
 import { Light } from "../models/Light";
+
 
 export default class LightStore {
     lightRegistry = new Map<number, Light>();
@@ -18,7 +18,7 @@ export default class LightStore {
 
     loadLights = async (id_article:number) => {
         
-        if(id_article == -1) {
+        if(id_article === -1) {
             runInAction(()=>{
                 this.lightRegistry.clear();
             })

@@ -1,22 +1,21 @@
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useStore } from '../../../../app/stores/store';
 import { OrbitControls } from '@react-three/drei';
-import THREE, { Color, Vector3 } from 'three';
+import { Color, Vector3 } from 'three';
 import LoadModel from './LoadModel';
 import SetLight from './SetLight';
 import ShowAnnotation from './ShowAnnotation';
 import UpdateCameraWork from './UpdateCameraWork';
 import SceneInfoCatcher from './SceneInfoCatcher';
-import { Effects } from './Effect';
-import { Lights } from './Lights';
 import GetSceneCapture from './GetSceneCapture';
 import AutomaticCameraMove from './AutomaticCameraMove';
 import ShowOrbitInfo from './ShowOrbitInfo';
 import UpdateInstanceVisivility from './UpdateInstanceVisivility';
 import ShowActionUseInstructionSettings from './ShowActionUseInstructionSettings';
 import ShowActionofSettedModel from './ShowActionofSettedModel';
+
 
 
 // ref https://codesandbox.io/s/draggable-mesh-rgn91?file=/src/App.tsx:900-940
@@ -26,15 +25,12 @@ import ShowActionofSettedModel from './ShowActionofSettedModel';
 
 
 interface Props {
-  //width : string;
-  //height : string;
   isEditmode : boolean
   isAutoAnimationExec : boolean;
 }
 
 export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}: Props) {
 
-  const [isDebugMode, setIsDebugMode] = useState(false);
   
   const { articleStore } = useStore();
   const { selectedArticle } = articleStore;
@@ -46,7 +42,7 @@ export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}:
   const { annotationRegistry, selectedAnnotation } = annotationStore;
     
   const {instructionStore} = useStore();
-  const {selectedInstruction,  loading : isInstructionLoading} = instructionStore;
+  const {selectedInstruction} = instructionStore;
   
   const {annotationDisplayStore} = useStore();
   const {selectedAnnotationDisplayMap } = annotationDisplayStore;
@@ -103,7 +99,6 @@ useEffect(()=> {
         }
         <OrbitControls enableDamping={false} attach="orbitControls" />
 
-        { isDebugMode && <axesHelper args={[2]}/> }
         {
           <ShowAnnotation annotationMap={annotationRegistry} annotationDisplayMap={selectedAnnotationDisplayMap} selectedAnnotationId = {selectedAnnotation?.id_annotation}/>
         }
@@ -113,14 +108,7 @@ useEffect(()=> {
         }
         <UpdateInstanceVisivility />
 
-        
-			{/* lights */}
-			{
-				//<Lights />
-			}
-      {
-      //  <Effects />
-      }
+       
       {
         isAutoAnimationExec && <ShowActionofSettedModel isActiondisplayMode={isAutoAnimationExec} />
       }

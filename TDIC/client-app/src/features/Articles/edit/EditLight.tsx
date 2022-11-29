@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
-import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
@@ -9,6 +8,7 @@ import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
 import { Col, Row } from 'react-bootstrap';
 import { Light } from '../../../app/models/Light';
 import { toast } from 'react-toastify';
+
 
 
 
@@ -42,7 +42,6 @@ const getDefaultValueOfLight = (id_article : number) => {
 }
 
 export default observer( function EditLight(){
-    const history = useHistory();
     
     const {articleStore} = useStore();
     const {lightStore} = useStore();
@@ -74,7 +73,7 @@ export default observer( function EditLight(){
 
     
     async function handleFormLightUpd(values:Light) {
-        if(values.id_light ==0 ){
+        if(values.id_light === 0 ){
             let newLight = {
                 ...values
             };
@@ -170,7 +169,7 @@ export default observer( function EditLight(){
                 onSubmit={values => handleFormLightDel(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                        <button disabled={!isValid || isSubmitting || light.id_light == 0} type = 'submit' className='btn btn-danger'>
+                        <button disabled={!isValid || isSubmitting || light.id_light === 0} type = 'submit' className='btn btn-danger'>
                             {isSubmitting ? "Processing" : "Delete"}
                         </button>
                     </Form>
@@ -185,7 +184,7 @@ export default observer( function EditLight(){
                 type = 'submit'
                 className={"btn btn-secondary"}
                 onClick={()=>{EntryNewLight()}}
-                disabled = {light.id_light == 0 ? true : false}
+                disabled = {light.id_light === 0 ? true : false}
             >
                 {isDataCopyFromSelectedLight ? "Copy From Selected Light" : "Entry New Light"}
             </button>

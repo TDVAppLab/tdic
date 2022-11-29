@@ -1,7 +1,7 @@
 import {  makeAutoObservable, runInAction } from "mobx";
 import { Quaternion, Vector3 } from 'three';
 import agent from "../api/agent";
-import { AttachmentfileEyecatchDtO } from "../models/attachmentfile";
+
 
 export default class SceneInfoStore {
     camera_pos : Vector3 | undefined = undefined;

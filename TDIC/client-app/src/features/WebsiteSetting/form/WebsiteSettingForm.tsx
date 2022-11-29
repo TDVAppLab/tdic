@@ -1,6 +1,5 @@
-import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
 import { Formik , Form } from "formik";
 import * as Yup from 'yup';
@@ -11,7 +10,6 @@ import agent from "../../../app/api/agent";
 import TextAreaGeneral from "../../../app/common/form/TextAreaGeneral";
 
 export default function WebsiteSettingForm(){
-    const history = useHistory();
 
     
     const {id} = useParams<{id: string}>();

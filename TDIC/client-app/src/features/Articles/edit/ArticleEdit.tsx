@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useRef, useState } from "react";
-import { Col, Container, Form, Row, Tab, Tabs } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Col, Row, Tab, Tabs } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
 import { useStore } from "../../../app/stores/store";
@@ -39,25 +39,25 @@ export default observer( function ArticleEdit() {
     const [isDataLoading, setIsDataLoading]= useState<boolean>(true);
 
     const {articleStore} = useStore();
-    const {selectedArticle : article, loadArticle, loading : isArticleLoading} = articleStore;
+    const {selectedArticle : article, loadArticle} = articleStore;
     
     const {instructionStore} = useStore();
-    const {loadInstructions, selectedInstruction, loading : isInstructionLoading, id_article : instructionId_article} = instructionStore;
+    const {loadInstructions, selectedInstruction, id_article : instructionId_article} = instructionStore;
 
     const {instanceobjectStore} = useStore();
-    const {instanceobjectRegistry, loadInstanceobjects, loading : isInstanceobjectLoading, id_article : instanceobjectId_article} = instanceobjectStore;
+    const {loadInstanceobjects, id_article : instanceobjectId_article} = instanceobjectStore;
     
     const {viewStore} = useStore();
-    const {loadViews, setselectedView, loading : isViewLoading, id_article : viewId_article} = viewStore;
+    const {loadViews, setselectedView, id_article : viewId_article} = viewStore;
     
     const {annotationStore} = useStore();
-    const {loadAnnotations, loading : isAnnotationLoading, id_article : annotationId_article} = annotationStore;
+    const {loadAnnotations, id_article : annotationId_article} = annotationStore;
     
     const {annotationDisplayStore} = useStore();
-    const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, selectedAnnotationDisplayMap, loading : isAnnotationDisplayLoading, id_article : annotationDisplayId_article} = annotationDisplayStore;
+    const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, selectedAnnotationDisplayMap, id_article : annotationDisplayId_article} = annotationDisplayStore;
     
     const {lightStore} = useStore();
-    const {loadLights, loading : isLightLoading, id_article : lightId_article} = lightStore;
+    const {loadLights, id_article : lightId_article} = lightStore;
     
     const {sceneInfoStore} = useStore();
     
@@ -67,13 +67,13 @@ export default observer( function ArticleEdit() {
     useEffect(() => { 
         if(id) {
             setIsDataLoading(
-                article?.id_article != Number(id)
-            || instructionId_article != Number(id)
-            || viewId_article != Number(id) 
-            || instanceobjectId_article != Number(id)
-            || lightId_article != Number(id) 
-            || annotationId_article != Number(id) 
-            || annotationDisplayId_article != Number(id) 
+                article?.id_article !== Number(id)
+            || instructionId_article !== Number(id)
+            || viewId_article !== Number(id) 
+            || instanceobjectId_article !== Number(id)
+            || lightId_article !== Number(id) 
+            || annotationId_article !== Number(id) 
+            || annotationDisplayId_article !== Number(id) 
             );
         } else {
             setIsDataLoading(false);
@@ -90,7 +90,7 @@ export default observer( function ArticleEdit() {
 
     useEffect(()=> {
 
-        if((instructionId_article == Number(id)) && (viewId_article == Number(id)))  {
+        if((instructionId_article === Number(id)) && (viewId_article === Number(id)))  {
         selectedInstruction && setselectedView(selectedInstruction.id_view);
         }
         
