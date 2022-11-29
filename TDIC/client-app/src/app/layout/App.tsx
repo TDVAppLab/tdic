@@ -93,7 +93,7 @@ function App() {
                 <Route path='/login' element={<LoginForm />} />
                 <Route path='/register' element={<RegisterForm />} />
                 <Route path='/privacy' element={<Privacy />} />
-                <Route element={<NotFound />} />
+                <Route path='*' element={<NotFound />} />
             </Routes>
       </div>    
     </>
