@@ -1,7 +1,7 @@
 import {  makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import {format} from 'date-fns';
 import { Article } from "../models/article";
+
 
 export default class ArticleStore {
     articleRegistry = new Map<number, Article>();
@@ -32,7 +32,7 @@ export default class ArticleStore {
 
         
         
-        if(id == -1) {
+        if(id === -1) {
             runInAction(()=>{
                 this.selectedArticle = undefined;
             })

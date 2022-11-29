@@ -1,7 +1,5 @@
 import { useFrame, useThree } from '@react-three/fiber';
-import { Vector3 } from 'three';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../../app/stores/store';
 
 
 interface Props{

@@ -1,9 +1,7 @@
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { useFrame, useThree } from '@react-three/fiber';
 import React, { useEffect, useRef } from 'react';
-import { OrbitControls } from '@react-three/drei';
 import { AnimationMixer } from 'three/src/animation/AnimationMixer';
-import { Clock, LoopOnce, LoopRepeat } from 'three';
+import { Clock } from 'three';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../app/stores/store';
 
@@ -20,7 +18,7 @@ export default observer( function ShowActionofSettedModel({isActiondisplayMode}:
     const {annimationsRegistry, instanceobjectRegistry} = instanceobjectStore;
 
     const {instructionStore} = useStore();
-    const {selectedInstruction, instanceDisplayRegistry} = instructionStore;
+    const {selectedInstruction} = instructionStore;
 
 
     
@@ -41,7 +39,7 @@ export default observer( function ShowActionofSettedModel({isActiondisplayMode}:
 
         
         instanceobjectRegistry.forEach(instanceobject=>{
-            const temp_instance = scene.children.find(child => child.name == `[${instanceobject.id_instance}]InstanceModel`);
+            const temp_instance = scene.children.find(child => child.name === `[${instanceobject.id_instance}]InstanceModel`);
             if(temp_instance){
                 mixers.current.set(instanceobject.id_instance,new AnimationMixer(temp_instance))
                 //console.log("mixers"); 

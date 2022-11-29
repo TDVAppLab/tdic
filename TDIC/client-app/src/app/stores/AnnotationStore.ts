@@ -17,7 +17,7 @@ export default class AnnotationStore {
 
     loadAnnotations = async (id_article:number) => {
         
-        if(id_article == -1) {
+        if(id_article === -1) {
             this.annotationRegistry.clear();
             return null;
         }
@@ -32,7 +32,7 @@ export default class AnnotationStore {
             })
 
             runInAction(()=>{
-                if(this.id_article != id_article){
+                if(this.id_article !== id_article){
                     this.selectedAnnotation = undefined
                 }
                 this.id_article=id_article;

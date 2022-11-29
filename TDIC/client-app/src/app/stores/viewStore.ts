@@ -1,6 +1,5 @@
 import {  makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import {format} from 'date-fns';
 import { View } from "../models/view";
 import { OptionBase } from "../models/Optionbase";
 
@@ -19,7 +18,7 @@ export default class ViewStore {
 
         
         
-        if(id_article == -1) {
+        if(id_article === -1) {
             this.viewRegistry.clear();
             return null;
         }

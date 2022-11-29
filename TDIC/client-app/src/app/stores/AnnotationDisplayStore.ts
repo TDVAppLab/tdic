@@ -20,7 +20,7 @@ export default class AnnotationDisplayStore {
 
     loadAnnotationDisplays = async (id_article:number) => {
 
-        if(id_article == -1) {            
+        if(id_article === -1) {            
             runInAction(()=>{
                 this.selectedAnnotationDisplayMap.clear();
             })
@@ -83,7 +83,7 @@ export default class AnnotationDisplayStore {
     updateAnnotationDisplay = async (objects: AnnotationDisplay[]) => {
         this.loading = true;
 
-        const prv_article = objects[0].id_article;
+        //const prv_article = objects[0].id_article;
         const prv_selectedInstruction = this.selectedInstructionId;
         
         try {
@@ -92,8 +92,8 @@ export default class AnnotationDisplayStore {
             runInAction(() => {
 
                 objects.forEach(object => {
-                    const i = this.annotationDisplayArray.findIndex(x => x.id_article == object.id_article && x.id_instruct == object.id_instruct && x.id_annotation == object.id_annotation );
-                    if(i != -1){
+                    const i = this.annotationDisplayArray.findIndex(x => x.id_article === object.id_article && x.id_instruct === object.id_instruct && x.id_annotation === object.id_annotation );
+                    if(i !== -1){
                         this.annotationDisplayArray[i] = object;
                     }
                 })
@@ -114,8 +114,8 @@ export default class AnnotationDisplayStore {
 
         try {
             runInAction(() => {
-                this.annotationDisplayArray = this.annotationDisplayArray.filter(x => x.id_annotation != id_annotation);
-                this.selectedInstructionId != 0 &&this.setSelectedAnnotationDisplayMap(this.selectedInstructionId);                
+                this.annotationDisplayArray = this.annotationDisplayArray.filter(x => x.id_annotation !== id_annotation);
+                this.selectedInstructionId !== 0 &&this.setSelectedAnnotationDisplayMap(this.selectedInstructionId);                
                 this.loading = false;
             })
             

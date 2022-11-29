@@ -2,7 +2,6 @@
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
 import { AnnotationDisplay } from '../../../app/models/AnnotationDisplay';
 import { useStore } from '../../../app/stores/store';
 import * as Yup from 'yup';
@@ -14,7 +13,6 @@ import { toast } from 'react-toastify';
 
 export default observer( function EdiaAnnotationDisplay() {
     
-    const history = useHistory();
 
     const validationSchema = Yup.object({
         title: Yup.string().required(),
@@ -101,7 +99,7 @@ export default observer( function EdiaAnnotationDisplay() {
                                         <td>
                                             <button key={x.id_annotation}
                                                     type = 'button'
-                                                    className={ x.id_annotation == selectedAnnotation?.id_annotation ? "btn btn-secondary" :  "btn btn-outline-secondary"}
+                                                    className={ x.id_annotation === selectedAnnotation?.id_annotation ? "btn btn-secondary" :  "btn btn-outline-secondary"}
                                                     onClick={()=>{setSelectedAnnotation(x.id_annotation)}} 
                                                 >
                                                 Edit

@@ -1,8 +1,8 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import {format} from 'date-fns';
 import { AnimationClip } from "three";
 import { Instanceobject } from "../models/Instanceobject";
+
 
 export default class InstanceobjectStore {
     instanceobjectRegistry = new Map<number, Instanceobject>();
@@ -23,7 +23,7 @@ export default class InstanceobjectStore {
     loadInstanceobjects = async (id_article:number) => {
 
         
-        if(id_article == -1) {
+        if(id_article === -1) {
             this.instanceobjectRegistry.clear();
             this.annimationsRegistry.clear();
             this.modelLoadingRegistry.clear();

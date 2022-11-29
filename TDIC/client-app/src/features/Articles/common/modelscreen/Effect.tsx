@@ -1,10 +1,10 @@
 import { useControls } from 'leva';
-import React, { useEffect, useState, VFC } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import THREE from 'three';
 import { useThree } from '@react-three/fiber';
 import { EffectComposer, GodRays } from '@react-three/postprocessing';
 
-export const Effects: VFC = () => {
+export const Effects: FC = () => {
 	// add controller
 	//const datas = useController()
 
@@ -49,7 +49,7 @@ export const Effects: VFC = () => {
 
 
 
-export const EffectsEditor: VFC = () => {
+export const EffectsEditor: FC = () => {
 	// add controller
 	const datas = useController()
 

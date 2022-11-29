@@ -42,7 +42,7 @@ export default observer( function EditLightList() {
                               <td>
                                 <button key={x.id_light}
                                         type = 'submit'
-                                        className={ x.id_light == selectedLight?.id_light ? "btn btn-secondary" :  "btn btn-outline-secondary"}
+                                        className={ x.id_light === selectedLight?.id_light ? "btn btn-secondary" :  "btn btn-outline-secondary"}
                                         onClick={()=>{handleInputChangeLight(x.id_light)}} 
                                     >
                                     Edit

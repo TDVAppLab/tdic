@@ -1,17 +1,15 @@
 
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
-import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import { Form, Formik, useField, useFormikContext } from 'formik';
+import { Form, Formik } from 'formik';
 import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
 import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
 import { Col, Row } from 'react-bootstrap';
 import { Annotation } from '../../../app/models/Annotation';
 import { Vector3 } from 'three';
 import { toast } from 'react-toastify';
-
 
 
 const getDefaultValueOfAnnotation = (id_article : number) => {
@@ -35,7 +33,6 @@ const getDefaultValueOfAnnotation = (id_article : number) => {
 
 
 export default observer( function EditAnnotation(){
-    const history = useHistory();
     
     const {articleStore} = useStore();
     const {annotationStore} = useStore();
@@ -43,7 +40,7 @@ export default observer( function EditAnnotation(){
     const {sceneInfoStore} = useStore();
 
     const {annotationDisplayStore} = useStore();
-    const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, deleteAnnotationDisplayArray, selectedInstructionId, selectedAnnotationDisplayMap, loading : isAnnotationDisplayLoading, id_article : annotationDisplayId_article} = annotationDisplayStore;
+    const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, deleteAnnotationDisplayArray, selectedInstructionId, id_article : annotationDisplayId_article} = annotationDisplayStore;
 
     const [isDataCopyFromSelectedAnnotation, setIsDataCopyFromSelectedAnnotation] = useState(false);
 
@@ -74,7 +71,7 @@ export default observer( function EditAnnotation(){
 
     
     async function handleFormAnnotationUpd(annotation:Annotation) {
-        if(annotation.id_annotation ==0 ){
+        if(annotation.id_annotation === 0 ){
             let newAnnotation = {
                 ...annotation
             };
@@ -236,7 +233,7 @@ export default observer( function EditAnnotation(){
                 onSubmit={values => handleFormAnnotationDel(values)}>
                 {({ handleSubmit, isValid, isSubmitting }) => (
                     <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
-                        <button disabled={!isValid || isSubmitting || annotation.id_annotation == 0} type = 'submit' className='btn btn-danger'>
+                        <button disabled={!isValid || isSubmitting || annotation.id_annotation === 0} type = 'submit' className='btn btn-danger'>
                             {isSubmitting ? "Processing" : "Delete"}
                         </button>
                     </Form>
@@ -247,7 +244,7 @@ export default observer( function EditAnnotation(){
                 type = 'submit'
                 className={"btn btn-secondary"}
                 onClick={()=>{EntryNewAnnotation()}}
-                disabled = {   annotation.id_annotation == 0 ? true : false}
+                disabled = {   annotation.id_annotation === 0 ? true : false}
             >
                 {isDataCopyFromSelectedAnnotation ? "Copy From Selected Annotation" : "Entry New Annotation"}
             </button>

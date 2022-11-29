@@ -12,7 +12,7 @@ interface Props {
 export default function ShowAction({animations, modelUuid, is_exec_animation}: Props){
     const { scene } = useThree();
 
-    const model = scene.children.find(child => child.uuid == modelUuid);
+    const model = scene.children.find(child => child.uuid === modelUuid);
   
     const mixer = new AnimationMixer(model!);
 

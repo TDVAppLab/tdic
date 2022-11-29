@@ -1,11 +1,9 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { APIURL } from "../../../app/constants";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
 import { useStore } from "../../../app/stores/store";
-//import PartViewer from "./PartViewer";
 
 
 
