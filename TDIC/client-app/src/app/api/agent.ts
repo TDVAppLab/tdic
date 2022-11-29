@@ -103,6 +103,7 @@ const Attachmentfiles = {
 const Articles = {
     list: () => requests.get<Article[]>('/articles/index'),
     details:(id:number) => requests.get<Article>(`/articles/details/${id}`),
+    detailsguid:(id:string) => requests.get<Article>(`/articles/detailsguid/${id}`),
     create:(article: Article) => axios.post<Article>(`/articles/create`,article),
     update: (article: Article) => axios.post<void>(`/articles/update/`, article),
     delete:(id:number) => axios.post<void>(`/articles/delete/${id}`),

@@ -35,6 +35,7 @@ export default observer( function EditArticleSub(){
     const [article, setArticle] = useState<Article>({
             
         id_article: 0,
+        id_article_uid: null,
         id_assy: 0,
 
         title: '',

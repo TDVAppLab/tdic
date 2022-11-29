@@ -1,5 +1,6 @@
 export interface Article {
     id_article: number;
+    id_article_uid: string | null;
     id_assy: number;
 
     title: string;

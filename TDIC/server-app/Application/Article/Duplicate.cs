@@ -45,6 +45,7 @@ namespace Application.Article
 
                 
                 article.id_article = id_article_new;
+                article.id_article_uid = Guid.NewGuid();
                 article.title = title_new;
                 article.status = status_new;
 

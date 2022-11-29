@@ -78,7 +78,7 @@ export default class ArticleStore {
     
     createArticle = async (object: Article) => {
         this.loading = true;
-        //console.log("called light create");
+//        console.log(ArticleCreatDtoMapper(object));
         try {
 //            await agent.Articles.create(object);
             const result_object = await (await agent.Articles.create(object)).data;
