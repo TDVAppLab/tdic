@@ -46,6 +46,8 @@ namespace Application.Article
 
                 request.Article.id_article = id_article;
 
+                request.Article.id_article_uid = Guid.NewGuid();
+
                 
                 request.Article.create_user = "";
                 request.Article.create_datetime = DateTime.Now;
