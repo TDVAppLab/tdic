@@ -2,16 +2,25 @@ import { ErrorMessage, Formik } from "formik";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import TextInputGeneral from "../../app/common/form/TextInputGeneral";
 import { useStore } from "../../app/stores/store";
 
 export default observer( function LoginForm() {
-    const {userStore} = useStore();
+    
+    const {userStore} = useStore();   
+    const navigate = useNavigate();
+
     return (
         <Formik
             initialValues={{email:'', password: '', error: null}}
-            onSubmit={(values, {setErrors}) => userStore.login(values).catch(error => 
-                setErrors({error:'Invalid email or password'}))}
+            onSubmit={(values, {setErrors}) => userStore.login(values)
+                .then(state => {
+                    toast.success('successfully logged in');
+                    navigate(`/`)})
+                .catch(error => setErrors({error:'Invalid email or password'}))
+            }
             >
                 {({handleSubmit, isSubmitting, errors}) =>(
                     <Form className="ui form" onSubmit={handleSubmit} autoComplete='off'>
