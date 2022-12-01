@@ -1,11 +1,20 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useStore } from '../stores/store';
+import { toast } from 'react-toastify';
 
 export default observer ( function NavBar() {
     const {userStore: {user, logout}} = useStore();
+    const navigate = useNavigate();
+
+    
+    function handleLogout() {
+        logout();
+        toast.info('successfully logged out');
+        navigate(`/`);
+    }
 
     return(
         <Navbar bg="dark" variant="dark" expand="sm" className="border-bottom box-shadow mb-3">
@@ -34,7 +43,7 @@ export default observer ( function NavBar() {
                                         <NavDropdown.Item as={NavLink} to="/websitesettings">WebsiteSettings</NavDropdown.Item>
                                         { process.env.NODE_ENV === 'development' &&  <NavDropdown.Item as={NavLink} to="/errors">Errors</NavDropdown.Item>  }     
                                         <NavDropdown.Divider />
-                                        <NavDropdown.Item as="a" onClick={logout}>Logout</NavDropdown.Item>
+                                        <NavDropdown.Item as="a" onClick={handleLogout}>Logout</NavDropdown.Item>
                                     </NavDropdown>
                                     
                                 </>                            
