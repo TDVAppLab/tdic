@@ -4,19 +4,29 @@ import { useStore } from "../stores/store";
 
 interface Props {
     component: React.ReactNode;
-    redirect: string
+    redirect: string;
+    isauth: boolean;
   }  
   
-export const RouteAuthChk = ({component, redirect}: Props) => {
+export const RouteAuthChk = ({component, redirect, isauth}: Props) => {
     
   const authUser = useStore();    
 
   
+  if(isauth){
+    if (!authUser.userStore.user?.username) {
+      return <Navigate to={redirect} replace={false} />
+    }
   
-  if (!authUser.userStore.user?.username) {
-    return <Navigate to={redirect} replace={false} />
-  }
+    return <>{component}</>;
 
-  return <>{component}</>;
+  }else{
+    if (authUser.userStore.user?.username) {
+      return <Navigate to={redirect} replace={false} />
+    }
+  
+    return <>{component}</>;
+
+  }
 
 }

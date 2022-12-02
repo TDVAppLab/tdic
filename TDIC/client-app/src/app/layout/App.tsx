@@ -65,32 +65,32 @@ function App() {
                 <Route path = '/' element={<ArticleDashboard />} />       
                 <Route path = '/articles' element={<ArticleDashboard />} />
                 <Route path = '/article/:id' element={<ArticleDetails />} />                
-                <Route path = '/articleedit/:id' element={ <RouteAuthChk component={<ArticleEdit />} redirect="/login" /> } />
-                <Route path = '/createarticle' element={ <RouteAuthChk component={<ArticleEdit />} redirect="/login" /> } />
+                <Route path = '/articleedit/:id' element={ <RouteAuthChk component={<ArticleEdit />} redirect="/login" isauth={true} /> } />
+                <Route path = '/createarticle' element={ <RouteAuthChk component={<ArticleEdit />} redirect="/login" isauth={true} /> } />
 
                 
-                <Route path = '/attachmentfiles' element={ <RouteAuthChk component={<AttachmentFileDashboard />} redirect="/login" /> } />
-                <Route path = '/attachmentfile/:id' element={ <RouteAuthChk component={<AttachmentFileDetails />} redirect="/login" /> } />
-                <Route path = '/attachmentfileedit/:id' element={ <RouteAuthChk component={<AttachmentfileEdit />} redirect="/login" /> } />
-                <Route path = '/attachmentfileupload' element={ <RouteAuthChk component={<AttachmentfileUpload />} redirect="/login" /> } />
+                <Route path = '/attachmentfiles' element={ <RouteAuthChk component={<AttachmentFileDashboard />} redirect="/login" isauth={true} /> } />
+                <Route path = '/attachmentfile/:id' element={ <RouteAuthChk component={<AttachmentFileDetails />} redirect="/login" isauth={true} /> } />
+                <Route path = '/attachmentfileedit/:id' element={ <RouteAuthChk component={<AttachmentfileEdit />} redirect="/login" isauth={true} /> } />
+                <Route path = '/attachmentfileupload' element={ <RouteAuthChk component={<AttachmentfileUpload />} redirect="/login" isauth={true} /> } />
 
 
 
-                <Route path = '/modelfiles' element={ <RouteAuthChk component={<ModelfileDashboard />} redirect="/login" /> } />
-                <Route path = '/modelfilecreate' element={ <RouteAuthChk component={<ModelfileCreate />} redirect="/login" /> } />
-                <Route key = {location.key} path = '/modelfileedit/:id' element={ <RouteAuthChk component={<ModelfileEdit />} redirect="/login" /> } />
+                <Route path = '/modelfiles' element={ <RouteAuthChk component={<ModelfileDashboard />} redirect="/login" isauth={true} /> } />
+                <Route path = '/modelfilecreate' element={ <RouteAuthChk component={<ModelfileCreate />} redirect="/login" isauth={true} /> } />
+                <Route key = {location.key} path = '/modelfileedit/:id' element={ <RouteAuthChk component={<ModelfileEdit />} redirect="/login" isauth={true} /> } />
 
 
 
-                <Route path = '/websitesettings' element={ <RouteAuthChk component={<WebsiteSettingDashboard />} redirect="/login" /> } />
-                <Route key = {location.key} path = '/websitesettingedit/:id' element={ <RouteAuthChk component={<WebsiteSettingForm />} redirect="/login" /> } />
-                <Route key = {location.key} path = '/websitesettingcreate' element={ <RouteAuthChk component={<WebsiteSettingForm />} redirect="/login" /> } />
+                <Route path = '/websitesettings' element={ <RouteAuthChk component={<WebsiteSettingDashboard />} redirect="/login" isauth={true} /> } />
+                <Route key = {location.key} path = '/websitesettingedit/:id' element={ <RouteAuthChk component={<WebsiteSettingForm />} redirect="/login" isauth={true} /> } />
+                <Route key = {location.key} path = '/websitesettingcreate' element={ <RouteAuthChk component={<WebsiteSettingForm />} redirect="/login" isauth={true} /> } />
                 
                 
 
                 <Route path='/errors' element={<TestErrors />} />
                 <Route path='/server-error' element={<ServerError />} />
-                <Route path='/login' element={<LoginForm />} />
+                <Route path='/login' element={ <RouteAuthChk component={<LoginForm />} redirect="/" isauth={false} /> } />
                 <Route path='/register' element={<RegisterForm />} />
                 <Route path='/privacy' element={<Privacy />} />
                 <Route path='*' element={<NotFound />} />
