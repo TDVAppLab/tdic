@@ -93,6 +93,22 @@ export default observer( function EditInstanceobject(){
                                     <th>
                                         Z
                                     </th>
+                                    
+                                    {/*
+                                    <th>
+                                        QX
+                                    </th>
+                                    <th>
+                                        QY
+                                    </th>
+                                    <th>
+                                        QZ
+                                    </th>
+                                    <th>
+                                        QW
+                                    </th>
+                                    */}
+
                                     <th>
                                         Scale
                                     </th>
@@ -109,6 +125,14 @@ export default observer( function EditInstanceobject(){
                                         <td><TextInputGeneral name={`[${index}]pos_x`} placeholder='POS X' /></td>
                                         <td><TextInputGeneral name={`[${index}]pos_y`} placeholder='POS Y' /></td>
                                         <td><TextInputGeneral name={`[${index}]pos_z`} placeholder='POS Z' /></td>
+
+                                    {/*
+                                        <td><TextInputGeneral name={`[${index}]quaternion_x`} placeholder='X' /></td>
+                                        <td><TextInputGeneral name={`[${index}]quaternion_y`} placeholder='Y' /></td>
+                                        <td><TextInputGeneral name={`[${index}]quaternion_z`} placeholder='Z' /></td>
+                                        <td><TextInputGeneral name={`[${index}]quaternion_w`} placeholder='W' /></td>
+
+                                    */}
                                         <td><TextInputGeneral name={`[${index}]scale`} placeholder='Scale' /></td>
                                         <td>
                                             <button key={x.id_instance}
@@ -123,6 +147,11 @@ export default observer( function EditInstanceobject(){
                                                             pos_y: 0,
                                                             pos_z: 0,
                                                             scale: 0,
+                                                            quaternion_x: 0,
+                                                            quaternion_y: 0,
+                                                            quaternion_z: 0,
+                                                            quaternion_w: 1,
+                                                            uuid: null,
                                                 
                                                         });
                                                     }} 
