@@ -126,6 +126,20 @@ export default class InstanceobjectStore {
         }
     }    
 
+    setInstanceUuid = (id_instance: number, uuid: string) => {
+        if(this.instanceobjectRegistry ) {
+            const temp = this.instanceobjectRegistry.get(id_instance);
+            if(temp){
+                temp.uuid=uuid;
+                runInAction(() => {
+                    this.instanceobjectRegistry.set(temp.id_instance,temp);
+                })
+            }
+        }
+
+    }
+    
+
 
     setAnimationClips = (animations : AnimationClip[], id_instance: number) => {
         this.annimationsRegistry.set(id_instance,animations);
