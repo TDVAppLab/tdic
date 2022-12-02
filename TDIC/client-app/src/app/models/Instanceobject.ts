@@ -8,4 +8,11 @@ export interface Instanceobject {
     pos_y: number;
     pos_z: number;
     scale: number;
+
+    quaternion_x: number;
+    quaternion_y: number;
+    quaternion_z: number;
+    quaternion_w: number;
+
+    uuid: string | null;
 }

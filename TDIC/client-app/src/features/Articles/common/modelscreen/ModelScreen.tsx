@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { useStore } from '../../../../app/stores/store';
 import { OrbitControls } from '@react-three/drei';
-import { Color, Vector3 } from 'three';
+import { Color, Quaternion, Vector3 } from 'three';
 import LoadModel from './LoadModel';
 import SetLight from './SetLight';
 import ShowAnnotation from './ShowAnnotation';
@@ -92,7 +92,7 @@ useEffect(()=> {
           Array.from(lightRegistry.values()).map(x=>(<SetLight key={x.id_light} light={x} />))
         }
         {
-          Array.from(instanceobjectRegistry.values()).map(x=>(<LoadModel key={x.id_instance} id_inst={x.id_instance} id_part={x.id_part} pos={new Vector3(x.pos_x, x.pos_y, x.pos_z)} scale={x.scale}/>))
+          Array.from(instanceobjectRegistry.values()).map(x=>(<LoadModel key={x.id_instance} id_inst={x.id_instance} id_part={x.id_part} pos={new Vector3(x.pos_x, x.pos_y, x.pos_z)} scale={x.scale} quaternion={new Quaternion(x.quaternion_x, x.quaternion_y, x.quaternion_z, x.quaternion_w)}/>))
         }
         {
           selectedView && <UpdateCameraWork view={selectedView} isModeTransport={sceneInfoStore.mode_transport} step={100}/>

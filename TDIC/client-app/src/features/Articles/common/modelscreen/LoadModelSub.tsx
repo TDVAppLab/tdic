@@ -1,5 +1,5 @@
 import { useLoader } from '@react-three/fiber';
-import { Vector3 } from 'three';
+import { Quaternion, Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import React from 'react';
 import { observer } from 'mobx-react-lite';
@@ -14,18 +14,22 @@ interface PartProps {
     id_part: number;
     pos:Vector3;
     scale:number;
+    quaternion:Quaternion;
 }
 
-export default observer( function LoadModelSub({id_inst, id_part, pos, scale}: PartProps){
+export default observer( function LoadModelSub({id_inst, id_part, pos, scale, quaternion}: PartProps){
 
     const {instanceobjectStore} = useStore();
-    const {setAnimationClips, setModelLoading} = instanceobjectStore;
+    const {setAnimationClips, setModelLoading, setInstanceUuid } = instanceobjectStore;
   
     const str_url_partapi = APIURL + `/modelfiles/file/${id_part}`;
     const gltf = useLoader(GLTFLoader, str_url_partapi);
     gltf.scene.position.set(pos.x,pos.y,pos.z);
-    gltf.scene.scale.set(scale,scale,scale)
+    gltf.scene.scale.set(scale,scale,scale);
+    gltf.scene.scale.applyQuaternion(quaternion);
     gltf.scene.name = `[${id_inst}]InstanceModel`;
+    setInstanceUuid(id_inst, gltf.scene.uuid);
+    
     setAnimationClips(gltf.animations,id_inst);
     
     setModelLoading(id_inst, false);

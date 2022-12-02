@@ -1,4 +1,4 @@
-import { Vector3 } from 'three';
+import { Quaternion, Vector3 } from 'three';
 import React from 'react';
 import LoadModelSub from './LoadModelSub';
 
@@ -19,14 +19,15 @@ interface PartProps {
     id_part: number;
     pos:Vector3;
     scale:number;
+    quaternion:Quaternion;
 }
 
 
 
-const LoadModel  = ({id_inst, id_part, pos, scale}: PartProps) => {
+const LoadModel  = ({id_inst, id_part, pos, scale, quaternion}: PartProps) => {
     return (
         <React.Suspense fallback={<Loader />}>
-            <LoadModelSub id_inst={id_inst} id_part={id_part} pos={pos} scale={scale} />
+            <LoadModelSub id_inst={id_inst} id_part={id_part} pos={pos} scale={scale} quaternion={quaternion} />
         </React.Suspense>
     )
 }  

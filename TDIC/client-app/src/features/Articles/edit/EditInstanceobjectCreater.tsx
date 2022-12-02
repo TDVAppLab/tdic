@@ -29,6 +29,11 @@ export default observer( function EditInstanceobjectCreater(){
         pos_y: 0,
         pos_z: 0,
         scale: 1,
+        quaternion_x: 0,
+        quaternion_y: 0,
+        quaternion_z: 0,
+        quaternion_w: 1,
+        uuid: null,
 
     });
     
@@ -49,6 +54,11 @@ export default observer( function EditInstanceobjectCreater(){
                     pos_y: 0,
                     pos_z: 0,
                     scale: 1,
+                    quaternion_x: 0,
+                    quaternion_y: 0,
+                    quaternion_z: 0,
+                    quaternion_w: 1,
+                    uuid: null,
         
                 });            
             //loadModelfiles(false);

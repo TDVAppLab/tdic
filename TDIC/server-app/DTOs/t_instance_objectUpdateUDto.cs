@@ -12,6 +12,10 @@ namespace TDIC.DTOs
         public double pos_y { get; set; }
         public double pos_z { get; set; }
         public double scale { get; set; }
+        public double quaternion_x { get; set; }
+        public double quaternion_y { get; set; }
+        public double quaternion_z { get; set; }
+        public double quaternion_w { get; set; }
 
     }
 }
