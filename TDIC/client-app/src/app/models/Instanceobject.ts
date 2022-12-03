@@ -16,3 +16,22 @@ export interface Instanceobject {
 
     uuid: string | null;
 }
+
+export const getDefaultValueOfInstanceobject = (id_article : number) => {
+    const ans : Instanceobject = {
+        id_article: id_article ? id_article : 0,
+        id_instance: 0,
+        id_part: 0,
+        
+        pos_x: 0,
+        pos_y: 0,
+        pos_z: 0,
+        scale: 1,
+        quaternion_x: 0,
+        quaternion_y: 0,
+        quaternion_z: 0,
+        quaternion_w: 1,
+        uuid: null,
+    }
+    return ans;
+}
