@@ -5,7 +5,7 @@ namespace TDIC.DTOs
 {
     public partial class t_lightUpdateUDto
     {
-        public long id_article { get; set; }
+        public string id_article { get; set; }
         public long id_light { get; set; }
         public string light_type { get; set; }
         public string title { get; set; }

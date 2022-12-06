@@ -20,7 +20,7 @@ namespace Application.Instruction
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public long id_article {get; set;}
+            public string id_article {get; set;}
         }
         /*
         public class CommandVelidator : AbstractValidator<Command>

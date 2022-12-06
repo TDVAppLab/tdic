@@ -7,7 +7,7 @@ namespace TDIC.Models.EDM
 {
     public partial class t_light
     {
-        public long id_article { get; set; }
+        public string id_article { get; set; }
         public Guid? id_article_uid { get; set; }
         public long id_light { get; set; }
         public string light_type { get; set; }

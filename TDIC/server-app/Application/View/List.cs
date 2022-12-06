@@ -14,7 +14,7 @@ namespace Application.View
     public class List
     {
         public class Query : IRequest<Result<List<t_view>>>{
-            public long id_article {get; set;}
+            public string id_article {get; set;}
         }
 
         public class Handler : IRequestHandler<Query, Result<List<t_view>>>

@@ -14,7 +14,7 @@ namespace Application.InstanceObject
     public class List
     {
         public class Query : IRequest<Result<List<t_instance_object>>>{
-            public long id_article {get; set;}
+            public string id_article {get; set;}
         }
 
         public class Handler : IRequestHandler<Query, Result<List<t_instance_object>>>

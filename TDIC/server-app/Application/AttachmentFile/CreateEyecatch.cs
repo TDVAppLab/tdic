@@ -14,7 +14,7 @@ namespace Application.AttachmentFile
     public class CreateEyecatch
     {
         public class Command : IRequest<Result<Unit>>{
-            public long id_article {get; set;}
+            public string id_article {get; set;}
             public string imgfilebin {get; set;}
         }
 

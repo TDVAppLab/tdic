@@ -6,7 +6,7 @@ namespace TDIC.DTOs
     public partial class t_articleUpdateUDto
     {
 
-        public long id_article { get; set; }
+        public string id_article { get; set; }
         public long? id_assy { get; set; }
         public string title { get; set; }
         public string short_description { get; set; }

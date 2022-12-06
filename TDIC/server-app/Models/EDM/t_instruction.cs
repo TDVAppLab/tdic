@@ -13,7 +13,7 @@ namespace TDIC.Models.EDM
             t_annotation_displays = new HashSet<t_annotation_display>();
         }
 
-        public long id_article { get; set; }
+        public string id_article { get; set; }
         public Guid? id_article_uid { get; set; }
         public long id_instruct { get; set; }
         public int id_view { get; set; }

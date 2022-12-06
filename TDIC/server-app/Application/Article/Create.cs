@@ -40,13 +40,14 @@ namespace Application.Article
             public async Task<Result<t_article>> Handle(Command request, CancellationToken cancellationToken)
             {
 
-                
+                /*
                 long id_article = 1 + (await _context.t_articles
                                         .MaxAsync(t => (long?)t.id_article) ?? 0);
 
-                request.Article.id_article = id_article;
+                request.Article.id_article = id_article;*/
 
                 request.Article.id_article_uid = Guid.NewGuid();
+                request.Article.id_article = request.Article.id_article_uid.ToString();
 
                 
                 request.Article.create_user = "";

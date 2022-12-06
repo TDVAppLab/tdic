@@ -17,7 +17,7 @@ namespace Application.Annotation
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public long id_article {get; set;}
+            public string id_article {get; set;}
             public long id_annotation {get; set;}
         }
         public class Handler : IRequestHandler<Command,Result<Unit>>

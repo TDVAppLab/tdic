@@ -14,7 +14,7 @@ namespace Application.Light
     public class Details
     {
         public class Query : IRequest<Result<t_light>>{
-            public long id_article {get; set;}
+            public string id_article {get; set;}
             public long id_light {get; set;}
         }
 

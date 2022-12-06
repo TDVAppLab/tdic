@@ -5,7 +5,7 @@ namespace TDIC.DTOs
 {
     public partial class t_instance_objectUpdateUDto
     {
-        public long id_article { get; set; }
+        public string id_article { get; set; }
         public long id_instance { get; set; }
         public long id_part { get; set; }
         public double pos_x { get; set; }

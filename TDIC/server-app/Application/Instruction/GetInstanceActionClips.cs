@@ -16,7 +16,7 @@ namespace Application.Instruction
     public class GetInstanceActionClips
     {
         public class Query : IRequest<Result<List<InstanceActionExecSetting>>>{
-            public long ID {get; set;}
+            public string ID {get; set;}
         }
 
         public class Handler : IRequestHandler<Query, Result<List<InstanceActionExecSetting>>>
