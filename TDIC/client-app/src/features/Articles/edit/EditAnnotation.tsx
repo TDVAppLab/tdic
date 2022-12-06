@@ -12,9 +12,9 @@ import { Vector3 } from 'three';
 import { toast } from 'react-toastify';
 
 
-const getDefaultValueOfAnnotation = (id_article : number) => {
+const getDefaultValueOfAnnotation = (id_article : string) => {
     const ans : Annotation = {
-        id_article: id_article ? id_article : 0,
+        id_article: id_article ? id_article : "",
         id_annotation: 0,
 
         title: '',

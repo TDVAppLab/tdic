@@ -56,7 +56,7 @@ export default observer( function ArticleDetails() {
     useEffect(() => {
 
         setIsDataLoading(
-               article?.id_article_uid !== id
+               article?.id_article !== id
             || isArticleLoading 
             || isInstructionLoading
             || isViewLoading 
@@ -87,18 +87,18 @@ export default observer( function ArticleDetails() {
     useEffect(()=> {
 
         
-        id && agent.Articles.detailsguid(id).then(x=>{
+        //id && agent.Articles.detailsguid(id).then(x=>{
 
-            if(x.id_article) {
-                loadArticle(x.id_article);
-                loadInstanceobjects(x.id_article);
-                loadInstructions(x.id_article);
-                loadViews(x.id_article);
-                loadAnnotations(x.id_article);
-                loadLights(x.id_article);
-                loadAnnotationDisplays(x.id_article);
+            if(id) {
+                loadArticle(id);
+                loadInstanceobjects(id);
+                loadInstructions(id);
+                loadViews(id);
+                loadAnnotations(id);
+                loadLights(id);
+                loadAnnotationDisplays(id);
             }
-        })
+        //})
 
     }, [id])
 

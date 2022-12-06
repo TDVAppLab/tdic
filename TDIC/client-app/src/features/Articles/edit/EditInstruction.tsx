@@ -16,9 +16,9 @@ import PreviewInstructionDescription from './PreviewInstructionDescription';
 
 
 
-const getDefaultValueOfInstruction = (id_article : number) => {
+const getDefaultValueOfInstruction = (id_article : string) => {
     const ans : Instruction = {
-        id_article: id_article ? id_article : 0,
+        id_article: id_article ? id_article : "",
         id_instruct: 0,
         id_view: 0,
         title: '',

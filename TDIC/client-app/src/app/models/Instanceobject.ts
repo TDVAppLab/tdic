@@ -1,6 +1,6 @@
 export interface Instanceobject {
 
-    id_article: number;
+    id_article: string;
     id_instance: number;
     id_part: number;
     
@@ -17,9 +17,9 @@ export interface Instanceobject {
     uuid: string | null;
 }
 
-export const getDefaultValueOfInstanceobject = (id_article : number) => {
+export const getDefaultValueOfInstanceobject = (id_article : string) => {
     const ans : Instanceobject = {
-        id_article: id_article ? id_article : 0,
+        id_article: id_article ? id_article : "",
         id_instance: 0,
         id_part: 0,
         

@@ -12,9 +12,9 @@ import { toast } from 'react-toastify';
 
 
 
-const getDefaultValueOfLight = (id_article : number) => {
+const getDefaultValueOfLight = (id_article : string) => {
     const ans : Light = {
-        id_article: id_article ? id_article : 0,
+        id_article: id_article ? id_article : "",
         id_light: 0,
         light_type: '',
         title:  '',

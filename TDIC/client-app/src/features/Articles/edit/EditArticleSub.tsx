@@ -34,8 +34,7 @@ export default observer( function EditArticleSub(){
 
     const [article, setArticle] = useState<Article>({
             
-        id_article: 0,
-        id_article_uid: null,
+        id_article: "",
         id_assy: 0,
 
         title: '',
@@ -95,7 +94,7 @@ export default observer( function EditArticleSub(){
     
 
     async function handleFormArticleUpd(object:Article) {
-        if(object.id_article === 0 ){
+        if(object.id_article === "" ){
             let newObject = {
                 ...object
             }
@@ -169,7 +168,7 @@ export default observer( function EditArticleSub(){
 
             </Formik>
 
-            { article.id_article !== 0 &&
+            { article.id_article !== "" &&
             <Formik
                 validationSchema={validationSchemaDel}
                 enableReinitialize 
@@ -186,7 +185,7 @@ export default observer( function EditArticleSub(){
             }
 
 
-            { article.id_article !== 0 &&
+            { article.id_article !== "" &&
             <Formik
                 validationSchema={validationSchemaDel}
                 enableReinitialize 

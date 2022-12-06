@@ -11,16 +11,16 @@ export default class AnnotationDisplayStore {
     loading=false;
 
     
-    id_article: number = 0;
+    id_article: string = "";
 
     constructor(){
         makeAutoObservable(this)
     }
 
 
-    loadAnnotationDisplays = async (id_article:number) => {
+    loadAnnotationDisplays = async (id_article:string) => {
 
-        if(id_article === -1) {            
+        if(id_article === "") {            
             runInAction(()=>{
                 this.selectedAnnotationDisplayMap.clear();
             })

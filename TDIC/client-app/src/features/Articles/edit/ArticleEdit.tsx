@@ -67,13 +67,13 @@ export default observer( function ArticleEdit() {
     useEffect(() => { 
         if(id) {
             setIsDataLoading(
-                article?.id_article !== Number(id)
-            || instructionId_article !== Number(id)
-            || viewId_article !== Number(id) 
-            || instanceobjectId_article !== Number(id)
-            || lightId_article !== Number(id) 
-            || annotationId_article !== Number(id) 
-            || annotationDisplayId_article !== Number(id) 
+                article?.id_article !== id
+            || instructionId_article !== id
+            || viewId_article !== id
+            || instanceobjectId_article !== id
+            || lightId_article !== id
+            || annotationId_article !== id
+            || annotationDisplayId_article !== id
             );
         } else {
             setIsDataLoading(false);
@@ -90,7 +90,7 @@ export default observer( function ArticleEdit() {
 
     useEffect(()=> {
 
-        if((instructionId_article === Number(id)) && (viewId_article === Number(id)))  {
+        if((instructionId_article === id) && (viewId_article === id))  {
         selectedInstruction && setselectedView(selectedInstruction.id_view);
         }
         
@@ -99,21 +99,21 @@ export default observer( function ArticleEdit() {
     useEffect(()=> {
 
         if(id) {
-            loadArticle(Number(id));
-            loadInstanceobjects(Number(id));
-            loadInstructions(Number(id));
-            loadViews(Number(id));
-            loadAnnotations(Number(id));
-            loadLights(Number(id));
-            loadAnnotationDisplays(Number(id));
+            loadArticle(id);
+            loadInstanceobjects(id);
+            loadInstructions(id);
+            loadViews(id);
+            loadAnnotations(id);
+            loadLights(id);
+            loadAnnotationDisplays(id);
         } else {
-            loadArticle(-1);
-            loadInstanceobjects(-1);
-            loadInstructions(-1);
-            loadViews(-1);
-            loadAnnotations(-1);
-            loadLights(-1);
-            loadAnnotationDisplays(-1);
+            loadArticle("");
+            loadInstanceobjects("");
+            loadInstructions("");
+            loadViews("");
+            loadAnnotations("");
+            loadLights("");
+            loadAnnotationDisplays("");
         }
 
     }, [id])
@@ -222,7 +222,7 @@ export default observer( function ArticleEdit() {
 
                             { id &&
                             <Tab eventKey="info" title="info" >
-                                <Link to={`/article/${article?.id_article_uid}`}>Details</Link> 
+                                <Link to={`/article/${article?.id_article}`}>Details</Link> 
                                 <hr />
 
                                 <SetChecker Val={isEditmode} ValSettingFunction={setIsEditmode} LabelString="Edit Mode" />
