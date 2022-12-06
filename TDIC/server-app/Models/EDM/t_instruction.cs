@@ -14,6 +14,7 @@ namespace TDIC.Models.EDM
         }
 
         public long id_article { get; set; }
+        public Guid? id_article_uid { get; set; }
         public long id_instruct { get; set; }
         public int id_view { get; set; }
         public string title { get; set; }
