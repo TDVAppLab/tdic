@@ -26,7 +26,7 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpGet("details/{id}")]
-        public async Task<ActionResult> GetActivity(string id)
+        public async Task<ActionResult> GetActivity(Guid id)
         {
             return HandleResult(await Mediator.Send(new Details.Query{ID = id}));
         }
@@ -53,19 +53,19 @@ namespace API.Controllers
         }
         
         [HttpPost("delete/{id}")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             return HandleResult(await Mediator.Send(new Delete.Command{id_article=id}));
         }
         
         [HttpPost("deletedeep/{id}")]
-        public async Task<IActionResult> DeleteDeep(string id)
+        public async Task<IActionResult> DeleteDeep(Guid id)
         {
             return HandleResult(await Mediator.Send(new DeleteDeep.Command{id_article=id}));
         }
         
         [HttpPost("duplicate/{id}")]
-        public async Task<IActionResult> Duplicate(string id)
+        public async Task<IActionResult> Duplicate(Guid id)
         {
             return HandleResult(await Mediator.Send(new Duplicate.Command{id_article=id}));
         }

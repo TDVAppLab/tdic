@@ -21,14 +21,14 @@ namespace API.Controllers
     {        
         [AllowAnonymous]
         [HttpGet("Index/{id}")]
-        public async Task<ActionResult> GetInstructions(string id)
+        public async Task<ActionResult> GetInstructions(Guid id)
         {
             return HandleResult(await Mediator.Send(new List.Query{id_article=id}));
         }
 
         [AllowAnonymous]
         [HttpGet("details/id_article={id_article}&id_instruct={id_instruct}")]
-        public async Task<ActionResult> GetInstruction(string id_article,long id_instruct)
+        public async Task<ActionResult> GetInstruction(Guid id_article,long id_instruct)
         {
             return HandleResult(await Mediator.Send(new Details.Query{id_article = id_article,id_instruct=id_instruct}));
         }
@@ -52,7 +52,7 @@ namespace API.Controllers
         }
 
         [HttpPost("resetinstancedisplay/{id}")]
-        public async Task<IActionResult> ResetInstanceDisplay(string id)
+        public async Task<IActionResult> ResetInstanceDisplay(Guid id)
         {
             //task.id = id;
 
@@ -60,27 +60,27 @@ namespace API.Controllers
         }
 
         [HttpPost("resetinstanceactionclips/{id}")]
-        public async Task<IActionResult> resetInstanceActionClips(string id)
+        public async Task<IActionResult> resetInstanceActionClips(Guid id)
         {
             return HandleResult(await Mediator.Send(new resetInstanceActionClips.Command{ id_article = id}));
         }
 
         [AllowAnonymous]
         [HttpGet("getinstanceactionclips/{id}")]
-        public async Task<ActionResult> GetInstanceActionClips(string id)
+        public async Task<ActionResult> GetInstanceActionClips(Guid id)
         {
             return HandleResult(await Mediator.Send(new GetInstanceActionClips.Query{ID = id}));
         }
         
 
         [HttpPost("updateinstanceactionclips/id_article={id_article}&id_instruct={id_instruct}")]
-        public async Task<IActionResult> UpdateInstanceActionClips(string id_article,long id_instruct, [FromBody] List<InstanceActionExecSetting> instanceActionExecSettings)
+        public async Task<IActionResult> UpdateInstanceActionClips(Guid id_article,long id_instruct, [FromBody] List<InstanceActionExecSetting> instanceActionExecSettings)
         {
             return HandleResult(await Mediator.Send(new UpdateInstanceActionClips.Command{ id_article = id_article, id_instruct=id_instruct, instanceActionExecSettings=instanceActionExecSettings}));
         }
 
         [HttpPost("delete/id_article={id_article}&id_instruct={id_instruct}")]
-        public async Task<IActionResult> Delete(string id_article,long id_instruct)
+        public async Task<IActionResult> Delete(Guid id_article,long id_instruct)
         {
             return HandleResult(await Mediator.Send(new Delete.Command{id_article=id_article, id_instruct=id_instruct}));
         }

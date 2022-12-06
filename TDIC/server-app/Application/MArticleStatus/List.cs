@@ -14,7 +14,7 @@ namespace Application.MArticleStatus
     public class List
     {
         public class Query : IRequest<Result<List<m_status_article>>>{
-            public string id_article {get; set;}
+            public Guid id_article {get; set;}
         }
 
         public class Handler : IRequestHandler<Query, Result<List<m_status_article>>>

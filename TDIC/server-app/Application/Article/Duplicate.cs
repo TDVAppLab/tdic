@@ -15,7 +15,7 @@ namespace Application.Article
     public class Duplicate
     {
         public class Command : IRequest<Result<t_article>>{
-            public string id_article {get; set;}
+            public Guid id_article {get; set;}
         }
         public class Handler : IRequestHandler<Command, Result<t_article>>
         {
@@ -42,8 +42,8 @@ namespace Application.Article
 
 
                 
-                article.id_article_uid = Guid.NewGuid();
-                article.id_article = article.id_article_uid.ToString();
+                article.id_article = Guid.NewGuid();
+                article.id_article_uid = article.id_article;
                 article.title = title_new;
                 article.status = status_new;
 

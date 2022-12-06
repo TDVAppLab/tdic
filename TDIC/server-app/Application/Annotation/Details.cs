@@ -14,7 +14,7 @@ namespace Application.Annotation
     public class Details
     {
         public class Query : IRequest<Result<t_annotation>>{
-            public string id_article {get; set;}
+            public Guid id_article {get; set;}
             public long id_annotation {get; set;}
         }
 

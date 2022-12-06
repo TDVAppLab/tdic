@@ -17,7 +17,7 @@ namespace Application.Light
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public string id_article {get; set;}
+            public Guid id_article {get; set;}
             public long id_light {get; set;}
         }
         public class Handler : IRequestHandler<Command,Result<Unit>>

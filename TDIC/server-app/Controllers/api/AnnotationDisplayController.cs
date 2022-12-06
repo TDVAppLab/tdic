@@ -19,7 +19,7 @@ namespace API.Controllers
     {        
         [AllowAnonymous]
         [HttpGet("Index/{id}")]
-        public async Task<ActionResult> GetIndex(string id)
+        public async Task<ActionResult> GetIndex(Guid id)
         {
             return HandleResult(await Mediator.Send(new List.Query{id_article=id}));
         }

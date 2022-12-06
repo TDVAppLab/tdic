@@ -14,7 +14,7 @@ namespace Application.Instruction
     public class Details
     {
         public class Query : IRequest<Result<t_instruction>>{
-            public string id_article {get; set;}
+            public Guid id_article {get; set;}
             public long id_instruct {get; set;}
         }
 
