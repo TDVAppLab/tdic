@@ -28,7 +28,7 @@ namespace Application.Article
 
             public async Task<Result<t_article>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var t_article =  await _context.t_articles.Where(t => t.id_article_uid == request.UID).FirstOrDefaultAsync();
+                var t_article =  await _context.t_articles.Where(t => t.id_article == request.UID).FirstOrDefaultAsync();
 
                 if(t_article==null) throw new Exception("t_article not found");
 

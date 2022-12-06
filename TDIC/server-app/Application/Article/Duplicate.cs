@@ -43,7 +43,6 @@ namespace Application.Article
 
                 
                 article.id_article = Guid.NewGuid();
-                article.id_article_uid = article.id_article;
                 article.title = title_new;
                 article.status = status_new;
 

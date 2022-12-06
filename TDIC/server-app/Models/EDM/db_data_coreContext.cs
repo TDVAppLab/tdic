@@ -51,7 +51,7 @@ namespace TDIC.Models.EDM
 
             modelBuilder.Entity<t_annotation>(entity =>
             {
-                entity.HasKey(e => new { e.id_article_uid, e.id_annotation });
+                entity.HasKey(e => new { e.id_article, e.id_annotation });
 
                 entity.ToTable("t_annotation");
 
@@ -67,14 +67,14 @@ namespace TDIC.Models.EDM
 
                 entity.HasOne(d => d.id_articleNavigation)
                     .WithMany(p => p.t_annotations)
-                    .HasForeignKey(d => d.id_article_uid)
+                    .HasForeignKey(d => d.id_article)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_annotation_t_article");
             });
 
             modelBuilder.Entity<t_annotation_display>(entity =>
             {
-                entity.HasKey(e => new { e.id_article_uid, e.id_instruct, e.id_annotation });
+                entity.HasKey(e => new { e.id_article, e.id_instruct, e.id_annotation });
 
                 entity.ToTable("t_annotation_display");
 
@@ -84,20 +84,20 @@ namespace TDIC.Models.EDM
 
                 entity.HasOne(d => d.id_a)
                     .WithMany(p => p.t_annotation_displays)
-                    .HasForeignKey(d => new { d.id_article_uid, d.id_annotation })
+                    .HasForeignKey(d => new { d.id_article, d.id_annotation })
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_annotation_display_t_annotation");
 
                 entity.HasOne(d => d.id_)
                     .WithMany(p => p.t_annotation_displays)
-                    .HasForeignKey(d => new { d.id_article_uid, d.id_instruct })
+                    .HasForeignKey(d => new { d.id_article, d.id_instruct })
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_annotation_display_t_instruction");
             });
 
             modelBuilder.Entity<t_article>(entity =>
             {
-                entity.HasKey(e => e.id_article_uid)
+                entity.HasKey(e => e.id_article)
                     .HasName("PK_t_product");
 
                 entity.ToTable("t_article");
@@ -176,7 +176,7 @@ namespace TDIC.Models.EDM
 
             modelBuilder.Entity<t_instance_object>(entity =>
             {
-                entity.HasKey(e => new { e.id_article_uid, e.id_instance })
+                entity.HasKey(e => new { e.id_article, e.id_instance })
                     .HasName("PK_t_instance_object");
 
                 entity.ToTable("t_instance_object");
@@ -187,7 +187,7 @@ namespace TDIC.Models.EDM
 
                 entity.HasOne(d => d.id_articleNavigation)
                     .WithMany(p => p.t_instance_objects)
-                    .HasForeignKey(d => d.id_article_uid)
+                    .HasForeignKey(d => d.id_article)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_instance_object_t_article");
 
@@ -200,7 +200,7 @@ namespace TDIC.Models.EDM
 
             modelBuilder.Entity<t_instruction>(entity =>
             {
-                entity.HasKey(e => new { e.id_article_uid, e.id_instruct });
+                entity.HasKey(e => new { e.id_article, e.id_instruct });
 
                 entity.ToTable("t_instruction");
 
@@ -212,20 +212,20 @@ namespace TDIC.Models.EDM
 
                 entity.HasOne(d => d.id_articleNavigation)
                     .WithMany(p => p.t_instructions)
-                    .HasForeignKey(d => d.id_article_uid)
+                    .HasForeignKey(d => d.id_article)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_instruction_t_article");
 
                 entity.HasOne(d => d.id_)
                     .WithMany(p => p.t_instructions)
-                    .HasForeignKey(d => new { d.id_article_uid, d.id_view })
+                    .HasForeignKey(d => new { d.id_article, d.id_view })
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_instruction_t_view");
             });
 
             modelBuilder.Entity<t_light>(entity =>
             {
-                entity.HasKey(e => new { e.id_article_uid, e.id_light });
+                entity.HasKey(e => new { e.id_article, e.id_light });
 
                 entity.ToTable("t_light");
 
@@ -241,7 +241,7 @@ namespace TDIC.Models.EDM
 
                 entity.HasOne(d => d.id_articleNavigation)
                     .WithMany(p => p.t_lights)
-                    .HasForeignKey(d => d.id_article_uid)
+                    .HasForeignKey(d => d.id_article)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_light_t_article");
             });
@@ -281,7 +281,7 @@ namespace TDIC.Models.EDM
 
             modelBuilder.Entity<t_view>(entity =>
             {
-                entity.HasKey(e => new { e.id_article_uid, e.id_view });
+                entity.HasKey(e => new { e.id_article, e.id_view });
 
                 entity.ToTable("t_view");
 
@@ -293,7 +293,7 @@ namespace TDIC.Models.EDM
 
                 entity.HasOne(d => d.id_articleNavigation)
                     .WithMany(p => p.t_views)
-                    .HasForeignKey(d => d.id_article_uid)
+                    .HasForeignKey(d => d.id_article)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_view_t_article");
             });

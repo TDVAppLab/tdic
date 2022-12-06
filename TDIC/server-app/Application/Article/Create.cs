@@ -42,7 +42,6 @@ namespace Application.Article
 
 
                 request.Article.id_article = Guid.NewGuid();
-                request.Article.id_article_uid = request.Article.id_article;
 
                 
                 request.Article.create_user = "";
