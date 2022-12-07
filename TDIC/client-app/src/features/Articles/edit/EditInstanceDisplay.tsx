@@ -37,7 +37,7 @@ export default observer( function EditInstanceDisplay(){
 
 
     
-    async function handleFormInstanceActionClipsUpd(id_article : number,id_instruct : number, values : InstanceActionExecSetting[]) {        
+    async function handleFormInstanceActionClipsUpd(id_article : string,id_instruct : number, values : InstanceActionExecSetting[]) {        
         await instructionStore.updateInstanceActionClips(id_article,id_instruct,values);
         toast.info('instance actionClips updated');
     }

@@ -45,11 +45,11 @@ export default observer( function EditInstanceobjectCreater(){
     
 
     const validationSchemaInstanceEdit = Yup.object({
-        id_article: Yup.number().min(1, 'The minimum amount is one').required(),
+        id_article: Yup.string().required(),
     });
     
     const validationSchemaInstanceDel = Yup.object({
-        id_article: Yup.number().min(1, 'The minimum amount is one').required(),
+        id_article: Yup.string().required(),
         id_instance: Yup.number().min(1, 'The minimum amount is one').required(),
     });
 

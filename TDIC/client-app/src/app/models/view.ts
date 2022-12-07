@@ -1,6 +1,6 @@
 export interface View {
 
-    id_article: number;
+    id_article: string;
     id_view: number;
 
     title: string;

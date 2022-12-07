@@ -19,14 +19,14 @@ namespace API.Controllers
     {        
         [AllowAnonymous]
         [HttpGet("Index/{id}")]
-        public async Task<ActionResult> GetInstructions(long id)
+        public async Task<ActionResult> GetInstructions(Guid id)
         {
             return HandleResult(await Mediator.Send(new List.Query{id_article=id}));
         }
 
         [AllowAnonymous]
         [HttpGet("details/id_article={id_article}&id_view={id_view}")]
-        public async Task<ActionResult> GetInstruction(long id_article,int id_view)
+        public async Task<ActionResult> GetInstruction(Guid id_article,int id_view)
         {
             return HandleResult(await Mediator.Send(new Details.Query{id_article = id_article,id_view=id_view}));
         }
@@ -46,7 +46,7 @@ namespace API.Controllers
         }
         
         [HttpPost("delete/id_article={id_article}&id_view={id_view}")]
-        public async Task<IActionResult> Delete(long id_article, int id_view)
+        public async Task<IActionResult> Delete(Guid id_article, int id_view)
         {
             return HandleResult(await Mediator.Send(new Delete.Command{id_article=id_article, id_view=id_view}));
         }

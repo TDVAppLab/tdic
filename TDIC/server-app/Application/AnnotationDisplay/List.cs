@@ -14,7 +14,7 @@ namespace Application.AnnotationDisplay
     public class List
     {
         public class Query : IRequest<Result<List<t_annotation_display>>>{
-            public long id_article {get; set;}
+            public Guid id_article {get; set;}
         }
 
         public class Handler : IRequestHandler<Query, Result<List<t_annotation_display>>>

@@ -15,8 +15,7 @@ namespace TDIC.Models.EDM
             t_views = new HashSet<t_view>();
         }
 
-        public long id_article { get; set; }
-        public Guid? id_article_uid { get; set; }
+        public Guid id_article { get; set; }
         public long? id_assy { get; set; }
         public string title { get; set; }
         public string short_description { get; set; }

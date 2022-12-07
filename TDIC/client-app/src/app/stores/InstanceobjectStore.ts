@@ -13,17 +13,17 @@ export default class InstanceobjectStore {
 
     modelLoadingRegistry = new  Map<number, boolean>();
     
-    id_article: number = 0;
+    id_article: string = "";
 
     constructor(){
         makeAutoObservable(this)
     }
 
 
-    loadInstanceobjects = async (id_article:number) => {
+    loadInstanceobjects = async (id_article:string) => {
 
         
-        if(id_article === -1) {
+        if(id_article === "") {
             this.instanceobjectRegistry.clear();
             this.annimationsRegistry.clear();
             this.modelLoadingRegistry.clear();

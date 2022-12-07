@@ -102,63 +102,63 @@ const Attachmentfiles = {
 
 const Articles = {
     list: () => requests.get<Article[]>('/articles/index'),
-    details:(id:number) => requests.get<Article>(`/articles/details/${id}`),
+    details:(id:string) => requests.get<Article>(`/articles/details/${id}`),
     detailsguid:(id:string) => requests.get<Article>(`/articles/detailsguid/${id}`),
     create:(article: Article) => axios.post<Article>(`/articles/create`,article),
     update: (article: Article) => axios.post<void>(`/articles/update/`, article),
-    delete:(id:number) => axios.post<void>(`/articles/delete/${id}`),
-    deleteDeep:(id:number) => axios.post<void>(`/articles/deletedeep/${id}`),
-    duplicate:(id:number) => axios.post<Article>(`/articles/duplicate/${id}`),
+    delete:(id:string) => axios.post<void>(`/articles/delete/${id}`),
+    deleteDeep:(id:string) => axios.post<void>(`/articles/deletedeep/${id}`),
+    duplicate:(id:string) => axios.post<Article>(`/articles/duplicate/${id}`),
 }
 
 const Instructions = {
-    list: (id:number) => requests.get<Instruction[]>(`/instruction/index/${id}`),
-    details:(id_article:number,id_instruct:number) => requests.get<Instruction>(`/instruction/id_article=${id_article}&id_instruct=${id_instruct}`),
+    list: (id:string) => requests.get<Instruction[]>(`/instruction/index/${id}`),
+    details:(id_article:string,id_instruct:number) => requests.get<Instruction>(`/instruction/id_article=${id_article}&id_instruct=${id_instruct}`),
     create:(instruction: Instruction) => axios.post<Instruction>(`/instruction/create`,instruction),
     update: (instruction: Instruction) => axios.post<void>(`/instruction/update/`, instruction),
     updateInstanceDisplay: (instruction: Instruction) => axios.post<void>(`/instruction/updateinstancedisplay/`, instruction),
-    resetInstanceDisplay: (id_article: number) => axios.post<void>(`/instruction/resetinstancedisplay/${id_article}`),    
-    resetInstanceActionClips: (id_article: number) => axios.post<void>(`/instruction/resetinstanceactionclips/${id_article}`),
-    getInstanceActionClips:(id_article:number) => requests.get<InstanceActionExecSetting[]>(`/instruction/getinstanceactionclips/${id_article}`),    
-    updateInstanceActionClips: (id_article:number,id_instruct:number,instanceActionExecSettings: InstanceActionExecSetting[]) => axios.post<void>(`/instruction/updateinstanceactionclips/id_article=${id_article}&id_instruct=${id_instruct}`, instanceActionExecSettings),
-    delete: (id_article:number,id_instruct:number) => axios.post<void>(`/instruction/delete/id_article=${id_article}&id_instruct=${id_instruct}`),
+    resetInstanceDisplay: (id_article: string) => axios.post<void>(`/instruction/resetinstancedisplay/${id_article}`),    
+    resetInstanceActionClips: (id_article: string) => axios.post<void>(`/instruction/resetinstanceactionclips/${id_article}`),
+    getInstanceActionClips:(id_article:string) => requests.get<InstanceActionExecSetting[]>(`/instruction/getinstanceactionclips/${id_article}`),    
+    updateInstanceActionClips: (id_article:string,id_instruct:number,instanceActionExecSettings: InstanceActionExecSetting[]) => axios.post<void>(`/instruction/updateinstanceactionclips/id_article=${id_article}&id_instruct=${id_instruct}`, instanceActionExecSettings),
+    delete: (id_article:string,id_instruct:number) => axios.post<void>(`/instruction/delete/id_article=${id_article}&id_instruct=${id_instruct}`),
 }
 
 const Views = {
-    list: (id:number) => requests.get<View[]>(`/view/index/${id}`),
-    details:(id_article:number, id_view : number) => requests.get<View>(`/view/details/id_article=${id_article}&id_view=${id_view}`),
+    list: (id:string) => requests.get<View[]>(`/view/index/${id}`),
+    details:(id_article:string, id_view : number) => requests.get<View>(`/view/details/id_article=${id_article}&id_view=${id_view}`),
     create:(view: View) => axios.post<View>(`/view/create`,view),
     update: (view: View) => axios.post<void>(`/view/update/`, view),
-    delete: (id_article:number,id_view:number) => axios.post<void>(`/view/delete/id_article=${id_article}&id_view=${id_view}`),
+    delete: (id_article:string,id_view:number) => axios.post<void>(`/view/delete/id_article=${id_article}&id_view=${id_view}`),
 }
 
 const Annotations = {
-    list: (id:number) => requests.get<Annotation[]>(`/annotation/index/${id}`),
-    details:(id_article:number,id_annotation:number) => requests.get<Annotation>(`/annotation/details/id_article=${id_article}&id_annotation=${id_annotation}`),
+    list: (id:string) => requests.get<Annotation[]>(`/annotation/index/${id}`),
+    details:(id_article:string,id_annotation:number) => requests.get<Annotation>(`/annotation/details/id_article=${id_article}&id_annotation=${id_annotation}`),
     create:(annotation: Annotation) => axios.post<Annotation>(`/annotation/create`,annotation),
     update: (annotation: Annotation) => axios.post<void>(`/annotation/update/`, annotation),
-    delete: (id_article:number,id_annotation:number) => axios.post<void>(`/annotation/delete/id_article=${id_article}&id_annotation=${id_annotation}`),
+    delete: (id_article:string,id_annotation:number) => axios.post<void>(`/annotation/delete/id_article=${id_article}&id_annotation=${id_annotation}`),
 }
 const AnnotationDisplays = {
-    list: (id:number) => requests.get<AnnotationDisplay[]>(`/annotationdisplay/index/${id}`),
-    details:(id:number) => requests.get<AnnotationDisplay>(`/annotationdisplay/details/${id}`),
+    list: (id:string) => requests.get<AnnotationDisplay[]>(`/annotationdisplay/index/${id}`),
+    details:(id:string) => requests.get<AnnotationDisplay>(`/annotationdisplay/details/${id}`),
     update: (annotationDisplays: AnnotationDisplay[]) => axios.post<void>(`/annotationdisplay/update/`, annotationDisplays),
 }
 
 const Lights = {
-    list: (id:number) => requests.get<Light[]>(`/light/index/${id}`),
-    details:(id_article:number,id_light:number) => requests.get<Light>(`/light/details/id_article=${id_article}&id_light=${id_light}`),
+    list: (id:string) => requests.get<Light[]>(`/light/index/${id}`),
+    details:(id_article:string,id_light:number) => requests.get<Light>(`/light/details/id_article=${id_article}&id_light=${id_light}`),
     create:(light: Light) => axios.post<Light>(`/light/create`,light),
     update: (light: Light) => axios.post<void>(`/light/update/`, light),
-    delete: (id_article:number,id_light:number) => axios.post<void>(`/light/delete/id_article=${id_article}&id_light=${id_light}`),
+    delete: (id_article:string,id_light:number) => axios.post<void>(`/light/delete/id_article=${id_article}&id_light=${id_light}`),
 }
 
 const Instanceobjects = {
-    list: (id:number) => requests.get<Instanceobject[]>(`/instanceobject/index/${id}`),
-    details:(id_article:number,id_instance:number) => requests.get<Instanceobject>(`/instanceobject/details/id_article=${id_article}&id_instance=${id_instance}`),    
+    list: (id:string) => requests.get<Instanceobject[]>(`/instanceobject/index/${id}`),
+    details:(id_article:string,id_instance:number) => requests.get<Instanceobject>(`/instanceobject/details/id_article=${id_article}&id_instance=${id_instance}`),    
     create:(object: Instanceobject) => axios.post<Instanceobject>(`/instanceobject/create`,object),
     update: (instanceobject: Instanceobject[]) => axios.post<void>(`/instanceobject/update/`, instanceobject),
-    delete: (id_article:number,id_instance:number) => axios.post<void>(`/instanceobject/delete/id_article=${id_article}&id_instance=${id_instance}`),
+    delete: (id_article:string,id_instance:number) => axios.post<void>(`/instanceobject/delete/id_article=${id_article}&id_instance=${id_instance}`),
 }
 
 const Account = {

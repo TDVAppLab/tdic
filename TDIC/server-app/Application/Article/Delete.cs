@@ -17,7 +17,7 @@ namespace Application.Article
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public long id_article {get; set;}
+            public Guid id_article {get; set;}
         }
         public class Handler : IRequestHandler<Command,Result<Unit>>
         {

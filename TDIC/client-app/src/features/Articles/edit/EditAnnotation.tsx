@@ -12,9 +12,9 @@ import { Vector3 } from 'three';
 import { toast } from 'react-toastify';
 
 
-const getDefaultValueOfAnnotation = (id_article : number) => {
+const getDefaultValueOfAnnotation = (id_article : string) => {
     const ans : Annotation = {
-        id_article: id_article ? id_article : 0,
+        id_article: id_article ? id_article : "",
         id_annotation: 0,
 
         title: '',
@@ -54,7 +54,7 @@ export default observer( function EditAnnotation(){
     
 
     const validationSchemaDel = Yup.object({
-        id_article: Yup.number().required(),
+        id_article: Yup.string().required(),
         id_annotation: Yup.number().required(),
     });
 

@@ -12,7 +12,7 @@ namespace TDIC.Models.EDM
             t_instructions = new HashSet<t_instruction>();
         }
 
-        public long id_article { get; set; }
+        public Guid id_article { get; set; }
         public int id_view { get; set; }
         public string title { get; set; }
         public double? cam_pos_x { get; set; }

@@ -4,7 +4,7 @@ import { Article } from "../models/article";
 
 
 export default class ArticleStore {
-    articleRegistry = new Map<number, Article>();
+    articleRegistry = new Map<string, Article>();
     selectedArticle: Article| undefined = undefined;
     loading=false;
 
@@ -28,11 +28,11 @@ export default class ArticleStore {
         }
     }
 
-    loadArticle = async (id:number) => {
+    loadArticle = async (id:string) => {
 
         
         
-        if(id === -1) {
+        if(id === "") {
             runInAction(()=>{
                 this.selectedArticle = undefined;
             })
@@ -138,7 +138,7 @@ export default class ArticleStore {
         this.articleRegistry.set(article.id_article,article);
     }
 
-    private getArticle=(id:number) => {
+    private getArticle=(id:string) => {
         return this.articleRegistry.get(id);
     }
 
