@@ -14,7 +14,7 @@ namespace Application.InstanceObject
     public class Details
     {
         public class Query : IRequest<Result<t_instance_object>>{
-            public long id_article {get; set;}
+            public Guid id_article {get; set;}
             public long id_instance {get; set;}
         }
 

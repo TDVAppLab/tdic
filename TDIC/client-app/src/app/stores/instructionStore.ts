@@ -20,18 +20,18 @@ export default class InstructionStore {
     instanceActionExecSettingRegistry :InstanceActionExecSetting[]=[];
 
     
-    id_article: number = 0;
+    id_article: string = "";
 
     constructor(){
         makeAutoObservable(this)
     }
 
 
-    loadInstructions = async (id_article:number) => {
+    loadInstructions = async (id_article:string) => {
         
         
         
-        if(id_article === -1) {
+        if(id_article === "") {
             this.instructionRegistry.clear();
             this.selectedInstruction = undefined;
             this.selectedSubtitles.length = 0;
@@ -79,7 +79,7 @@ export default class InstructionStore {
     }
 
 
-    loadInstanceActionExecSettingAllArray = async (id_article:number) => {
+    loadInstanceActionExecSettingAllArray = async (id_article:string) => {
         this.loading = true;
         try {
             const result_object = await agent.Instructions.getInstanceActionClips(id_article);
@@ -136,7 +136,7 @@ export default class InstructionStore {
         }
     }
 
-    loadInstruction = async (id_article:number,id_instruct:number) => {
+    loadInstruction = async (id_article:string,id_instruct:number) => {
 
         this.loading = true;
         try {
@@ -221,7 +221,7 @@ export default class InstructionStore {
         }
     }
 
-    resetInstanceDisplay = async (id_article:number) => {
+    resetInstanceDisplay = async (id_article:string) => {
         //this.loading = true;
         console.log(id_article);
         try {
@@ -241,7 +241,7 @@ export default class InstructionStore {
     }
 
 
-    updateInstanceActionClips = async (id_article:number,id_instruct:number,instanceActionExecSettings: InstanceActionExecSetting[]) => {
+    updateInstanceActionClips = async (id_article:string,id_instruct:number,instanceActionExecSettings: InstanceActionExecSetting[]) => {
         //this.loading = true;
         //console.log("called");
         try {

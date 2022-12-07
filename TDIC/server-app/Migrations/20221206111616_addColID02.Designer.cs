@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TDIC.Models.EDM;
 
@@ -11,9 +12,10 @@ using TDIC.Models.EDM;
 namespace serverapp.Migrations
 {
     [DbContext(typeof(db_data_coreContext))]
-    partial class db_data_coreContextModelSnapshot : ModelSnapshot
+    [Migration("20221206111616_addColID02")]
+    partial class addColID02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,7 +246,7 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_annotation", b =>
                 {
-                    b.Property<Guid>("id_article")
+                    b.Property<Guid?>("id_article_uid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("id_annotation")
@@ -264,6 +266,9 @@ namespace serverapp.Migrations
                     b.Property<string>("description2")
                         .HasMaxLength(550)
                         .HasColumnType("nvarchar(550)");
+
+                    b.Property<long>("id_article")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("latest_update_datetime")
                         .HasColumnType("datetime2");
@@ -288,14 +293,14 @@ namespace serverapp.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.HasKey("id_article", "id_annotation");
+                    b.HasKey("id_article_uid", "id_annotation");
 
                     b.ToTable("t_annotation", (string)null);
                 });
 
             modelBuilder.Entity("TDIC.Models.EDM.t_annotation_display", b =>
                 {
-                    b.Property<Guid>("id_article")
+                    b.Property<Guid?>("id_article_uid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("id_instruct")
@@ -311,6 +316,9 @@ namespace serverapp.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<long>("id_article")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("is_display")
                         .HasColumnType("bit");
 
@@ -324,16 +332,17 @@ namespace serverapp.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("id_article", "id_instruct", "id_annotation");
+                    b.HasKey("id_article_uid", "id_instruct", "id_annotation");
 
-                    b.HasIndex("id_article", "id_annotation");
+                    b.HasIndex("id_article_uid", "id_annotation");
 
                     b.ToTable("t_annotation_display", (string)null);
                 });
 
             modelBuilder.Entity("TDIC.Models.EDM.t_article", b =>
                 {
-                    b.Property<Guid>("id_article")
+                    b.Property<Guid?>("id_article_uid")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("ambient_light_color")
@@ -383,6 +392,9 @@ namespace serverapp.Migrations
                     b.Property<bool?>("gammaOutput")
                         .HasColumnType("bit");
 
+                    b.Property<long>("id_article")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("id_assy")
                         .HasColumnType("bigint");
 
@@ -421,7 +433,7 @@ namespace serverapp.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.HasKey("id_article")
+                    b.HasKey("id_article_uid")
                         .HasName("PK_t_product");
 
                     b.HasIndex("status");
@@ -524,7 +536,7 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_instance_object", b =>
                 {
-                    b.Property<Guid>("id_article")
+                    b.Property<Guid?>("id_article_uid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("id_instance")
@@ -536,6 +548,9 @@ namespace serverapp.Migrations
                     b.Property<string>("create_user")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("id_article")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("id_part")
                         .HasColumnType("bigint");
@@ -571,7 +586,7 @@ namespace serverapp.Migrations
                     b.Property<double>("scale")
                         .HasColumnType("float");
 
-                    b.HasKey("id_article", "id_instance")
+                    b.HasKey("id_article_uid", "id_instance")
                         .HasName("PK_t_instance_object");
 
                     b.HasIndex("id_part");
@@ -581,7 +596,7 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_instruction", b =>
                 {
-                    b.Property<Guid>("id_article")
+                    b.Property<Guid?>("id_article_uid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("id_instruct")
@@ -598,6 +613,9 @@ namespace serverapp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("display_order")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("id_article")
                         .HasColumnType("bigint");
 
                     b.Property<int>("id_view")
@@ -629,16 +647,16 @@ namespace serverapp.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.HasKey("id_article", "id_instruct");
+                    b.HasKey("id_article_uid", "id_instruct");
 
-                    b.HasIndex("id_article", "id_view");
+                    b.HasIndex("id_article_uid", "id_view");
 
                     b.ToTable("t_instruction", (string)null);
                 });
 
             modelBuilder.Entity("TDIC.Models.EDM.t_light", b =>
                 {
-                    b.Property<Guid>("id_article")
+                    b.Property<Guid?>("id_article_uid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("id_light")
@@ -664,6 +682,9 @@ namespace serverapp.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<long?>("groundcolor")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("id_article")
                         .HasColumnType("bigint");
 
                     b.Property<double?>("intensity")
@@ -721,7 +742,7 @@ namespace serverapp.Migrations
                     b.Property<double?>("tz")
                         .HasColumnType("float");
 
-                    b.HasKey("id_article", "id_light");
+                    b.HasKey("id_article_uid", "id_light");
 
                     b.ToTable("t_light", (string)null);
                 });
@@ -804,7 +825,7 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_view", b =>
                 {
-                    b.Property<Guid>("id_article")
+                    b.Property<Guid?>("id_article_uid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("id_view")
@@ -847,6 +868,9 @@ namespace serverapp.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<long>("id_article")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime?>("latest_update_datetime")
                         .HasColumnType("datetime2");
 
@@ -867,7 +891,7 @@ namespace serverapp.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.HasKey("id_article", "id_view");
+                    b.HasKey("id_article_uid", "id_view");
 
                     b.ToTable("t_view", (string)null);
                 });
@@ -960,7 +984,7 @@ namespace serverapp.Migrations
                 {
                     b.HasOne("TDIC.Models.EDM.t_article", "id_articleNavigation")
                         .WithMany("t_annotations")
-                        .HasForeignKey("id_article")
+                        .HasForeignKey("id_article_uid")
                         .IsRequired()
                         .HasConstraintName("FK_t_annotation_t_article");
 
@@ -971,13 +995,13 @@ namespace serverapp.Migrations
                 {
                     b.HasOne("TDIC.Models.EDM.t_annotation", "id_a")
                         .WithMany("t_annotation_displays")
-                        .HasForeignKey("id_article", "id_annotation")
+                        .HasForeignKey("id_article_uid", "id_annotation")
                         .IsRequired()
                         .HasConstraintName("FK_t_annotation_display_t_annotation");
 
                     b.HasOne("TDIC.Models.EDM.t_instruction", "id_")
                         .WithMany("t_annotation_displays")
-                        .HasForeignKey("id_article", "id_instruct")
+                        .HasForeignKey("id_article_uid", "id_instruct")
                         .IsRequired()
                         .HasConstraintName("FK_t_annotation_display_t_instruction");
 
@@ -1001,7 +1025,7 @@ namespace serverapp.Migrations
                 {
                     b.HasOne("TDIC.Models.EDM.t_article", "id_articleNavigation")
                         .WithMany("t_instance_objects")
-                        .HasForeignKey("id_article")
+                        .HasForeignKey("id_article_uid")
                         .IsRequired()
                         .HasConstraintName("FK_t_instance_object_t_article");
 
@@ -1020,13 +1044,13 @@ namespace serverapp.Migrations
                 {
                     b.HasOne("TDIC.Models.EDM.t_article", "id_articleNavigation")
                         .WithMany("t_instructions")
-                        .HasForeignKey("id_article")
+                        .HasForeignKey("id_article_uid")
                         .IsRequired()
                         .HasConstraintName("FK_t_instruction_t_article");
 
                     b.HasOne("TDIC.Models.EDM.t_view", "id_")
                         .WithMany("t_instructions")
-                        .HasForeignKey("id_article", "id_view")
+                        .HasForeignKey("id_article_uid", "id_view")
                         .IsRequired()
                         .HasConstraintName("FK_t_instruction_t_view");
 
@@ -1039,7 +1063,7 @@ namespace serverapp.Migrations
                 {
                     b.HasOne("TDIC.Models.EDM.t_article", "id_articleNavigation")
                         .WithMany("t_lights")
-                        .HasForeignKey("id_article")
+                        .HasForeignKey("id_article_uid")
                         .IsRequired()
                         .HasConstraintName("FK_t_light_t_article");
 
@@ -1050,7 +1074,7 @@ namespace serverapp.Migrations
                 {
                     b.HasOne("TDIC.Models.EDM.t_article", "id_articleNavigation")
                         .WithMany("t_views")
-                        .HasForeignKey("id_article")
+                        .HasForeignKey("id_article_uid")
                         .IsRequired()
                         .HasConstraintName("FK_t_view_t_article");
 

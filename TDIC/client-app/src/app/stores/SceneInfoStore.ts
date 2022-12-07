@@ -57,7 +57,7 @@ export default class SceneInfoStore {
         })
     }
     
-    createEyeCatch = async (id_article:number) => {        
+    createEyeCatch = async (id_article:string) => {        
         try {
             await agent.Attachmentfiles.createeyecatch({id_article: id_article, imgfilebin: this.screen_shot});            
         }catch (error) {

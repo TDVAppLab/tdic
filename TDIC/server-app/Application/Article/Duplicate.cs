@@ -15,7 +15,7 @@ namespace Application.Article
     public class Duplicate
     {
         public class Command : IRequest<Result<t_article>>{
-            public long id_article {get; set;}
+            public Guid id_article {get; set;}
         }
         public class Handler : IRequestHandler<Command, Result<t_article>>
         {
@@ -35,8 +35,6 @@ namespace Application.Article
 
                 if(article == null) return null;                
 
-                long id_article_new = 1 + (await _context.t_articles
-                                        .MaxAsync(t => (long?)t.id_article) ?? 0);
 
                 string title_new = "Copy : " + ( article.title ?? "" );
 
@@ -44,8 +42,7 @@ namespace Application.Article
 
 
                 
-                article.id_article = id_article_new;
-                article.id_article_uid = Guid.NewGuid();
+                article.id_article = Guid.NewGuid();
                 article.title = title_new;
                 article.status = status_new;
 
