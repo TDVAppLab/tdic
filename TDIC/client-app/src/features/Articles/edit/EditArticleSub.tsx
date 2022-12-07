@@ -13,6 +13,7 @@ import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
 import LoadingComponent from '../../../app/layout/LoadingComponents';
 import { toast } from 'react-toastify';
+import {v4} from 'uuid';
 
 
 export default observer( function EditArticleSub(){
@@ -73,7 +74,7 @@ export default observer( function EditArticleSub(){
     
 
     const validationSchemaDel = Yup.object({
-        id_article: Yup.number().required(),
+        id_article: Yup.string().required(),
     });
 
     useEffect(()=>{
@@ -99,8 +100,10 @@ export default observer( function EditArticleSub(){
                 ...object
             }
 
+            newObject.id_article=v4();
+
             const ans_article = await createArticle(newObject);
-            ans_article && navigate(`/articleedit/${Number(ans_article.id_article)}`);
+            ans_article && navigate(`/articleedit/${ans_article.id_article}`);
             toast.success('new article added');
         } else {
             await updateArticle(object);
@@ -118,7 +121,7 @@ export default observer( function EditArticleSub(){
     async function handleFormArticleDuplicate(values:Article) {
         
         const ans_article = await duplicateArticle(values);
-        ans_article && navigate(`/articleedit/${Number(ans_article.id_article)}`); 
+        ans_article && navigate(`/articleedit/${ans_article.id_article}`); 
         toast.info('article duplicated');
     }
 

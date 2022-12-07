@@ -54,7 +54,7 @@ export default observer( function EditAnnotation(){
     
 
     const validationSchemaDel = Yup.object({
-        id_article: Yup.number().required(),
+        id_article: Yup.string().required(),
         id_annotation: Yup.number().required(),
     });
 

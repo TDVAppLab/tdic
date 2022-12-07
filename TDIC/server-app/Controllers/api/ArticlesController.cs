@@ -30,13 +30,6 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Details.Query{ID = id}));
         }
-
-        [AllowAnonymous]
-        [HttpGet("detailsguid/{id}")]
-        public async Task<ActionResult> Uid2id(Guid id)
-        {
-            return HandleResult(await Mediator.Send(new DetailsUID.Query{UID = id}));
-        }
         
 
         [HttpPost("update")]

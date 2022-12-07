@@ -61,7 +61,7 @@ export default observer( function EditInstruction(){
     
 
     const validationSchemaDel = Yup.object({
-        id_article: Yup.number().required(),
+        id_article: Yup.string().required(),
         id_instruct: Yup.number().required(),
     });
 

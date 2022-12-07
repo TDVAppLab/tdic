@@ -86,19 +86,15 @@ export default observer( function ArticleDetails() {
 
     useEffect(()=> {
 
-        
-        //id && agent.Articles.detailsguid(id).then(x=>{
-
-            if(id) {
-                loadArticle(id);
-                loadInstanceobjects(id);
-                loadInstructions(id);
-                loadViews(id);
-                loadAnnotations(id);
-                loadLights(id);
-                loadAnnotationDisplays(id);
-            }
-        //})
+        if(id) {
+            loadArticle(id);
+            loadInstanceobjects(id);
+            loadInstructions(id);
+            loadViews(id);
+            loadAnnotations(id);
+            loadLights(id);
+            loadAnnotationDisplays(id);
+        }
 
     }, [id])
 
@@ -133,7 +129,7 @@ export default observer( function ArticleDetails() {
                             {
                                 user &&
                                 <Tab eventKey="edit" title="Edit">
-                                    <Link to={`/articleedit/${Number(article?.id_article)}`}>Edit</Link> 
+                                    <Link to={`/articleedit/${article?.id_article}`}>Edit</Link> 
                                     <hr />
                                     <DebugDisplay />
                                 </Tab>

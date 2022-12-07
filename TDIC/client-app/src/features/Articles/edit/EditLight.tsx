@@ -59,7 +59,7 @@ export default observer( function EditLight(){
     
 
     const validationSchemaDel = Yup.object({
-        id_article: Yup.number().required(),
+        id_article: Yup.string().required(),
         id_light: Yup.number().required(),
     });
 
