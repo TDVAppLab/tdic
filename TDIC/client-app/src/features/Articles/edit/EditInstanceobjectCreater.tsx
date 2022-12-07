@@ -4,84 +4,87 @@ import { useStore } from "../../../app/stores/store";
 import { Formik , Form } from "formik";
 import * as Yup from 'yup';
 import TextInputGeneral from "../../../app/common/form/TextInputGeneral";
-import { Instanceobject } from '../../../app/models/Instanceobject';
+import { getDefaultValueOfInstanceobject, Instanceobject } from '../../../app/models/Instanceobject';
 import SelectInputGeneral from "../../../app/common/form/SelectInputGeneral";
-import LoadingComponent from "../../../app/layout/LoadingComponents";
 import { toast } from "react-toastify";
+import { Col, Row } from "react-bootstrap";
+
+
+
+
 
 export default observer( function EditInstanceobjectCreater(){
     const {articleStore} = useStore();
     const {selectedArticle} = articleStore;
 
     const {instanceobjectStore} = useStore();
-    const {createInstanceobject} = instanceobjectStore;
+    const {createInstanceobject, updateInstanceobjects, deleteInstanceobject, selectedInstanceobject} = instanceobjectStore;
 
     const {modelfileStore} = useStore();
-    const {loadModelfiles, loading : loadingModelfile, getOptionArray} = modelfileStore;
+    const {loading : loadingModelfile, getOptionArray} = modelfileStore;
 
-    const [instanceobject, setInstancepart] = useState<Instanceobject>({
-        
-        id_article: 0,
-        id_instance: 0,
-        id_part: 0,
-        
-        pos_x: 0,
-        pos_y: 0,
-        pos_z: 0,
-        scale: 1,
-        quaternion_x: 0,
-        quaternion_y: 0,
-        quaternion_z: 0,
-        quaternion_w: 1,
-        uuid: null,
+    const [instanceobject, setInstancepart] = useState<Instanceobject>(getDefaultValueOfInstanceobject(selectedArticle?.id_article!));
 
-    });
-    
-
-    const validationSchemaInstanceEdit = Yup.object({
-        id_article: Yup.number()
-        .min(1, 'The minimum amount is one').required(),
-    });
-    
 
     useEffect(()=>{
         if(selectedArticle?.id_article && !loadingModelfile){
-                setInstancepart({        
-                    id_article: selectedArticle.id_article,
-                    id_instance: 0,
-                    id_part: 0,                
-                    pos_x: 0,
-                    pos_y: 0,
-                    pos_z: 0,
-                    scale: 1,
-                    quaternion_x: 0,
-                    quaternion_y: 0,
-                    quaternion_z: 0,
-                    quaternion_w: 1,
-                    uuid: null,
-        
-                });            
-            //loadModelfiles(false);
+            setInstancepart(getDefaultValueOfInstanceobject(selectedArticle?.id_article!));
         }
     }, [selectedArticle?.id_article, loadingModelfile]);
 
     
-    async function handleFormInstanceobjectCreate(values:Instanceobject) {
-        await createInstanceobject(values);        
-        toast.info('instanceobjects created');
+    useEffect(()=>{
+        
+        if(selectedInstanceobject){
+            setInstancepart(selectedInstanceobject);
+        } else {
+            setInstancepart(getDefaultValueOfInstanceobject(selectedArticle?.id_article!));
+        }
+    }, [selectedInstanceobject]);
+    
+    
+
+    const validationSchemaInstanceEdit = Yup.object({
+        id_article: Yup.string().required(),
+    });
+    
+    const validationSchemaInstanceDel = Yup.object({
+        id_article: Yup.string().required(),
+        id_instance: Yup.number().min(1, 'The minimum amount is one').required(),
+    });
+
+    async function handleFormInstanceobjectCreate(value:Instanceobject) {
+        if(value.id_instance === 0 ){
+            let newObject = {
+                ...value
+            }
+            await createInstanceobject(newObject);        
+            toast.info('instanceobjects created');
+        } else {
+            const values : Instanceobject[] = [];
+            values.push(value);
+            await updateInstanceobjects(values);
+            await toast.info('annotation updated');
+        }
+    }
+
+
+    async function handleFormInstanceobjectDelete(values:Instanceobject) {
+        console.log("delete called")
+        await deleteInstanceobject(values);
+        toast.info('instanceobject deleted');
         
     }
 
-    if(loadingModelfile) return <LoadingComponent content="Loading ..." />
+    
+//    if(loadingModelfile) return <LoadingComponent content="Loading ..." />
 
     return(
         <div>         
-            <h3>Model Edit</h3> 
-
-
+            <h4>Model Create and Edit</h4> 
 
             <div>
-            {<Formik
+            {<Formik            
                     validationSchema={validationSchemaInstanceEdit}
                     enableReinitialize 
                     initialValues={instanceobject} 
@@ -89,41 +92,47 @@ export default observer( function EditInstanceobjectCreater(){
                     {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                         <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>
 
+                            <Row>
+                                <Col xs={3}><TextInputGeneral label='Instance ID' name='id_instance' placeholder='Instance ID' disabled /></Col>
+                                <Col xs={6}><SelectInputGeneral label='Part Number' placeholder='Part Number' name='id_part' options={getOptionArray()} /></Col>
+                                <Col xs={3}><TextInputGeneral label='Scale' name='scale' placeholder='Scale' /></Col>
+                            </Row>
+
                             <table className="table">
                                 <thead>
                                     <tr>
                                         <th>
-                                            ID Article
+                                            
                                         </th>
                                         <th>
-                                            ID Inst
+                                            X
                                         </th>
                                         <th>
-                                            Part
+                                            Y
                                         </th>
                                         <th>
-                                            POS X
+                                            Z
                                         </th>
                                         <th>
-                                            POS Y
-                                        </th>
-                                        <th>
-                                            POS Z
-                                        </th>
-                                        <th>
-                                            Scale
+                                            W
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>                   
-                                    <tr key={instanceobject.id_instance}>
-                                        <td><div>{instanceobject.id_article}</div></td>
-                                        <td><div>{instanceobject.id_instance}</div></td>
-                                        <td><SelectInputGeneral placeholder='Part Number' name='id_part' options={getOptionArray()} /></td>
+                                <tbody>
+                                    <tr>
+                                        <td>POS</td>
                                         <td><TextInputGeneral name={`pos_x`} placeholder='POS X' /></td>
                                         <td><TextInputGeneral name={`pos_y`} placeholder='POS Y' /></td>
                                         <td><TextInputGeneral name={`pos_z`} placeholder='POS Z' /></td>
-                                        <td><TextInputGeneral name={`scale`} placeholder='Scale' /></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Quaternion</td>
+                                        <td><TextInputGeneral name={`quaternion_x`} placeholder='X' /></td>
+                                        <td><TextInputGeneral name={`quaternion_y`} placeholder='Y' /></td>
+                                        <td><TextInputGeneral name={`quaternion_z`} placeholder='Z' /></td>
+                                        <td><TextInputGeneral name={`quaternion_w`} placeholder='W' /></td>
+                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -135,6 +144,25 @@ export default observer( function EditInstanceobjectCreater(){
                     )}
 
                 </Formik> }
+
+
+                {<Formik
+                    validateOnMount={true}
+                    validationSchema={validationSchemaInstanceDel}
+                    enableReinitialize 
+                    initialValues={instanceobject} 
+                    onSubmit={(values) => handleFormInstanceobjectDelete(values)}>
+                    {({ handleSubmit, isValid, isSubmitting }) => (
+                        <Form className="ui form" onSubmit = {handleSubmit} autoComplete='off'>                            
+                            <button disabled={!isValid || isSubmitting} type = 'submit' className='btn btn-danger'>
+                                {isSubmitting ? "Processing" : "Delete"}
+                            </button>
+                        </Form>
+                    )}
+
+                </Formik> }
+
+
             </div>
 
         </div>

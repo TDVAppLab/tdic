@@ -1,6 +1,6 @@
 export interface Instruction {
 
-    id_article: number;
+    id_article: string;
     id_instruct: number;
     id_view: number;
 

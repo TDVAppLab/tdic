@@ -29,10 +29,10 @@ namespace Application.Article
             {
                 if(request.IsAuthenticated){
                     return Result<List<t_article>>
-                        .Success(await _context.t_articles.ToListAsync(cancellationToken));
+                        .Success(await _context.t_articles.OrderByDescending(t => t.create_datetime).ToListAsync(cancellationToken));
                 } else{
                     return Result<List<t_article>>
-                        .Success(await _context.t_articles.Where(t => t.statusNavigation.is_approved==true).ToListAsync(cancellationToken));
+                        .Success(await _context.t_articles.Where(t => t.statusNavigation.is_approved==true).OrderByDescending(t => t.create_datetime).ToListAsync(cancellationToken));
                 }
             }
         }

@@ -13,9 +13,9 @@ import { toast } from 'react-toastify';
 
 
 
-const getDefaultValueOfView = (id_article : number) => {
+const getDefaultValueOfView = (id_article : string) => {
     const ans : View = {
-        id_article: id_article ? id_article : 0,
+        id_article: id_article ? id_article : "",
         id_view: 0,
         title: '',
         cam_pos_x: 0,
@@ -66,7 +66,7 @@ export default observer( function EditView(){
     
 
     const validationSchemaDel = Yup.object({
-        id_article: Yup.number().required(),
+        id_article: Yup.string().required(),
         id_view: Yup.number().required(),
     });
     

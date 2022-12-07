@@ -1,10 +1,12 @@
 ﻿
+using System;
+
 namespace TDIC.DTOs
 {
     public partial class t_annotationUpdateUDto
     {
 
-        public long id_article { get; set; }
+        public Guid id_article { get; set; }
         public long id_annotation { get; set; }
         public string title { get; set; }
         public string description1 { get; set; }

@@ -23,6 +23,6 @@ export interface Attachmentfile {
 }
 
 export interface AttachmentfileEyecatchDtO {
-    id_article: number;
+    id_article: string;
     imgfilebin: string;
 }

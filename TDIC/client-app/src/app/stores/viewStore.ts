@@ -7,18 +7,18 @@ export default class ViewStore {
     viewRegistry = new Map<number, View>();
     selectedView: View| undefined = undefined;
     loading=false;
-    id_article: number = 0;
+    id_article: string = "";
 
     constructor(){
         makeAutoObservable(this)
     }
 
 
-    loadViews = async (id_article:number) => {
+    loadViews = async (id_article:string) => {
 
         
         
-        if(id_article === -1) {
+        if(id_article === "") {
             this.viewRegistry.clear();
             return null;
         }

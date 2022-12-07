@@ -1,6 +1,6 @@
 export interface Annotation {
 
-    id_article: number;
+    id_article: string;
     id_annotation: number;
 
     title: string;

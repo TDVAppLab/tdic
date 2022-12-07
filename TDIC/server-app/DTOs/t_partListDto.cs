@@ -27,7 +27,7 @@ namespace TDIC.DTOs
     
     public partial class article_reference
     {
-        public long id_article { get; set; }
+        public Guid id_article { get; set; }
         public string title { get; set; }
         public string status_name { get; set; }
     }

@@ -9,16 +9,16 @@ export default class LightStore {
     loading=false;
 
     
-    id_article: number = 0;
+    id_article: string = "";
 
     constructor(){
         makeAutoObservable(this)
     }
 
 
-    loadLights = async (id_article:number) => {
+    loadLights = async (id_article:string) => {
         
-        if(id_article === -1) {
+        if(id_article === "") {
             runInAction(()=>{
                 this.lightRegistry.clear();
             })

@@ -24,9 +24,12 @@ export default observer( function LoadModelSub({id_inst, id_part, pos, scale, qu
   
     const str_url_partapi = APIURL + `/modelfiles/file/${id_part}`;
     const gltf = useLoader(GLTFLoader, str_url_partapi);
+    
     gltf.scene.position.set(pos.x,pos.y,pos.z);
     gltf.scene.scale.set(scale,scale,scale);
-    gltf.scene.scale.applyQuaternion(quaternion);
+    gltf.scene.quaternion.set(0,0,0,1);
+    gltf.scene.applyQuaternion(quaternion);
+
     gltf.scene.name = `[${id_inst}]InstanceModel`;
     setInstanceUuid(id_inst, gltf.scene.uuid);
     

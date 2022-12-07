@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TDIC.Models.EDM;
 
@@ -11,9 +12,10 @@ using TDIC.Models.EDM;
 namespace serverapp.Migrations
 {
     [DbContext(typeof(db_data_coreContext))]
-    partial class db_data_coreContextModelSnapshot : ModelSnapshot
+    [Migration("20221206103153_addColID")]
+    partial class addColID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,8 +246,8 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_annotation", b =>
                 {
-                    b.Property<Guid>("id_article")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("id_article")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("id_annotation")
                         .HasColumnType("bigint");
@@ -264,6 +266,9 @@ namespace serverapp.Migrations
                     b.Property<string>("description2")
                         .HasMaxLength(550)
                         .HasColumnType("nvarchar(550)");
+
+                    b.Property<Guid?>("id_article_uid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("latest_update_datetime")
                         .HasColumnType("datetime2");
@@ -295,8 +300,8 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_annotation_display", b =>
                 {
-                    b.Property<Guid>("id_article")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("id_article")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("id_instruct")
                         .HasColumnType("bigint");
@@ -310,6 +315,9 @@ namespace serverapp.Migrations
                     b.Property<string>("create_user")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid?>("id_article_uid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("is_display")
                         .HasColumnType("bit");
@@ -333,8 +341,8 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_article", b =>
                 {
-                    b.Property<Guid>("id_article")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("id_article")
+                        .HasColumnType("bigint");
 
                     b.Property<int?>("ambient_light_color")
                         .HasColumnType("int");
@@ -382,6 +390,9 @@ namespace serverapp.Migrations
 
                     b.Property<bool?>("gammaOutput")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("id_article_uid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long?>("id_assy")
                         .HasColumnType("bigint");
@@ -524,8 +535,8 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_instance_object", b =>
                 {
-                    b.Property<Guid>("id_article")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("id_article")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("id_instance")
                         .HasColumnType("bigint");
@@ -536,6 +547,9 @@ namespace serverapp.Migrations
                     b.Property<string>("create_user")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid?>("id_article_uid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("id_part")
                         .HasColumnType("bigint");
@@ -581,8 +595,8 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_instruction", b =>
                 {
-                    b.Property<Guid>("id_article")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("id_article")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("id_instruct")
                         .HasColumnType("bigint");
@@ -599,6 +613,9 @@ namespace serverapp.Migrations
 
                     b.Property<long>("display_order")
                         .HasColumnType("bigint");
+
+                    b.Property<Guid?>("id_article_uid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("id_view")
                         .HasColumnType("int");
@@ -638,8 +655,8 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_light", b =>
                 {
-                    b.Property<Guid>("id_article")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("id_article")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("id_light")
                         .HasColumnType("bigint");
@@ -665,6 +682,9 @@ namespace serverapp.Migrations
 
                     b.Property<long?>("groundcolor")
                         .HasColumnType("bigint");
+
+                    b.Property<Guid?>("id_article_uid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double?>("intensity")
                         .HasColumnType("float");
@@ -804,8 +824,8 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_view", b =>
                 {
-                    b.Property<Guid>("id_article")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("id_article")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("id_view")
                         .HasColumnType("int");
@@ -846,6 +866,9 @@ namespace serverapp.Migrations
                     b.Property<string>("create_user")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid?>("id_article_uid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("latest_update_datetime")
                         .HasColumnType("datetime2");

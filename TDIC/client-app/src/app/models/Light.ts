@@ -1,6 +1,6 @@
 export interface Light {
 
-    id_article: number;
+    id_article: string;
     id_light: number;
     light_type: string;
     title: string;
