@@ -126,9 +126,9 @@ export default observer( function ModelfileEdit(){
             <Row>
                 <Col  sm={6} >
                     <div className="row" style={{ height:"45vh", width:'45vw' }}>                            
-                        <Canvas style={{background: 'white'}} camera={{position:[3,3,3]}} >
-                            <ambientLight intensity={1.5} />
-                            <directionalLight intensity={0.6} position={[0, 2, 2]} />
+                        <Canvas style={{background: 'white'}} camera={{fov:45,position:[3,3,3]}} >
+                            <ambientLight intensity={1.0} />
+                            <directionalLight intensity={1.0} position={[0, 2, 2]} />
                             <ModelfileViewer id_part={Number(id)} setTeststring={setAnimations} setModelUuid = {setModelUuid}/>
                             <OrbitControls target={[0, 0, 0]}  makeDefault />
                             <axesHelper args={[2]}/>
