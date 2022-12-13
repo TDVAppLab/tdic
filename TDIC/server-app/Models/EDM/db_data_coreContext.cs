@@ -193,7 +193,7 @@ namespace TDIC.Models.EDM
 
                 entity.HasOne(d => d.id_partNavigation)
                     .WithMany(p => p.t_instance_objects)
-                    .HasForeignKey(d => d.id_part)
+                    .HasForeignKey(d => d.id_part_guid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_instance_object_t_part");
             });
@@ -248,11 +248,11 @@ namespace TDIC.Models.EDM
 
             modelBuilder.Entity<t_part>(entity =>
             {
-                entity.HasKey(e => e.id_part);
+                entity.HasKey(e => e.id_part_guid);
 
                 entity.ToTable("t_part");
 
-                entity.Property(e => e.id_part).ValueGeneratedNever();
+                entity.Property(e => e.id_part_guid).ValueGeneratedNever();
 
                 entity.Property(e => e.author).HasMaxLength(250);
 
