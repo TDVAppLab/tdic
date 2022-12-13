@@ -32,14 +32,14 @@ namespace API.Controllers
         }
 
         [HttpGet("details/{id}")]
-        public async Task<ActionResult> GetDetails(string id)
+        public async Task<ActionResult> GetDetails(Guid id)
         {
             return HandleResult(await Mediator.Send(new Details.Query{ID = id}));
         }
         [AllowAnonymous]
 
         [HttpGet("file/{id}")]
-        public async Task<ActionResult> GetFile(string id)
+        public async Task<ActionResult> GetFile(Guid id)
         {
             var det = await Mediator.Send(new ModelFile.Query{ID = id});
 
@@ -87,21 +87,21 @@ namespace API.Controllers
 
         
         [HttpPost("delete/{id}")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             return HandleResult(await Mediator.Send(new Delete.Command{id=id}));
         }
 
 
         [HttpGet("getpartanimationclip/{id}")]
-        public async Task<ActionResult> GetPartAnimationClip(string id)
+        public async Task<ActionResult> GetPartAnimationClip(Guid id)
         {
             return HandleResult(await Mediator.Send(new GetPartAnimationClip.Query{ID = id}));
         }
         
 
         [HttpPost("updatepartanimationClip/{id}")]
-        public async Task<IActionResult> UpdatePartAnimationClip(string id, [FromBody] IList<PartAnimationClipDtO> partAnimationClips)
+        public async Task<IActionResult> UpdatePartAnimationClip(Guid id, [FromBody] IList<PartAnimationClipDtO> partAnimationClips)
         {
             return HandleResult(await Mediator.Send(new UpdatePartAnimationClip.Command{id_part=id, PartAnimationClips=partAnimationClips}));
         }

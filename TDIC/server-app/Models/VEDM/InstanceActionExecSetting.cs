@@ -8,7 +8,7 @@ namespace TDIC.Models.VEDM
     {
         public long id_instruct { get; set; }
         public long id_instance { get; set; }
-        public string id_part { get; set; }
+        public Guid id_part { get; set; }
         public long no { get; set; }
         public string name { get; set;}
         public bool is_exec { get; set; }

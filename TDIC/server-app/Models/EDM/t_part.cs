@@ -12,7 +12,7 @@ namespace TDIC.Models.EDM
             //t_instance_parts = new HashSet<t_instance_part>();
         }
 
-        public string id_part { get; set; }
+        public Guid id_part { get; set; }
         public Guid? id_part_guid { get; set; }
         public string part_number { get; set; }
         public int version { get; set; }

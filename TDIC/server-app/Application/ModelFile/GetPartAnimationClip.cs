@@ -15,7 +15,7 @@ namespace Application.ModelFile
     public class GetPartAnimationClip
     {
         public class Query : IRequest<Result<List<PartAnimationClipDtO>>>{
-            public string ID {get; set;}
+            public Guid ID {get; set;}
         }
 
         public class Handler : IRequestHandler<Query, Result<List<PartAnimationClipDtO>>>

@@ -14,7 +14,7 @@ namespace Application.ModelFile
     {
 
         public class Query : IRequest<Result<t_partListDto>>{
-            public string ID {get; set;}
+            public Guid ID {get; set;}
         }
 
         public class Handler : IRequestHandler<Query, Result<t_partListDto>>

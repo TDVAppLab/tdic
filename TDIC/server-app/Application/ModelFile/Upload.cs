@@ -82,8 +82,8 @@ namespace Application.ModelFile
 
                 
 
-                request.Part.id_part_guid = Guid.NewGuid();
-                request.Part.id_part = request.Part.id_part_guid.ToString();
+                request.Part.id_part = Guid.NewGuid();
+                request.Part.id_part_guid = request.Part.id_part;
 
                 
                 request.Part.create_user = "";

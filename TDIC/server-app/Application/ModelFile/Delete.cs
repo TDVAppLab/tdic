@@ -14,7 +14,7 @@ namespace Application.ModelFile
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public string id {get; set;}
+            public Guid id {get; set;}
         }
         public class Handler : IRequestHandler<Command,Result<Unit>>
         {
