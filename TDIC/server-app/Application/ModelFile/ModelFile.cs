@@ -13,7 +13,7 @@ namespace Application.ModelFile
     {
 
         public class Query : IRequest<Result<t_part>>{
-            public long ID {get; set;}
+            public string ID {get; set;}
         }
 
         public class Handler : IRequestHandler<Query, Result<t_part>>

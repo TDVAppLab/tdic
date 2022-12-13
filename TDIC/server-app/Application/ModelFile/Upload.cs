@@ -81,10 +81,9 @@ namespace Application.ModelFile
 
 
                 
-                long id_part = 1 + (await _context.t_parts
-                                        .MaxAsync(t => (long?)t.id_part) ?? 0);
 
-                request.Part.id_part = id_part;
+                request.Part.id_part_guid = Guid.NewGuid();
+                request.Part.id_part = request.Part.id_part_guid.ToString();
 
                 
                 request.Part.create_user = "";
