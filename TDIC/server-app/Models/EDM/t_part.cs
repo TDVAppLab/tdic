@@ -13,6 +13,7 @@ namespace TDIC.Models.EDM
         }
 
         public long id_part { get; set; }
+        public Guid? id_part_guid { get; set; }
         public string part_number { get; set; }
         public int version { get; set; }
         public byte[] file_data { get; set; }
