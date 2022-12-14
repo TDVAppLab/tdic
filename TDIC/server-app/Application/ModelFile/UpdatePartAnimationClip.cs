@@ -18,7 +18,7 @@ namespace Application.ModelFile
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public long id_part {get; set;}
+            public Guid id_part {get; set;}
             public IList<PartAnimationClipDtO> PartAnimationClips {get; set;}
         }
         

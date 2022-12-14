@@ -83,12 +83,12 @@ const requests = {
 
 const Modelfiles = {
     list: (is_exclude_used:boolean) => requests.get<Modelfile[]>(`/modelfiles/index/is_exclude_used=${is_exclude_used}`),
-    details:(id:number) => requests.get<Modelfile>(`/modelfiles/details/${id}`),
+    details:(id:string) => requests.get<Modelfile>(`/modelfiles/details/${id}`),
     update: (modelfile: Modelfile) => axios.post<void>(`/modelfiles/update`, modelfile),
     fileupload: (formData:FormData) => axios.post<Modelfile>('/modelfiles/uploadfile',formData),
-    delete:(id:number) => axios.post<void>(`/modelfiles/delete/${id}`),
-    updatePartAnimationClip: (id:number, partAnimationClips: PartAnimationClip[]) => axios.post<void>(`/modelfiles/updatepartanimationclip/${id}`, partAnimationClips),
-    getPartAnimationClips:(id:number) => requests.get<PartAnimationClip[]>(`/modelfiles/getpartanimationclip/${id}`),
+    delete:(id:string) => axios.post<void>(`/modelfiles/delete/${id}`),
+    updatePartAnimationClip: (id:string, partAnimationClips: PartAnimationClip[]) => axios.post<void>(`/modelfiles/updatepartanimationclip/${id}`, partAnimationClips),
+    getPartAnimationClips:(id:string) => requests.get<PartAnimationClip[]>(`/modelfiles/getpartanimationclip/${id}`),
 }
 
 const Attachmentfiles = {

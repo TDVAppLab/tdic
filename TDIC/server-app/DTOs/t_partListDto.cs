@@ -5,7 +5,7 @@ namespace TDIC.DTOs
 {
     public partial class t_partListDto
     {
-        public long id_part { get; set; }
+        public Guid id_part { get; set; }
         public string part_number { get; set; }
         public int version { get; set; }
         public string type_data { get; set; }

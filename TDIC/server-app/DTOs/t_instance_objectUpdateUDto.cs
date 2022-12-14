@@ -7,7 +7,7 @@ namespace TDIC.DTOs
     {
         public Guid id_article { get; set; }
         public long id_instance { get; set; }
-        public long id_part { get; set; }
+        public string id_part { get; set; }
         public double pos_x { get; set; }
         public double pos_y { get; set; }
         public double pos_z { get; set; }

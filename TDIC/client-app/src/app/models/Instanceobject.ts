@@ -2,7 +2,7 @@ export interface Instanceobject {
 
     id_article: string;
     id_instance: number;
-    id_part: number;
+    id_part: string;
     
     pos_x: number;
     pos_y: number;
@@ -21,7 +21,7 @@ export const getDefaultValueOfInstanceobject = (id_article : string) => {
     const ans : Instanceobject = {
         id_article: id_article ? id_article : "",
         id_instance: 0,
-        id_part: 0,
+        id_part: "",
         
         pos_x: 0,
         pos_y: 0,

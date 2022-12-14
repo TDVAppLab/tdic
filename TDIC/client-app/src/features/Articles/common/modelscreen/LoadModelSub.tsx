@@ -11,7 +11,7 @@ import { APIURL } from '../../../../app/constants';
 
 interface PartProps {
     id_inst: number;
-    id_part: number;
+    id_part: string;
     pos:Vector3;
     scale:number;
     quaternion:Quaternion;
