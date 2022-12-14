@@ -31,7 +31,7 @@ export default observer( function ModelfileEdit(){
     const [modelUuid, setModelUuid] = useState("");
 
     const [modelfile, setModelfile] = useState<Modelfile>({
-        id_part: 0,
+        id_part: '',
         part_number: '',
         version: 0,
         type_data: '',
@@ -62,8 +62,7 @@ export default observer( function ModelfileEdit(){
     
 
     const validationSchemaDel = Yup.object({
-        id_part: Yup.number()
-        .min(1, 'The minimum amount is one').required(),
+        id_part: Yup.string().required(),
     });
 
     useEffect(()=>{
@@ -79,8 +78,8 @@ export default observer( function ModelfileEdit(){
 */
     useEffect(()=>{
         if(id){            
-            loadModelfile(Number(id));
-            agent.Modelfiles.getPartAnimationClips(Number(id)).then((response) => {
+            loadModelfile(id);
+            agent.Modelfiles.getPartAnimationClips(id).then((response) => {
                     setPartAnimationClips(response);
             });
 
@@ -95,7 +94,7 @@ export default observer( function ModelfileEdit(){
 
     function handleFormSubmit(modelfile:Modelfile) {
         console.log(modelfile);
-        if(modelfile.id_part ===0 ){
+        if(modelfile.id_part ==='' ){
         } else {
             updateModelfile(modelfile);
         }
@@ -111,7 +110,7 @@ export default observer( function ModelfileEdit(){
 
         if(id){
             console.log(PartAnimationClips);
-            agent.Modelfiles.updatePartAnimationClip(Number(id),PartAnimationClips).then((response) => {});
+            agent.Modelfiles.updatePartAnimationClip(id,PartAnimationClips).then((response) => {});
 
         }
     }
@@ -119,17 +118,17 @@ export default observer( function ModelfileEdit(){
     if(loading) return <LoadingComponent />
 
     return(
-        <div>         
+        id ? <div>         
             <h3>Model Edit</h3> 
 
             
             <Row>
                 <Col  sm={6} >
                     <div className="row" style={{ height:"45vh", width:'45vw' }}>                            
-                        <Canvas style={{background: 'white'}} camera={{position:[3,3,3]}} >
-                            <ambientLight intensity={1.5} />
-                            <directionalLight intensity={0.6} position={[0, 2, 2]} />
-                            <ModelfileViewer id_part={Number(id)} setTeststring={setAnimations} setModelUuid = {setModelUuid}/>
+                        <Canvas style={{background: 'white'}} camera={{fov:45,position:[3,3,3]}} >
+                            <ambientLight intensity={1.0} />
+                            <directionalLight intensity={1.0} position={[0, 2, 2]} />
+                            <ModelfileViewer id_part={id} setTeststring={setAnimations} setModelUuid = {setModelUuid}/>
                             <OrbitControls target={[0, 0, 0]}  makeDefault />
                             <axesHelper args={[2]}/>
                             <gridHelper args={[2]}/>
@@ -319,5 +318,7 @@ export default observer( function ModelfileEdit(){
 
 
         </div>
+        :
+        <div></div>
     )
 })

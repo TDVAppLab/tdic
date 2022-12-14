@@ -16,7 +16,7 @@ function Loader() {
 
 
 interface Props {
-  id_part: number;
+  id_part: string;
   setTeststring: React.Dispatch<React.SetStateAction<AnimationClip[]>>;
   setModelUuid: React.Dispatch<React.SetStateAction<string>>;
 }

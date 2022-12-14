@@ -4,7 +4,7 @@ import { Modelfile } from "../models/ModelFile";
 import { OptionBase } from "../models/Optionbase";
 
 export default class ModelfileStore {
-    ModelfileRegistry = new Map<number, Modelfile>();
+    ModelfileRegistry = new Map<string, Modelfile>();
     selectedModelfile: Modelfile| undefined = undefined;
     loading=false;
 
@@ -29,7 +29,7 @@ export default class ModelfileStore {
     }
     
 
-    loadModelfile = async (id:number) => {
+    loadModelfile = async (id:string) => {
         this.loading = true;
         let object:Modelfile;
         
@@ -91,7 +91,7 @@ export default class ModelfileStore {
         }
     }    
     
-    setSelectedModelfile = async (id_part:number) => {
+    setSelectedModelfile = async (id_part:string) => {
         let modelfile = this.getModelfile(id_part);
         if(modelfile) {
             runInAction(()=>{
@@ -130,7 +130,7 @@ export default class ModelfileStore {
         this.ModelfileRegistry.set(modelfile.id_part,modelfile);
     }
 
-    private getModelfile=(id:number) => {
+    private getModelfile=(id:string) => {
         return this.ModelfileRegistry.get(id);
     }
 
