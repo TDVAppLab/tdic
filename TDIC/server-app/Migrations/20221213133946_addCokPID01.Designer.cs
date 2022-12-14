@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TDIC.Models.EDM;
 
@@ -11,9 +12,10 @@ using TDIC.Models.EDM;
 namespace serverapp.Migrations
 {
     [DbContext(typeof(db_data_coreContext))]
-    partial class db_data_coreContextModelSnapshot : ModelSnapshot
+    [Migration("20221213133946_addCokPID01")]
+    partial class addCokPID01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -537,7 +539,10 @@ namespace serverapp.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("id_part")
+                    b.Property<long>("id_part")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("id_part_guid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("latest_update_datetime")
@@ -728,8 +733,8 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_part", b =>
                 {
-                    b.Property<Guid>("id_part")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("id_part")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("AnimationClip")
                         .HasColumnType("nvarchar(max)");
@@ -761,6 +766,9 @@ namespace serverapp.Migrations
                     b.Property<string>("format_data")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid?>("id_part_guid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("itemlink")
                         .HasMaxLength(2048)
