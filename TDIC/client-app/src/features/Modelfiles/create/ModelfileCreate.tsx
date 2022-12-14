@@ -11,7 +11,7 @@ function ModelfileCreate() {
     const navigate = useNavigate();
     
     const [modelfile, setModelfile] = useState<ModelfileUploadDtO>({
-        id_part: 0,
+        id_part: "",
         part_number: '',
         version: 0,
         file_data: new File([],''),
@@ -65,7 +65,7 @@ function ModelfileCreate() {
             
             const ans = await (await agent.Modelfiles.fileupload(formData)).data;
             
-            ans && navigate(`/modelfileedit/${Number(ans.id_part)}`);
+            ans && navigate(`/modelfileedit/${ans.id_part}`);
 
         }
 

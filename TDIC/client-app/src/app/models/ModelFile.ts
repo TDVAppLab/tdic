@@ -1,6 +1,6 @@
 export interface Modelfile {
 
-    id_part: number;
+    id_part: string;
     part_number: string;
     version: number;
     type_data: string;
@@ -27,7 +27,7 @@ export interface article_reference
 
 export interface ModelfileUploadDtO {
 
-    id_part: number;
+    id_part: string;
     part_number: string;
     version: number;
     file_data: File;
