@@ -36,7 +36,8 @@ namespace Application.AttachmentFile
                         file_length = x.file_length,
                         itemlink=x.itemlink,
                         license = x.license,
-                }).ToListAsync(cancellationToken));
+                        create_datetime = x.create_datetime,
+                }).OrderByDescending(t => t.create_datetime).ToListAsync(cancellationToken));
             }
         }
     }

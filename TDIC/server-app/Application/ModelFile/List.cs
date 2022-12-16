@@ -51,6 +51,7 @@ namespace Application.ModelFile
                             article_references = x.t_instance_objects.Where(z=>z.id_part==x.id_part).Select(y => new article_reference{id_article = y.id_articleNavigation.id_article, title = y.id_articleNavigation.title, status_name = y.id_articleNavigation.statusNavigation.name})
                         })
                         .Where(x => request.is_exclude_used ? x.count_use_instance < 1 : true )
+                        .OrderByDescending(t => t.create_datetime)
                         .ToListAsync(cancellationToken));
             }
         }
