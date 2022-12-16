@@ -4,7 +4,7 @@ import { Attachmentfile } from "../models/attachmentfile";
 
 
 export default class AttachmentfileStore {
-    AttachmentfileRegistry = new Map<number, Attachmentfile>();
+    AttachmentfileRegistry = new Map<string, Attachmentfile>();
     selectedAttachmentfile: Attachmentfile| undefined = undefined;
     loading=false;
 
@@ -26,7 +26,7 @@ export default class AttachmentfileStore {
 
             
     }
-
+/*
     get groupedAttachmentfiles(){
         return Object.entries(
             this.AttachmentfilesByDate.reduce((attachmentfiles,attachmentfile) => {
@@ -35,7 +35,7 @@ export default class AttachmentfileStore {
                 return attachmentfiles;
             }, {} as {[key: number]: Attachmentfile[]})
         )
-    }
+    }*/
 
 
     loadAttachmentfiles = async () => {
@@ -53,7 +53,7 @@ export default class AttachmentfileStore {
         }
     }
 
-    loadAttachmentfile = async (id:number) => {
+    loadAttachmentfile = async (id:string) => {
         this.loading = true;
         let object:Attachmentfile;
         try {
@@ -115,7 +115,7 @@ export default class AttachmentfileStore {
         this.AttachmentfileRegistry.set(attachmentfile.id_file,attachmentfile);
     }
 
-    private getActivity=(id:number) => {
+    private getActivity=(id:string) => {
         return this.AttachmentfileRegistry.get(id);
     }
 
