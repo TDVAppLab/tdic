@@ -7,8 +7,7 @@ namespace TDIC.Models.EDM
 {
     public partial class t_attachment
     {
-        public string id_file { get; set; }
-        public Guid? id_file_guid { get; set; }
+        public Guid id_file { get; set; }
         public string name { get; set; }
         public byte[] file_data { get; set; }
         public string type_data { get; set; }

@@ -73,7 +73,7 @@ namespace Application.AttachmentFile
                 t_attachment.latest_update_datetime = DateTime.Now;
 
 
-                 t_attachment.id_file = Guid.NewGuid().ToString();
+                 t_attachment.id_file = Guid.NewGuid();
 
                 await _context.AddAsync(t_attachment);
 

@@ -35,8 +35,7 @@ namespace TDIC.Models.EDM
         public DateTime? create_datetime { get; set; }
         public string latest_update_user { get; set; }
         public DateTime? latest_update_datetime { get; set; }
-        public string? id_attachment_for_eye_catch { get; set; }
-        public Guid? id_attachment_for_eye_catch_guid { get; set; }
+        public Guid? id_attachment_for_eye_catch { get; set; }
         public string bg_color { get; set; }
         public long bg_c { get; set; }
         public double bg_h { get; set; }

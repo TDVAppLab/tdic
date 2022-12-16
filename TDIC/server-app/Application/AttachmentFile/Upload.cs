@@ -40,7 +40,7 @@ namespace Application.AttachmentFile
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
 
-                request.t_attachment.id_file = Guid.NewGuid().ToString();
+                request.t_attachment.id_file = Guid.NewGuid();
 
                 
                 request.t_attachment.create_user = "";
