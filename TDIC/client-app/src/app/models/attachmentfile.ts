@@ -1,5 +1,5 @@
 export interface Attachmentfile {
-    id_file: number;
+    id_file: string;
     name: string;
     type_data: string;
     format_data: string;

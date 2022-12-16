@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TDIC.Models.EDM;
 
@@ -11,9 +12,10 @@ using TDIC.Models.EDM;
 namespace serverapp.Migrations
 {
     [DbContext(typeof(db_data_coreContext))]
-    partial class db_data_coreContextModelSnapshot : ModelSnapshot
+    [Migration("20221216123146_addColAttach01")]
+    partial class addColAttach01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -386,8 +388,8 @@ namespace serverapp.Migrations
                     b.Property<long?>("id_assy")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid?>("id_attachment_for_eye_catch")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("id_attachment_for_eye_catch")
+                        .HasColumnType("bigint");
 
                     b.Property<bool?>("isStarrySky")
                         .HasColumnType("bit");
@@ -452,8 +454,8 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_attachment", b =>
                 {
-                    b.Property<Guid>("id_file")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("id_file")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("create_datetime")
                         .HasColumnType("datetime2");
@@ -476,6 +478,9 @@ namespace serverapp.Migrations
                     b.Property<string>("format_data")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid?>("id_file_guid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool?>("isActive")
                         .IsRequired()
