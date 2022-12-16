@@ -27,14 +27,14 @@ namespace API.Controllers
         }
 
         [HttpGet("details/{id}")]
-        public async Task<ActionResult> GetDetails(long id)
+        public async Task<ActionResult> GetDetails(string id)
         {
             return HandleResult(await Mediator.Send(new Details.Query{ID = id}));
         }
 
         [AllowAnonymous]
         [HttpGet("file/{id}")]
-        public async Task<ActionResult> GetFile(long id)
+        public async Task<ActionResult> GetFile(string id)
         {
             var det = await Mediator.Send(new Details.Query{ID = id});
 
@@ -50,7 +50,7 @@ namespace API.Controllers
 
         
         [HttpPost("delete/{id}")]
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(string id)
         {
             return HandleResult(await Mediator.Send(new Delete.Command{id=id}));
         }

@@ -136,7 +136,7 @@ namespace TDIC.Models.EDM
 
             modelBuilder.Entity<t_attachment>(entity =>
             {
-                entity.HasKey(e => e.id_file);
+                entity.HasKey(e => e.id_file_guid);
 
                 entity.ToTable("t_attachment");
 

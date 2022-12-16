@@ -5,7 +5,7 @@ namespace TDIC.DTOs
 {
     public partial class t_attachmentUpdateUDto
     {
-        public long id_file { get; set; }
+        public string id_file { get; set; }
         public Guid? id_file_guid { get; set; }
         public string name { get; set; }
         public string type_data { get; set; }
