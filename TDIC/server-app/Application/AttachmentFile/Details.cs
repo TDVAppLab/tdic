@@ -11,7 +11,7 @@ namespace Application.AttachmentFile
     {
 
         public class Query : IRequest<Result<t_attachment>>{
-            public long ID {get; set;}
+            public Guid ID {get; set;}
         }
 
         public class Handler : IRequestHandler<Query, Result<t_attachment>>

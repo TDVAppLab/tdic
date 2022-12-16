@@ -25,7 +25,7 @@ export default observer( function AttachmentfileEdit(){
 
     const [attachmentfile, setAttachmentfile] = useState<Attachmentfile>({
         
-        id_file: 0,
+        id_file: '',
         name:  '',
         type_data:  '',
         format_data:  '',
@@ -73,12 +73,12 @@ export default observer( function AttachmentfileEdit(){
     }, []);
 
     useEffect(()=>{
-        if(id) loadAttachmentfile(Number(id)).then(attachmentfile => setAttachmentfile(attachmentfile!))
+        if(id) loadAttachmentfile(id).then(attachmentfile => setAttachmentfile(attachmentfile!))
     }, [id, loadAttachmentfile]);
 
     
     function handleFormSubmit(attachmentfile:Attachmentfile) {
-        if(attachmentfile.id_file ===0 ){
+        if(attachmentfile.id_file === '' ){
         } else {
             updateAttachmentfile(attachmentfile);
         }
@@ -87,7 +87,7 @@ export default observer( function AttachmentfileEdit(){
     
     function handleFormSubmitDelete(attachmentfile:Attachmentfile) {
         
-        if(attachmentfile.id_file ===0 ){
+        if(attachmentfile.id_file === '' ){
         } else {
             
             deleteAttachmentfile(attachmentfile);

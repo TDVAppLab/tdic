@@ -18,8 +18,7 @@ export default observer( function AttachmentFileDetails() {
     useEffect(()=> {
 
         if(id) {
-            console.log("called id");
-            loadAttachmentfile(Number(id));
+            loadAttachmentfile(id);
         }
 
     }, [id])

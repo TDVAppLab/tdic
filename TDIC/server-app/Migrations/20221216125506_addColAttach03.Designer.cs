@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TDIC.Models.EDM;
 
@@ -11,9 +12,10 @@ using TDIC.Models.EDM;
 namespace serverapp.Migrations
 {
     [DbContext(typeof(db_data_coreContext))]
-    partial class db_data_coreContextModelSnapshot : ModelSnapshot
+    [Migration("20221216125506_addColAttach03")]
+    partial class addColAttach03
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -386,7 +388,10 @@ namespace serverapp.Migrations
                     b.Property<long?>("id_assy")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid?>("id_attachment_for_eye_catch")
+                    b.Property<string>("id_attachment_for_eye_catch")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("id_attachment_for_eye_catch_guid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool?>("isStarrySky")
@@ -452,7 +457,8 @@ namespace serverapp.Migrations
 
             modelBuilder.Entity("TDIC.Models.EDM.t_attachment", b =>
                 {
-                    b.Property<Guid>("id_file")
+                    b.Property<Guid?>("id_file_guid")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("create_datetime")
@@ -476,6 +482,9 @@ namespace serverapp.Migrations
                     b.Property<string>("format_data")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("id_file")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("isActive")
                         .IsRequired()
@@ -517,7 +526,7 @@ namespace serverapp.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.HasKey("id_file");
+                    b.HasKey("id_file_guid");
 
                     b.ToTable("t_attachment", (string)null);
                 });

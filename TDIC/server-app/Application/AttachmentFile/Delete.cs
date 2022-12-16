@@ -14,7 +14,7 @@ namespace Application.AttachmentFile
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public long id {get; set;}
+            public Guid id {get; set;}
         }
         public class Handler : IRequestHandler<Command,Result<Unit>>
         {
