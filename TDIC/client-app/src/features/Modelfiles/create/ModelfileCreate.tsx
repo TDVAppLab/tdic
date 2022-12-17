@@ -77,6 +77,7 @@ function ModelfileCreate() {
             <h3>Model File Upload</h3>
 
             <Formik
+                    validateOnMount={true}
                     validationSchema={validationSchema}
                     enableReinitialize 
                     initialValues={modelfile} 
