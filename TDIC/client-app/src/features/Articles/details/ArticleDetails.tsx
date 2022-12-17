@@ -12,6 +12,7 @@ import ModelScreen from "../common/modelscreen/ModelScreen";
 import PanelInstruction from "./PanelInstruction";
 import InstructionSelector from "./InstructionSelector";
 import agent from "../../../app/api/agent";
+import MaterialDisplay from "../common/MaterialDisplay";
 
 
 
@@ -125,6 +126,7 @@ export default observer( function ArticleDetails() {
                                 <PanelInstruction />
                             </Tab>
                             <Tab eventKey="profile" title="Material">
+                                <MaterialDisplay />
                             </Tab>
                             {
                                 user &&

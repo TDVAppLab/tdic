@@ -82,7 +82,8 @@ const requests = {
 }
 
 const Modelfiles = {
-    list: (is_exclude_used:boolean) => requests.get<Modelfile[]>(`/modelfiles/index/is_exclude_used=${is_exclude_used}`),
+    list: (is_exclude_used:boolean) => requests.get<Modelfile[]>(`/modelfiles/index/is_exclude_used=${is_exclude_used}`),    
+    autherList: (id_article:string) => requests.get<Modelfile[]>(`/modelfiles/autherList/${id_article}`),
     details:(id:string) => requests.get<Modelfile>(`/modelfiles/details/${id}`),
     update: (modelfile: Modelfile) => axios.post<void>(`/modelfiles/update`, modelfile),
     fileupload: (formData:FormData) => axios.post<Modelfile>('/modelfiles/uploadfile',formData),

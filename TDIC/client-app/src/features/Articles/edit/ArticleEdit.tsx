@@ -22,6 +22,7 @@ import EditInstanceDisplay from "./EditInstanceDisplay";
 import PanelInstruction from "../details/PanelInstruction";
 import InstructionSelector from "../details/InstructionSelector";
 import EditInstanceobject from "./EditInstanceobject";
+import MaterialDisplay from "../common/MaterialDisplay";
 
 
 
@@ -213,7 +214,7 @@ export default observer( function ArticleEdit() {
 
                                     { id &&
                                     <Tab eventKey="materials" title="Materials" >
-                                        <p>abxxxxxx</p>
+                                        <MaterialDisplay />
                                     </Tab>
                                     }
                                 </Tabs>
