@@ -57,7 +57,7 @@ export default observer( function EditArticleSub(){
 
         gammaOutput: false,
 
-        id_attachment_for_eye_catch: 0,
+        id_attachment_for_eye_catch: "",
 
         bg_color:'#000000',
         bg_c: 0,
