@@ -17,6 +17,7 @@ import { OrbitControls } from "@react-three/drei";
 import ShowAction from "../common/ShowAction";
 import agent from "../../../app/api/agent";
 import { PartAnimationClip } from "../../../app/models/PartAnimationClip";
+import ControlPanel from "../common/ControlPanel";
 
 export default observer( function ModelfileEdit(){
     const navigate = useNavigate();
@@ -129,6 +130,7 @@ export default observer( function ModelfileEdit(){
                             <axesHelper args={[2]}/>
                             <gridHelper args={[2]}/>
                             <ShowAction modelUuid={modelUuid} animations = {animations} is_exec_animation={isMExecAnimation}/>
+                            <ControlPanel />
                         </Canvas>                            
                     </div>
                 </Col>

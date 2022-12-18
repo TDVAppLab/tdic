@@ -134,6 +134,14 @@ export default class ArticleStore {
         }
     }    
 
+    setBgcolor = (bg_color : string) => {
+        runInAction(() => {
+            if(this.selectedArticle){
+                this.selectedArticle.bg_color = bg_color;
+            }
+        })
+    }
+
     private setArticle = (article : Article) => {
         this.articleRegistry.set(article.id_article,article);
     }

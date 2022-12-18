@@ -15,6 +15,7 @@ import ShowOrbitInfo from './ShowOrbitInfo';
 import UpdateInstanceVisivility from './SetVisivility/UpdateInstanceVisivility';
 import ShowActionUseInstructionSettings from './ShowAction/ShowActionUseInstructionSettings';
 import ShowActionofSettedModel from './ShowAction/ShowActionofSettedModel';
+import ControlPanelofCanvasBasic from './ControlPanelofCanvasBasic';
 
 
 
@@ -121,6 +122,7 @@ useEffect(()=> {
         {
           <GetSceneCapture />
         }
+        { isEditmode && <ControlPanelofCanvasBasic /> }
       </Canvas>
   );
 });
