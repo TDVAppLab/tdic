@@ -30,6 +30,13 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new List.Query{is_exclude_used = is_exclude_used}));
         }
+                
+        [AllowAnonymous]
+        [HttpGet("autherList/{id}")]
+        public async Task<ActionResult> GetModelAutherList(Guid id)
+        {
+            return HandleResult(await Mediator.Send(new ModelAutherList.Query{id = id, IsAuthenticated=User.Identity.IsAuthenticated}));
+        }
 
         [HttpGet("details/{id}")]
         public async Task<ActionResult> GetDetails(Guid id)
