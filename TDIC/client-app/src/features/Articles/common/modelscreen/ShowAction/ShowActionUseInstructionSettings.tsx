@@ -2,7 +2,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { AnimationMixer } from 'three/src/animation/AnimationMixer';
 import { Clock, LoopOnce } from 'three';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../../app/stores/store';
+import { useStore } from '../../../../../app/stores/store';
 import { useEffect, useRef } from 'react';
 
 

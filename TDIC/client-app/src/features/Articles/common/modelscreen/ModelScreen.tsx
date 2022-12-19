@@ -4,17 +4,17 @@ import { useEffect } from 'react';
 import { useStore } from '../../../../app/stores/store';
 import { OrbitControls } from '@react-three/drei';
 import { Color, Quaternion, Vector3 } from 'three';
-import LoadModel from './LoadModel';
-import SetLight from './SetLight';
-import ShowAnnotation from './ShowAnnotation';
-import UpdateCameraWork from './UpdateCameraWork';
+import LoadModel from './ModelLoading/LoadModel';
+import SetLight from './Lighting/SetLight';
+import ShowAnnotation from './ShowAnnotation/ShowAnnotation';
+import UpdateCameraWork from './CameraControl/UpdateCameraWork';
 import SceneInfoCatcher from './SceneInfoCatcher';
-import GetSceneCapture from './GetSceneCapture';
-import AutomaticCameraMove from './AutomaticCameraMove';
+import GetSceneCapture from './SceneCapture/GetSceneCapture';
+import AutomaticCameraMove from './CameraControl/AutomaticCameraMove';
 import ShowOrbitInfo from './ShowOrbitInfo';
-import UpdateInstanceVisivility from './UpdateInstanceVisivility';
-import ShowActionUseInstructionSettings from './ShowActionUseInstructionSettings';
-import ShowActionofSettedModel from './ShowActionofSettedModel';
+import UpdateInstanceVisivility from './SetVisivility/UpdateInstanceVisivility';
+import ShowActionUseInstructionSettings from './ShowAction/ShowActionUseInstructionSettings';
+import ShowActionofSettedModel from './ShowAction/ShowActionofSettedModel';
 
 
 

@@ -1,4 +1,4 @@
-import { Light } from '../../../../app/models/Light';
+import { Light } from '../../../../../app/models/Light';
 
 
 import { Lights } from './Lights';
