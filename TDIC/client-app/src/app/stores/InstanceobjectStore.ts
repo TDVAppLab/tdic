@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { AnimationClip } from "three";
 import { Instanceobject } from "../models/Instanceobject";
+import { Modelfile } from "../models/ModelFile";
 
 
 export default class InstanceobjectStore {
@@ -12,6 +13,9 @@ export default class InstanceobjectStore {
     annimationsRegistry = new Map<number, AnimationClip[]>();//number = id_inst(=instance)
 
     modelLoadingRegistry = new  Map<number, boolean>();
+
+    
+    materialInfoRegistry = new Map<string, Modelfile>();
     
     id_article: string = "";
 
@@ -38,11 +42,17 @@ export default class InstanceobjectStore {
         this.modelLoadingRegistry.clear();
         try {
             const objects = await agent.Instanceobjects.list(id_article);
+            const materialinfo = await agent.Modelfiles.autherList(id_article);
             runInAction(() => {
                 objects.forEach(object => {
                     this.setInstanceobject(object);
                     this.modelLoadingRegistry.set(object.id_instance,true);
                 })
+                
+                materialinfo.forEach(object => {
+                    this.materialInfoRegistry.set(object.id_part,object);
+                })
+
                 this.id_article=id_article;
             })            
             this.setLoading(false);

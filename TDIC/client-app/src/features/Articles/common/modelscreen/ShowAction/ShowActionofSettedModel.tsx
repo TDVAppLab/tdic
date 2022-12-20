@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { AnimationMixer } from 'three/src/animation/AnimationMixer';
 import { Clock } from 'three';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../../app/stores/store';
+import { useStore } from '../../../../../app/stores/store';
 
 
 interface Props {

@@ -15,13 +15,14 @@ import EditArticleSub from "./EditArticleSub";
 import EditViewList from "./EditViewList";
 import ModelScreen from "../common/modelscreen/ModelScreen";
 import EditEyecatch from "./EditEyecatch";
-import DisplayHtmlSubtitles from "../common/modelscreen/DisplayHtmlSubtitles";
+import DisplayHtmlSubtitles from "../common/modelscreen/Subtitles/DisplayHtmlSubtitles";
 import SubtitleSelector from "../common/SubtitleSelector";
 import ListupSubtitles from "./ListupSubtitles";
 import EditInstanceDisplay from "./EditInstanceDisplay";
 import PanelInstruction from "../details/PanelInstruction";
 import InstructionSelector from "../details/InstructionSelector";
 import EditInstanceobject from "./EditInstanceobject";
+import MaterialDisplay from "../common/MaterialDisplay";
 
 
 
@@ -213,7 +214,7 @@ export default observer( function ArticleEdit() {
 
                                     { id &&
                                     <Tab eventKey="materials" title="Materials" >
-                                        <p>abxxxxxx</p>
+                                        <MaterialDisplay />
                                     </Tab>
                                     }
                                 </Tabs>
