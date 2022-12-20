@@ -82,6 +82,7 @@ useEffect(()=> {
           scene.background = new Color(selectedArticle?.bg_color)
         }}
         linear={!selectedArticle?.gammaOutput}        
+        flat={true}    
         camera={{ 
           fov:45
           ,position:[3,3,3]
