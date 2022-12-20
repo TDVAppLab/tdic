@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { useStore } from '../../../../app/stores/store';
 import { OrbitControls } from '@react-three/drei';
-import { Color, Quaternion, Vector3 } from 'three';
+import THREE, { Color, Quaternion, Vector3 } from 'three';
 import LoadModel from './ModelLoading/LoadModel';
 import SetLight from './Lighting/SetLight';
 import ShowAnnotation from './ShowAnnotation/ShowAnnotation';
@@ -16,6 +16,7 @@ import UpdateInstanceVisivility from './SetVisivility/UpdateInstanceVisivility';
 import ShowActionUseInstructionSettings from './ShowAction/ShowActionUseInstructionSettings';
 import ShowActionofSettedModel from './ShowAction/ShowActionofSettedModel';
 import ControlPanelofCanvasBasic from './ControlPanelofCanvasBasic';
+import { Effects } from './Lighting/Effect';
 
 
 

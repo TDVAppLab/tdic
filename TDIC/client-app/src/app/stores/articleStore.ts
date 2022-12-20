@@ -141,6 +141,15 @@ export default class ArticleStore {
             }
         })
     }
+    
+    
+    setLinear = (liner : boolean) => {
+        runInAction(() => {
+            if(this.selectedArticle){
+                this.selectedArticle.gammaOutput = liner;
+            }
+        })
+    }
 
     private setArticle = (article : Article) => {
         this.articleRegistry.set(article.id_article,article);

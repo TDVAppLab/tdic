@@ -11,13 +11,13 @@ import { Color, Quaternion, Vector3 } from 'three';
 export default observer( function ControlPanelofCanvasBasic(){
 
     const { gl} = useThree();
-    let { linear} = useThree();
+//    let { linear} = useThree();
     const camera = useThree((state) => state.camera);
     const { scene } = useThree();
 
     
     const { articleStore } = useStore();
-    const { selectedArticle, setBgcolor } = articleStore;
+    const { selectedArticle, setBgcolor, setLinear } = articleStore;
 
     const [Param, set] = useControls(() => ({
         bgcolor: "#000000",
@@ -37,7 +37,9 @@ export default observer( function ControlPanelofCanvasBasic(){
         console.log("called change param")
         setBgcolor(Param.bgcolor)
         scene.background = new Color(Param.bgcolor);
-        linear=Param.linear;
+//        selectedArticle?.gammaOutput;
+        setLinear(Param.linear);
+//        linear=Param.linear;
     }, [Param])
 
   return (
