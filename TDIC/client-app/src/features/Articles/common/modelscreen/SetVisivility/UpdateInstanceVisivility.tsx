@@ -1,6 +1,6 @@
 import { useThree } from '@react-three/fiber';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../../app/stores/store';
+import { useStore } from '../../../../../app/stores/store';
 import { useEffect } from 'react';
 
 

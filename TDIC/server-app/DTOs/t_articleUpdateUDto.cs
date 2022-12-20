@@ -22,7 +22,7 @@ namespace TDIC.DTOs
         public int? ambient_light_color { get; set; }
         public double? ambient_light_intensity { get; set; }
         public bool? gammaOutput { get; set; }
-        public long? id_attachment_for_eye_catch { get; set; }
+        public Guid? id_attachment_for_eye_catch { get; set; }
         public string bg_color { get; set; }
         public long bg_c { get; set; }
         public double bg_h { get; set; }

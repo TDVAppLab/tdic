@@ -3,8 +3,8 @@ import { Quaternion, Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../../app/stores/store';
-import { APIURL } from '../../../../app/constants';
+import { useStore } from '../../../../../app/stores/store';
+import { APIURL } from '../../../../../app/constants';
 
 
 
