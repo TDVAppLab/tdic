@@ -81,7 +81,7 @@ useEffect(()=> {
           //gl.outputEncoding = THREE.sRGBEncoding
           scene.background = new Color(selectedArticle?.bg_color)
         }}
-        linear={!selectedArticle?.gammaOutput}        
+        linear={selectedArticle?.gammaOutput}        
         flat={true}    
         camera={{ 
           fov:45
