@@ -21,7 +21,7 @@ export interface Article {
 
     gammaOutput: boolean;
 
-    id_attachment_for_eye_catch: string;
+    id_attachment_for_eye_catch: string | null;
 
     bg_color: string;
     bg_c: number;
