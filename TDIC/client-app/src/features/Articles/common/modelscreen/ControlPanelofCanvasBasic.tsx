@@ -28,7 +28,7 @@ export default observer( function ControlPanelofCanvasBasic(){
         if(selectedArticle){
             set({
                 bgcolor: selectedArticle.bg_color,
-                linear: !selectedArticle.gammaOutput,
+                linear: selectedArticle.gammaOutput,
               })
         }
     }, [selectedArticle?.id_article])
@@ -37,9 +37,7 @@ export default observer( function ControlPanelofCanvasBasic(){
         console.log("called change param")
         setBgcolor(Param.bgcolor)
         scene.background = new Color(Param.bgcolor);
-//        selectedArticle?.gammaOutput;
         setLinear(Param.linear);
-//        linear=Param.linear;
     }, [Param])
 
   return (

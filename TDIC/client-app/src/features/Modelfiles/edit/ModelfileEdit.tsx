@@ -130,7 +130,9 @@ export default observer( function ModelfileEdit(){
                             <axesHelper args={[2]}/>
                             <gridHelper args={[2]}/>
                             <ShowAction modelUuid={modelUuid} animations = {animations} is_exec_animation={isMExecAnimation}/>
-                            <ControlPanel />
+                            {
+                                <ControlPanel />
+                            }
                         </Canvas>                            
                     </div>
                 </Col>
@@ -306,6 +308,13 @@ export default observer( function ModelfileEdit(){
                                         }
                                     </tbody>
                                 </table>
+                            </div>
+                        </Tab>
+
+                        
+                        <Tab eventKey="setting" title="Setting" >
+                            <div>
+
                             </div>
                         </Tab>
 

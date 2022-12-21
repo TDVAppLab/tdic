@@ -1,27 +1,26 @@
 import { useThree } from '@react-three/fiber';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useControls } from 'leva';
+import { Color } from 'three';
 
 //https://sbcode.net/react-three-fiber/leva/
 
 export default function ControlPanel(){
     const camera = useThree((state) => state.camera);
+    const { scene } = useThree();
 
     
-    const options = useMemo(() => {
-        return {
-        x: { value: 0, min: 0, max: 500 },
-        y: { value: 0, min: 0, max: 500 },
-        z: { value: 0, min: 0, max: 500 },
-        }
-    }, [])
+    const [Param, set] = useControls(() => ({
+        bgcolor: "#000000",
+        linear: true
+      }));
 
 
-    const pA = useControls('Camera', options)
+    //const pA = useControls('Camera', options)
 
     useEffect(()=>{
-        camera.position.set(pA.x,pA.y,pA.z);
-    }, [pA])
+        scene.background = new Color(Param.bgcolor);
+    }, [Param])
 
   return (
       null
