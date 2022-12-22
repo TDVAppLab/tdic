@@ -46,24 +46,13 @@ export default observer( function EditArticleSub(){
 
         status: 1,
 
-        directional_light_color: 0,
-        directional_light_intensity: 0,
-        directional_light_px: 0,
-        directional_light_py: 0,
-        directional_light_pz: 0,
 
-        ambient_light_color: 0,
-        ambient_light_intensity: 0,
 
         gammaOutput: false,
 
         id_attachment_for_eye_catch: null,
 
         bg_color:'#000000',
-        bg_c: 0,
-        bg_h: 0,
-        bg_s: 0,
-        bg_l: 0,
         isStarrySky: false,
     });
 

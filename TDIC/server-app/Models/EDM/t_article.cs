@@ -23,13 +23,6 @@ namespace TDIC.Models.EDM
         public string meta_description { get; set; }
         public string meta_category { get; set; }
         public short status { get; set; }
-        public int? directional_light_color { get; set; }
-        public double? directional_light_intensity { get; set; }
-        public double? directional_light_px { get; set; }
-        public double? directional_light_py { get; set; }
-        public double? directional_light_pz { get; set; }
-        public int? ambient_light_color { get; set; }
-        public double? ambient_light_intensity { get; set; }
         public bool? gammaOutput { get; set; }
         public string create_user { get; set; }
         public DateTime? create_datetime { get; set; }
@@ -37,10 +30,6 @@ namespace TDIC.Models.EDM
         public DateTime? latest_update_datetime { get; set; }
         public Guid? id_attachment_for_eye_catch { get; set; }
         public string bg_color { get; set; }
-        public long bg_c { get; set; }
-        public double bg_h { get; set; }
-        public double bg_s { get; set; }
-        public double bg_l { get; set; }
         public bool? isStarrySky { get; set; }
         public virtual m_status_article statusNavigation { get; set; }
         public virtual ICollection<t_annotation> t_annotations { get; set; }
