@@ -15,6 +15,7 @@ wwwroot/
 # TEST-Directory-ForReact
 client-app-test/
 
+TDIC/server-app/appsettings.Development.json
 
 # User-specific files
 *.rsuser
@@ -360,5 +361,3 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 
-# Ionide (cross platform F# VS Code tools) working folder
-.ionide/

@@ -42,3 +42,26 @@ export interface ModelfileUploadDtO {
     create_datetime: Date | null;
     latest_update_datetime: Date | null;
 }
+
+
+
+export const getDefaultValueOfModelfile = () => {
+    const ans : Modelfile = {
+        id_part: '',
+        part_number: '',
+        version: 0,
+        type_data: '',
+        format_data: '',
+        file_name: '',
+        file_length: 0,
+        itemlink: '',
+        license: '',
+        author: '',
+        memo: '',
+        create_datetime: null,
+        latest_update_datetime: null,
+        count_use_instance:0,
+        article_references: []
+    }
+    return ans;
+}
