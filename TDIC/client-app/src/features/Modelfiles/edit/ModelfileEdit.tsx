@@ -297,7 +297,7 @@ export default observer( function ModelfileEdit(){
                                             selectedModelfile && selectedModelfile.article_references.map(x=>(
                                                 <tr key={x.id_article}>
                                                     <td>{x.id_article}</td>
-                                                    <td><Link to={`/articleedit/${Number(x.id_article)}`}>{x.title}</Link></td>
+                                                    <td><Link to={`/articleedit/${x.id_article}`}>{x.title}</Link></td>
                                                     <td>{x.status_name}</td>
                                                 </tr>
                                             ))
