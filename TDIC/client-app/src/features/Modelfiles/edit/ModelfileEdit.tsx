@@ -34,6 +34,9 @@ export default observer( function ModelfileEdit(){
     const [modelfile, setModelfile] = useState<Modelfile>(getDefaultValueOfModelfile());
 
 
+    
+    const [isShowHelpers, setIsShowHelpers] = useState(false);
+
     const validationSchema = Yup.object({
         part_number: Yup.string().required(),
         version: Yup.number().required(),
@@ -127,8 +130,8 @@ export default observer( function ModelfileEdit(){
                             <directionalLight intensity={1.0} position={[0, 2, 2]} />
                             <ModelfileViewer id_part={id} setTeststring={setAnimations} setModelUuid = {setModelUuid}/>
                             <OrbitControls target={[0, 0, 0]}  makeDefault />
-                            <axesHelper args={[2]}/>
-                            <gridHelper args={[2]}/>
+                            {isShowHelpers && <axesHelper args={[2]}/> }
+                            {isShowHelpers && <gridHelper args={[2]}/> }
                             <ShowAction modelUuid={modelUuid} animations = {animations} is_exec_animation={isMExecAnimation}/>
                             {
                                 <ControlPanel />
