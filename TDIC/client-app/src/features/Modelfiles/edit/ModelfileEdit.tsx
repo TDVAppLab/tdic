@@ -17,11 +17,18 @@ import { OrbitControls } from "@react-three/drei";
 import ShowAction from "../common/ShowAction";
 import agent from "../../../app/api/agent";
 import { PartAnimationClip } from "../../../app/models/PartAnimationClip";
+import ControlPanel from "../common/ModelFilesEditControlPanel";
+import ShowScreenObjectInfo from "./ShowScreenObjectInfo";
+import SetScreenObjectInfo from "../common/SetScreenObjectInfo";
+import TestLighting from "../common/AddLighting";
 
 export default observer( function ModelfileEdit(){
     const navigate = useNavigate();
     const { modelfileStore} = useStore();
     const { selectedModelfile, loadModelfile, updateModelfile, deleteModelfile, loading } = modelfileStore;
+
+    
+    const { modelFileEditorStore } = useStore();
 
     const {id} = useParams<{id: string}>();
 
@@ -32,6 +39,9 @@ export default observer( function ModelfileEdit(){
 
     const [modelfile, setModelfile] = useState<Modelfile>(getDefaultValueOfModelfile());
 
+
+    
+    const [isliner, setIsliner] = useState(false);
 
     const validationSchema = Yup.object({
         part_number: Yup.string().required(),
@@ -50,16 +60,10 @@ export default observer( function ModelfileEdit(){
     });
 
     useEffect(()=>{
-        //loadStatuses().then(()=>{
-        //    console.log(statusRegistry);
-        //});
-    }, []);
-/*
-    useEffect(()=>{
-        if(id) loadModelfile(Number(id)).then(modelfile => setModelfile(modelfile!))
-    }, [id, loadModelfile]);
+        setIsliner(modelFileEditorStore.liner);
+    }, [modelFileEditorStore.liner]);
 
-*/
+
     useEffect(()=>{
         if(id){            
             loadModelfile(id);
@@ -119,16 +123,19 @@ export default observer( function ModelfileEdit(){
                                 //gl.outputEncoding = THREE.sRGBEncoding
                                 //scene.background = new Color(selectedArticle?.bg_color)
                             }}
-                            linear={false}        
+                            linear={isliner}        
                             flat={true}    
                             style={{background: 'white'}} camera={{fov:45,position:[3,3,3]}} >
-                            <ambientLight intensity={1.0} />
-                            <directionalLight intensity={1.0} position={[0, 2, 2]} />
                             <ModelfileViewer id_part={id} setTeststring={setAnimations} setModelUuid = {setModelUuid}/>
                             <OrbitControls target={[0, 0, 0]}  makeDefault />
                             <axesHelper args={[2]}/>
                             <gridHelper args={[2]}/>
                             <ShowAction modelUuid={modelUuid} animations = {animations} is_exec_animation={isMExecAnimation}/>
+                            {
+                                <ControlPanel setIsMExecAnimation={setIsMExecAnimation} />
+                            }
+                            <TestLighting />
+                            <SetScreenObjectInfo />
                         </Canvas>                            
                     </div>
                 </Col>
@@ -211,12 +218,6 @@ export default observer( function ModelfileEdit(){
                         
                         <Tab eventKey="animation" title="Animation" >
                             <div>
-                                <input type="checkbox" defaultChecked={isMExecAnimation} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsMExecAnimation(event.target.checked)}/>
-                                <label>Display Action</label>
-                            </div>
-
-
-                            <div>
                                 <table className="table">
                                     <thead>
                                         <tr>
@@ -229,7 +230,7 @@ export default observer( function ModelfileEdit(){
                                     {
                                         partAnimationClips.map((x,index)=>(
 
-                                            <tr>
+                                            <tr key={x.name}>
                                                 <td>{index}</td>
                                                 <td>{x.no}</td>
                                                 <td>{x.name}</td>
@@ -253,7 +254,7 @@ export default observer( function ModelfileEdit(){
                                     {
                                         animations.map((x,index)=>(
 
-                                            <tr>
+                                            <tr key={x.name}>
                                                 <td>{index}</td>
                                                 <td>{x.name}</td>
                                             </tr>
@@ -304,6 +305,14 @@ export default observer( function ModelfileEdit(){
                                         }
                                     </tbody>
                                 </table>
+                            </div>
+                        </Tab>
+
+                        
+                        <Tab eventKey="setting" title="Setting" >
+                            <div>
+                                <ShowScreenObjectInfo />
+
                             </div>
                         </Tab>
 
