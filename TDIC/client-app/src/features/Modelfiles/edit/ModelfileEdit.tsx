@@ -6,7 +6,7 @@ import { useStore } from "../../../app/stores/store";
 import { Formik , Form } from "formik";
 import * as Yup from 'yup';
 import TextInputGeneral from "../../../app/common/form/TextInputGeneral";
-import { Modelfile } from "../../../app/models/ModelFile";
+import { getDefaultValueOfModelfile, Modelfile } from "../../../app/models/ModelFile";
 import { Col, Row, Tab, Tabs } from "react-bootstrap";
 import ModelfileViewer from "../common/ModelfileViewer";
 import TextAreaGeneral from "../../../app/common/form/TextAreaGeneral";
@@ -30,23 +30,7 @@ export default observer( function ModelfileEdit(){
     const [partAnimationClips, setPartAnimationClips] = useState<PartAnimationClip[]>([]);
     const [modelUuid, setModelUuid] = useState("");
 
-    const [modelfile, setModelfile] = useState<Modelfile>({
-        id_part: '',
-        part_number: '',
-        version: 0,
-        type_data: '',
-        format_data: '',
-        file_name: '',
-        file_length: 0,
-        itemlink: '',
-        license: '',
-        author: '',
-        memo: '',
-        create_datetime: null,
-        latest_update_datetime: null,
-        count_use_instance:0,
-        article_references: []
-    });
+    const [modelfile, setModelfile] = useState<Modelfile>(getDefaultValueOfModelfile());
 
 
     const validationSchema = Yup.object({
