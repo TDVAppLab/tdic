@@ -21,6 +21,7 @@ import ControlPanel from "../common/ModelFilesEditControlPanel";
 import ShowScreenObjectInfo from "./ShowScreenObjectInfo";
 import SetScreenObjectInfo from "../common/SetScreenObjectInfo";
 import TestLighting from "../common/AddLighting";
+import ModelfileUploader from "./ModelfileUploader";
 
 export default observer( function ModelfileEdit(){
     const navigate = useNavigate();
@@ -315,6 +316,15 @@ export default observer( function ModelfileEdit(){
 
                             </div>
                         </Tab>
+
+                        
+                        <Tab eventKey="ReUpload" title="ReUpload" >
+                            <div>
+                                <ModelfileUploader />
+                            </div>
+                        </Tab>
+
+
 
                     </Tabs>
                 </Col>
