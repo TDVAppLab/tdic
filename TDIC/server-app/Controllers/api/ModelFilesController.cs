@@ -55,35 +55,25 @@ namespace API.Controllers
         }
 
 
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateModelFileObject([FromBody] t_part t_part){
+            return HandleResult(await Mediator.Send(new CreateModelFileObject.Command{ t_part = t_part}));
+        }
 
 
-
-        [HttpPost("uploadfile")]
-        public async Task<ActionResult> UploadFile([FromForm] IFormFile file)
+        [HttpPost("uploadmodelfile/{id}")]
+        public async Task<ActionResult> UploadModelFile(Guid id, [FromForm] IFormFile file)
         {
             
             t_part t_part = new t_part();
 
             if (file == null)
             {
-                return HandleResult(await Mediator.Send(new Upload.Command{ Part = null}));
+                return HandleResult(await Mediator.Send(new ReUploadModelfile.Command{ id_part=id, file = null }));
             }
 
-            t_part.part_number = file.FileName;
-            t_part.file_data = GetByteArrayFromStream(file.OpenReadStream());
-            t_part.type_data = file.ContentType;
-            t_part.file_name = file.FileName;
-            t_part.file_length = file.Length;
-            t_part.format_data = "";
 
-
-            t_part.itemlink = "";
-            t_part.license = "";
-            t_part.author = "";
-            t_part.memo = "";
-
-
-            return HandleResult(await Mediator.Send(new Upload.Command{ Part = t_part}));
+            return HandleResult(await Mediator.Send(new ReUploadModelfile.Command{ id_part=id, file = file}));
         }
 
 
@@ -111,15 +101,6 @@ namespace API.Controllers
         public async Task<IActionResult> UpdatePartAnimationClip(Guid id, [FromBody] IList<PartAnimationClipDtO> partAnimationClips)
         {
             return HandleResult(await Mediator.Send(new UpdatePartAnimationClip.Command{id_part=id, PartAnimationClips=partAnimationClips}));
-        }
-        
-        public static byte[] GetByteArrayFromStream(Stream sm)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                sm.CopyTo(ms);
-                return ms.ToArray();
-            }
         }
     }
 }

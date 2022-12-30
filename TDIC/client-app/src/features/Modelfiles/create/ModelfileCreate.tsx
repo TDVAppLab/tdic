@@ -2,10 +2,25 @@ import { Form, Formik } from 'formik';
 import React, {useState} from 'react';
 import agent from '../../../app/api/agent';
 import * as Yup from 'yup';
-import { ModelfileUploadDtO } from '../../../app/models/ModelFile';
+import { getDefaultValueOfModelfile, Modelfile, ModelfileUploadDtO } from '../../../app/models/ModelFile';
 import { Col, Row } from 'react-bootstrap';
 import FileInputGeneral from '../../../app/common/form/FileInputGeneral';
 import { useNavigate } from 'react-router-dom';
+import {v4} from 'uuid';
+
+
+
+
+function baseName(str: string)
+{
+   var base = new String(str).substring(str.lastIndexOf('/') + 1); 
+    if(base.lastIndexOf(".") != -1)       
+        base = base.substring(0, base.lastIndexOf("."));
+   return base;
+}
+
+
+
 
 function ModelfileCreate() {  
     const navigate = useNavigate();
@@ -59,13 +74,26 @@ function ModelfileCreate() {
         console.log(event);
 
         if(event.file_data){
-            
-            formData.append('file', event.file_data);
 
+            const createDto = getDefaultValueOfModelfile();
+            createDto.id_part=v4();
+            createDto.part_number=baseName(event.file_data.name);
+            createDto.version=0;
+
+            const ans_step1 = await (await agent.Modelfiles.create(createDto)).data;
+
+
+
+            if(event.file_data && ans_step1){
             
-            const ans = await (await agent.Modelfiles.fileupload(formData)).data;
-            
-            ans && navigate(`/modelfileedit/${ans.id_part}`);
+                formData.append('file', event.file_data);
+    
+                
+                const ans = await (await agent.Modelfiles.uploadmodelfile(ans_step1.id_part, formData)).data;
+                
+                ans && navigate(`/modelfileedit/${ans.id_part}`);
+    
+            }    
 
         }
 
