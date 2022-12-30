@@ -7,6 +7,9 @@ import { Col, Row } from 'react-bootstrap';
 import FileInputGeneral from '../../../app/common/form/FileInputGeneral';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../../app/stores/store';
+import { APIURL } from '../../../app/constants';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { PartAnimationClip } from '../../../app/models/PartAnimationClip';
 
 function ModelfileUploader() {  
     const navigate = useNavigate();
@@ -62,16 +65,36 @@ function ModelfileUploader() {
     async function handleFormSubmit(event: ModelfileUploadDtO) {
 
         const formData = new FormData();
-        console.log(event);
 
         if(event.file_data && selectedModelfile){
             
             formData.append('file', event.file_data);
 
             
-            const ans = await (await agent.Modelfiles.uploadmodelfile(selectedModelfile.id_part, formData)).data;
+            const ans_step2 = await (await agent.Modelfiles.uploadmodelfile(selectedModelfile.id_part, formData)).data;
+
+            //console.log(ans_step2);
+
+            const str_url_partapi = APIURL + `/modelfiles/file/${ans_step2.id_part}`
+
+            const glfLoader = new GLTFLoader();
+
+            const PartAnimationClips : PartAnimationClip[] = [];
             
-            ans && navigate(`/modelfileedit/${ans.id_part}`);
+
+            await glfLoader.loadAsync(str_url_partapi).then(gltf => {
+                
+                gltf.animations.forEach((animation,index)=>{
+                    PartAnimationClips.push({no:index, name: animation.name})
+                })
+            
+            });
+    
+            if(ans_step2.id_part && PartAnimationClips.length > 0){
+                await agent.Modelfiles.updatePartAnimationClip(ans_step2.id_part,PartAnimationClips);        
+            }
+            
+            ans_step2 && navigate(`/modelfileedit/${ans_step2.id_part}`);
 
         }
 
