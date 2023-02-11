@@ -11,7 +11,7 @@ import { Col, Row, Tab, Tabs } from "react-bootstrap";
 import ModelfileViewer from "../common/ModelfileViewer";
 import TextAreaGeneral from "../../../app/common/form/TextAreaGeneral";
 import EditModelfileEyecatch from "./EditModelfileEyecatch";
-import { AnimationClip } from "three";
+import { AnimationClip, Color, NoToneMapping, sRGBEncoding } from "three";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import ShowAction from "../common/ShowAction";
@@ -28,9 +28,6 @@ export default observer( function ModelfileEdit(){
     const { modelfileStore} = useStore();
     const { selectedModelfile, loadModelfile, updateModelfile, deleteModelfile, loading } = modelfileStore;
 
-    
-    const { modelFileEditorStore } = useStore();
-
     const {id} = useParams<{id: string}>();
 
     const [isMExecAnimation, setIsMExecAnimation] = useState(false);
@@ -39,10 +36,7 @@ export default observer( function ModelfileEdit(){
     const [modelUuid, setModelUuid] = useState("");
 
     const [modelfile, setModelfile] = useState<Modelfile>(getDefaultValueOfModelfile());
-
-
     
-    const [isliner, setIsliner] = useState(false);
 
     const validationSchema = Yup.object({
         part_number: Yup.string().required(),
@@ -59,10 +53,6 @@ export default observer( function ModelfileEdit(){
     const validationSchemaDel = Yup.object({
         id_part: Yup.string().required(),
     });
-
-    useEffect(()=>{
-        setIsliner(modelFileEditorStore.liner);
-    }, [modelFileEditorStore.liner]);
 
 
     useEffect(()=>{
@@ -106,6 +96,10 @@ export default observer( function ModelfileEdit(){
 
     if(loading) return <LoadingComponent />
 
+
+
+
+
     return(
         id ? <div>         
             <h3>Model Edit</h3> 
@@ -117,16 +111,18 @@ export default observer( function ModelfileEdit(){
                         <Canvas                        
                             gl={{ 
                                 antialias: true, 
-                                //toneMapping: NoToneMapping 
+                                outputEncoding : sRGBEncoding,
+                                toneMapping: NoToneMapping,
                             }}
                             onCreated={({ gl, scene }) => {
-                                //gl.toneMapping = THREE.ACESFilmicToneMapping
-                                //gl.outputEncoding = THREE.sRGBEncoding
-                                //scene.background = new Color(selectedArticle?.bg_color)
+                                gl.toneMappingExposure = Math.pow(2, 0);
+                                scene.environment = null
+                                scene.background = new Color("#ffffff")
                             }}
-                            linear={isliner}        
-                            flat={true}    
-                            style={{background: 'white'}} camera={{fov:45,position:[3,3,3]}} >
+                            //linear={isliner}        
+                            //flat={true}
+                            camera={{fov:45,position:[3,3,3]}} 
+                        >
                             <ModelfileViewer id_part={id} setTeststring={setAnimations} setModelUuid = {setModelUuid}/>
                             <OrbitControls target={[0, 0, 0]}  makeDefault />
                             <axesHelper args={[2]}/>
