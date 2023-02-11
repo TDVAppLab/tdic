@@ -4,6 +4,7 @@ import { useControls } from 'leva';
 import { ACESFilmicToneMapping, Color, LinearEncoding, LinearToneMapping, NoToneMapping, PMREMGenerator, sRGBEncoding } from 'three';
 import { useStore } from '../../../app/stores/store';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
+import { outputEncodingOptions } from '../../../app/values/environments';
 
 //https://sbcode.net/react-three-fiber/leva/
 
@@ -34,11 +35,18 @@ export default function ModelFilesEditControlPanel({setIsMExecAnimation}: Props)
 
     
     useEffect(()=>{
+      gl.outputEncoding = outputEncodingOptions.find((e) => e.selectorname === Param.outputEncoding)?.value 
+                          ? outputEncodingOptions.find((e) => e.selectorname === Param.outputEncoding)!.value
+                          : LinearEncoding
+
+
+/*
       if(Param.outputEncoding==='sRGB'){
         gl.outputEncoding = sRGBEncoding;
       } else {
         gl.outputEncoding = LinearEncoding;
-      }
+      }*/
+
     }, [Param.outputEncoding])
     
     useEffect(()=>{
