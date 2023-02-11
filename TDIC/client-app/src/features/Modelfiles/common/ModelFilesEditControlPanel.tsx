@@ -4,6 +4,8 @@ import { useControls } from 'leva';
 import { ACESFilmicToneMapping, Color, LinearEncoding, LinearToneMapping, NoToneMapping, PMREMGenerator, sRGBEncoding } from 'three';
 import { useStore } from '../../../app/stores/store';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
+import { outputEncodingOptions } from '../../../app/values/outputEncodingOptions';
+import { toneMappingOptions } from '../../../app/values/toneMappingOptions';
 
 //https://sbcode.net/react-three-fiber/leva/
 
@@ -21,10 +23,12 @@ export default function ModelFilesEditControlPanel({setIsMExecAnimation}: Props)
 
     const { scene, gl } = useThree();
     
-    const [Param, set] = useControls(() => ({  
-        outputEncoding: { options: ["sRGB", "Linear"] },
-        environment: { options: ["None", "Neutral"] },
-        toneMapping: { options: ["None", "Linear", "ACES Filmic"] },
+    const [Param, set] = useControls(() => ({
+        outputEncoding: { value : LinearEncoding, options: {"sRGB" : sRGBEncoding, "Linear" : LinearEncoding} },
+
+        environment: { options: {none: "None", mat : "Neutral"} },
+        
+        toneMapping: { value : ACESFilmicToneMapping, options: {"None" : NoToneMapping, "Linear" : LinearToneMapping, "ACES Filmic" : ACESFilmicToneMapping} },
         exposure: {value: 0.0, min: -10.0, max: 10, step: 0.1},
         bgcolor: "#ffffff",
         isShowHelpers: false,
@@ -34,11 +38,9 @@ export default function ModelFilesEditControlPanel({setIsMExecAnimation}: Props)
 
     
     useEffect(()=>{
-      if(Param.outputEncoding==='sRGB'){
-        gl.outputEncoding = sRGBEncoding;
-      } else {
-        gl.outputEncoding = LinearEncoding;
-      }
+      
+      gl.outputEncoding = Param.outputEncoding;
+
     }, [Param.outputEncoding])
     
     useEffect(()=>{
@@ -51,14 +53,8 @@ export default function ModelFilesEditControlPanel({setIsMExecAnimation}: Props)
 
 
     useEffect(()=>{
-      
-      if(Param.toneMapping==='None'){
-        gl.toneMapping = NoToneMapping;
-      } else if(Param.toneMapping==='Linear'){
-        gl.toneMapping = LinearToneMapping;
-      } else {
-        gl.toneMapping = ACESFilmicToneMapping;
-      }
+      gl.toneMapping = Param.toneMapping;
+      //console.log(Param.toneMapping);
     }, [Param.toneMapping])
 
 

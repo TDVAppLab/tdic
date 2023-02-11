@@ -39,6 +39,7 @@ export default class ModelfileStore {
             this.setModelfile(object);
             runInAction(()=>{
                 this.selectedModelfile = object;
+                this.selectedModelfile.outputEncoding = 'LinearEncoding';
             })
             this.setLoaing(false);
             return object;

@@ -1,3 +1,5 @@
+import { LinearEncoding, sRGBEncoding, TextureEncoding } from "three";
+
 export interface Modelfile {
 
     id_part: string;
@@ -11,6 +13,7 @@ export interface Modelfile {
     license: string;
     author: string;
     memo: string;
+    outputEncoding : string;
     create_datetime: Date | null;
     latest_update_datetime: Date | null;
     count_use_instance: number;
@@ -58,6 +61,7 @@ export const getDefaultValueOfModelfile = () => {
         license: '',
         author: '',
         memo: '',
+        outputEncoding: 'LinearEncoding',
         create_datetime: null,
         latest_update_datetime: null,
         count_use_instance:0,

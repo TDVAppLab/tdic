@@ -36,6 +36,8 @@ export default observer( function ModelfileEdit(){
     const [modelUuid, setModelUuid] = useState("");
 
     const [modelfile, setModelfile] = useState<Modelfile>(getDefaultValueOfModelfile());
+
+//    const [outputEncoding, setOutputEncoding] = useState<Modelfile>(getDefaultValueOfModelfile());
     
 
     const validationSchema = Yup.object({
@@ -111,7 +113,7 @@ export default observer( function ModelfileEdit(){
                         <Canvas                        
                             gl={{ 
                                 antialias: true, 
-                                outputEncoding : sRGBEncoding,
+//                                outputEncoding : modelfile.outputEncoding,
                                 toneMapping: NoToneMapping,
                             }}
                             onCreated={({ gl, scene }) => {
