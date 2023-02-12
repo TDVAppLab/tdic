@@ -4,7 +4,6 @@ import { useControls } from 'leva';
 import { ACESFilmicToneMapping, Color, LinearEncoding, LinearToneMapping, NoToneMapping, PMREMGenerator, sRGBEncoding } from 'three';
 import { useStore } from '../../../app/stores/store';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
-import { outputEncodingOptions } from '../../../app/values/environments';
 
 //https://sbcode.net/react-three-fiber/leva/
 
@@ -19,13 +18,17 @@ interface Props {
 
 
 export default function ModelFilesEditControlPanel({setIsMExecAnimation}: Props){
+  
+  const { modelfileStore} = useStore();
+  const { selectedModelfile } = modelfileStore;
+
 
     const { scene, gl } = useThree();
     
-    const [Param, set] = useControls(() => ({  
-        outputEncoding: { options: ["sRGB", "Linear"] },
-        environment: { options: ["None", "Neutral"] },
-        toneMapping: { options: ["None", "Linear", "ACES Filmic"] },
+    const [Param, set] = useControls(() => ({
+        outputEncoding: { value : sRGBEncoding, options: {"sRGB" : sRGBEncoding, "Linear" : LinearEncoding} },
+        environment: { options: {None: "None", Neutral : "Neutral"} },        
+        toneMapping: { value : NoToneMapping, options: {"None" : NoToneMapping, "Linear" : LinearToneMapping, "ACES Filmic" : ACESFilmicToneMapping} },
         exposure: {value: 0.0, min: -10.0, max: 10, step: 0.1},
         bgcolor: "#ffffff",
         isShowHelpers: false,
@@ -34,18 +37,24 @@ export default function ModelFilesEditControlPanel({setIsMExecAnimation}: Props)
 
 
     
+      useEffect(()=>{
+        set({
+          outputEncoding: sRGBEncoding,
+          environment: "None",        
+          toneMapping: NoToneMapping,
+          exposure: 0.0,
+          bgcolor: "#ffffff",
+          isShowHelpers: false,
+          isMExecAnimation: false
+        })
+  
+      }, [selectedModelfile?.id_part])
+
+
+    
     useEffect(()=>{
-      gl.outputEncoding = outputEncodingOptions.find((e) => e.selectorname === Param.outputEncoding)?.value 
-                          ? outputEncodingOptions.find((e) => e.selectorname === Param.outputEncoding)!.value
-                          : LinearEncoding
-
-
-/*
-      if(Param.outputEncoding==='sRGB'){
-        gl.outputEncoding = sRGBEncoding;
-      } else {
-        gl.outputEncoding = LinearEncoding;
-      }*/
+      
+      gl.outputEncoding = Param.outputEncoding;
 
     }, [Param.outputEncoding])
     
@@ -59,14 +68,7 @@ export default function ModelFilesEditControlPanel({setIsMExecAnimation}: Props)
 
 
     useEffect(()=>{
-      
-      if(Param.toneMapping==='None'){
-        gl.toneMapping = NoToneMapping;
-      } else if(Param.toneMapping==='Linear'){
-        gl.toneMapping = LinearToneMapping;
-      } else {
-        gl.toneMapping = ACESFilmicToneMapping;
-      }
+      gl.toneMapping = Param.toneMapping;
     }, [Param.toneMapping])
 
 
