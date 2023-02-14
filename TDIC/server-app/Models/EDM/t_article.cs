@@ -24,6 +24,10 @@ namespace TDIC.Models.EDM
         public string meta_category { get; set; }
         public short status { get; set; }
         public bool? gammaOutput { get; set; }
+        public int? outputEncoding { get; set; }
+        public int? toneMapping { get; set; }
+        public double? exposure { get; set; }
+        public string environment { get; set; }
         public string create_user { get; set; }
         public DateTime? create_datetime { get; set; }
         public string latest_update_user { get; set; }
