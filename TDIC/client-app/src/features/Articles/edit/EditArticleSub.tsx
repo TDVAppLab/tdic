@@ -14,6 +14,7 @@ import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
 import LoadingComponent from '../../../app/layout/LoadingComponents';
 import { toast } from 'react-toastify';
 import {v4} from 'uuid';
+import { NoToneMapping, sRGBEncoding } from 'three';
 
 
 export default observer( function EditArticleSub(){
@@ -49,6 +50,11 @@ export default observer( function EditArticleSub(){
 
 
         gammaOutput: false,
+    
+        outputEncoding: sRGBEncoding,
+        toneMapping: NoToneMapping,
+        exposure: 0.0,
+        environment: "Neutral",
 
         id_attachment_for_eye_catch: null,
 
