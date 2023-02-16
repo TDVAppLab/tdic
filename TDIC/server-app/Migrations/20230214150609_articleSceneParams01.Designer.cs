@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TDIC.Models.EDM;
 
@@ -11,9 +12,10 @@ using TDIC.Models.EDM;
 namespace serverapp.Migrations
 {
     [DbContext(typeof(db_data_coreContext))]
-    partial class db_data_coreContextModelSnapshot : ModelSnapshot
+    [Migration("20230214150609_articleSceneParams01")]
+    partial class articleSceneParams01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -350,7 +352,7 @@ namespace serverapp.Migrations
                     b.Property<string>("environment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("exposure")
+                    b.Property<double?>("exposure")
                         .HasColumnType("float");
 
                     b.Property<bool?>("gammaOutput")
@@ -383,7 +385,7 @@ namespace serverapp.Migrations
                         .HasMaxLength(550)
                         .HasColumnType("nvarchar(550)");
 
-                    b.Property<int>("outputEncoding")
+                    b.Property<int?>("outputEncoding")
                         .HasColumnType("int");
 
                     b.Property<string>("short_description")
@@ -397,7 +399,7 @@ namespace serverapp.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("toneMapping")
+                    b.Property<int?>("toneMapping")
                         .HasColumnType("int");
 
                     b.HasKey("id_article")

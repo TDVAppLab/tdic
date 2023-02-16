@@ -11,6 +11,7 @@ namespace TDIC.Application.Core
             //t_article
             CreateMap<t_article, t_article>();
             CreateMap<t_articleUpdateUDto, t_article>();
+            CreateMap<t_articleScreenInfoUpdateDto, t_article>();
 
             //t_annotation
             CreateMap<t_annotation, t_annotation>();

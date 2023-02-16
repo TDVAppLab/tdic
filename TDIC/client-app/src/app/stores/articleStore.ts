@@ -1,6 +1,6 @@
 import {  makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { Article } from "../models/article";
+import { Article, ArticleScreenInfoUpdDto } from "../models/article";
 
 
 export default class ArticleStore {
@@ -132,7 +132,22 @@ export default class ArticleStore {
                 this.loading = false;
             })
         }
-    }    
+    }
+
+    updateArticleScreenInfo = async (object: ArticleScreenInfoUpdDto) => {
+        try {
+            await agent.Articles.updateScreenInfo(object);            
+            const result_object = await agent.Articles.details(object.id_article);
+
+            runInAction(() => {
+                this.articleRegistry.set(object.id_article, result_object);
+                this.selectedArticle = result_object;
+            })
+            
+        }catch (error) {
+            console.log(error);
+        }
+    }
 
     private setArticle = (article : Article) => {
         this.articleRegistry.set(article.id_article,article);
