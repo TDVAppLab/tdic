@@ -75,10 +75,10 @@ export default function ModelScreenControlPanel(){
     }, [Param.outputEncoding])
     
     useEffect(()=>{
-      if(Param.environment==='None'){
-        scene.environment = null
-      } else {
+      if(Param.environment==='Neutral'){
         scene.environment =  new PMREMGenerator(gl).fromScene( new RoomEnvironment() ).texture
+      } else {
+        scene.environment = null
       }
     }, [Param.environment])
 
