@@ -82,10 +82,10 @@ useEffect(()=> {
         onCreated={({ gl, scene }) => {
           gl.toneMappingExposure = Math.pow(2, selectedArticle?.exposure ? selectedArticle.exposure : 0.0);
           
-          if(selectedArticle?.environment==='None'){
-            scene.environment = null
-          } else {
+          if(selectedArticle?.environment==='Neutral'){
             scene.environment =  new PMREMGenerator(gl).fromScene( new RoomEnvironment() ).texture
+          } else {
+            scene.environment = null
           }
 
           scene.background = new Color(selectedArticle?.bg_color ? selectedArticle.bg_color : "#ffffff")
