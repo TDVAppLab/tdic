@@ -17,4 +17,10 @@ namespace Application.Article
         {
         }
     }
+    public class ArticleScreenInfoUpdateDtoValidator : AbstractValidator<t_articleScreenInfoUpdateDto>
+    {
+        public ArticleScreenInfoUpdateDtoValidator()
+        {
+        }
+    }
 }

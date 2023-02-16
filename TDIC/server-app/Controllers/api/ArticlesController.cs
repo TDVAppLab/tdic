@@ -62,6 +62,14 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Duplicate.Command{id_article=id}));
         }
+        
+
+        [HttpPost("updatescreeninfo")]
+        public async Task<IActionResult> UpdateScreenInfo([FromBody] t_articleScreenInfoUpdateDto articleScreenInfo)
+        {
+
+            return HandleResult(await Mediator.Send(new UpdateScreenInfo.Command{ articleScreenInfo = articleScreenInfo}));
+        }
 
 
     }

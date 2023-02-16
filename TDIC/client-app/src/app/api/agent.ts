@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { APIURL } from "../constants";
 import { Annotation } from "../models/Annotation";
 import { AnnotationDisplay } from "../models/AnnotationDisplay";
-import { Article } from "../models/article";
+import { Article, ArticleScreenInfoUpdDto } from "../models/article";
 import { Attachmentfile, AttachmentfileEyecatchDtO } from "../models/attachmentfile";
 import { InstanceActionExecSetting } from "../models/InstanceActionExecSetting";
 import { Instanceobject } from "../models/Instanceobject";
@@ -108,6 +108,7 @@ const Articles = {
     detailsguid:(id:string) => requests.get<Article>(`/articles/detailsguid/${id}`),
     create:(article: Article) => axios.post<Article>(`/articles/create`,article),
     update: (article: Article) => axios.post<void>(`/articles/update/`, article),
+    updateScreenInfo: (articleScreenInfo: ArticleScreenInfoUpdDto) => axios.post<void>(`/articles/updatescreeninfo/`, articleScreenInfo), 
     delete:(id:string) => axios.post<void>(`/articles/delete/${id}`),
     deleteDeep:(id:string) => axios.post<void>(`/articles/deletedeep/${id}`),
     duplicate:(id:string) => axios.post<Article>(`/articles/duplicate/${id}`),
