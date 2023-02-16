@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { useStore } from '../../../../app/stores/store';
 import { OrbitControls } from '@react-three/drei';
-import { Color, Quaternion, Vector3 } from 'three';
+import { Color, LinearEncoding, NoToneMapping, PMREMGenerator, Quaternion, sRGBEncoding, Vector3 } from 'three';
 import LoadModel from './ModelLoading/LoadModel';
 import SetLight from './Lighting/SetLight';
 import ShowAnnotation from './ShowAnnotation/ShowAnnotation';
@@ -15,6 +15,8 @@ import ShowOrbitInfo from './ShowOrbitInfo';
 import UpdateInstanceVisivility from './SetVisivility/UpdateInstanceVisivility';
 import ShowActionUseInstructionSettings from './ShowAction/ShowActionUseInstructionSettings';
 import ShowActionofSettedModel from './ShowAction/ShowActionofSettedModel';
+import ModelScreenControlPanel from './ModelScreenControlPanel';
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
 
 
 
@@ -74,21 +76,29 @@ useEffect(()=> {
       <Canvas
         gl={{ 
           antialias: true, 
-          //toneMapping: NoToneMapping 
+          outputEncoding : selectedArticle?.outputEncoding ? selectedArticle.outputEncoding : LinearEncoding,
+          toneMapping: selectedArticle?.toneMapping ? selectedArticle.toneMapping : NoToneMapping,
         }}
         onCreated={({ gl, scene }) => {
-          //gl.toneMapping = THREE.ACESFilmicToneMapping
-          //gl.outputEncoding = THREE.sRGBEncoding
-          scene.background = new Color(selectedArticle?.bg_color)
+          gl.toneMappingExposure = Math.pow(2, selectedArticle?.exposure ? selectedArticle.exposure : 0.0);
+          
+          if(selectedArticle?.environment==='Neutral'){
+            scene.environment =  new PMREMGenerator(gl).fromScene( new RoomEnvironment() ).texture
+          } else {
+            scene.environment = null
+          }
+
+          scene.background = new Color(selectedArticle?.bg_color ? selectedArticle.bg_color : "#ffffff")
         }}
-        linear={selectedArticle?.gammaOutput}        
-        flat={true}    
+        //linear={selectedArticle?.gammaOutput}        
+        //flat={true}    
         camera={{ 
           fov:45
           ,position:[3,3,3]
           ,near:1
           ,far:6350000
           }} >
+          { isEditmode && <ModelScreenControlPanel /> }
         {
           Array.from(lightRegistry.values()).map(x=>(<SetLight key={x.id_light} light={x} />))
         }

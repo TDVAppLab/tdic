@@ -12,10 +12,26 @@ export interface Article {
 
 
     gammaOutput: boolean;
+    
+    outputEncoding: number;
+    toneMapping: number;
+    exposure: number;
+    environment: string;
 
     id_attachment_for_eye_catch: string | null;
 
     bg_color: string;
 
     isStarrySky: boolean;
+}
+
+
+export interface ArticleScreenInfoUpdDto {
+    id_article: string;
+    
+    outputEncoding: number;
+    toneMapping: number;
+    exposure: number;
+    environment: string;
+    bg_color: string;
 }
