@@ -108,7 +108,7 @@ useEffect(()=> {
         {
           selectedView && <UpdateCameraWork view={selectedView} isModeTransport={sceneInfoStore.mode_transport} step={100}/>
         }
-        <OrbitControls enableDamping={false} attach="orbitControls" />
+        <OrbitControls enableDamping={false} attach="orbitControls" makeDefault />
 
         {
           <ShowAnnotation annotationMap={annotationRegistry} annotationDisplayMap={selectedAnnotationDisplayMap} selectedAnnotationId = {selectedAnnotation?.id_annotation}/>
