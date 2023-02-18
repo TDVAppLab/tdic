@@ -148,14 +148,6 @@ export default observer( function EditArticleSub(){
                         </Row>
 
                         <hr />
-
-                        <Row>
-                            <Col xs={4}><TextInputGeneral type="color" label='Color' name='bg_color' placeholder='Color' /></Col>
-                        </Row>
-                        
-                        <Row>
-                            <Col xs={4}><CheckBoxGeneral label='gammaOutput' name='gammaOutput'  /></Col>
-                        </Row>
                         
                         
                         <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>
