@@ -1,33 +1,50 @@
-
-
-
-.model-annotation {
+.model-annotation2 {
   margin-left: 0px;
+  margin-right: 0px;
   margin-top: -10px;
+  margin-bottom: 0px;
+  
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 0px;
+
   transform: translate3d(50%, 0, 0);
   text-align: left;
   background: #202035;
   color: white;
-  padding: 10px 15px;
+  
   border-radius: 5px;
-  max-width: 200px;
+  max-width: 300px;
 }
 
 
-.model-annotation2 {
+.model-annotation {
   margin-left: 0px;
+  margin-right: 0px;
   margin-top: -10px;
+  margin-bottom: 0px;
+  
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 0px;
+
   transform: translate3d(50%, 0, 0);
   text-align: left;
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
-  padding: 10px 15px;
+
   border-radius: 5px;
-  max-width: 200px;
+  max-width: 300px;
 }
 
+.model-annotation-displaytext {
+  width: 300px;
+}
 
 .annotation_editmode {
   outline-color: red;
   background: rgba(0, 0, 255, 0.8);
+  width: 300px;
 }
