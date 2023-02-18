@@ -23,7 +23,11 @@ const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotatio
             (annotationDisplayMap.get(x.id_annotation)?.is_display || x.id_annotation === selectedAnnotationId) && 
             <React.Fragment key={x.id_annotation}>
               <Html
-                className={ x.id_annotation === selectedAnnotationId ? `model-annotation annotation_editmode` : `model-annotation` }
+                className={ 
+                  `model-annotation `
+                  + (x.id_annotation === selectedAnnotationId ? `model-annotation annotation_editmode ` : `` )
+                  + (annotationDisplayMap.get(x.id_annotation)?.is_display_description ? `model-annotation-displaytext ` : `` ) 
+                }
                 position={new Vector3(x.pos_x+0.5,x.pos_y+0.5,x.pos_z+0.5)}
               >
                 <div
