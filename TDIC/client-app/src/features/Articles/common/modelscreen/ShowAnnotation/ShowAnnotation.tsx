@@ -13,37 +13,56 @@ interface Props {
 }
 
 
-
 const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotationId}: Props) => {
   
   return (
         <>
         {
-          Array.from(annotationMap.values()).map(x=>(
-            (annotationDisplayMap.get(x.id_annotation)?.is_display || x.id_annotation === selectedAnnotationId) && 
-            <React.Fragment key={x.id_annotation}>
-              <Html
-                className={ 
-                  `model-annotation `
-                  + (x.id_annotation === selectedAnnotationId ? `model-annotation annotation_editmode ` : `` )
-                  + (annotationDisplayMap.get(x.id_annotation)?.is_display_description ? `model-annotation-displaytext ` : `` ) 
-                }
-                position={new Vector3(x.pos_x+0.5,x.pos_y+0.5,x.pos_z+0.5)}
-              >
-                <div
-                >
-                  <h4>{x.title}</h4>                
-                  {annotationDisplayMap.get(x.id_annotation)?.is_display_description && <p>{x.description1}</p>}
-                </div>
-              </Html>      
-              <arrowHelper args={[new Vector3( -0.5, -0.5, -0.5 ).normalize(), new Vector3(x.pos_x+0.5,x.pos_y+0.5,x.pos_z+0.5),Math.sqrt(0.5*0.5*3), "red"]} />            
-            </React.Fragment>
+          Array.from(annotationMap.values()).map(annotation=>(
+            (annotationDisplayMap.get(annotation.id_annotation)?.is_display ||annotation.id_annotation === selectedAnnotationId)
+              && <SowAnnotationSub annotation={annotation} isDisplayDescription = {annotationDisplayMap.get(annotation.id_annotation)?.is_display_description ? annotationDisplayMap.get(annotation.id_annotation)!.is_display_description : false} isSelected = {annotation.id_annotation === selectedAnnotationId} key={annotation.id_annotation} />
           ))          
         }
         { annotationMap.get(selectedAnnotationId ? selectedAnnotationId : 0) && <axesHelper args={[1]} position = {[annotationMap.get(selectedAnnotationId!)?.pos_x!,annotationMap.get(selectedAnnotationId!)?.pos_y!,annotationMap.get(selectedAnnotationId!)?.pos_z!]} /> }
         </>
     )
 }
+
+
+interface SubProps {
+  annotation : Annotation;
+  isDisplayDescription : boolean;
+  isSelected : boolean;
+
+}
+
+
+const SowAnnotationSub = ({annotation, isDisplayDescription, isSelected} : SubProps) => {
+
+  return (
+    <React.Fragment>
+      <Html
+        className={ 
+          `model-annotation `
+          + (isDisplayDescription ? `model-annotation-displaytext ` : `` ) 
+          + (isSelected ? `model-annotation annotation_editmode ` : `` )
+        }
+        position={new Vector3(annotation.pos_x+0.5,annotation.pos_y+0.5,annotation.pos_z+0.5)}
+      >
+        <div
+        >
+          <h4>{annotation.title}</h4>                
+          {(isDisplayDescription || isSelected) && <>{annotation.description1}</>}
+        </div>
+      </Html>      
+      <arrowHelper args={[new Vector3( -0.5, -0.5, -0.5 ).normalize(), new Vector3(annotation.pos_x+0.5,annotation.pos_y+0.5,annotation.pos_z+0.5),Math.sqrt(0.5*0.5*3), "red"]} />            
+    </React.Fragment>
+  )
+}
+
+
+
+
 
 
 export default ShowAnnotation;
