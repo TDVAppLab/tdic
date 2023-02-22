@@ -17,6 +17,8 @@ export default class SceneInfoStore {
 
     is_automatic_camera_rotate : boolean=true;
 
+    selectedAnnotationPosMoved : Vector3 | undefined = undefined;
+
     selectedInstructionId =0;
 
     constructor(){
@@ -33,6 +35,12 @@ export default class SceneInfoStore {
 
     setOrbitTarget = (pos:Vector3) => {
         this.orbit_target = pos;
+    }
+
+    setSelectedAnnotationPosMoved = (selectedAnnotationPosMoved:Vector3) => {
+        runInAction(() => {
+            this.selectedAnnotationPosMoved = selectedAnnotationPosMoved;
+        })
     }
 
     setSelectedInstructionId = (id:number) => {
