@@ -3,9 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { useStore } from '../../../../app/stores/store';
 import { OrbitControls } from '@react-three/drei';
-import { Color, LinearEncoding, NoToneMapping, PMREMGenerator, Quaternion, sRGBEncoding, Vector3 } from 'three';
-import LoadModel from './ModelLoading/LoadModel';
-import SetLight from './Lighting/SetLight';
+import { Color, LinearEncoding, NoToneMapping, PMREMGenerator } from 'three';
 import ShowAnnotation from './ShowAnnotation/ShowAnnotation';
 import UpdateCameraWork from './CameraControl/UpdateCameraWork';
 import SceneInfoCatcher from './SceneInfoCatcher';
@@ -16,6 +14,8 @@ import ShowActionUseInstructionSettings from './ShowAction/ShowActionUseInstruct
 import ShowActionofSettedModel from './ShowAction/ShowActionofSettedModel';
 import ModelScreenControlPanel from './ModelScreenControlPanel';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
+import LoadModels from './ModelLoading/LoadModels';
+import SetLights from './Lighting/SetLights';
 
 
 
@@ -33,34 +33,22 @@ interface Props {
 export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}: Props) {
 
   
-  const { articleStore } = useStore();
-  const { selectedArticle } = articleStore;
+  const { articleStore :{ selectedArticle } } = useStore();
 
-  const { viewStore } = useStore();
-  const { selectedView } = viewStore;
+  const { viewStore :{ selectedView } } = useStore();
   
-  const { annotationStore } = useStore();
-  const { annotationRegistry, selectedAnnotation, setSelectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen } = annotationStore;
+  const { annotationStore :{ annotationRegistry, selectedAnnotation, setSelectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen } } = useStore();
     
-  const {instructionStore} = useStore();
-  const {selectedInstruction} = instructionStore;
+  const {instructionStore : {selectedInstruction}} = useStore();
   
-  const {annotationDisplayStore} = useStore();
-  const {selectedAnnotationDisplayMap } = annotationDisplayStore;
-
-  const { instanceobjectStore } = useStore();
-  const { instanceobjectRegistry } = instanceobjectStore;
+  const {annotationDisplayStore : { selectedAnnotationDisplayMap } } = useStore();
   
-  const { lightStore } = useStore();
-  const { lightRegistry } = lightStore;
-  
-  const { sceneInfoStore } = useStore();
-  const { setModeTransport } = sceneInfoStore;
+  const { sceneInfoStore : { setIsAutomaticCameraRotate,setModeTransport, is_automatic_camera_rotate, mode_transport } } = useStore();
   
 
 
   useEffect(()=> {
-    sceneInfoStore.setIsAutomaticCameraRotate(selectedInstruction ? selectedInstruction.is_automatic_camera_rotate : false);
+    setIsAutomaticCameraRotate(selectedInstruction ? selectedInstruction.is_automatic_camera_rotate : false);
   }, [selectedInstruction])
 
   
@@ -69,7 +57,7 @@ export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}:
   }, [selectedView, selectedInstruction])
 
 useEffect(()=> {
-}, [sceneInfoStore.is_automatic_camera_rotate])
+}, [is_automatic_camera_rotate])
 
   return (
       <Canvas
@@ -96,26 +84,39 @@ useEffect(()=> {
           ,position:[3,3,3]
           ,near:1
           ,far:6350000
-          }} >
-          { isEditmode && <ModelScreenControlPanel /> }
-        {
-          Array.from(lightRegistry.values()).map(x=>(<SetLight key={x.id_light} light={x} />))
-        }
-        {
-          Array.from(instanceobjectRegistry.values()).map(x=>(<LoadModel key={x.id_instance} id_inst={x.id_instance} id_part={x.id_part} pos={new Vector3(x.pos_x, x.pos_y, x.pos_z)} scale={x.scale} quaternion={new Quaternion(x.quaternion_x, x.quaternion_y, x.quaternion_z, x.quaternion_w)}/>))
-        }
-        {
-          selectedView && <UpdateCameraWork view={selectedView} isModeTransport={sceneInfoStore.mode_transport} step={100}/>
-        }
-        <OrbitControls enableDamping={false} attach="orbitControls" autoRotate={sceneInfoStore.is_automatic_camera_rotate} autoRotateSpeed={1} makeDefault />
+          }} 
+      >
+      {
+      // Show the control panel only in Edit Mode (Edit Modeの場合のみコントロールパネルを表示する)
+      isEditmode && <ModelScreenControlPanel />
+      }
+      <SetLights />
+      <LoadModels />
+      {
+        selectedView && <UpdateCameraWork view={selectedView} isModeTransport={mode_transport} step={100}/>
+      }
 
-        {
-          <ShowAnnotation annotationMap={annotationRegistry} annotationDisplayMap={selectedAnnotationDisplayMap} selectedAnnotationId = {selectedAnnotation?.id_annotation} setSelectedAnnotationPosMoved={setSelectedAnnotationPosMoved} isShowSelectedAnnotationDetailOnScreen={isShowSelectedAnnotationDetailOnScreen} />
-        }
-        {
-          isEditmode && <ShowOrbitInfo />
-        }
-        <UpdateInstanceVisivility />
+      <OrbitControls
+        enableDamping={false}
+        attach="orbitControls"
+        autoRotate={is_automatic_camera_rotate}
+        autoRotateSpeed={1}
+        makeDefault
+      />
+
+      <ShowAnnotation
+        annotationMap={annotationRegistry}
+        annotationDisplayMap={selectedAnnotationDisplayMap}
+        selectedAnnotationId = {selectedAnnotation?.id_annotation}
+        setSelectedAnnotationPosMoved={setSelectedAnnotationPosMoved}
+        isShowSelectedAnnotationDetailOnScreen={isShowSelectedAnnotationDetailOnScreen}
+      />
+
+      {/*編集モードの場合はオービットコントロールの各情報をCanvasに表示する*/}
+      {
+        isEditmode && <ShowOrbitInfo />
+      }
+      <UpdateInstanceVisivility />
 
        
       {
@@ -125,10 +126,12 @@ useEffect(()=> {
         !isAutoAnimationExec && <ShowActionUseInstructionSettings isActiondisplayMode={false} />
       }
       
-        {<SceneInfoCatcher />}
-        {
-          <GetSceneCapture />
-        }
+      {
+        <SceneInfoCatcher />
+      }
+      {
+        <GetSceneCapture />
+      }
       </Canvas>
   );
 });
