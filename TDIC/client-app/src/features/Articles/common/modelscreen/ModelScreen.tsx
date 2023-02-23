@@ -33,28 +33,22 @@ interface Props {
 export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}: Props) {
 
   
-  const { articleStore } = useStore();
-  const { selectedArticle } = articleStore;
+  const { articleStore :{ selectedArticle } } = useStore();
 
-  const { viewStore } = useStore();
-  const { selectedView } = viewStore;
+  const { viewStore :{ selectedView } } = useStore();
   
-  const { annotationStore } = useStore();
-  const { annotationRegistry, selectedAnnotation, setSelectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen } = annotationStore;
+  const { annotationStore :{ annotationRegistry, selectedAnnotation, setSelectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen } } = useStore();
     
-  const {instructionStore} = useStore();
-  const {selectedInstruction} = instructionStore;
+  const {instructionStore : {selectedInstruction}} = useStore();
   
-  const {annotationDisplayStore} = useStore();
-  const {selectedAnnotationDisplayMap } = annotationDisplayStore;
+  const {annotationDisplayStore : { selectedAnnotationDisplayMap } } = useStore();
   
-  const { sceneInfoStore } = useStore();
-  const { setModeTransport } = sceneInfoStore;
+  const { sceneInfoStore : { setIsAutomaticCameraRotate,setModeTransport, is_automatic_camera_rotate, mode_transport } } = useStore();
   
 
 
   useEffect(()=> {
-    sceneInfoStore.setIsAutomaticCameraRotate(selectedInstruction ? selectedInstruction.is_automatic_camera_rotate : false);
+    setIsAutomaticCameraRotate(selectedInstruction ? selectedInstruction.is_automatic_camera_rotate : false);
   }, [selectedInstruction])
 
   
@@ -63,7 +57,7 @@ export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}:
   }, [selectedView, selectedInstruction])
 
 useEffect(()=> {
-}, [sceneInfoStore.is_automatic_camera_rotate])
+}, [is_automatic_camera_rotate])
 
   return (
       <Canvas
@@ -99,13 +93,13 @@ useEffect(()=> {
       <SetLights />
       <LoadModels />
       {
-        selectedView && <UpdateCameraWork view={selectedView} isModeTransport={sceneInfoStore.mode_transport} step={100}/>
+        selectedView && <UpdateCameraWork view={selectedView} isModeTransport={mode_transport} step={100}/>
       }
 
       <OrbitControls
         enableDamping={false}
         attach="orbitControls"
-        autoRotate={sceneInfoStore.is_automatic_camera_rotate}
+        autoRotate={is_automatic_camera_rotate}
         autoRotateSpeed={1}
         makeDefault
       />
@@ -132,7 +126,9 @@ useEffect(()=> {
         !isAutoAnimationExec && <ShowActionUseInstructionSettings isActiondisplayMode={false} />
       }
       
-      {<SceneInfoCatcher />}
+      {
+        <SceneInfoCatcher />
+      }
       {
         <GetSceneCapture />
       }
