@@ -102,16 +102,37 @@ useEffect(()=> {
           Array.from(lightRegistry.values()).map(x=>(<SetLight key={x.id_light} light={x} />))
         }
         {
-          Array.from(instanceobjectRegistry.values()).map(x=>(<LoadModel key={x.id_instance} id_inst={x.id_instance} id_part={x.id_part} pos={new Vector3(x.pos_x, x.pos_y, x.pos_z)} scale={x.scale} quaternion={new Quaternion(x.quaternion_x, x.quaternion_y, x.quaternion_z, x.quaternion_w)}/>))
+          Array.from(instanceobjectRegistry.values()).map(x=>(
+            <LoadModel  key={x.id_instance}
+                        id_inst={x.id_instance}
+                        id_part={x.id_part}
+                        pos={new Vector3(x.pos_x, x.pos_y, x.pos_z)}
+                        scale={x.scale}
+                        quaternion={new Quaternion(x.quaternion_x, x.quaternion_y, x.quaternion_z, x.quaternion_w)}
+            />
+          ))
         }
         {
           selectedView && <UpdateCameraWork view={selectedView} isModeTransport={sceneInfoStore.mode_transport} step={100}/>
         }
-        <OrbitControls enableDamping={false} attach="orbitControls" autoRotate={sceneInfoStore.is_automatic_camera_rotate} autoRotateSpeed={1} makeDefault />
 
-        {
-          <ShowAnnotation annotationMap={annotationRegistry} annotationDisplayMap={selectedAnnotationDisplayMap} selectedAnnotationId = {selectedAnnotation?.id_annotation} setSelectedAnnotationPosMoved={setSelectedAnnotationPosMoved} isShowSelectedAnnotationDetailOnScreen={isShowSelectedAnnotationDetailOnScreen} />
-        }
+        <OrbitControls
+          enableDamping={false}
+          attach="orbitControls"
+          autoRotate={sceneInfoStore.is_automatic_camera_rotate}
+          autoRotateSpeed={1}
+          makeDefault
+        />
+
+        <ShowAnnotation
+          annotationMap={annotationRegistry}
+          annotationDisplayMap={selectedAnnotationDisplayMap}
+          selectedAnnotationId = {selectedAnnotation?.id_annotation}
+          setSelectedAnnotationPosMoved={setSelectedAnnotationPosMoved}
+          isShowSelectedAnnotationDetailOnScreen={isShowSelectedAnnotationDetailOnScreen}
+        />
+
+        {/*編集モードの場合はオービットコントロールの各情報をCanvasに表示する*/}
         {
           isEditmode && <ShowOrbitInfo />
         }
