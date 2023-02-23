@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useStore } from '../../../../app/stores/store';
 import { OrbitControls } from '@react-three/drei';
 import { Color, LinearEncoding, NoToneMapping, PMREMGenerator, Quaternion, sRGBEncoding, Vector3 } from 'three';
-import SetLight from './Lighting/SetLight';
 import ShowAnnotation from './ShowAnnotation/ShowAnnotation';
 import UpdateCameraWork from './CameraControl/UpdateCameraWork';
 import SceneInfoCatcher from './SceneInfoCatcher';
@@ -16,6 +15,7 @@ import ShowActionofSettedModel from './ShowAction/ShowActionofSettedModel';
 import ModelScreenControlPanel from './ModelScreenControlPanel';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
 import LoadModels from './ModelLoading/LoadModels';
+import SetLights from './Lighting/SetLights';
 
 
 
@@ -50,9 +50,6 @@ export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}:
 
   const { instanceobjectStore } = useStore();
   const { instanceobjectRegistry } = instanceobjectStore;
-  
-  const { lightStore } = useStore();
-  const { lightRegistry } = lightStore;
   
   const { sceneInfoStore } = useStore();
   const { setModeTransport } = sceneInfoStore;
@@ -102,9 +99,7 @@ useEffect(()=> {
       // Show the control panel only in Edit Mode (Edit Modeの場合のみコントロールパネルを表示する)
       isEditmode && <ModelScreenControlPanel />
       }
-      {
-        Array.from(lightRegistry.values()).map(x=>(<SetLight key={x.id_light} light={x} />))
-      }
+      <SetLights />
       <LoadModels />
       {
         selectedView && <UpdateCameraWork view={selectedView} isModeTransport={sceneInfoStore.mode_transport} step={100}/>
