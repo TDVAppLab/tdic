@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useStore } from '../../../../app/stores/store';
 import { OrbitControls } from '@react-three/drei';
 import { Color, LinearEncoding, NoToneMapping, PMREMGenerator, Quaternion, sRGBEncoding, Vector3 } from 'three';
-import LoadModel from './ModelLoading/LoadModel';
 import SetLight from './Lighting/SetLight';
 import ShowAnnotation from './ShowAnnotation/ShowAnnotation';
 import UpdateCameraWork from './CameraControl/UpdateCameraWork';
@@ -16,6 +15,7 @@ import ShowActionUseInstructionSettings from './ShowAction/ShowActionUseInstruct
 import ShowActionofSettedModel from './ShowAction/ShowActionofSettedModel';
 import ModelScreenControlPanel from './ModelScreenControlPanel';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
+import LoadModels from './ModelLoading/LoadModels';
 
 
 
@@ -102,45 +102,35 @@ useEffect(()=> {
       // Show the control panel only in Edit Mode (Edit Modeの場合のみコントロールパネルを表示する)
       isEditmode && <ModelScreenControlPanel />
       }
-        {
-          Array.from(lightRegistry.values()).map(x=>(<SetLight key={x.id_light} light={x} />))
-        }
-        {
-          Array.from(instanceobjectRegistry.values()).map(x=>(
-            <LoadModel  key={x.id_instance}
-                        id_inst={x.id_instance}
-                        id_part={x.id_part}
-                        pos={new Vector3(x.pos_x, x.pos_y, x.pos_z)}
-                        scale={x.scale}
-                        quaternion={new Quaternion(x.quaternion_x, x.quaternion_y, x.quaternion_z, x.quaternion_w)}
-            />
-          ))
-        }
-        {
-          selectedView && <UpdateCameraWork view={selectedView} isModeTransport={sceneInfoStore.mode_transport} step={100}/>
-        }
+      {
+        Array.from(lightRegistry.values()).map(x=>(<SetLight key={x.id_light} light={x} />))
+      }
+      <LoadModels />
+      {
+        selectedView && <UpdateCameraWork view={selectedView} isModeTransport={sceneInfoStore.mode_transport} step={100}/>
+      }
 
-        <OrbitControls
-          enableDamping={false}
-          attach="orbitControls"
-          autoRotate={sceneInfoStore.is_automatic_camera_rotate}
-          autoRotateSpeed={1}
-          makeDefault
-        />
+      <OrbitControls
+        enableDamping={false}
+        attach="orbitControls"
+        autoRotate={sceneInfoStore.is_automatic_camera_rotate}
+        autoRotateSpeed={1}
+        makeDefault
+      />
 
-        <ShowAnnotation
-          annotationMap={annotationRegistry}
-          annotationDisplayMap={selectedAnnotationDisplayMap}
-          selectedAnnotationId = {selectedAnnotation?.id_annotation}
-          setSelectedAnnotationPosMoved={setSelectedAnnotationPosMoved}
-          isShowSelectedAnnotationDetailOnScreen={isShowSelectedAnnotationDetailOnScreen}
-        />
+      <ShowAnnotation
+        annotationMap={annotationRegistry}
+        annotationDisplayMap={selectedAnnotationDisplayMap}
+        selectedAnnotationId = {selectedAnnotation?.id_annotation}
+        setSelectedAnnotationPosMoved={setSelectedAnnotationPosMoved}
+        isShowSelectedAnnotationDetailOnScreen={isShowSelectedAnnotationDetailOnScreen}
+      />
 
-        {/*編集モードの場合はオービットコントロールの各情報をCanvasに表示する*/}
-        {
-          isEditmode && <ShowOrbitInfo />
-        }
-        <UpdateInstanceVisivility />
+      {/*編集モードの場合はオービットコントロールの各情報をCanvasに表示する*/}
+      {
+        isEditmode && <ShowOrbitInfo />
+      }
+      <UpdateInstanceVisivility />
 
        
       {
@@ -150,10 +140,10 @@ useEffect(()=> {
         !isAutoAnimationExec && <ShowActionUseInstructionSettings isActiondisplayMode={false} />
       }
       
-        {<SceneInfoCatcher />}
-        {
-          <GetSceneCapture />
-        }
+      {<SceneInfoCatcher />}
+      {
+        <GetSceneCapture />
+      }
       </Canvas>
   );
 });
