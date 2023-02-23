@@ -41,7 +41,7 @@ export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}:
   const { selectedView } = viewStore;
   
   const { annotationStore } = useStore();
-  const { annotationRegistry, selectedAnnotation } = annotationStore;
+  const { annotationRegistry, selectedAnnotation, setSelectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen } = annotationStore;
     
   const {instructionStore} = useStore();
   const {selectedInstruction} = instructionStore;
@@ -56,7 +56,7 @@ export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}:
   const { lightRegistry } = lightStore;
   
   const { sceneInfoStore } = useStore();
-  const { setModeTransport, setSelectedAnnotationPosMoved } = sceneInfoStore;
+  const { setModeTransport } = sceneInfoStore;
   
 
 
@@ -111,7 +111,7 @@ useEffect(()=> {
         <OrbitControls enableDamping={false} attach="orbitControls" makeDefault />
 
         {
-          <ShowAnnotation annotationMap={annotationRegistry} annotationDisplayMap={selectedAnnotationDisplayMap} selectedAnnotationId = {selectedAnnotation?.id_annotation} setSelectedAnnotationPosMoved={setSelectedAnnotationPosMoved} />
+          <ShowAnnotation annotationMap={annotationRegistry} annotationDisplayMap={selectedAnnotationDisplayMap} selectedAnnotationId = {selectedAnnotation?.id_annotation} setSelectedAnnotationPosMoved={setSelectedAnnotationPosMoved} isShowSelectedAnnotationDetailOnScreen={isShowSelectedAnnotationDetailOnScreen} />
         }
         <AutomaticCameraMove isModeTransport={sceneInfoStore.is_automatic_camera_rotate} />
         {

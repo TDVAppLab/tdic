@@ -11,10 +11,11 @@ interface Props {
     annotationDisplayMap : Map<number, AnnotationDisplay>;
     selectedAnnotationId : number | undefined;
     setSelectedAnnotationPosMoved: (selectedAnnotationPosMoved: Vector3) => void;
+    isShowSelectedAnnotationDetailOnScreen : boolean;
 }
 
 
-const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotationId, setSelectedAnnotationPosMoved}: Props) => {
+const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotationId, setSelectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen}: Props) => {
   const [matrix, setMatrix] = useState<Matrix4>();
 
   
@@ -42,11 +43,23 @@ const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotatio
               onDrag={(l,deltaL,w,deltaW) => {const v = new Vector3(); setSelectedAnnotationPosMoved(v.setFromMatrixPosition(w))}}
               key={annotation.id_annotation}
             >
-              <SowAnnotationSub annotation={annotation} isDisplayDescription = {annotationDisplayMap.get(annotation.id_annotation)?.is_display_description ? annotationDisplayMap.get(annotation.id_annotation)!.is_display_description : false} isSelected = {annotation.id_annotation === selectedAnnotationId}  key={annotation.id_annotation} />
+              <SowAnnotationSub 
+                annotation={annotation}
+                isDisplayDescription = {annotationDisplayMap.get(annotation.id_annotation)?.is_display_description ? annotationDisplayMap.get(annotation.id_annotation)!.is_display_description : false}
+                isSelected = {annotation.id_annotation === selectedAnnotationId}
+                key={annotation.id_annotation}
+                isShowHtml={isShowSelectedAnnotationDetailOnScreen} 
+              />
             </PivotControls>
             :
             (annotationDisplayMap.get(annotation.id_annotation)?.is_display ||annotation.id_annotation === selectedAnnotationId)
-              && <SowAnnotationSub annotation={annotation} isDisplayDescription = {annotationDisplayMap.get(annotation.id_annotation)?.is_display_description ? annotationDisplayMap.get(annotation.id_annotation)!.is_display_description : false} isSelected = {annotation.id_annotation === selectedAnnotationId} key={annotation.id_annotation} />
+              && <SowAnnotationSub
+                    annotation={annotation}
+                    isDisplayDescription = {annotationDisplayMap.get(annotation.id_annotation)?.is_display_description ? annotationDisplayMap.get(annotation.id_annotation)!.is_display_description : false}
+                    isSelected = {annotation.id_annotation === selectedAnnotationId}
+                    key={annotation.id_annotation}
+                    isShowHtml={true} 
+                 />
           ))          
         }
         </>
@@ -58,15 +71,17 @@ interface SubProps {
   annotation : Annotation;
   isDisplayDescription : boolean;
   isSelected : boolean;
+  isShowHtml : boolean
 
 }
 
 
-const SowAnnotationSub = ({annotation, isDisplayDescription, isSelected} : SubProps) => {
+const SowAnnotationSub = ({annotation, isDisplayDescription, isSelected, isShowHtml} : SubProps) => {
 
   return (
     //<group position={[annotation.pos_x,annotation.pos_y,annotation.pos_z]}>
     <React.Fragment>
+      { isShowHtml &&
       <Html
         className={ 
           `model-annotation `
@@ -80,7 +95,8 @@ const SowAnnotationSub = ({annotation, isDisplayDescription, isSelected} : SubPr
           <h4>{annotation.title}</h4>                
           {(isDisplayDescription || isSelected) && <>{annotation.description1}</>}
         </div>
-      </Html>      
+      </Html>
+      }
       <arrowHelper args={[new Vector3( -0.5, -0.5, -0.5 ).normalize(), new Vector3(annotation.pos_x+0.5,annotation.pos_y+0.5,annotation.pos_z+0.5),Math.sqrt(0.5*0.5*3), "red"]} />            
     </React.Fragment>
     //</group>

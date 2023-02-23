@@ -37,8 +37,8 @@ export default observer( function EditAnnotation(){
     
     const {articleStore} = useStore();
     const {annotationStore} = useStore();
-    const {selectedAnnotation, editAnnotationInternal, updateAnnotation, createAnnotation, deleteAnnotation, setSelectedAnnotation} = annotationStore;
-    const {sceneInfoStore : {selectedAnnotationPosMoved, orbit_target}} = useStore();
+    const {selectedAnnotation, editAnnotationInternal, updateAnnotation, createAnnotation, deleteAnnotation, setSelectedAnnotation, selectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen, setIsShowSelectedAnnotationDetailOnScreen} = annotationStore;
+    const {sceneInfoStore : {orbit_target}} = useStore();
 
     const {annotationDisplayStore} = useStore();
     const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, deleteAnnotationDisplayArray, selectedInstructionId, id_article : annotationDisplayId_article} = annotationDisplayStore;
@@ -217,6 +217,15 @@ export default observer( function EditAnnotation(){
 
                             </tbody>
                         </table>
+
+                        
+            
+                        <div>
+                            <input type="checkbox" checked={isShowSelectedAnnotationDetailOnScreen} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsShowSelectedAnnotationDetailOnScreen(event.target.checked)}/>
+                            <label>Show Selected Annotations Detail</label>
+                        </div>
+
+
                         { 
                             (selectedAnnotationPosMoved && selectedAnnotation) &&  
                                 <EditAnnotationSubUpdatePos pos_drug={selectedAnnotationPosMoved} pos_annotation = {new Vector3( selectedAnnotation.pos_x,selectedAnnotation.pos_y,selectedAnnotation.pos_z)} /> 
@@ -258,7 +267,6 @@ export default observer( function EditAnnotation(){
                 <input type="checkbox" checked={isDataCopyFromSelectedAnnotation} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsDataCopyFromSelectedAnnotation(event.target.checked)}/>
                 <label>Data Copy From Selected View</label>
             </div>
-            
 
             
 
