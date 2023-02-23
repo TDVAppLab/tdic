@@ -96,8 +96,12 @@ useEffect(()=> {
           ,position:[3,3,3]
           ,near:1
           ,far:6350000
-          }} >
-          { isEditmode && <ModelScreenControlPanel /> }
+          }} 
+      >
+      {
+      // Show the control panel only in Edit Mode (Edit Modeの場合のみコントロールパネルを表示する)
+      isEditmode && <ModelScreenControlPanel />
+      }
         {
           Array.from(lightRegistry.values()).map(x=>(<SetLight key={x.id_light} light={x} />))
         }
