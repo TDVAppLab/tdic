@@ -10,7 +10,6 @@ import ShowAnnotation from './ShowAnnotation/ShowAnnotation';
 import UpdateCameraWork from './CameraControl/UpdateCameraWork';
 import SceneInfoCatcher from './SceneInfoCatcher';
 import GetSceneCapture from './SceneCapture/GetSceneCapture';
-import AutomaticCameraMove from './CameraControl/AutomaticCameraMove';
 import ShowOrbitInfo from './ShowOrbitInfo';
 import UpdateInstanceVisivility from './SetVisivility/UpdateInstanceVisivility';
 import ShowActionUseInstructionSettings from './ShowAction/ShowActionUseInstructionSettings';
@@ -108,12 +107,11 @@ useEffect(()=> {
         {
           selectedView && <UpdateCameraWork view={selectedView} isModeTransport={sceneInfoStore.mode_transport} step={100}/>
         }
-        <OrbitControls enableDamping={false} attach="orbitControls" makeDefault />
+        <OrbitControls enableDamping={false} attach="orbitControls" autoRotate={sceneInfoStore.is_automatic_camera_rotate} autoRotateSpeed={1} makeDefault />
 
         {
           <ShowAnnotation annotationMap={annotationRegistry} annotationDisplayMap={selectedAnnotationDisplayMap} selectedAnnotationId = {selectedAnnotation?.id_annotation} setSelectedAnnotationPosMoved={setSelectedAnnotationPosMoved} isShowSelectedAnnotationDetailOnScreen={isShowSelectedAnnotationDetailOnScreen} />
         }
-        <AutomaticCameraMove isModeTransport={sceneInfoStore.is_automatic_camera_rotate} />
         {
           isEditmode && <ShowOrbitInfo />
         }
