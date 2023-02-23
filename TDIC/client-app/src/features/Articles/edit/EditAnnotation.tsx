@@ -10,6 +10,7 @@ import { Col, Row } from 'react-bootstrap';
 import { Annotation } from '../../../app/models/Annotation';
 import { Vector3 } from 'three';
 import { toast } from 'react-toastify';
+import EditAnnotationSubUpdatePos from './EditAnnotationSubUpdatePos';
 
 
 const getDefaultValueOfAnnotation = (id_article : string) => {
@@ -36,8 +37,8 @@ export default observer( function EditAnnotation(){
     
     const {articleStore} = useStore();
     const {annotationStore} = useStore();
-    const {selectedAnnotation, editAnnotationInternal, updateAnnotation, createAnnotation, deleteAnnotation, setSelectedAnnotation} = annotationStore;
-    const {sceneInfoStore} = useStore();
+    const {selectedAnnotation, editAnnotationInternal, updateAnnotation, createAnnotation, deleteAnnotation, setSelectedAnnotation, selectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen, setIsShowSelectedAnnotationDetailOnScreen} = annotationStore;
+    const {sceneInfoStore : {orbit_target}} = useStore();
 
     const {annotationDisplayStore} = useStore();
     const {loadAnnotationDisplays, setSelectedAnnotationDisplayMap, deleteAnnotationDisplayArray, selectedInstructionId, id_article : annotationDisplayId_article} = annotationDisplayStore;
@@ -121,9 +122,9 @@ export default observer( function EditAnnotation(){
 
         } else {
             const temp_annotation_new = getDefaultValueOfAnnotation(articleStore?.selectedArticle?.id_article!);
-            temp_annotation_new.pos_x = sceneInfoStore?.orbit_target?.x!;
-            temp_annotation_new.pos_y = sceneInfoStore?.orbit_target?.y!;
-            temp_annotation_new.pos_z = sceneInfoStore?.orbit_target?.z!;
+            temp_annotation_new.pos_x = orbit_target?.x!;
+            temp_annotation_new.pos_y = orbit_target?.y!;
+            temp_annotation_new.pos_z = orbit_target?.z!;
             editAnnotationInternal(temp_annotation_new);
             setSelectedAnnotation(0);
         }
@@ -134,9 +135,9 @@ export default observer( function EditAnnotation(){
         
         const temp_annotation = {...annotation};
 
-        temp_annotation.pos_x = sceneInfoStore?.orbit_target?.x!;
-        temp_annotation.pos_y = sceneInfoStore?.orbit_target?.y!;
-        temp_annotation.pos_z = sceneInfoStore?.orbit_target?.z!;
+        temp_annotation.pos_x = orbit_target?.x!;
+        temp_annotation.pos_y = orbit_target?.y!;
+        temp_annotation.pos_z = orbit_target?.z!;
         editAnnotationInternal(temp_annotation);
         setSelectedAnnotation(annotation.id_annotation);
     }
@@ -216,6 +217,19 @@ export default observer( function EditAnnotation(){
 
                             </tbody>
                         </table>
+
+                        
+            
+                        <div>
+                            <input type="checkbox" checked={isShowSelectedAnnotationDetailOnScreen} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsShowSelectedAnnotationDetailOnScreen(event.target.checked)}/>
+                            <label>Show Selected Annotations Detail</label>
+                        </div>
+
+
+                        { 
+                            (selectedAnnotationPosMoved && selectedAnnotation) &&  
+                                <EditAnnotationSubUpdatePos pos_drug={selectedAnnotationPosMoved} pos_annotation = {new Vector3( selectedAnnotation.pos_x,selectedAnnotation.pos_y,selectedAnnotation.pos_z)} /> 
+                        }
                         
                         <button disabled={!isValid || !dirty || isSubmitting} type = 'submit' className='btn btn-primary'>
                             {isSubmitting ? "Processing" : "Submit"}
@@ -253,7 +267,6 @@ export default observer( function EditAnnotation(){
                 <input type="checkbox" checked={isDataCopyFromSelectedAnnotation} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsDataCopyFromSelectedAnnotation(event.target.checked)}/>
                 <label>Data Copy From Selected View</label>
             </div>
-            
 
             
 

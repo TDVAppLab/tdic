@@ -1,10 +1,13 @@
 import { makeAutoObservable, runInAction } from "mobx";
+import { Vector3 } from "three";
 import agent from "../api/agent";
 import { Annotation } from "../models/Annotation";
 
 export default class AnnotationStore {
     annotationRegistry = new Map<number, Annotation>();
     selectedAnnotation: Annotation| undefined = undefined;
+    selectedAnnotationPosMoved : Vector3 | undefined = undefined;
+    isShowSelectedAnnotationDetailOnScreen : boolean=false;
     loading=false;
 
     
@@ -149,6 +152,18 @@ export default class AnnotationStore {
             })
         }
     }    
+
+    setSelectedAnnotationPosMoved = (selectedAnnotationPosMoved:Vector3) => {
+        runInAction(() => {
+            this.selectedAnnotationPosMoved = selectedAnnotationPosMoved;
+        })
+    }
+
+    setIsShowSelectedAnnotationDetailOnScreen = (isShowSelectedAnnotationDetailOnScreen:boolean) => {
+        runInAction(() => {
+            this.isShowSelectedAnnotationDetailOnScreen = isShowSelectedAnnotationDetailOnScreen;
+        })
+    }
 
     private setAnnotation = (object : Annotation) => {
         this.annotationRegistry.set(object.id_annotation,object);
