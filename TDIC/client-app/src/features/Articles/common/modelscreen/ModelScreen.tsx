@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { useStore } from '../../../../app/stores/store';
 import { OrbitControls } from '@react-three/drei';
-import { Color, LinearEncoding, NoToneMapping, PMREMGenerator, Quaternion, sRGBEncoding, Vector3 } from 'three';
+import { Color, LinearEncoding, NoToneMapping, PMREMGenerator } from 'three';
 import ShowAnnotation from './ShowAnnotation/ShowAnnotation';
 import UpdateCameraWork from './CameraControl/UpdateCameraWork';
 import SceneInfoCatcher from './SceneInfoCatcher';
@@ -47,9 +47,6 @@ export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}:
   
   const {annotationDisplayStore} = useStore();
   const {selectedAnnotationDisplayMap } = annotationDisplayStore;
-
-  const { instanceobjectStore } = useStore();
-  const { instanceobjectRegistry } = instanceobjectStore;
   
   const { sceneInfoStore } = useStore();
   const { setModeTransport } = sceneInfoStore;
