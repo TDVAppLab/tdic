@@ -1,5 +1,5 @@
 import { Matrix4, Vector3 } from 'three';
-import { Html, PivotControls } from "@react-three/drei"
+import { Html, PivotControls, Sphere } from "@react-three/drei"
 import "./styles.css"
 import { Annotation } from '../../../../../app/models/Annotation';
 import { AnnotationDisplay } from '../../../../../app/models/AnnotationDisplay';
@@ -17,6 +17,7 @@ interface Props {
 
 const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotationId, setSelectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen}: Props) => {
   const [matrix, setMatrix] = useState<Matrix4>();
+  const [vec, setVec] = useState<Vector3>(new Vector3(0,0,0));
 
   
   useEffect(()=> {
@@ -29,6 +30,7 @@ const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotatio
         0,0,0,1);
 
     setMatrix(m);
+    setVec(new Vector3(0,0,0));
 
   }, [selectedAnnotationId, annotationMap.get(selectedAnnotationId ? selectedAnnotationId : 0)])
   
@@ -37,20 +39,16 @@ const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotatio
         <>
         {
           Array.from(annotationMap.values()).map(annotation=>(
-            (annotation.id_annotation === selectedAnnotationId) ?
             
-            <PivotControls anchor={[0,0,0,]} depthTest={true} scale={1} lineWidth={2} offset={[0,0,0]} matrix={matrix}
-              onDrag={(l,deltaL,w,deltaW) => {const v = new Vector3(); setSelectedAnnotationPosMoved(v.setFromMatrixPosition(w))}}
-              key={annotation.id_annotation}
-            >
+            (annotation.id_annotation === selectedAnnotationId) ?
               <SowAnnotationSub 
                 annotation={annotation}
                 isDisplayDescription = {annotationDisplayMap.get(annotation.id_annotation)?.is_display_description ? annotationDisplayMap.get(annotation.id_annotation)!.is_display_description : false}
                 isSelected = {annotation.id_annotation === selectedAnnotationId}
                 key={annotation.id_annotation}
                 isShowHtml={isShowSelectedAnnotationDetailOnScreen} 
+                pos={new Vector3(annotation.pos_x+vec.x,annotation.pos_y+vec.y,annotation.pos_z+vec.z)}
               />
-            </PivotControls>
             :
             (annotationDisplayMap.get(annotation.id_annotation)?.is_display ||annotation.id_annotation === selectedAnnotationId)
               && <SowAnnotationSub
@@ -59,9 +57,20 @@ const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotatio
                     isSelected = {annotation.id_annotation === selectedAnnotationId}
                     key={annotation.id_annotation}
                     isShowHtml={true} 
+                    pos={new Vector3(annotation.pos_x,annotation.pos_y,annotation.pos_z)}
                  />
           ))          
         }
+        <PivotControls anchor={[0,0,0,]} depthTest={true} scale={1} lineWidth={2} offset={[0,0,0]} matrix={matrix}
+          onDrag={(l,deltaL,w,deltaW) => {const v = new Vector3(); setSelectedAnnotationPosMoved(v.setFromMatrixPosition(w)); setVec(v.setFromMatrixPosition(w));}}
+        >
+        {
+        selectedAnnotationId &&
+          <Sphere scale={0} position={[annotationMap.get(selectedAnnotationId)?.pos_x!,annotationMap.get(selectedAnnotationId)?.pos_y!, annotationMap.get(selectedAnnotationId)?.pos_z!]}>
+              <meshBasicMaterial color="#f3f3f3" />
+          </Sphere>
+        }
+        </PivotControls>
         </>
     )
 }
@@ -72,11 +81,13 @@ interface SubProps {
   isDisplayDescription : boolean;
   isSelected : boolean;
   isShowHtml : boolean
+  pos : Vector3;
+  //ref : useref
 
 }
 
 
-const SowAnnotationSub = ({annotation, isDisplayDescription, isSelected, isShowHtml} : SubProps) => {
+const SowAnnotationSub = ({annotation, isDisplayDescription, isSelected, isShowHtml, pos} : SubProps) => {
 
   return (
     //<group position={[annotation.pos_x,annotation.pos_y,annotation.pos_z]}>
@@ -88,7 +99,7 @@ const SowAnnotationSub = ({annotation, isDisplayDescription, isSelected, isShowH
           + (isDisplayDescription ? `model-annotation-displaytext ` : `` ) 
           + (isSelected ? `model-annotation annotation_editmode ` : `` )
         }
-        position={new Vector3(annotation.pos_x+0.5,annotation.pos_y+0.5,annotation.pos_z+0.5)}
+        position={new Vector3(pos.x+0.5,pos.y+0.5,pos.z+0.5)}
       >
         <div
         >
@@ -97,7 +108,7 @@ const SowAnnotationSub = ({annotation, isDisplayDescription, isSelected, isShowH
         </div>
       </Html>
       }
-      <arrowHelper args={[new Vector3( -0.5, -0.5, -0.5 ).normalize(), new Vector3(annotation.pos_x+0.5,annotation.pos_y+0.5,annotation.pos_z+0.5),Math.sqrt(0.5*0.5*3), "red"]} />            
+      <arrowHelper args={[new Vector3( -0.5, -0.5, -0.5 ).normalize(), new Vector3(pos.x+0.5,pos.y+0.5,pos.z+0.5),Math.sqrt(0.5*0.5*3), "red"]} />            
     </React.Fragment>
     //</group>
   )
