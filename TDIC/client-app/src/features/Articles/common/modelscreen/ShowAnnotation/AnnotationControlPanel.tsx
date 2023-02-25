@@ -69,11 +69,11 @@ export default observer( function AnnotationControlPanel(){
 
         if(annotation){
             
-            annotation.title = get('Title');
-            annotation.description1 = get('Description1');
-            annotation.pos_x = get('position').x;
-            annotation.pos_y = get('position').y; 
-            annotation.pos_z = get('position').z;
+            annotation.title = get('Annotation.Title');
+            annotation.description1 = get('Annotation.Description1');
+            annotation.pos_x = get('Annotation.position').x;
+            annotation.pos_y = get('Annotation.position').y; 
+            annotation.pos_z = get('Annotation.position').z;
             
 
             if(annotation.id_annotation === 0 ){
