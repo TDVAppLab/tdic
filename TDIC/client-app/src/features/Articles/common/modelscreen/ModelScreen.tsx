@@ -16,6 +16,7 @@ import ModelScreenControlPanel from './ModelScreenControlPanel';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
 import LoadModels from './ModelLoading/LoadModels';
 import SetLights from './Lighting/SetLights';
+import AnnotationControlPanel from './ShowAnnotation/AnnotationControlPanel';
 
 
 
@@ -37,7 +38,7 @@ export default observer( function ModelScreen({isEditmode, isAutoAnimationExec}:
 
   const { viewStore :{ selectedView } } = useStore();
   
-  const { annotationStore :{ annotationRegistry, selectedAnnotation, setSelectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen } } = useStore();
+  const { annotationStore :{ annotationRegistry, selectedAnnotation, setSelectedAnnotation, setSelectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen } } = useStore();
     
   const {instructionStore : {selectedInstruction}} = useStore();
   
@@ -88,8 +89,13 @@ useEffect(()=> {
       >
       {
       // Show the control panel only in Edit Mode (Edit Modeの場合のみコントロールパネルを表示する)
-      isEditmode && <ModelScreenControlPanel />
+      isEditmode && 
+        <>
+          <ModelScreenControlPanel />
+          <AnnotationControlPanel />
+        </>
       }
+      
       <SetLights />
       <LoadModels />
       {
@@ -110,6 +116,8 @@ useEffect(()=> {
         selectedAnnotationId = {selectedAnnotation?.id_annotation}
         setSelectedAnnotationPosMoved={setSelectedAnnotationPosMoved}
         isShowSelectedAnnotationDetailOnScreen={isShowSelectedAnnotationDetailOnScreen}
+        setSelectedAnnotation={setSelectedAnnotation}
+        isEditmode = {isEditmode}
       />
 
       {/*編集モードの場合はオービットコントロールの各情報をCanvasに表示する*/}
