@@ -3,11 +3,12 @@ import { button, folder, useControls } from 'leva';
 import { useStore } from '../../../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import { toast } from 'react-toastify';
+import { Vector3 } from 'three';
 
 export default observer( function AnnotationControlPanel(){
   
 
-  const { annotationStore : { selectedAnnotation, updateAnnotation, createAnnotation, selectedAnnotationPosMoved, setIsShowSelectedAnnotationDetailOnScreen, isShowSelectedAnnotationDetailOnScreen } } = useStore();
+  const { annotationStore : { selectedAnnotation, updateAnnotation, createAnnotation, selectedAnnotationPosMoved, setSelectedAnnotationPosMoved, setIsShowSelectedAnnotationDetailOnScreen, isShowSelectedAnnotationDetailOnScreen } } = useStore();
   const { annotationDisplayStore : {loadAnnotationDisplays, setSelectedAnnotationDisplayMap,  selectedInstructionId, id_article : annotationDisplayId_article} } = useStore();
 
   //mobxの変数をそのまま入れるとhandleFormAnnotationUpdで反映が起こらないので(理由が仕様を読み解き切れておらず分かっていない)
@@ -80,9 +81,11 @@ export default observer( function AnnotationControlPanel(){
                 await createAnnotation(annotation);
                 await loadAnnotationDisplays(refAnnotationDisplayId_article.current);
                 await setSelectedAnnotationDisplayMap(refSelectedInstructionId.current);
+                setSelectedAnnotationPosMoved(new Vector3(0,0,0));
                 await toast.info('annotation added');
             } else {
                 await updateAnnotation(annotation);
+                setSelectedAnnotationPosMoved(new Vector3(0,0,0));
                 await toast.info('annotation updated');
             }
         }
