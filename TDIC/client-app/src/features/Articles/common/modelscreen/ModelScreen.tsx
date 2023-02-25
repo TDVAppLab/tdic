@@ -16,6 +16,7 @@ import ModelScreenControlPanel from './ModelScreenControlPanel';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
 import LoadModels from './ModelLoading/LoadModels';
 import SetLights from './Lighting/SetLights';
+import AnnotationControlPanel from './ShowAnnotation/AnnotationControlPanel';
 
 
 
@@ -88,8 +89,13 @@ useEffect(()=> {
       >
       {
       // Show the control panel only in Edit Mode (Edit Modeの場合のみコントロールパネルを表示する)
-      isEditmode && <ModelScreenControlPanel />
+      isEditmode && 
+        <>
+          <ModelScreenControlPanel />
+          <AnnotationControlPanel />
+        </>
       }
+      
       <SetLights />
       <LoadModels />
       {
