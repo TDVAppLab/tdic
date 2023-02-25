@@ -91,8 +91,8 @@ useEffect(()=> {
       // Show the control panel only in Edit Mode (Edit Modeの場合のみコントロールパネルを表示する)
       isEditmode && 
         <>
-          <ModelScreenControlPanel />
           <AnnotationControlPanel />
+          <ModelScreenControlPanel />
         </>
       }
       
