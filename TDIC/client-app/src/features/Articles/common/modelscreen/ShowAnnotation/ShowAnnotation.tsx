@@ -12,10 +12,12 @@ interface Props {
     selectedAnnotationId : number | undefined;
     setSelectedAnnotationPosMoved: (selectedAnnotationPosMoved: Vector3) => void;
     isShowSelectedAnnotationDetailOnScreen : boolean;
+    setSelectedAnnotation: (id_annotation: number) => Promise<Annotation | undefined>;
+    isEditmode: boolean;
 }
 
 
-const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotationId, setSelectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen}: Props) => {
+const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotationId, setSelectedAnnotationPosMoved, isShowSelectedAnnotationDetailOnScreen, setSelectedAnnotation, isEditmode }: Props) => {
   const [matrix, setMatrix] = useState<Matrix4>();
   const [vec, setVec] = useState<Vector3>(new Vector3(0,0,0));
 
@@ -48,6 +50,8 @@ const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotatio
                 key={annotation.id_annotation}
                 isShowHtml={isShowSelectedAnnotationDetailOnScreen} 
                 pos={new Vector3(annotation.pos_x+vec.x,annotation.pos_y+vec.y,annotation.pos_z+vec.z)}
+                setSelectedAnnotation={setSelectedAnnotation}
+                isEditmode={isEditmode}
               />
             :
             (annotationDisplayMap.get(annotation.id_annotation)?.is_display ||annotation.id_annotation === selectedAnnotationId)
@@ -58,6 +62,8 @@ const ShowAnnotation  = ({annotationMap, annotationDisplayMap, selectedAnnotatio
                     key={annotation.id_annotation}
                     isShowHtml={true} 
                     pos={new Vector3(annotation.pos_x,annotation.pos_y,annotation.pos_z)}
+                    setSelectedAnnotation={setSelectedAnnotation}
+                    isEditmode={isEditmode}
                  />
           ))          
         }
@@ -82,12 +88,14 @@ interface SubProps {
   isSelected : boolean;
   isShowHtml : boolean
   pos : Vector3;
+  setSelectedAnnotation: (id_annotation: number) => Promise<Annotation | undefined>;
+  isEditmode: boolean;
   //ref : useref
 
 }
 
 
-const SowAnnotationSub = ({annotation, isDisplayDescription, isSelected, isShowHtml, pos} : SubProps) => {
+const SowAnnotationSub = ({annotation, isDisplayDescription, isSelected, isShowHtml, pos, setSelectedAnnotation, isEditmode} : SubProps) => {
 
   return (
     //<group position={[annotation.pos_x,annotation.pos_y,annotation.pos_z]}>
@@ -103,7 +111,11 @@ const SowAnnotationSub = ({annotation, isDisplayDescription, isSelected, isShowH
       >
         <div
         >
-          <h4>{annotation.title}</h4>                
+          <h4
+            onClick={()=>{isEditmode && setSelectedAnnotation(annotation.id_annotation)}}
+          >
+            {annotation.title}
+          </h4>                
           {(isDisplayDescription || isSelected) && <>{annotation.description1}</>}
         </div>
       </Html>
