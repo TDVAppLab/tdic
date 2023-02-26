@@ -179,12 +179,6 @@ export default observer( function EdiaAnnotationDisplay({EntryNewAnnotation, set
                                     ))
                             }
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>                                        
-                                    <td></td>
-                                    <td></td>
                                     <td>
                                         <button
                                             type = 'button'
@@ -196,6 +190,12 @@ export default observer( function EdiaAnnotationDisplay({EntryNewAnnotation, set
                                             ADD
                                         </button>
                                     </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>                                        
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                     <td></td>
                                 </tr>
                             </tbody>
