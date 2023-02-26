@@ -7,29 +7,13 @@ import { Form, Formik } from 'formik';
 import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
 import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
 import { Col, Row } from 'react-bootstrap';
-import { Annotation } from '../../../app/models/Annotation';
+import { Annotation, getDefaultValueOfAnnotation } from '../../../app/models/Annotation';
 import { Vector3 } from 'three';
 import { toast } from 'react-toastify';
 import EditAnnotationSubUpdatePos from './EditAnnotationSubUpdatePos';
+import EdiaAnnotationDisplay from "./EditAnnotationDisplay";
 
 
-const getDefaultValueOfAnnotation = (id_article : string) => {
-    const ans : Annotation = {
-        id_article: id_article ? id_article : "",
-        id_annotation: 0,
-
-        title: '',
-        description1: '',
-        description2: '',
-        
-        status: 0,
-
-        pos_x: 0,
-        pos_y: 0,
-        pos_z: 0,
-    }
-    return ans;
-}
 
 
 
@@ -143,6 +127,8 @@ export default observer( function EditAnnotation(){
     }
 
     return(
+        <>
+        <EdiaAnnotationDisplay EntryNewAnnotation={EntryNewAnnotation} setAnnotation={setAnnotation} />
         <div>
             <Formik
                 validationSchema={validationSchema}
@@ -279,5 +265,6 @@ export default observer( function EditAnnotation(){
                 Set Annotation Position with Current Orbit
             </button>
         </div>
+        </>
     )
 })
