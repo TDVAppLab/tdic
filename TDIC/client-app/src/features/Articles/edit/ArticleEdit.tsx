@@ -180,10 +180,10 @@ export default observer( function ArticleEdit() {
                                     </Tab>
                                     
                                     <Tab eventKey="annotation" title="Annotation" >
-                                        <EditAnnotation />
                                         {
-                                            selectedAnnotationDisplayMap.size > 0 && <EdiaAnnotationDisplay />
+                                            //<EdiaAnnotationDisplay />
                                         }
+                                        <EditAnnotation />
                                     </Tab>
                                     
                                     <Tab eventKey="light" title="Light" >

@@ -8,21 +8,31 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 import { toast } from 'react-toastify';
+import { Annotation, getDefaultValueOfAnnotation } from '../../../app/models/Annotation';
 
 
+interface Props {
+    EntryNewAnnotation: () => void;
+    setAnnotation: React.Dispatch<React.SetStateAction<Annotation>>;
+  
+  }
 
-export default observer( function EdiaAnnotationDisplay() {
+export default observer( function EdiaAnnotationDisplay({EntryNewAnnotation, setAnnotation} : Props) {
     
 
     const validationSchema = Yup.object({
         title: Yup.string().required(),
     });
-  
+
+    const {sceneInfoStore : {orbit_target}} = useStore();
+
+    const {articleStore} = useStore();
+
     const { annotationStore } = useStore();
-    const { annotationRegistry, setSelectedAnnotation, selectedAnnotation } = annotationStore;  
+    const { annotationRegistry, setSelectedAnnotation, selectedAnnotation, deleteAnnotation, editAnnotationInternal } = annotationStore;  
 
     const { annotationDisplayStore} = useStore();
-    const { selectedAnnotationDisplayMap, selectedInstructionId, updateAnnotationDisplay } = annotationDisplayStore;
+    const { selectedAnnotationDisplayMap, selectedInstructionId, updateAnnotationDisplay, deleteAnnotationDisplayArray } = annotationDisplayStore;
 
     const [annotationDisplays, setAnnotationDisplays] = useState<AnnotationDisplay[]>([]);
  
@@ -47,6 +57,41 @@ export default observer( function EdiaAnnotationDisplay() {
         await updateAnnotationDisplay(values);
         toast.info('annotation display updated');
     }
+    
+    
+    const EntryNewAnnotation2 = () => {
+        
+        if(selectedAnnotation && (selectedAnnotation.id_annotation !== 0)) {
+
+            
+
+            const temp_annotation_new = getDefaultValueOfAnnotation(articleStore?.selectedArticle?.id_article!);
+            temp_annotation_new.pos_x = orbit_target?.x!;
+            temp_annotation_new.pos_y = orbit_target?.y!;
+            temp_annotation_new.pos_z = orbit_target?.z!;
+            editAnnotationInternal(temp_annotation_new);
+            setSelectedAnnotation(0);
+        } else {
+            if(selectedAnnotation) {
+                const temp_annotation = {...selectedAnnotation};
+                temp_annotation.id_annotation=0;
+                
+                editAnnotationInternal(temp_annotation);
+                setSelectedAnnotation(0);
+            }
+        }
+    }
+
+    async function handleFormAnnotationDel(id:number) {
+        const target = annotationRegistry.get(id);
+        
+        if(target){
+            await deleteAnnotation(target);
+            await deleteAnnotationDisplayArray(target.id_annotation);
+            setAnnotation(getDefaultValueOfAnnotation(articleStore?.selectedArticle?.id_article!));
+            toast.info('annotation deleted');
+        }
+    }
 
     return(
         <div>
@@ -65,9 +110,6 @@ export default observer( function EdiaAnnotationDisplay() {
                                         No.
                                     </th>
                                     <th>
-                                        ID Annotation
-                                    </th>
-                                    <th>
                                         Title
                                     </th>
                                     <th>
@@ -80,7 +122,10 @@ export default observer( function EdiaAnnotationDisplay() {
                                         Display Description
                                     </th>
                                     <th>
-                                        Edit
+                                        COPY
+                                    </th>
+                                    <th>
+                                        DEL
                                     </th>
                                 </tr>
                             </thead>
@@ -90,25 +135,69 @@ export default observer( function EdiaAnnotationDisplay() {
                                     
 
                                     <tr key={x.id_annotation}>
-                                        <td>{x.id_annotation}</td>
-                                        <td>{x.id_annotation}</td>
-                                        <td>{ annotationRegistry.get(x.id_annotation)?.title }</td>
-                                        <td>{ annotationRegistry.get(x.id_annotation)?.description1 }</td>                                        
-                                        <td><CheckBoxGeneral label='' name={`[${index}]is_display`}  /></td>
-                                        <td><CheckBoxGeneral label='' name={`[${index}]is_display_description`}  /></td>
                                         <td>
                                             <button key={x.id_annotation}
                                                     type = 'button'
                                                     className={ x.id_annotation === selectedAnnotation?.id_annotation ? "btn btn-secondary" :  "btn btn-outline-secondary"}
                                                     onClick={()=>{setSelectedAnnotation(x.id_annotation)}} 
                                                 >
-                                                Edit
+                                                {index+1}
                                             </button>
+                                        </td>
+                                        <td>{ annotationRegistry.get(x.id_annotation)?.title }</td>
+                                        <td>{ annotationRegistry.get(x.id_annotation)?.description1 }</td>                                        
+                                        <td><CheckBoxGeneral label='' name={`[${index}]is_display`}  /></td>
+                                        <td><CheckBoxGeneral label='' name={`[${index}]is_display_description`}  /></td>
+                                        <td>
+                                            {   x.id_annotation === selectedAnnotation?.id_annotation &&
+                                                <button
+                                                    type = 'button'
+                                                    className={"btn btn-warning"}
+                                                    onClick={()=>{
+                                                        EntryNewAnnotation()
+                                                    }}
+                                                >
+                                                    COPY
+                                                </button>
+                                            }
+                                        </td>
+                                        <td>
+                                            {   x.id_annotation === selectedAnnotation?.id_annotation &&
+                                                <button
+                                                    type = 'button'
+                                                    className={"btn btn-danger"}
+                                                    onClick={()=>{
+                                                        handleFormAnnotationDel(x.id_annotation)
+                                                    }}
+                                                >
+                                                    DEL
+                                                </button>
+                                            }
                                         </td>
                                     </tr>
 
                                     ))
                             }
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>                                        
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <button
+                                            type = 'button'
+                                            className={"btn btn-secondary"}
+                                            onClick={()=>{
+                                                EntryNewAnnotation()
+                                            }}
+                                        >
+                                            ADD
+                                        </button>
+                                    </td>
+                                    <td></td>
+                                </tr>
                             </tbody>
                         </table>
                         
