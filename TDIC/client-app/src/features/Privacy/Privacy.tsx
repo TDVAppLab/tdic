@@ -1,12 +1,11 @@
 import { marked } from "marked";
-import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import agent from "../../app/api/agent";
 
 
 
 
-export default observer( function Privacy() {
+export default  function Privacy() {
 
     
   const [policy, setPolicy] = useState<string>("");
@@ -21,4 +20,4 @@ export default observer( function Privacy() {
     );
 
     return <div dangerouslySetInnerHTML={{__html: marked(policy)}}></div>;
-})
+}
