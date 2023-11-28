@@ -1,32 +1,22 @@
-import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import LoadingComponent from '../../../app/layout/LoadingComponents';
-import { useStore } from '../../../app/stores/store';
 import ModelfileList from './ModelfileList';
+import { Modelfile } from '../../../app/models/ModelFile';
+import agent from '../../../app/api/agent';
 
-export default observer(function ModelfileDashboard() {
+export default function ModelfileDashboard() {
 
     const [isExcludeUsed, setIsExcludeUsed] = useState(false);
-
-
-    const {modelfileStore} = useStore();
-    const {loadModelfiles, ModelfileRegistry} = modelfileStore;
+    
+    const [modelfiles, setModelfiles] = useState<Modelfile[]>();
   
     useEffect(() => {
-        loadModelfiles(isExcludeUsed);
-    },[])
-  
-    useEffect(() => {
-        loadModelfiles(isExcludeUsed);
+        agent.Modelfiles.list(isExcludeUsed).then(modelfiles => {
+            modelfiles.length > 0 && setModelfiles(modelfiles);
+        })
     },[isExcludeUsed])
-
-
-    useEffect(() => {
-        if(ModelfileRegistry.size <= 1) loadModelfiles(isExcludeUsed);
-    },[ModelfileRegistry.size, loadModelfiles])
-
 
     
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -34,9 +24,7 @@ export default observer(function ModelfileDashboard() {
     }
   
   
-    if(modelfileStore.loading) return <LoadingComponent content='Loading modelfiles...' />
-
-
+    if(!modelfiles) return <LoadingComponent content='Loading modelfiles...' />
 
     return(
         <Container>
@@ -50,8 +38,8 @@ export default observer(function ModelfileDashboard() {
                 <label>Exclude Used Models</label>
             </div>
             
-            <ModelfileList />
+            <ModelfileList modelfiles={modelfiles}/>
         </Container>
 
     )
-})
+}

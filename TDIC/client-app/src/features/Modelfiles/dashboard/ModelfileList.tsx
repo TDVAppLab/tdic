@@ -1,11 +1,14 @@
-import { observer } from "mobx-react-lite";
 import { Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useStore } from "../../../app/stores/store";
+import { Modelfile } from "../../../app/models/ModelFile";
 
-export default observer( function ModelfileList() {
-    const { modelfileStore } = useStore();
-    const {ModelfileRegistry} = modelfileStore;
+
+interface Props {
+    modelfiles: Modelfile[];
+  }  
+
+export default function ModelfileList({modelfiles}: Props) {
+
 
     return (
         <Row>
@@ -47,7 +50,7 @@ export default observer( function ModelfileList() {
                     </thead>
                     <tbody>
                     {                                
-                        Array.from(ModelfileRegistry.values()).map((x,index)=>(                     
+                        modelfiles.map((x,index)=>(                     
     
                             <tr key={x.id_part}>
                                 <td>{index+1}</td>
@@ -70,4 +73,4 @@ export default observer( function ModelfileList() {
 
 
     )
-})
+}
