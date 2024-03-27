@@ -1,7 +1,8 @@
-import { observer } from "mobx-react-lite";
 import { useFrame, useThree } from '@react-three/fiber';
-import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
+
+import { useStore } from "../../../app/stores/store";
 
 export default observer( function SetScreenObjectInfo() {
     

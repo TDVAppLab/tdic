@@ -1,6 +1,7 @@
 import { useFrame, useThree } from '@react-three/fiber';
+import type { AnimationClip} from 'three';
+import { Clock, LoopPingPong } from 'three';
 import { AnimationMixer } from 'three/src/animation/AnimationMixer';
-import { AnimationClip, Clock, LoopPingPong } from 'three';
 
 
 interface Props {
