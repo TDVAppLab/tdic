@@ -7,15 +7,15 @@ import type { AnnotationDisplay } from "../models/AnnotationDisplay";
 import type { Article, ArticleScreenInfoUpdDto } from "../models/article";
 import type { Attachmentfile, AttachmentfileEyecatchDtO } from "../models/attachmentfile";
 import type { InstanceActionExecSetting } from "../models/InstanceActionExecSetting";
-import { Instanceobject } from "../models/Instanceobject";
-import { Instruction } from "../models/instruction";
-import { Light } from "../models/Light";
-import { mArticleStatus } from "../models/mArticleStatus";
-import { Modelfile } from "../models/ModelFile";
-import { PartAnimationClip } from "../models/PartAnimationClip";
-import { User, UserFormValues } from "../models/user";
-import { View } from "../models/view";
-import { WebsiteSetting } from "../models/WebsiteSetting";
+import type { Instanceobject } from "../models/Instanceobject";
+import type { Instruction } from "../models/instruction";
+import type { Light } from "../models/Light";
+import type { mArticleStatus } from "../models/mArticleStatus";
+import type { Modelfile } from "../models/ModelFile";
+import type { PartAnimationClip } from "../models/PartAnimationClip";
+import type { User, UserFormValues } from "../models/user";
+import type { View } from "../models/view";
+import type { WebsiteSetting } from "../models/WebsiteSetting";
 import { store } from "../stores/store";
 
 const sleep = (delay: number) => {

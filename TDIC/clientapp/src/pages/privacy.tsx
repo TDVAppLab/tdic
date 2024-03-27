@@ -1,15 +1,24 @@
-import { Container } from '@mui/material'
-import { Inter } from 'next/font/google'
+import { marked } from "marked";
+import React, { useEffect, useState } from "react";
 
-import { useLocale } from '@/components/utils/useLocale'
+import agent from "@/app/api/agent";
 
-const inter = Inter({ subsets: ['latin'] })
 
-//プライバシーポリシーページ
-export default function Privacy() {
-  const { t } = useLocale()
 
-  return <Container maxWidth={false} sx={{ py: 2 }}></Container>
+
+export default  function Privacy() {
+
+    
+  const [policy, setPolicy] = useState<string>("");
+
+    useEffect(() => {
+        const DataLoading = async () => {
+            const data = await agent.WebsiteSettings.details("PrivacyPolicy");
+            setPolicy(data.data);
+        };
+        DataLoading();
+    }, []
+    );
+
+    return <div dangerouslySetInnerHTML={{__html: marked(policy)}}></div>;
 }
-
-Privacy.title = 'Privacy'

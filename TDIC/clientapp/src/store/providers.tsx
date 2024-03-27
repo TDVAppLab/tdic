@@ -1,18 +1,16 @@
 import React from 'react'
 
+import { store,StoreContext } from '@/app/stores/store'
+
 import { LayoutSizeProvider } from './layoutsizeprovider'
-import { TleProvider } from './tleprovider'
-import { UserLocationProvider } from './userlocationprovider'
 
 type Props = {
   children: React.ReactNode
 }
 export const Providers: React.FC<Props> = (props) => {
   return (
-    <TleProvider>
-      <UserLocationProvider>
+    <StoreContext.Provider value={store}>
         <LayoutSizeProvider>{props.children}</LayoutSizeProvider>
-      </UserLocationProvider>
-    </TleProvider>
+    </StoreContext.Provider>
   )
 }
