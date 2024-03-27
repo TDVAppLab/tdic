@@ -23,7 +23,7 @@ export default function WebsiteSettingDashboard() {
         <Container>
             
             
-        <Link href="/websitesettingcreate">
+        <Link href="/websitesettingedit">
             <h3 >Create</h3>
         </Link>
             <hr />
