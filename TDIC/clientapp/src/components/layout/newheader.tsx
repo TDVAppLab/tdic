@@ -1,64 +1,62 @@
-import {
-  AppBar,
-  Button,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Typography,
-} from '@mui/material'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { signIn, signOut, useSession } from 'next-auth/react'
-import { useEffect, useRef, useState } from 'react'
+import { observer } from 'mobx-react-lite';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import React from 'react';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
-import { useWindowSize } from '@/hooks/useWindowSize'
-import { useLayoutSizeContext } from '@/store/layoutsizeprovider'
+import { useStore } from '@/app/stores/store';
 
-import { useLocale } from '../utils/useLocale'
-import DrawerAppBar from './drawernavigation'
 
-export default function NewHeader() {
-  const layoutSize = useLayoutSizeContext()
-  const ref = useRef<HTMLDivElement>(null)
+export default observer ( function NavBar() {
+    const {userStore: {user, logout}} = useStore();
 
-  const { t } = useLocale()
-
-  const router = useRouter()
-
-  //Windowサイズを取得する
-  const { height, width } = useWindowSize()
-
-  useEffect(() => {
-    if (ref.current) {
-      //console.log(ref.current.getBoundingClientRect())
-      layoutSize.setHeaderHight(ref.current.getBoundingClientRect().height)
+    
+    function handleLogout() {
+        logout();
+        toast.info('successfully logged out');
+        redirect(`/`);
     }
-  }, [height, width])
 
-  const { data: session } = useSession()
+    return(
+        <Navbar bg="dark" variant="dark" expand="sm" className="border-bottom box-shadow mb-3">
+            <Container>
+                <Navbar.Brand as={Link} href="/">3D Aerospace Museum</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link as={Link} href="/articles">Contents</Nav.Link>
+                        {
+                            user && 
+                                <>
+                                  <Nav.Link as={Link} href="/modelfiles">Modelfiles</Nav.Link>
+                                  <Nav.Link as={Link} href="/attachmentfiles">Attachmentfiles</Nav.Link>
+                                </>
+                        }
+                    </Nav>
+                    <Nav>
+                        <Nav.Link as={Link} href="/privacy">PrivacyPolicy</Nav.Link>                        
+                        {
+                            user ? 
+                                <>
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
-  const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-  return (
-    <AppBar ref={ref} position="static">
-      <Toolbar>
-        <Typography variant="h6" style={{ flexGrow: 1 }}>
-          Sattrack
-        </Typography>
-        <Link href="/">
-          <Button sx={{ color: 'white' }}>Home</Button>
-        </Link>
-        <DrawerAppBar />
-      </Toolbar>
-    </AppBar>
-  )
-}
+                                    <NavDropdown title={user.username} id="collasible-nav-dropdown-user">
+                                        <NavDropdown.Item as={Link} href="/register">register</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} href="/websitesettings">WebsiteSettings</NavDropdown.Item>
+                                        { process.env.NODE_ENV === 'development' &&  <NavDropdown.Item as={Link} href="/errors">Errors</NavDropdown.Item>  }     
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item as="a" onClick={handleLogout}>Logout</NavDropdown.Item>
+                                    </NavDropdown>
+                                    
+                                </>                            
+                                :
+                                <>
+                                    { process.env.NODE_ENV === 'development' &&  <Nav.Link as={Link} href="/login">Login</Nav.Link>  }                   
+                                </>
+                        }
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
+    )
+})

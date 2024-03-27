@@ -1,113 +1,61 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import React, { useEffect, useRef, useState } from 'react'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import { IsAvailableWithoutProduction } from '@/constants'
-import { useWindowSize } from '@/hooks/useWindowSize'
-import { useLayoutSizeContext } from '@/store/layoutsizeprovider'
-import style from '@/styles/Header.module.scss'
+import { useStore } from '../stores/store';
 
-import { useLocale } from '../utils/useLocale'
+export default observer ( function NavBar() {
+    const {userStore: {user, logout}} = useStore();
+    const navigate = useNavigate();
 
-export default function Header() {
-  const layoutSize = useLayoutSizeContext()
-  const ref = useRef<HTMLDivElement>(null)
-
-  const [isOpenMenu, setIsOpenMenu] = useState(false)
-  const { t } = useLocale()
-
-  const router = useRouter()
-
-  //Windowサイズを取得する
-  const { height, width } = useWindowSize()
-
-  useEffect(() => {
-    if (ref.current) {
-      //      console.log(ref.current.getBoundingClientRect())
-      layoutSize.setHeaderHight(ref.current.getBoundingClientRect().height)
+    
+    function handleLogout() {
+        logout();
+        toast.info('successfully logged out');
+        navigate(`/`);
     }
-  }, [height, width])
 
-  const toggleMenuOpen = () => {
-    setIsOpenMenu(!isOpenMenu)
-  }
+    return(
+        <Navbar bg="dark" variant="dark" expand="sm" className="border-bottom box-shadow mb-3">
+            <Container>
+                <Navbar.Brand as={NavLink} to="/">3D Aerospace Museum</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link as={NavLink} to="/articles">Contents</Nav.Link>
+                        {
+                            user && 
+                                <>
+                                    <Nav.Link as={NavLink} to="/modelfiles">Modelfiles</Nav.Link>
+                                    <Nav.Link as={NavLink} to="/attachmentfiles">Attachmentfiles</Nav.Link>
+                                </>
+                        }
+                    </Nav>
+                    <Nav>
+                        <Nav.Link as={NavLink} to="/privacy">PrivacyPolicy</Nav.Link>                        
+                        {
+                            user ? 
+                                <>
 
-  const onClickLink = () => {
-    toggleMenuOpen()
-  }
-
-  const onKeyDownLink = (e: any) => {
-    if (e.code === 'Enter') {
-      toggleMenuOpen()
-    }
-  }
-
-  return (
-    <header ref={ref} className={style.header}>
-      <div className={style.headerInner}>
-        <div className={style.headerLeft}>
-          <div className={style.headerLogo}>
-            <Link href="/">Sattrack</Link>
-          </div>
-        </div>
-        <div className={style.headerRight}>
-          <nav className={style.headerNav}>
-            <ul className={style.headerNavList}>
-              <li className={style.headerNavItem}>
-                <Link href="/">Home</Link>
-              </li>
-              {
-                //管理ページ(リンクは開発環境のみ出る)
-                IsAvailableWithoutProduction && (
-                  <li className={style.headerNavItem}>
-                    <Link href="/admin">admin</Link>
-                  </li>
-                )
-              }
-            </ul>
-          </nav>
-
-          <div
-            className={` ${style.headerMenu} ${isOpenMenu ? style.isOpen : ''}`}
-          >
-            <button
-              type="button"
-              className={style.headerMenuTrigger}
-              aria-label="menu"
-              onClick={toggleMenuOpen}
-            >
-              <div className={style.headerMenuTriggerLine} />
-              <div className={style.headerMenuTriggerLine} />
-              <div className={style.headerMenuTriggerLine} />
-            </button>
-
-            {isOpenMenu && (
-              <nav className={style.headerMenuContent}>
-                <h1 className={style.headerMenuTitle}>Menu</h1>
-                <ul className={style.headerMenuNavList}>
-                  <li className={style.headerMenuNaviItem}>
-                    <Link
-                      href="/"
-                      onClick={onClickLink}
-                      onKeyDown={onKeyDownLink}
-                    >
-                      Home
-                    </Link>
-                  </li>
-                </ul>
-
-                <ul className={style.headerMenuSnsList}>
-                  <li className={style.headerMenuSnsItem}>
-                    <Link href="https://twitter.com" target="_blank">
-                      Twitter
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
-            )}
-          </div>
-        </div>
-      </div>
-    </header>
-  )
-}
+                                    <NavDropdown title={user.username} id="collasible-nav-dropdown-user">
+                                        <NavDropdown.Item as={NavLink} to="/register">register</NavDropdown.Item>
+                                        <NavDropdown.Item as={NavLink} to="/websitesettings">WebsiteSettings</NavDropdown.Item>
+                                        { process.env.NODE_ENV === 'development' &&  <NavDropdown.Item as={NavLink} to="/errors">Errors</NavDropdown.Item>  }     
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item as="a" onClick={handleLogout}>Logout</NavDropdown.Item>
+                                    </NavDropdown>
+                                    
+                                </>                            
+                                :
+                                <>
+                                    { process.env.NODE_ENV === 'development' &&  <Nav.Link as={NavLink} to="/login">Login</Nav.Link>  }                   
+                                </>
+                        }
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
+    )
+})

@@ -2,10 +2,7 @@ import { Button, Container } from '@mui/material'
 import { Inter } from 'next/font/google'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
-import ControlPanelForUpdateTargetOrbitalPassesManually from '@/components/batchs/ControlPanelForUpdateTargetOrbitalPassesManually'
 import { useLocale } from '@/components/utils/useLocale'
-import { trpc } from '@/utils/trpc'
-//import { IsAvailableWithoutProduction } from '@/constants'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,18 +12,6 @@ export default function Admin() {
 
   const { t } = useLocale()
 
-  const updateTargetOrbitalPassesTargetOnly =
-    trpc.tleRouter.updateTleTableFromCelestrackTargetOnly.useMutation()
-      .mutateAsync
-
-  const updateTargetOrbitalPassesAll =
-    trpc.tleRouter.updateTleTableFromCelestrackAll.useMutation().mutateAsync
-
-  /*
-  if (!IsAvailableWithoutProduction) {
-    // 本番環境ではNot Foundページを表示
-    return <p>404 - Page Not Found</p>
-  }*/
 
   return session ? (
     session.user.emailVerified ? (
@@ -42,10 +27,6 @@ export default function Admin() {
           <li>{session.user.emailVerified?.toString()}</li>
            */}
         </ul>
-        <ControlPanelForUpdateTargetOrbitalPassesManually
-          onOrbitalPassUpdateTargetOnly={updateTargetOrbitalPassesTargetOnly}
-          onOrbitalPassUpdateTargetAll={updateTargetOrbitalPassesAll}
-        />
         <Button variant="text" href="/adminupdate">
           Edit Updates
         </Button>
