@@ -16,33 +16,19 @@ import TextAreaGeneral from '@/app/common/form/TextAreaGeneral'
 import TextInputGeneral from '@/app/common/form/TextInputGeneral'
 import type { Modelfile } from '@/app/models/ModelFile'
 import { getDefaultValueOfModelfile } from '@/app/models/ModelFile'
-//import { getDefaultValueOfModelfile,Modelfile } from "@/app/models/ModelFile";
 import type { PartAnimationClip } from '@/app/models/PartAnimationClip'
 import { useStore } from '@/app/stores/store'
 import LoadingComponent from '@/components/layout/LoadingComponents'
-//import agent from "../../../app/api/agent";
-//import TextAreaGeneral from "../../../app/common/form/TextAreaGeneral";
-//import TextInputGeneral from "../../../app/common/form/TextInputGeneral";
-//import LoadingComponent from "../../../app/layout/LoadingComponents";
-//import type { Modelfile } from "../../../app/models/ModelFile";
-//import { getDefaultValueOfModelfile } from "../../../app/models/ModelFile";
-//import type { PartAnimationClip } from "../../../app/models/PartAnimationClip";
-//import { useStore } from "../../../app/stores/store";
 import TestLighting from '@/components/modelfile/common/AddLighting'
 import ControlPanel from '@/components/modelfile/common/ModelFilesEditControlPanel'
 import ModelfileViewer from '@/components/modelfile/common/ModelfileViewer'
 import SetScreenObjectInfo from '@/components/modelfile/common/SetScreenObjectInfo'
 import ShowAction from '@/components/modelfile/common/ShowAction'
 import EditModelfileEyecatch from '@/components/modelfile/edit/EditModelfileEyecatch'
-//import ModelfileViewer from "../common/ModelfileViewer";
-//import SetScreenObjectInfo from "../common/SetScreenObjectInfo";
-//import ShowAction from "../common/ShowAction";
-//import EditModelfileEyecatch from "./EditModelfileEyecatch";
 import ModelfileUploader from '@/components/modelfile/edit/ModelfileUploader'
 import ShowScreenObjectInfo from '@/components/modelfile/edit/ShowScreenObjectInfo'
 
 export default observer(function ModelfileEdit() {
-  //    const navigate = useNavigate();
   const { modelfileStore } = useStore()
   const {
     selectedModelfile,
