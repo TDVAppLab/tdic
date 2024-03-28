@@ -2,6 +2,7 @@ import { OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { Form, Formik } from 'formik'
 import { observer } from 'mobx-react-lite'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { useRouter } from 'next/router'
@@ -27,6 +28,19 @@ import ShowAction from '@/components/modelfile/common/ShowAction'
 import EditModelfileEyecatch from '@/components/modelfile/edit/EditModelfileEyecatch'
 import ModelfileUploader from '@/components/modelfile/edit/ModelfileUploader'
 import ShowScreenObjectInfo from '@/components/modelfile/edit/ShowScreenObjectInfo'
+
+
+
+
+
+
+
+
+const ModelfileEditCanvas = dynamic(() => import('@/components/modelfile/edit/modelfilecanvas'), {
+  ssr: false,
+})
+
+
 
 export default observer(function ModelfileEdit() {
   const { modelfileStore } = useStore()
@@ -111,36 +125,8 @@ export default observer(function ModelfileEdit() {
       <Row>
         <Col sm={6}>
           <div className="row" style={{ height: '45vh', width: '45vw' }}>
-            <Canvas
-              gl={{
-                antialias: true,
-                outputEncoding: sRGBEncoding,
-                toneMapping: NoToneMapping,
-              }}
-              onCreated={({ gl, scene }) => {
-                gl.toneMappingExposure = Math.pow(2, 0)
-                scene.environment = null
-                scene.background = new Color('#ffffff')
-              }}
-              //linear={isliner}
-              //flat={true}
-              camera={{ fov: 45, position: [3, 3, 3] }}
-            >
-              <ModelfileViewer
-                id_part={id[0]}
-                setTeststring={setAnimations}
-                setModelUuid={setModelUuid}
-              />
-              <OrbitControls target={[0, 0, 0]} makeDefault />
-              <axesHelper args={[2]} />
-              <gridHelper args={[2]} />
-              {
-                <ShowAction modelUuid={modelUuid} animations = {animations} is_exec_animation={isMExecAnimation}/>
-              }
-              {<ControlPanel setIsMExecAnimation={setIsMExecAnimation} />}
-              <TestLighting />
-              <SetScreenObjectInfo />
-            </Canvas>
+            <ModelfileEditCanvas id={id[0]} modelUuid={modelUuid} animations={animations} setAnimations={setAnimations} setModelUuid={setModelUuid} isMExecAnimation={isMExecAnimation} setIsMExecAnimation={setIsMExecAnimation} />
+
           </div>
         </Col>
 
