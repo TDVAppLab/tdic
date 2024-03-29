@@ -1,22 +1,23 @@
+import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { useStore } from '../../../../app/stores/store';
-import { OrbitControls } from '@react-three/drei';
 import { Color, LinearEncoding, NoToneMapping, PMREMGenerator } from 'three';
-import ShowAnnotation from './ShowAnnotation/ShowAnnotation';
-import UpdateCameraWork from './CameraControl/UpdateCameraWork';
-import SceneInfoCatcher from './SceneInfoCatcher';
-import GetSceneCapture from './SceneCapture/GetSceneCapture';
-import ShowOrbitInfo from './ShowOrbitInfo';
-import UpdateInstanceVisivility from './SetVisivility/UpdateInstanceVisivility';
-import ShowActionUseInstructionSettings from './ShowAction/ShowActionUseInstructionSettings';
-import ShowActionofSettedModel from './ShowAction/ShowActionofSettedModel';
-import ModelScreenControlPanel from './ModelScreenControlPanel';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
-import LoadModels from './ModelLoading/LoadModels';
+
+import { useStore } from '../../../../app/stores/store';
+import UpdateCameraWork from './CameraControl/UpdateCameraWork';
 import SetLights from './Lighting/SetLights';
+import LoadModels from './ModelLoading/LoadModels';
+import ModelScreenControlPanel from './ModelScreenControlPanel';
+import GetSceneCapture from './SceneCapture/GetSceneCapture';
+import SceneInfoCatcher from './SceneInfoCatcher';
+import UpdateInstanceVisivility from './SetVisivility/UpdateInstanceVisivility';
+import ShowActionofSettedModel from './ShowAction/ShowActionofSettedModel';
+import ShowActionUseInstructionSettings from './ShowAction/ShowActionUseInstructionSettings';
 import AnnotationControlPanel from './ShowAnnotation/AnnotationControlPanel';
+import ShowAnnotation from './ShowAnnotation/ShowAnnotation';
+import ShowOrbitInfo from './ShowOrbitInfo';
 
 
 
@@ -64,7 +65,7 @@ useEffect(()=> {
       <Canvas
         gl={{ 
           antialias: true, 
-          outputEncoding : selectedArticle?.outputEncoding ? selectedArticle.outputEncoding : LinearEncoding,
+          outputEncoding: selectedArticle?.outputEncoding ? selectedArticle.outputEncoding : LinearEncoding as TextureEncoding,
           toneMapping: selectedArticle?.toneMapping ? selectedArticle.toneMapping : NoToneMapping,
         }}
         onCreated={({ gl, scene }) => {

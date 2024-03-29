@@ -1,8 +1,9 @@
-import { color } from 'csx';
-import React, { useEffect, useRef, FC, useState } from 'react';
-import * as THREE from 'three';
 import { useThree } from '@react-three/fiber';
 import { EffectComposer, GodRays } from '@react-three/postprocessing';
+import { color } from 'csx';
+import type { FC} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
 
 
 
