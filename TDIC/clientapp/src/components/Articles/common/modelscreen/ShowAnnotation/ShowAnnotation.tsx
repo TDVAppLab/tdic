@@ -1,9 +1,11 @@
-import { Matrix4, Vector3 } from 'three';
-import { Html, PivotControls, Sphere } from "@react-three/drei"
 import "./styles.css"
-import { Annotation } from '../../../../../app/models/Annotation';
-import { AnnotationDisplay } from '../../../../../app/models/AnnotationDisplay';
+
+import { Html, PivotControls, Sphere } from "@react-three/drei"
 import React, { useEffect, useState } from 'react';
+import { Matrix4, Vector3 } from 'three';
+
+import type { Annotation } from '../../../../../app/models/Annotation';
+import type { AnnotationDisplay } from '../../../../../app/models/AnnotationDisplay';
 
 
 interface Props {

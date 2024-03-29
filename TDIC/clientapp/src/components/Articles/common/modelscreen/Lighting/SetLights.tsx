@@ -1,6 +1,8 @@
 
 import { observer } from 'mobx-react-lite';
-import { Light } from '../../../../../app/models/Light';
+
+import type { Light } from '@/app/models/Light';
+
 import { useStore } from '../../../../../app/stores/store';
 import { BloomLights } from './BloomLights';
 

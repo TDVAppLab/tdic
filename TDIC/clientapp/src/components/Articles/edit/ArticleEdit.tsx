@@ -1,29 +1,31 @@
+import "./ArticleEditorStyles.css"
+
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import { Col, Row, Tab, Tabs } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+
 import LoadingComponent from "../../../app/layout/LoadingComponents";
 import { useStore } from "../../../app/stores/store";
 import DebugDisplay from "../common/DebugDisplay";
-import EdiaAnnotationDisplay from "./EditAnnotationDisplay";
-import EditAnnotation from "./EditAnnotation";
-import EdiaInstruction from "./EditInstruction";
-import EditView from "./EditView";
-import EditLightList from "./EditLightList";
-import EditLight from "./EditLight";
-import EditArticleSub from "./EditArticleSub";
-import EditViewList from "./EditViewList";
+import MaterialDisplay from "../common/MaterialDisplay";
 import ModelScreen from "../common/modelscreen/ModelScreen";
-import EditEyecatch from "./EditEyecatch";
 import DisplayHtmlSubtitles from "../common/modelscreen/Subtitles/DisplayHtmlSubtitles";
 import SubtitleSelector from "../common/SubtitleSelector";
-import ListupSubtitles from "./ListupSubtitles";
-import EditInstanceDisplay from "./EditInstanceDisplay";
-import PanelInstruction from "../details/PanelInstruction";
 import InstructionSelector from "../details/InstructionSelector";
+import PanelInstruction from "../details/PanelInstruction";
+import EditAnnotation from "./EditAnnotation";
+import EdiaAnnotationDisplay from "./EditAnnotationDisplay";
+import EditArticleSub from "./EditArticleSub";
+import EditEyecatch from "./EditEyecatch";
+import EditInstanceDisplay from "./EditInstanceDisplay";
 import EditInstanceobject from "./EditInstanceobject";
-import MaterialDisplay from "../common/MaterialDisplay";
-import "./ArticleEditorStyles.css"
+import EdiaInstruction from "./EditInstruction";
+import EditLight from "./EditLight";
+import EditLightList from "./EditLightList";
+import EditView from "./EditView";
+import EditViewList from "./EditViewList";
+import ListupSubtitles from "./ListupSubtitles";
 
 
 

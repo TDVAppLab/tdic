@@ -1,12 +1,14 @@
 
-import { AnimationClip, Quaternion, Vector3 } from 'three';
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../../../app/stores/store';
-import React from 'react';
 import { Html, useProgress } from '@react-three/drei';
-import { APIURL } from '../../../../../app/constants';
 import { useLoader } from '@react-three/fiber';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import type { AnimationClip} from 'three';
+import { Quaternion, Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
+import { APIURL } from '../../../../../app/constants';
+import { useStore } from '../../../../../app/stores/store';
 
 
 
