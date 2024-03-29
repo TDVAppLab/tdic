@@ -1,16 +1,17 @@
 
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../app/stores/store';
-import { Instruction } from "../../../app/models/instruction";
-import { useEffect, useState } from 'react';
-import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
-import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
+import { observer } from 'mobx-react-lite';
+import { useEffect, useState } from 'react';
 import { Col, Row, Tab, Tabs } from 'react-bootstrap';
-import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
-import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
+
+import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
+import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
+import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
+import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
+import type { Instruction } from "../../../app/models/instruction";
+import { useStore } from '../../../app/stores/store';
 import PreviewInstructionDescription from './PreviewInstructionDescription';
 
 

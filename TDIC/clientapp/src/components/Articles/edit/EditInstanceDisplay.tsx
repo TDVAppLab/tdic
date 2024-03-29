@@ -1,13 +1,14 @@
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../app/stores/store';
-import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import { InstanceDisplay } from '../../../app/models/InstanceDisplay';
-import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
-import agent from '../../../app/api/agent';
-import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
+import { observer } from 'mobx-react-lite';
 import { toast } from 'react-toastify';
-import { InstanceActionExecSetting } from '../../../app/models/InstanceActionExecSetting';
+import * as Yup from 'yup';
+
+import agent from '../../../app/api/agent';
+import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
+import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
+import type { InstanceActionExecSetting } from '../../../app/models/InstanceActionExecSetting';
+import type { InstanceDisplay } from '../../../app/models/InstanceDisplay';
+import { useStore } from '../../../app/stores/store';
 
 
 export default observer( function EditInstanceDisplay(){

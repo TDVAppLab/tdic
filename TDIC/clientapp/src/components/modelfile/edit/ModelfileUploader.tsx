@@ -2,20 +2,18 @@ import { Form, Formik } from 'formik';
 import { redirect } from 'next/navigation';
 import React, {useState} from 'react';
 import { Col, Row } from 'react-bootstrap';
-//import { useNavigate } from 'react-router-dom';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as Yup from 'yup';
 
+import { APIURL } from '@/constants';
+
 import agent from '../../../app/api/agent';
 import FileInputGeneral from '../../../app/common/form/FileInputGeneral';
-import { APIURL } from '../../../app/constants';
 import type { ModelfileUploadDtO } from '../../../app/models/ModelFile';
 import type { PartAnimationClip } from '../../../app/models/PartAnimationClip';
 import { useStore } from '../../../app/stores/store';
 
 function ModelfileUploader() {  
-    //const navigate = useNavigate();
-
 
     const { modelfileStore} = useStore();
     const { selectedModelfile } = modelfileStore;

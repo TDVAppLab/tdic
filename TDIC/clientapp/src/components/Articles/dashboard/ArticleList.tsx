@@ -2,8 +2,8 @@ import { observer } from "mobx-react-lite";
 import Link from "next/link";
 import { Row } from "react-bootstrap";
 
-//import { Link } from "react-router-dom";
-import { APIURL } from "../../../app/constants";
+import { APIURL } from '@/constants';
+
 import { useStore } from "../../../app/stores/store";
 
 export default observer( function ArticleList() {

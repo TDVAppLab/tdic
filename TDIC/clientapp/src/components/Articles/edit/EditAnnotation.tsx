@@ -1,17 +1,19 @@
 
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../app/stores/store';
-import { useEffect, useState } from 'react';
-import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
-import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
+import { observer } from 'mobx-react-lite';
+import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { Annotation, getDefaultValueOfAnnotation } from '../../../app/models/Annotation';
-import { Vector3 } from 'three';
 import { toast } from 'react-toastify';
-import EditAnnotationSubUpdatePos from './EditAnnotationSubUpdatePos';
+import { Vector3 } from 'three';
+import * as Yup from 'yup';
+
+import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
+import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
+import type { Annotation} from '../../../app/models/Annotation';
+import { getDefaultValueOfAnnotation } from '../../../app/models/Annotation';
+import { useStore } from '../../../app/stores/store';
 import EdiaAnnotationDisplay from "./EditAnnotationDisplay";
+import EditAnnotationSubUpdatePos from './EditAnnotationSubUpdatePos';
 
 
 

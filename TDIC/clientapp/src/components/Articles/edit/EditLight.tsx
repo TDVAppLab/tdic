@@ -1,13 +1,14 @@
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../app/stores/store';
-import { useEffect, useState } from 'react';
-import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
-import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
+import { observer } from 'mobx-react-lite';
+import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { Light } from '../../../app/models/Light';
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
+
+import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
+import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
+import type { Light } from '../../../app/models/Light';
+import { useStore } from '../../../app/stores/store';
 
 
 

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { APIURL } from "../constants";
+import { APIURL } from '@/constants';
+
 import type { Annotation } from "../models/Annotation";
 import type { AnnotationDisplay } from "../models/AnnotationDisplay";
 import type { Article, ArticleScreenInfoUpdDto } from "../models/article";

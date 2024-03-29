@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
 import { useFormikContext } from 'formik';
-import { Quaternion, Vector3 } from 'three';
+import { useEffect, useRef } from 'react';
+import type { Quaternion, Vector3 } from 'three';
 
 
 interface Props{

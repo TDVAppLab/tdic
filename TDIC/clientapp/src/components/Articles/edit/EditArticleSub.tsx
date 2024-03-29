@@ -1,24 +1,25 @@
 
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../app/stores/store';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
-import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
+import { observer } from 'mobx-react-lite';
+import { redirect } from 'next/navigation'
+import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { Article } from '../../../app/models/article';
-import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
-import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
-import LoadingComponent from '../../../app/layout/LoadingComponents';
 import { toast } from 'react-toastify';
-import {v4} from 'uuid';
 import { NoToneMapping, sRGBEncoding } from 'three';
+import {v4} from 'uuid';
+import * as Yup from 'yup';
 
+import LoadingComponent from '@/components/layout/LoadingComponents';
+
+import SelectInputGeneral from '../../../app/common/form/SelectInputGeneral';
+import TextAreaGeneral from '../../../app/common/form/TextAreaGeneral';
+import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
+import type { Article } from '../../../app/models/article';
+import { useStore } from '../../../app/stores/store';
 
 export default observer( function EditArticleSub(){
-    const navigate = useNavigate();
+    
+
     
     const [isDataLoadingFinished, setIsDataLoadingFinished]= useState<boolean>(false);
     
@@ -98,7 +99,7 @@ export default observer( function EditArticleSub(){
             newObject.id_article=v4();
 
             const ans_article = await createArticle(newObject);
-            ans_article && navigate(`/articleedit/${ans_article.id_article}`);
+            ans_article && redirect(`/articleedit/${ans_article.id_article}`);
             toast.success('new article added');
         } else {
             await updateArticle(object);
@@ -109,14 +110,14 @@ export default observer( function EditArticleSub(){
     async function handleFormArticleDel(values:Article) {
         
         await deleteArticle(values);
-        navigate(`/`);
+        redirect(`/`);
         toast.info('article deleted');
     }
 
     async function handleFormArticleDuplicate(values:Article) {
         
         const ans_article = await duplicateArticle(values);
-        ans_article && navigate(`/articleedit/${ans_article.id_article}`); 
+        ans_article && redirect(`/articleedit/${ans_article.id_article}`); 
         toast.info('article duplicated');
     }
 

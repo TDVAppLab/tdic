@@ -42,3 +42,8 @@ export const RadiusEarthOnCanvas = 6378137 * SCALEofECEFtoCanvas
 
 // リフレッシュインターバル
 export const REFRESH_INTERVAL = 100 // ms
+
+
+
+export const APIURL =
+  process.env.NEXT_PUBLIC_REACT_APP_API_URL || '/api'

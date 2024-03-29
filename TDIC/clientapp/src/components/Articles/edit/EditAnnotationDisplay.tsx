@@ -1,14 +1,16 @@
 
+import { Formik } from 'formik';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { AnnotationDisplay } from '../../../app/models/AnnotationDisplay';
-import { useStore } from '../../../app/stores/store';
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
 import { toast } from 'react-toastify';
-import { Annotation, getDefaultValueOfAnnotation } from '../../../app/models/Annotation';
+import * as Yup from 'yup';
+
+import CheckBoxGeneral from '../../../app/common/form/CheckBoxGeneral';
+import type { Annotation} from '../../../app/models/Annotation';
+import { getDefaultValueOfAnnotation } from '../../../app/models/Annotation';
+import type { AnnotationDisplay } from '../../../app/models/AnnotationDisplay';
+import { useStore } from '../../../app/stores/store';
 
 
 interface Props {

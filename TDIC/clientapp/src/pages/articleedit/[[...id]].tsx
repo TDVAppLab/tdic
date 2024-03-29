@@ -1,31 +1,31 @@
-import "./ArticleEditorStyles.css"
+import "@/components/Articles/edit/ArticleEditorStyles.css"
 
 import { observer } from "mobx-react-lite";
+import Link from "next/link";
+import  { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Col, Row, Tab, Tabs } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
 
-import LoadingComponent from "../../../app/layout/LoadingComponents";
-import { useStore } from "../../../app/stores/store";
-import DebugDisplay from "../common/DebugDisplay";
-import MaterialDisplay from "../common/MaterialDisplay";
-import ModelScreen from "../common/modelscreen/ModelScreen";
-import DisplayHtmlSubtitles from "../common/modelscreen/Subtitles/DisplayHtmlSubtitles";
-import SubtitleSelector from "../common/SubtitleSelector";
-import InstructionSelector from "../details/InstructionSelector";
-import PanelInstruction from "../details/PanelInstruction";
-import EditAnnotation from "./EditAnnotation";
-import EdiaAnnotationDisplay from "./EditAnnotationDisplay";
-import EditArticleSub from "./EditArticleSub";
-import EditEyecatch from "./EditEyecatch";
-import EditInstanceDisplay from "./EditInstanceDisplay";
-import EditInstanceobject from "./EditInstanceobject";
-import EdiaInstruction from "./EditInstruction";
-import EditLight from "./EditLight";
-import EditLightList from "./EditLightList";
-import EditView from "./EditView";
-import EditViewList from "./EditViewList";
-import ListupSubtitles from "./ListupSubtitles";
+import { useStore } from "@/app/stores/store";
+import DebugDisplay from "@/components/Articles/common/DebugDisplay";
+import MaterialDisplay from "@/components/Articles/common/MaterialDisplay";
+import ModelScreen from "@/components/Articles/common/modelscreen/ModelScreen";
+import DisplayHtmlSubtitles from "@/components/Articles/common/modelscreen/Subtitles/DisplayHtmlSubtitles";
+import SubtitleSelector from "@/components/Articles/common/SubtitleSelector";
+import InstructionSelector from "@/components/Articles/details/InstructionSelector";
+import PanelInstruction from "@/components/Articles/details/PanelInstruction";
+import EditAnnotation from "@/components/Articles/edit/EditAnnotation";
+import EditArticleSub from "@/components/Articles/edit/EditArticleSub";
+import EditEyecatch from "@/components/Articles/edit/EditEyecatch";
+import EditInstanceDisplay from "@/components/Articles/edit/EditInstanceDisplay";
+import EditInstanceobject from "@/components/Articles/edit/EditInstanceobject";
+import EditInstruction from "@/components/Articles/edit/EditInstruction";
+import EditLight from "@/components/Articles/edit/EditLight";
+import EditLightList from "@/components/Articles/edit/EditLightList";
+import EditView from "@/components/Articles/edit/EditView";
+import EditViewList from "@/components/Articles/edit/EditViewList";
+import ListupSubtitles from "@/components/Articles/edit/ListupSubtitles";
+import LoadingComponent from "@/components/layout/LoadingComponents";
 
 
 
@@ -33,7 +33,8 @@ import ListupSubtitles from "./ListupSubtitles";
 export default observer( function ArticleEdit() {
 
     
-    const {id} = useParams<{id:string}>();
+  const router = useRouter()
+  const { id } = router.query
 
     const [isEditmode, setIsEditmode] = useState(true); //編集モードかどうか
     const [isMotiondisplayMode, setIsMotiondisplayMode] = useState(false); //動画撮影モードかどうか
@@ -71,13 +72,13 @@ export default observer( function ArticleEdit() {
     useEffect(() => { 
         if(id) {
             setIsDataLoading(
-                article?.id_article !== id
-            || instructionId_article !== id
-            || viewId_article !== id
-            || instanceobjectId_article !== id
-            || lightId_article !== id
-            || annotationId_article !== id
-            || annotationDisplayId_article !== id
+                article?.id_article !== id[0]
+            || instructionId_article !== id[0]
+            || viewId_article !== id[0]
+            || instanceobjectId_article !== id[0]
+            || lightId_article !== id[0]
+            || annotationId_article !== id[0]
+            || annotationDisplayId_article !== id[0]
             );
         } else {
             setIsDataLoading(false);
@@ -94,7 +95,7 @@ export default observer( function ArticleEdit() {
 
     useEffect(()=> {
 
-        if((instructionId_article === id) && (viewId_article === id))  {
+        if((instructionId_article === (id ? id[0] : '')) && (viewId_article === (id ? id[0] : '')))  {
         selectedInstruction && setselectedView(selectedInstruction.id_view);
         }
         
@@ -103,13 +104,13 @@ export default observer( function ArticleEdit() {
     useEffect(()=> {
 
         if(id) {
-            loadArticle(id);
-            loadInstanceobjects(id);
-            loadInstructions(id);
-            loadViews(id);
-            loadAnnotations(id);
-            loadLights(id);
-            loadAnnotationDisplays(id);
+            loadArticle(id[0]);
+            loadInstanceobjects(id[0]);
+            loadInstructions(id[0]);
+            loadViews(id[0]);
+            loadAnnotations(id[0]);
+            loadLights(id[0]);
+            loadAnnotationDisplays(id[0]);
         } else {
             loadArticle("");
             loadInstanceobjects("");
@@ -158,7 +159,7 @@ export default observer( function ArticleEdit() {
                             <Tab eventKey="instruction" title="Instruction">
                                 <Tabs defaultActiveKey="edit_instruction" id="instruction-editor-sub-tab" className="mb-3">
                                     <Tab eventKey="edit_instruction" title="Edit Instruction">
-                                        <EdiaInstruction />
+                                        <EditInstruction />
                                     </Tab>
                                     <Tab eventKey="edit_instance_display" title="Edit Instance Display">
                                         <EditInstanceDisplay />
@@ -226,7 +227,7 @@ export default observer( function ArticleEdit() {
 
                             { id &&
                             <Tab eventKey="info" title="info" >
-                                <Link to={`/article/${article?.id_article}`}>Details</Link> 
+                                <Link href={`/article/${article?.id_article}`}>Details</Link> 
                                 <hr />
 
                                 <SetChecker Val={isEditmode} ValSettingFunction={setIsEditmode} LabelString="Edit Mode" />

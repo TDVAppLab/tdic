@@ -7,7 +7,8 @@ import type { AnimationClip} from 'three';
 import { Quaternion, Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-import { APIURL } from '../../../../../app/constants';
+import { APIURL } from '@/constants';
+
 import { useStore } from '../../../../../app/stores/store';
 
 

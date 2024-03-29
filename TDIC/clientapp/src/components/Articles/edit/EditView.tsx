@@ -1,14 +1,16 @@
 
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../app/stores/store';
-import { useEffect, useState } from 'react';
-import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
-import { View } from '../../../app/models/view';
+import { observer } from 'mobx-react-lite';
+import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import EditViewSubUpdateCurrentCameraInfo from './EditViewSubUpdateCurrentCameraInfo';
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
+
+import type { View } from '@/app/models/view';
+
+import TextInputGeneral from '../../../app/common/form/TextInputGeneral';
+import { useStore } from '../../../app/stores/store';
+import EditViewSubUpdateCurrentCameraInfo from './EditViewSubUpdateCurrentCameraInfo';
 
 
 

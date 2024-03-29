@@ -1,7 +1,8 @@
 import { useFormikContext } from 'formik';
 import { marked } from 'marked';
 import { useEffect } from 'react';
-import { Instruction } from '../../../app/models/instruction';
+
+import type { Instruction } from '../../../app/models/instruction';
 
 
 

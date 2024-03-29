@@ -1,9 +1,11 @@
 
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../app/stores/store';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useEffect } from 'react';
-import LoadingComponent from '../../../app/layout/LoadingComponents';
+
+import LoadingComponent from '@/components/layout/LoadingComponents';
+
+import { useStore } from '../../../app/stores/store';
 import EditInstanceobjectCreater from './EditInstanceobjectCreater';
 
 
@@ -79,7 +81,7 @@ export default observer( function EditInstanceobject(){
                         <tr key={x.id_instance}>
                             <td><div>{index+1}</div></td>
                             <td><div>{x.id_instance}</div></td>
-                            <td><div><Link to={`/modelfileedit/${x.id_part}`}>{x.id_part}</Link></div></td>
+                            <td><div><Link href={`/modelfileedit/${x.id_part}`}>{x.id_part}</Link></div></td>
                             <td>{ModelfileRegistry.get(x.id_part)?.part_number}</td>
                             <td>{x.pos_x}</td>
                             <td>{x.pos_y}</td>
