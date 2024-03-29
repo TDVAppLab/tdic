@@ -12,7 +12,9 @@ import type { AppProps, AppType } from 'next/app'
 import Head from 'next/head'
 import { SessionProvider } from 'next-auth/react'
 import { SnackbarProvider } from 'notistack'
+import { useEffect } from 'react';
 
+import { useStore } from '@/app/stores/store';
 import GaScript from '@/components/googleanalytics/gaScript'
 import Layout from '@/components/layout/layout'
 import { GA_MEASUREMENT_ID } from '@/constants'
@@ -32,6 +34,7 @@ export interface MyAppProps extends AppProps {
 const MyApp: AppType = (props: MyAppProps) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
+  const {commonStore, userStore} = useStore();
   useGoogleAnalytics(GA_MEASUREMENT_ID) // Google Analyticsを使用
 
   // ページコンポーネントからタイトルを取得する
@@ -39,6 +42,16 @@ const MyApp: AppType = (props: MyAppProps) => {
     ((Component as NextComponentType & { title?: string }).title || '') +
     ' | SATRACK'
 
+    
+  useEffect(() => {
+    if(commonStore.token){
+      userStore.getUser().finally(()=> commonStore.setAppLoaded());
+
+    } else {
+      commonStore.setAppLoaded();
+    }
+  }, [commonStore, userStore])
+  
   return (
     <SessionProvider session={pageProps.session}>
       <CacheProvider value={emotionCache}>
