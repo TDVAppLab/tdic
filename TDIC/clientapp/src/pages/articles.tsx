@@ -3,11 +3,11 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 
+import GoogleAd from '@/app/common/utils/GoogleAd';
 import { useStore } from '@/app/stores/store';
 import ArticleList from '@/components/Articles/dashboard/ArticleList';
 import LoadingComponent from '@/components/layout/LoadingComponents';
 
-//import GoogleAd from '../../../app/common/utils/GoogleAd';
 
 export default observer(function ArticleDashboard() {      
 
@@ -32,7 +32,7 @@ export default observer(function ArticleDashboard() {
             {
                 user &&
                     <>            
-                        <Link href={`/createarticle`}>
+                        <Link href={`/articleedit`}>
                             <h3>Create New Article</h3>
                         </Link>
                         <hr />                        
@@ -41,8 +41,7 @@ export default observer(function ArticleDashboard() {
             
             <ArticleList />
             {
-                // temporally ommited for transition to Next.js
-            //<GoogleAd pid={siteAnalyticsStore.GoogleAdsensePublisherId!} uid={siteAnalyticsStore.GoogleAdsenseUnitId!} />
+            <GoogleAd pid={siteAnalyticsStore.GoogleAdsensePublisherId!} uid={siteAnalyticsStore.GoogleAdsenseUnitId!} />
             }
         </Container>
 
