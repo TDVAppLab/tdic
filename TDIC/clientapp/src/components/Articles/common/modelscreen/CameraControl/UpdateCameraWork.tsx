@@ -1,7 +1,9 @@
 import { useFrame, useThree } from '@react-three/fiber';
-import { View } from '../../../../../app/models/view';
-import { Vector3 } from 'three';
 import { observer } from 'mobx-react-lite';
+import { Vector3 } from 'three';
+
+import type { View } from '@/app/models/view';
+
 import { useStore } from '../../../../../app/stores/store';
 
 

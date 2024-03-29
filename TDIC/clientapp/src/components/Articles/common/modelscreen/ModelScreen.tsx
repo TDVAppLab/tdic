@@ -2,6 +2,7 @@ import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
+import type { TextureEncoding } from 'three';
 import { Color, LinearEncoding, NoToneMapping, PMREMGenerator } from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
 
