@@ -6,13 +6,12 @@ on:
       - dev_move_nextjs
 
 jobs:
-  print-working-directory:
   build-and-deploy:
 
     runs-on: ubuntu-22.04
     defaults:
       run:
-        working-directory: ./TDIC/clientapp
+        working-directory: ./clientapp
     timeout-minutes: 300
     environment: production
     env:
