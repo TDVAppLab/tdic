@@ -23,6 +23,7 @@ import PanelInstruction from "../details/PanelInstruction";
 import InstructionSelector from "../details/InstructionSelector";
 import EditInstanceobject from "./EditInstanceobject";
 import MaterialDisplay from "../common/MaterialDisplay";
+import "./ArticleEditorStyles.css"
 
 
 
@@ -125,7 +126,6 @@ export default observer( function ArticleEdit() {
 
     return (
         <>
-            {id && <h2>{article?.title}</h2> }
 
                 <Row>
                     
@@ -133,6 +133,7 @@ export default observer( function ArticleEdit() {
                     <Col style={{ 
                         width: isMotiondisplayMode ? 1280 : undefined
                         }} sm={6} >
+                        {id && <h2>{article?.title}</h2> }
 
                         <div style={{aspectRatio: '16 / 9', position: "relative"}} >
                             <ModelScreen  isEditmode={isEditmode} isAutoAnimationExec={isAutoAnimationExec}/>
@@ -148,7 +149,7 @@ export default observer( function ArticleEdit() {
                     </Col>
                     }
 
-                    <Col>
+                    <Col className={`colsetting`}>
                         <Tabs defaultActiveKey={id ? "instruction" : "base"} id="article-editor-main-tab" className="mb-3">
                             {id && 
 
