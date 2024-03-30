@@ -19,6 +19,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: cd
+      run: cd TDIC/clientapp
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
