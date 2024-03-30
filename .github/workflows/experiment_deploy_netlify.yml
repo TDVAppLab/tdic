@@ -7,46 +7,38 @@ on:
 
 jobs:
   build-and-deploy:
+
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./TDIC/clientapp
     timeout-minutes: 300
     environment: production
     env:
       NODE_VERSION: 18.16.0
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: npm
 
-      # 'working-directory' を追加していないステップは、デフォルトのディレクトリ（リポジトリのルート）で実行されます。
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: npm-deps-
 
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: ./tdic/clientapp/node_modules
-          key: npm-deps-${{ hashFiles('./tdic/clientapp/**/package-lock.json') }}
-          restore-keys: npm-deps-
+    - name: Install dependencies
+      run: npm ci
 
-      - name: Install dependencies
-        run: npm ci
-        working-directory: ./tdic/clientapp
-
-      - name: Build
-        run: npm run build
-        working-directory: ./tdic/clientapp
-        # Next.jsプロジェクトをビルドするためのステップを追加しました。
-        # 'npm run build'はNext.jsの標準的なビルドコマンドです。
-
-      - name: Deploy to netlify(dev_move_nextjs)
-        run: netlify deploy --dir=./out --prod
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN_EXPERIMENT }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_EXPERIMENT }}
-        working-directory: ./tdic/clientapp
-        # Netlifyへのデプロイを行うステップにも`working-directory`を指定しました。
-        # また、`netlify deploy`コマンドに`--dir`オプションを追加して、ビルドされたサイトのディレクトリを指定しています。
+    - name: Deploy to netlify(dev_move_nextjs)
+      run: netlify deploy --build --prod
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN_EXPERIMENT }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_EXPERIMENT }}
