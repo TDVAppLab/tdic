@@ -9,6 +9,9 @@ jobs:
   build-and-deploy:
 
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./TDIC/clientapp
     timeout-minutes: 300
     environment: production
     env:
