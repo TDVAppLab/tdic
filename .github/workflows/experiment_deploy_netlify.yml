@@ -6,6 +6,7 @@ on:
       - dev_move_nextjs
 
 jobs:
+  print-working-directory:
   build-and-deploy:
 
     runs-on: ubuntu-22.04
