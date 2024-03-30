@@ -1,9 +1,9 @@
-name: Deploy dev_move_nextjs
+name: Deploy main
 
 on:
   push:
     branches:
-      - dev_move_nextjs
+      - main
 
 # デフォルトの作業ディレクトリ変更
 # ルート直下の場合は不要
@@ -46,7 +46,7 @@ jobs:
       run: npm ci
 
     - name: Deploy to netlify(main)
-      run: netlify deploy --build --alias=tdaspbs-experiment
+      run: netlify deploy --build --prod
       env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN_EXPERIMENT }}
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_EXPERIMENT }}
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN_PRODUCTION }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_PRODUCTION }}
