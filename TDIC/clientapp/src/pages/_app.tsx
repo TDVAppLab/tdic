@@ -40,7 +40,7 @@ const MyApp: AppType = (props: MyAppProps) => {
   // ページコンポーネントからタイトルを取得する
   const pageTitle =
     ((Component as NextComponentType & { title?: string }).title || '') +
-    ' | SATRACK'
+    ' | 3D Aerospace Museum'
 
     
   useEffect(() => {
