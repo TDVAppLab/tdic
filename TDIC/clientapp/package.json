@@ -90,6 +90,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/react-datepicker": "^6.2.0",
     "prisma": "^5.7.1"
   }
 }
