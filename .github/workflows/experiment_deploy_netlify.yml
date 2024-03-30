@@ -9,9 +9,6 @@ jobs:
   build-and-deploy:
 
     runs-on: ubuntu-22.04
-    defaults:
-      run:
-        working-directory: ./TDIC/clientapp
     timeout-minutes: 300
     environment: production
     env:
@@ -22,13 +19,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: List files in the repository
-      run: ls -la
-
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
-      working-directory: ./TDIC/clientapp
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: npm
@@ -42,7 +35,6 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
-      working-directory: ./TDIC/clientapp
 
     - name: Deploy to netlify(dev_move_nextjs)
       run: netlify deploy --build --prod
