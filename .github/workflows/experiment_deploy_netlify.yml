@@ -27,18 +27,15 @@ jobs:
     - name: Cache node_modules
       uses: actions/cache@v3
       with:
-        # パスをプロジェクトが存在するサブディレクトリのnode_modulesに更新
-        path: ./TDIC/clientapp/node_modules
-        key: npm-deps-${{ hashFiles('./TDIC/clientapp/**/package-lock.json') }}
+        path: ~/.npm
+        key: npm-deps-${{ hashFiles('**/package-lock.json') }}
         restore-keys: npm-deps-
 
     - name: Install dependencies
       run: npm ci
-      working-directory: ./TDIC/clientapp # コマンドを実行するディレクトリを指定
 
     - name: Deploy to netlify(main)
-      run: netlify deploy --dir=./out --prod # ビルドされたファイルのディレクトリを指定
+      run: netlify deploy --build --prod
       env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      working-directory: ./TDIC/clientapp # コマンドを実行するディレクトリを指定
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN_EXPERIMENT }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_EXPERIMENT }}
