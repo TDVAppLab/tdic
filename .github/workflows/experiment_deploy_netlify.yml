@@ -15,12 +15,8 @@ jobs:
       NODE_VERSION: 18.16.0
 
     steps:
-
     - name: Checkout
       uses: actions/checkout@v3
-
-    - name: cd
-      run: cd TDIC/clientapp
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
@@ -31,15 +27,18 @@ jobs:
     - name: Cache node_modules
       uses: actions/cache@v3
       with:
-        path: ~/.npm
-        key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+        # パスをプロジェクトが存在するサブディレクトリのnode_modulesに更新
+        path: ./TDIC/clientapp/node_modules
+        key: npm-deps-${{ hashFiles('./TDIC/clientapp/**/package-lock.json') }}
         restore-keys: npm-deps-
 
     - name: Install dependencies
       run: npm ci
+      working-directory: ./TDIC/clientapp # コマンドを実行するディレクトリを指定
 
-    - name: Deploy to netlify(dev_move_nextjs)
-      run: netlify deploy --build --prod
+    - name: Deploy to netlify(main)
+      run: netlify deploy --dir=./out --prod # ビルドされたファイルのディレクトリを指定
       env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN_EXPERIMENT }}
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_EXPERIMENT }}
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      working-directory: ./TDIC/clientapp # コマンドを実行するディレクトリを指定
