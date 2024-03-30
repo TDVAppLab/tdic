@@ -25,14 +25,8 @@ export default function WebsiteSettingForm(){
     const [loading, setLoading] = useState<boolean>(false);
 
 
-    useEffect(()=>{
-        //loadStatuses().then(()=>{
-        //    console.log(statusRegistry);
-        //});
-    }, []);
     
     useEffect(() => {
-        //console.log(id);
         if(id){
             setLoading(true);
             agent.WebsiteSettings.details(id).then(sitesetting => {

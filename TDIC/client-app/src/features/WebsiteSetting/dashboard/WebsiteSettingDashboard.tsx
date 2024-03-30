@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -6,7 +5,7 @@ import agent from '../../../app/api/agent';
 import LoadingComponent from '../../../app/layout/LoadingComponents';
 import { WebsiteSetting } from '../../../app/models/WebsiteSetting';
 
-export default observer(function WebsiteSettingDashboard() {
+export default function WebsiteSettingDashboard() {
 
     const [websiteSettings, setWebsiteSettings] = useState<WebsiteSetting[]>();
   
@@ -64,4 +63,4 @@ export default observer(function WebsiteSettingDashboard() {
 
         
     )
-})
+}
